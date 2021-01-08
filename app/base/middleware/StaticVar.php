@@ -49,7 +49,10 @@ class StaticVar
         $cookie_template = cookie('think_template');
         if (!$cookie_template) {
             $default_theme = check_wap()?config('app.DEFAULT_WAP_THEME'):config('app.DEFAULT_THEME');
+            define('TMPL_NAME', $default_theme);
             cookie('think_template', $request->param('t', $default_theme));
+        }else{
+            define('TMPL_NAME', $cookie_template);
         }
         //防止注入
         $request_data = $request->param();

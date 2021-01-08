@@ -3,6 +3,8 @@ declare (strict_types = 1);
 namespace app\home\controller;
 
 use app\base\model\ArticleView;
+use app\home\middleware\After;
+use app\home\middleware\Before;
 use think\App;
 use think\exception\HttpResponseException;
 use think\exception\ValidateException;
@@ -38,7 +40,7 @@ abstract class Base
      * 控制器中间件
      * @var array
      */
-    protected $middleware = [];
+    protected $middleware = [Before::class];
 
     /**
      * 构造方法
