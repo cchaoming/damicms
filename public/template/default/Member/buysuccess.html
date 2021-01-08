@@ -1,0 +1,31 @@
+<include file="./head_inner"/>
+<link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<style>
+label.valid {
+		  width: 24px;
+		  height: 24px;
+		  background: url(__PUBLIC__/image/valid.png) center center no-repeat;
+		  display: inline-block;
+		  text-indent: -9999px;
+		}
+		label.error {
+			font-weight: bold;
+			color: red;
+			padding: 2px 8px;
+			margin-top: 2px;
+		}
+</style>
+<div id='body'>
+<div class="inner" style="width:980px;">
+<div class="right" style="width:100%;">
+<div class="Position"><span>你的位置：<a href="/">首页</a>&nbsp;&gt;&nbsp;用户下单</span></div>
+<div class="HeightTab clearfix"></div>
+ 	<table width="650" align="center" cellpadding="0" cellspacing="0"><tr><td height="90">
+    <div style="width:90px;height:90px; background:url(__TMPL__/images/base_bg.png) no-repeat; background-position:-140px 5px;"></div>    
+    </td><td valign="middle">订单号:<font style="font-size:16px; color:#F00; font-weight:bold;">{$group_trade_no}</font>,您的订单提交成功!<br>
+    <p align="center"><a href="{:U('Member/buylist')}" class="btn btn-danger active">查看我的订单</a></p>
+    </td></tr></table>
+</div>
+</div>
+</div>
+<include file="$footer"/>

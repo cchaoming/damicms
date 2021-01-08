@@ -1,0 +1,73 @@
+<include file="$head"/>
+<script>$(document).ready(function () {
+    $('.ui-title').text('用户充值');//标题
+});
+</script>
+<div data-role="content">
+    <?php
+$user_agent = $_SERVER['HTTP_USER_AGENT'];
+if (strpos($user_agent, 'MicroMessenger') === false || intval(C('WX_TRADE')) != 1) {
+if(intval(C('AP_TYPE')) == 1){
+$action = "./Trade/ap_jishi/alipayapi.php";
+}else{
+$action = "./Trade/ap_danbao/alipayapi.php";
+}
+}else{
+$action = "./Trade/Wxpay/dopay/jsapi.php";
+}
+?>
+    <form name="payment" action="{$action}" method="post" data-ajax="false">
+        <p>您的余额：
+            <font color=red>{$row[money]}</font>
+            <span>元</span>
+        </p>          <input name="WIDtotal_fee" placeholder="充值金额 单位（元*）"/>
+        <input name="WIDsubject" value="{$config.sitetitle}会员在线充值" placeholder="充值名称(*）"/>
+        <input size="30" name="WIDbody" value="{$config.sitetitle}会员在线充值" placeholder="{$config.sitetitle}会员在线充值"/>
+        <input size="30" name="WIDreceive_mobile" placeholder="联系电话"/>
+        <input size="30" name="WIDout_trade_no" type="hidden" value="CZ{:time()}-{$_SESSION[dami_uid]}"/>
+        <?php if (strpos($user_agent, 'MicroMessenger') === false) { ?>
+					<span style="display:none;">
+                    <dt>商品展示地址：</dt>
+                    <dd>
+                        <span class="null-star">*</span>
+                        <input size="30" name="WIDshow_url" value="http://{$_SERVER['HTTP_HOST']}"/>
+                        <span>需以http://开头的完整路径，如：http://www.xxx.com/myorder.html
+</span>
+                    </dd>
+                    <dt>收货人姓名：</dt>
+                    <dd>
+                        <span class="null-star">*</span>
+                        <input size="30" name="WIDreceive_name"/> <input size="30" name="WIDseller_email"
+                                                                         value="{:C('AP_EMAIL')}"/>
+                        <span>如：张三
+</span>
+                    </dd>
+                    <dt>收货人地址：</dt>
+                    <dd>
+                        <span class="null-star">*</span>
+                        <input size="30" name="WIDreceive_address"/>
+                        <span>如：XX省XXX市XXX区XXX路XXX小区XXX栋XXX单元XXX号
+</span>
+                    </dd>
+                    <dt>收货人邮编：</dt>
+                    <dd>
+                        <span class="null-star">*</span>
+                        <input size="30" name="WIDreceive_zip"/>
+                        <span>如：123456
+</span>
+                    </dd>
+                    <dt>收货人电话号码：</dt>
+                    <dd>
+                        <span class="null-star">*</span>
+                        <input size="30" name="WIDreceive_phone"/>
+                        <span>如：0571-88158090
+</span>
+                    </dd>
+					</span>
+        <?php } ?>
+
+        <button class="new-btn-login" type="submit" style="text-align:center;" data-theme="e">立即充值</button>
+
+    </form>
+</div>
+</div>

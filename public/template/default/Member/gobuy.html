@@ -1,0 +1,126 @@
+<include file="./head_inner"/>
+<link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" language="javascript" src="__PUBLIC__/js/jsAddress.js"></script>
+<script>
+//省市区初始化
+$(document).ready(function() {
+	addressInit('province', 'city', 'area','{$uinfo.province}','{$uinfo.city}','{$uinfo.area}');
+});
+//计算购物清单
+function goods_calc(){
+    var total=0;
+    var trList = $("#buy_lists").find("tr");
+    for (var i=1;i<trList.length;i++) {
+        var tdArr = trList.eq(i).find("td");
+        var row_number = parseInt(tdArr.eq(4).find(".row_number").val());//数量
+        var row_price =  parseFloat(tdArr.eq(5).find(".row_price").text());//单价
+        var row_total_obj = tdArr.eq(6).find(".row_total");
+        var row_total = row_number * row_price;
+        row_total_obj.text(row_total);
+        total += row_total;
+    }
+    $('#total_money').text(total);
+}
+//删除某购物车产品
+function goods_del(obj,id){
+    if(confirm('您确定不需要购买此物品？')){
+        $.post("__ROOT__/index.php?m=Public&a=ajax_del_cart",{id:id},function(result){});
+        $(obj).parent().parent().remove();
+        goods_calc();
+    }
+}
+    function check_money(){
+        var total_money = parseFloat($("#total_money").text());
+        if(total_money<=0){
+            alert('购物为空或金额为0！');
+            return false;
+        }
+        return true;
+    }
+</script>
+<style>
+    .number1{ display: inline-block;width:20px; height: 20px;line-height: 12px; }
+    .row_number{ width:30px;height:20px;display:inline-block;text-align: center; }
+
+label.valid {
+		  width: 24px;
+		  height: 24px;
+		  background: url(__PUBLIC__/image/valid.png) center center no-repeat;
+		  display: inline-block;
+		  text-indent: -9999px;
+		}
+		label.error {
+			font-weight: bold;
+			color: red;
+			padding: 2px 8px;
+			margin-top: 2px;
+		}
+</style>
+<div id='body'>
+<div class="inner" style="width:980px;">
+<div class="right" style="width:100%;">
+<div class="Position"><span>你的位置：<a href="/">首页</a>&nbsp;&gt;&nbsp;用户下单</span></div>
+<div class="HeightTab clearfix"></div>
+<div class="main">
+<form action="{:U('Member/dobuy')}" method="post" name="form1" onsubmit="return check_money();">
+<div class="panel panel-danger">
+  <div class="panel-heading">订单列表</div>
+  <div class="panel-body">
+    <table class="table table-bordered" id="buy_lists">
+<tr><th width="80" align="center">商品编号</th>
+  <th colspan="2">名称</th><th align="center">型号</th>
+  <th width="100" align="center">数量</th>
+  <th width="100" align="center">单价</th>
+  <th width="100" align="center">小计</th></tr>
+  <php>$total_fee=0;</php>
+<volist name="list" id="vo">
+<neq name="vo.name" value="">
+<tr>
+<td align="center" valign="middle">{$vo.id}<input name="id[]" type="hidden" value="{$vo.id}" /></td>
+<td width="82" align="center" valign="middle"><img src="{$vo.pic}" width="20" height="20" /><input name="pic[]" type="hidden" value="{$vo.pic}" /></td>
+<td align="left" valign="middle">{$vo.name}<input name="name[]" type="hidden" value="{$vo.name}" /></td>
+<td align="center" valign="middle">{$vo.gtype}<input name="gtype[]" type="hidden" value="{$vo.gtype}" /></td>
+<td align="center" valign="middle">
+    <button type="button" class="numberplus number1" onclick="if(parseInt($('#gnum_{$i}').val())>1){ $('#gnum_{$i}').val(parseInt($('#gnum_{$i}').val())-1);goods_calc(); }">-</button>
+    <input type="text" name="qty[]" value="{$vo.qty}" id="gnum_{$i}" class="row_number" onblur="goods_calc();" onkeypress = "return event.keyCode>=48&&event.keyCode<=57||event.keyCode==46" onpaste = "return !clipboardData.getData('text').match(/D/)">
+    <button type="button" class="numbersubtract number1" onclick="$('#gnum_{$i}').val(parseInt($('#gnum_{$i}').val())+1);goods_calc();">+</button>
+</td>
+<td align="center" valign="middle"><span class="row_price">{$vo.price}</span><input name="price[]" type="hidden" value="{$vo.price}" /></td>
+<td align="center" valign="middle"><span class="row_total"><php>$total_fee += ($vo[qty]*$vo[price])*1; echo $vo[qty]*$vo[price];</php></span>&nbsp;<gt name="vo.id" value="0"><span class="glyphicon glyphicon glyphicon-remove-circle" aria-hidden="true" onclick="goods_del(this,{$vo.id})"></span></gt></td></tr></neq>
+</volist>
+</table>
+</div>
+  </div>
+  
+ <div class="panel panel-default">
+  <div class="panel-heading">送货地址(可修改)</div>
+  <div class="panel-body">
+    <table class="table table-bordered">
+<tr><td width="80" align="center">姓名</td>
+  <td align="center" width="90" >手机</td><td align="center" width="260">区域</td>
+  <td  align="center">详细地址</td>
+   <td width="100" align="center">付款方式</td>
+ </tr>
+  
+<tr><td align="center" valign="middle" width="50"><input type="text" name="realname" value="{$uinfo.realname}" class="dline" style="width:50px; text-align:center;" /></td>
+<td width="88" align="center" valign="middle"><input type="text" name="tel" value="{$uinfo.tel}" class="dline" style="width:88px;" /></td>
+  <td align="left" valign="middle" width="260"><select  name="province" id="province"  ></select><select  name="city" id="city"></select><select  name="area" id="area" ></select></td>
+  <td align="center" valign="middle"><input type="text" value="{$uinfo.address}" name="address" class="dline" style=" width:337px;" /></td>
+  <td align="center" valign="middle"><select name="trade_type">
+  <php>$trade_type = C('TRADE_TYPE');</php>
+  <volist name='trade_type' id="vo" key='k'>
+  <option value="{$key}">{$vo}</option>
+  </volist>
+  </select></td>
+ </tr>
+</table>
+</div>
+  </div>
+  <div style="text-align:right">合计：<font style="color:#F00; font-size:14px; font-weight:bold;" id="total_money">{$total_fee}</font>元&nbsp;&nbsp;&nbsp;&nbsp;
+  <input name="iscart" type="hidden" value="{$_REQUEST['iscart']}" /><input type="submit" class="btn btn-danger" value="提交订单" /><br><br>
+  </form>
+</div>
+</div>
+</div>
+</div>
+<include file="$footer"/>

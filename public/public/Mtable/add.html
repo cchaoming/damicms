@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网站后台管理</title>
+<link href="__PUBLIC__/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<link rel="shortcut icon" href="__PUBLIC__/Admin/images/myfav.ico" type="image/x-icon" />
+<import file= "Admin.setdate.WdatePicker,Admin.js.admin,Admin.js.Jquery"/> 
+</head>
+<body>
+<table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
+<form action="<neq name='info.zj_id' value=''>__URL__/doedit<else/>__URL__/doadd</neq>" name="myform" id="myform" method="post" >
+<tr> 
+    <td colspan="3" align=left class="admintitle"><neq name='info.zj_id' value=''>修改<else/>添加</neq> [<a href="__URL__/index">链接列表</a>]</td>
+</tr>
+<!--循环字段-->
+loop_lb
+<tr> 
+<td width="20%" class="b1_1"></td>
+<td colspan="2" class="b1_1"><neq name='info.zj_id' value=''><input name="zj_id" type="hidden" value="{$info.zj_id}"></neq><input name="Submit" type="submit" class="btn btn-success" value="保存">&nbsp;&nbsp;<input type="button" onClick="history.go(-1);" class="btn btn-info" value="返 回"></td>
+</tr>
+</form>
+</table>
+
+</body>
+</html>

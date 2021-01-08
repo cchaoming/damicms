@@ -1,0 +1,18 @@
+<include file="$head"/>
+<script>$(document).ready(function() {
+$('.ui-title').text('用户登陆');//标题
+});
+</script>
+<div data-role="content"  class="content">
+        	<form action="{:U('member/dologin')}" method="post" name="form1" data-ajax="false">
+            	<input type="text" name="username" id="username" placeholder="请输入用户名"/>
+            	<input type="password" name="userpwd" id="userpwd" placeholder="请输入密码"/>
+            	
+       		
+        <a data-role="button" id="submit" data-theme="b" data-ajax="false" onclick="document.form1.submit();" >登录</a>
+        <a data-role="button" id="toregist" data-theme="e" data-transition="turn" href="{:U('Member/register')}" >注册</a>
+        </form>
+</div>
+</div><!-- end page -->
+</body>
+</html>

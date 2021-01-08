@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{$config.sitetitle}|{$config.sitetitle2}</title>
+<link rel="stylesheet" href="__TMPL__/jmobile/jquery.mobile-1.3.0.min.css" />
+<link rel="stylesheet" href="__TMPL__/css/page.css" />
+<script src="__TMPL__/jmobile/jquery.min.js"></script>
+<script src="__TMPL__/jmobile/jquery.mobile-1.3.0.min.js"></script>
+<script src="__TMPL__/jmobile/jquery.nicescroll.js"></script>
+<script>
+  $(document).ready(function() {
+    $("html").niceScroll({  cursorwidth:4 });  // The document page (html)
+  });
+</script>
+</head>
+<body>
+<div data-role="page">
+<div data-role="header">
+		<a href="#"  data-transition="slidefade" class="ui-btn-right ui-btn ui-shadow ui-corner-all ui-icon-back ui-btn-icon-notext" data-theme="a" data-rel="back"></a>
+		<h1>{$type.typename}</h1>
+		<a href="__ROOT__/"  data-direction="reverse" class="ui-btn-left ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext" data-ajax="false"></a>
+</div><!-- /header -->
+<div  data-role="content">
+		<php>if($child_list){</php>
+<!-- 产品子类 -->
+		<ul data-role="listview">
+		<volist name='child_list' id='vo'>
+		    <li><a href="{$vo.typeid|url=lists,###}" rel="external"><h3>{$vo.typename}</h3></a></li>
+		</volist>
+		<li><a href="{:U('List/photo')}" data-ajax="false"><h3>产品相册</h3></a></li>
+</ul>
+		<php>}else{</php>
+<!-- 产品列表 -->
+		<ul data-role="listview">
+		<volist name="list" id="vo">
+		<li>
+				<a href="{$vo.aid|url=articles,###}" rel="external">
+	<img src="__ROOT__{$vo.imgurl}" alt="{$vo.title}" style="width:80px; height:54px;border-radius:5px; margin-top:15px;" />
+										<h3>{$vo.title} </h3>
+					<p>{$vo.description}</p></a>
+	</li>
+		</volist>
+		<li><div class="PageN">{$page}</div></li>
+		</ul>
+		<php>}</php>	
+	</div><!-- /content -->
+<include file="$footer"/>
+</div><!-- /page -->
+</body>
+</html>

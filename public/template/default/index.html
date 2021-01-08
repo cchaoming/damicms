@@ -1,0 +1,93 @@
+<include file="$head"/>        
+<div id="body">
+<!--MainBlock start-->
+<div class="MainBlock">
+<!--left start-->
+<div class="right">
+<div class="topic">
+<div class="TopicTitle"><a href="{:url(articles,55)}">关于公司</a></div>
+<div class="TopicMore"> <a  href='{:url(articles,55)}'><img src="__TMPL__/images/more.png"></a></div>
+</div>
+<div class='img'><a href='{:url(articles,55)}' target='_blank'><img src='__TMPL__/images/2012521212111.jpg' width='242' height='100' alt='关于公司'></a></div><div class='txt ColorLink'><p>{:msubstr(strip_tags(get_field('article','aid=55','content')),0,115)}<a href='{:url(articles,55)}' target='_blank'>【详细】</a></p></div>
+<div class=" clearfix"></div>
+
+</div>
+<!--left end-->
+<div class='WidthTab2'></div>
+
+<!--right start-->
+<div class="left">
+<div class="topic">
+<div class="TopicTitle"><a  href='#'>最近更新</a></div>
+<div class="TopicMore"></div>
+</div>
+<div class='clearfix'></div>
+<table class="MBlockTable" width="100%" border="0" cellspacing="0" cellpadding="0">
+<arclist model='article' order='ishot desc,addtime desc' num='9' id='vo'>
+<tr><td width='80%' class='ListTitle'><a href='{$vo.aid|url=articles,###}' target='_blank' >{$vo.title}</a></td><td width='20%'><span>{$vo.addtime|strtotime|date='Y-m-d',###}</span></td></tr>
+</arclist>
+
+  </table>
+</div>
+<!--right end-->
+
+<!--right2 start-->
+<div class="right2">
+<div class="topic">
+<div class="TopicTitle"><a  href='{:url('lists',35)}'>联系我们</a></div>
+<div class="TopicMore"> <a  href='{:url('lists',35)}'><img src="__TMPL__/images/more.png"></a></div>
+</div>
+<div class='img'><a href='{:url('lists',35)}' target='_blank'><img src='__TMPL__/images/contactus.jpg' width='242' height='100' alt='联系我们'></a></div><div class="txt ColorLink" style="line-height:23px;">
+{$config.sitelx}
+</div>
+
+<div class=" clearfix"></div>
+
+
+</div>
+<!--right2 end-->
+<div class="clearfix"></div>
+
+</div>
+<!--MainBlock end-->
+<div class="HeightTab2 clearfix"></div>
+<div class='productIndexTuijian'><div class='topic'><div class='TopicTitle'><a href='{:url('lists',22)}'>公司产品</a></div><div class='TopicMore'> <a href='{:url('lists',22)}'><img src='__TMPL__/images/more.png'></a></div></div></div><!--MainBlock3 start--><div class='MainBlock3'><!--left start--><div class='left'><div class='TabBlock'><div id='tabcontent1'><DIV class='blk_29'><DIV class='LeftBotton' id='LeftArr1'></DIV><DIV class='Cont' id='ISL_Cont_1'>
+<php>$product_ids=get_children(22);</php>
+<arclist model='article' where="typeid in($product_ids)" order='ishot desc,addtime desc' num='16' id='vo'>
+<DIV class='box'><A class='imgBorder'  href='{$vo.aid|url=articles,###}' target='_blank' title='{$vo.title}'><IMG alt='' src='__ROOT__{$vo.imgurl}' border="0">{$vo.title}</A> </DIV>
+</arclist>
+</DIV><DIV class='RightBotton' id='RightArr1'></DIV></DIV><SCRIPT language='javascript' type='text/javascript'>var scrollPic_02 = new ScrollPic();scrollPic_02.scrollContId   = 'ISL_Cont_1';scrollPic_02.arrLeftId      = 'LeftArr1';scrollPic_02.arrRightId     = 'RightArr1'; scrollPic_02.frameWidth     = 888;scrollPic_02.pageWidth      = 888; scrollPic_02.speed          = 3; scrollPic_02.space          = 50; scrollPic_02.autoPlay       = true; scrollPic_02.autoPlayTime   = 3; scrollPic_02.initialize(); </SCRIPT><div class='clearfix'></div> </div> </div></div><!--left end--><div class='clearfix'></div></div><!--MainBlock end-->
+<div class='jhyArticleListMainBlock'>
+<!--行业新闻开始-->
+<div class='juhaoyongALCommonUnit2'><div class='topic'><div class='TopicTitle'><a  href='{:url('lists',19)}' target='_blank'>行业新闻</a></div><div class='TopicMore'> <a  href='{:url('lists',19)}' target='_blank'><img src='__TMPL__/images/more.png'></a></div></div><div class='juhaoyongCommonUnitArticleList'><table class='JHYBlockTable' width='100%' border='0' cellspacing='0' cellpadding='0'>
+<arclist model='article' where="typeid=19" order='ishot desc,addtime desc' num='16' id='vo'>
+<tr><td width='75%' class='ListTitle'><a href='{$vo.aid|url=articles,###}' target='_blank' title='{$vo.title}'>{$vo.title|msubstr=###,0,14}</a></td><td width='25%'><span>{:date('Y-m-d',strtotime($vo['addtime']))}</span></td></tr></arclist></table></div></div><!--行业新闻结束-->
+<div class='WidthTab2'></div>
+<!--公司新闻开始-->
+<div class='juhaoyongALCommonUnit1'><div class='topic'><div class='TopicTitle'><a  href='{:url('lists',20)}' target='_blank'>公司新闻</a></div><div class='TopicMore'> <a  href='{:url('lists',20)}' target='_blank'><img src='__TMPL__/images/more.png'></a></div></div><div class='juhaoyongCommonUnitArticleList'><table class='JHYBlockTable' width='100%' border='0' cellspacing='0' cellpadding='0'>
+<arclist model='article' where="typeid=20" order='ishot desc,addtime desc' num='16' id='vo'>
+<tr><td class='ListTitle'><a href='{$vo.aid|url=articles,###}' target='_blank' title='{$vo.title}'>{$vo.title}</a></td><td width='85'><span>{:date('Y-m-d',strtotime($vo['addtime']))}</span></td></tr>
+</arclist>
+</table></div></div><div class='WidthTab2'></div>
+<!--公司案例开始-->
+<div class='juhaoyongALCommonUnit3'><div class='topic'><div class='TopicTitle'><a  href='{:url('lists',27)}' target='_blank'>案例展示</a></div><div class='TopicMore'> <a  href='{:url('lists',27)}' target='_blank'><img src='__TMPL__/images/more.png'></a></div></div><div class='juhaoyongCommonUnitArticleList'><table class='JHYBlockTable' width='100%' border='0' cellspacing='0' cellpadding='0'>
+<php>$anli_ids=get_children(27);</php>
+<arclist model='article' where="typeid in($anli_ids)" order='ishot desc,addtime desc' num='16' id='vo'>
+<tr><td width='75%' class='ListTitle'><a href='{$vo.aid|url=articles,###}' target='_blank' title='{$vo.title}'>{$vo.title}</a></td><td width='25%'><span>{:date('Y-m-d',strtotime($vo['addtime']))}</span></td></tr>
+</arclist>
+</table></div></div>
+<!--案例列表结束--></div>
+<div class="HeightTab2 clearfix"></div>
+
+<!--links start-->
+<div id="Links">
+<span>友情链接：</span>
+<arclist model='link' where="status=1" order='rank asc' id='vo'>
+<a href='{$vo.url}' target='_blank' >{$vo.title}</a>
+</arclist>
+</div>
+<!--links end-->
+
+</div>
+<script type="text/javascript" src="__TMPL__/js/TabShow.js" ></script>
+<include file="$footer"/> 

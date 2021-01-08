@@ -1,0 +1,79 @@
+<include file="./head_inner"/>
+<div id="body">
+<!--focus start-->
+<div id="InnerBanner">
+
+</div>
+<!--foncus end-->
+<div class="HeightTab clearfix"></div>
+<!--inner start -->
+<div class="inner">
+<!--left start-->
+<div class="left">
+<div class="Sbox">
+<div class="topic"><a href="#">公司产品&nbsp;&nbsp;&nbsp;Product</a></div>
+<div class="ClassNav">
+<div class="NavTree">
+<ul id='suckertree1'>
+<php>$first_id = get_first_father($type['typeid']);</php>
+<category parentid="$first_id" id="vo">
+<li><A href='{$vo.typeid|url=lists,###}'>{$vo.typename}</A>
+<!--判定是否有子类-->
+<php>$cid = get_children($vo['typeid']);if($vo['typeid'] != $cid){</php>
+<ul>
+<category parentid="$vo[typeid]" id="voo">
+<li><a href='{$voo.typeid|url=lists,###}' >{$voo.typename}</a></li> 
+</category>
+</ul>
+<php>}</php>
+</li>
+</category>
+</ul>
+</div>
+</div>
+
+</div>
+<div class="HeightTab clearfix"></div>
+<div class="Sbox">
+<div class="topic">点击排行&nbsp;&nbsp;&nbsp;Hot</div>
+<div class="list">
+
+<dl>
+<php>$all_ids=get_children($first_id);</php>
+<arclist model="article" where="typeid in($all_ids)" order="hits desc" num="10">
+<dd><a href='{$vo.aid|url='articles',###}' target='_blank' title='{$vo.title}'>{$vo.title}</a></dd>
+</arclist>
+</dl>
+</div>
+
+</div>
+<include file="Public:contact"/>
+</div>
+<!--left end-->
+<!--right start-->
+<div class="right">
+<div class="Position"><span>你的位置：{$nav}</span></div>
+<div class="HeightTab clearfix"></div>
+<!--main start-->
+<div class="main">
+<!--content start-->
+<div class="content">
+<div class="ProInfo" style="text-align:center;">
+<img src="__ROOT__{$article.imgurl}" width="500" height="350"  >
+</div>
+
+<div class="maincontent clearfix">
+<div class="IntroTitle">介绍</div>
+　{$article.content}	
+</div>
+
+<div class="prenext">{$updown}</div>
+<!--content end-->
+</div>
+<!--main end-->
+</div>
+<!--right end-->
+</div>
+<!--inner end-->
+</div>
+<include file="$footer"/>

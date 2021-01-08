@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{$config.sitetitle}|{$config.sitetitle2}</title>
+</head>
+<body >
+<link rel="stylesheet" href="__TMPL__/jmobile/jquery.mobile-1.3.0.min.css" />
+<script src="__TMPL__/jmobile/jquery.min.js"></script>
+<script src="__TMPL__/jmobile/jquery.mobile-1.3.0.min.js"></script>
+<script src="__TMPL__/jmobile/jquery.nicescroll.js"></script>
+<style>
+.ui-body-c{
+background: none; 
+}
+</style>
+<script>
+$(document).bind("mobileinit", function() {
+			// disable ajax nav
+			$.mobile.ajaxEnabled=false
+		});
+  $(document).ready(function() {
+    $("html").niceScroll({  cursorwidth:4 });  // The document page (html)
+  });
+</script>
+<php>$icon = array('','contact.png','news.png','events.png','athletics.png','maps.png','jinrong.png');</php>
+<!-- Home -->
+<div data-role="page" class="home" style="background: transparent url(__TMPL__/images/01.png);">
+<div data-role="content">	
+<div data-role="panel" id="rightpanel1" data-position="right" data-display="overlay" data-theme="b"> 
+<p><ul>
+<eq name="_SESSION['dami_uid']" value="">
+<li><a href="{:U('Member/login')}" data-role="button" data-icon="user" id="userlogin">用户登陆</a></li>
+<li><a href="{:U('Member/gobuy',array('iscart'=>'1'))}" data-role="button" data-icon="grid" data-ajax="false">我的购物车</a></li>
+<li><a href="tel:15982072714" data-role="button" data-icon="star">致电我们</a></li>
+<li><a href="sms:15982072714?body=哇，再不用大米CMS，您就错过移动APP时代了！http://www.damicms.com" data-role="button" data-icon="info">短信分享</a></li>
+<else/>
+<arclist model="member_menu" where="is_show=1" order="drand asc" key="k">
+<eq name="k" value="4"><li><a href="{:U('Member/gobuy',array('iscart'=>1))}" data-role="button" data-icon="grid" data-ajax="false">我的购物车</a></li></eq>
+<li><a href="__ROOT__{$vo.url}" data-role="button">{$vo.name}</a></li>
+</arclist>
+
+<li><a href="{:U('Member/dologout')}" data-role="button" data-ajax="false">注销登陆</a></li>
+</eq>
+<li><a href="#demo-links" data-rel="close" data-role="button" data-icon="delete">关闭菜单</a></li>
+</ul></p>       
+</div><!-- /rightpanel1 -->
+
+
+<div style="color:#fff; font-size:38px; font-weight:bold;color:#03220C"><a href="#rightpanel1" data-ajax="false" style="float:right;margin-right:10px;"  class="ui-btn ui-shadow ui-corner-all ui-icon-grid ui-btn-icon-notext ui-btn-right"></a>{$config.sitetitle}</div>
+		<form id="myform" action="{:U('index/search')}" method="post" data-ajax="false">
+			<div data-role="fieldcontain">
+				<label for="search-restaurants"></label>
+				<input type="search" name="k" id="search-restaurants" placeholder="请输入搜索关键词" />
+			</div> 
+		</form>
+		<ul data-role="listview"  data-inset="true" >
+       <!-- 特殊处理下单页关于我们-->
+        <li><a href="{:url(lists,14)}"><img src="__TMPL__/images/icon/contact.png" alt="News" class="ui-li-icon">关于我们</a></li>
+		<volist name="menu" id="vo" offset="1" length='7' key='k'> 
+			<li><a href="<eq name="vo.url" value="">{$vo.typeid|url=lists,###}<else/>__ROOT__{$vo.url}</eq>" rel="external" data-transition="slidedown" <eq name='vo.typeid' value='26'>data-ajax="false"</eq>>
+			<neq name="icon[$k+1]" value=""><img src="__TMPL__/images/icon/{$icon[$k+1]}" alt="News" class="ui-li-icon"></neq>{$vo.typename}</a></li> 
+			</volist>
+			<li><a href="#links" data-transition="slidedown"><img src="__TMPL__/images/icon/links.png" alt="Links" class="ui-li-icon">友情链接</a></li>		
+           			
+		</ul>
+</div><!-- end content -->
+</div>
+</div><!-- end page -->
+<div data-role="page" id="links">
+	<div data-role="header"> 
+		<h1>友情链接</h1>
+		<a href="./" data-icon="home" data-iconpos="left" data-direction="reverse" class="ui-btn-right" data-ajax="false">主页</a>
+	</div><!-- /header -->
+	<div >	
+		<ul data-role="listview" data-inset="true">
+		<arclist model='link' where="status=1" order='rank asc' id='vo'>
+			<li><a href='{$vo.url}'>{$vo.title}</a></li>
+		</arclist>
+		</ul>
+	</div><!-- /content -->
+</div>
+</body>
+</html>

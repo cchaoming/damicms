@@ -1,0 +1,164 @@
+<include file="$head"/>
+<link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<div id='content' style='width:1002px;height:574px;background:url(__TMPL__/images/cbg2.jpg) repeat-y;margin:0px auto'>
+    <php>$wtype = ($wx_openid==''?'QQ':'微信');</php>
+    <!-- 当前位置提示条 -->
+    <div id='pdv_15179' class='pdv_class' title='{$wtype}登陆绑定帐号'
+         style='width:960px;height:40px;top:0px;left:20px; z-index:11'>
+        <div id='spdv_15179' class='pdv_content' style='overflow:hidden;width:100%;height:100%'>
+            <div class="pdv_border"
+                 style="border:0px;height:100%;padding:0;margin:0;background:url(__TMPL__/images/border/788/images/title.jpg) 0px 0px no-repeat">
+                <div style="float:left;font:14px/40px Simsun;color:#000;padding-left:36px;">{$wtype}登陆绑定帐号</div>
+                <div style="float:right;height:100%;width:17px;background:url(__TMPL__/images/border/788/images/title.jpg) -983px 0px no-repeat;"></div>
+
+                <link href="__TMPL__/images/product/templates/css/nav.css" rel="stylesheet" type="text/css"/>
+                <div id="nav">
+                    您现在的位置：{$nav}
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- 登陆位置 -->
+    <div id='pdv_15180' class='pdv_class' title=''
+         style='width:460px; top:80px;left:266px;margin-bottom:80px;z-index:12'>
+        <div id='spdv_15180' class='pdv_content' style='overflow:visible;width:100%;'>
+            <div class="pdv_border" style="margin:0;padding:0;height:100%;border:0px  solid;background:;">
+                <div style="padding:0px">
+                    <link href="__TMPL__/images/list/css/newsquery.css" rel="stylesheet" type="text/css"/>
+
+                    <div>
+
+                        <div>
+                            <script>
+                                $(function () {
+                                    $('#mytab li').click(function () {
+                                        $('.active').removeClass('active');
+                                        $(this).addClass('active');
+                                    });
+                                });
+                            </script>
+                            <ul class="nav nav-tabs" id="mytab">
+                                <li class="active"><a
+                                        href="javascript:$('#total_config').show();$('#home_config').hide();"
+                                        data-toggle="tab">创建新账号</a></li>
+                                <li><a href="javascript:$('#total_config').hide();$('#home_config').show();"
+                                       data-toggle="tab">绑定已有账号</a></li>
+                            </ul>
+                            <div class="tab-content" style="border:1px solid #dddddd; border-top:none;padding:10px;">
+                                <div class="tab-pane active" id="total_config">
+                                    <div id="myTab1_Content0" style="clear:both;">
+                                        <form name='frm1' method='post' action='__URL__/qqcreate' role="form">
+                                            <table width="100%" border="0" align=center cellpadding="3" cellspacing="1"
+                                                   style="margin:5px 0;background:#FFF">
+
+                                                <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'"
+                                                    onMouseOut="this.style.backgroundColor='';this.style.color=''">
+                                                    <td align="right">注：</td>
+                                                    <td align="right">&nbsp;</td>
+                                                    <td align="left">创建的帐号密码均随即无须知道</td>
+                                                </tr>
+                                                <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'"
+                                                    onMouseOut="this.style.backgroundColor='';this.style.color=''">
+                                                    <td width="40%" align="right">昵称：</td>
+                                                    <td align="right" width="10">&nbsp;</td>
+                                                    <td width="60%" align="left">
+
+                                                        <input name="realname" value="{$userinfo.nickname}" type="text"
+                                                               id="oSiteTitle" onFocus="hSiteTitle.style.color='blue';"
+                                                               onBlur="hSiteTitle.style.color='#ccc';"
+                                                               style="width:300px;">
+
+                                                    </td>
+                                                </tr>
+
+                                                <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'"
+                                                    onMouseOut="this.style.backgroundColor='';this.style.color=''">
+                                                    <td width="40%" align="right">email：
+                                                    </td>
+                                                    <td align="right">&nbsp;</td>
+                                                    <td width="60%" align="left">
+                                                        <input name="email" type="text" id="oSiteUrl"
+                                                               onFocus="hSiteUrl.style.color='blue';"
+                                                               onBlur="hSiteUrl.style.color='#ccc';"
+                                                               style="width:300px;">
+                                                    </td>
+                                                </tr>
+
+
+                                                <tr class=css_page_list>
+                                                    <td height="30" colspan=3 align="center">
+                                                        <input name="lasturl" type="hidden"
+                                                               value="{:htmlspecialchars($_REQUEST['lasturl'])}">
+                                                        <input name="qid" type="hidden" value="{$qid}">
+                                                        <input name="wx_openid" type="hidden" value="{$wx_openid}">
+                                                        <input name="icon" type="hidden" value="<neq name="userinfo.headimgurl" value="">{$userinfo.headimgurl}<else/>{$userinfo.figureurl}</neq>">
+                                                        <input name='Submit' type='submit' class="btn btn-success"
+                                                               value=' 创建账号并登陆 '></td>
+                                                </tr>
+                                            </table>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="home_config">
+                                    <div id="myTab1_Content1" style="clear:both;">
+                                        <form name='frm2' method='post' action='__URL__/qqupdate' role="form">
+                                            <table width="100%" border="0" align=center cellpadding="3" cellspacing="1"
+                                                   style="margin:5px 0;background:#FFF">
+                                                <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'"
+                                                    onMouseOut="this.style.backgroundColor='';this.style.color=''">
+                                                    <td align="right">注:</td>
+                                                    <td align="right">&nbsp;</td>
+                                                    <td align="left">输入您已经注册过的账号和密码</td>
+                                                </tr>
+                                                <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'"
+                                                    onMouseOut="this.style.backgroundColor='';this.style.color=''">
+                                                    <td width="40%" align="right">用户名：
+                                                    </td>
+                                                    <td width="10" align="right">&nbsp;</td>
+                                                    <td width="60%" align="left"><input name="username" type="text"
+                                                                                        id="oSiteUrl3"
+                                                                                        onFocus="hSiteUrl.style.color='blue';"
+                                                                                        onBlur="hSiteUrl.style.color='#ccc';"
+                                                                                        style="width:300px;"></td>
+                                                </tr>
+                                                <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'"
+                                                    onMouseOut="this.style.backgroundColor='';this.style.color=''">
+                                                    <td align="right">密码：</td>
+                                                    <td align="right">&nbsp;</td>
+                                                    <td align="left"><input name="userpwd" type="password"
+                                                                            id="oSiteUrl2"
+                                                                            onFocus="hSiteUrl.style.color='blue';"
+                                                                            onBlur="hSiteUrl.style.color='#ccc';"
+                                                                            style="width:300px;"></td>
+                                                </tr>
+                                                <tr class=css_page_list>
+                                                    <td height="30" colspan=3 align="center">
+                                                        <input name="lasturl" type="hidden"
+                                                               value="{:htmlspecialchars($_REQUEST['lasturl'])}">
+                                                        <input name="qid" type="hidden" value="{$qid}">
+                                                        <input name="wx_openid" type="hidden" value="{$wx_openid}">
+                                                        <input name="icon" type="hidden" value="{$userinfo.figureurl}">
+                                                        <input name='Submit' type='submit' class="btn btn-success"
+                                                               value=' 绑定已有账号并登陆 '></td>
+                                                </tr>
+                                            </table>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <br><br>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<include file="$footer"/>

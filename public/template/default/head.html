@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><neq name="title" value="">{$title}-</neq>{$config.sitetitle}-{$config.sitetitle2}</title>
+<meta name="keywords" content="{$keywords}"/>
+<meta name="description" content="{$description}"/>
+<link href="__TMPL__/css/style.css" rel="stylesheet" type="text/css" />
+<link href="__TMPL__/css/common.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__TMPL__/js/jquery.min.js"></script>
+<script type="text/javascript" src="__TMPL__/css/functions.js"></script>
+<script type="text/javascript" src="__TMPL__/js/FocusSlide.js"></script>
+<script type="text/javascript" src="__TMPL__/js/ScrollPic.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+<!--head start-->
+<div id="head">
+
+<!--top start -->
+<div class="top">
+<div class="TopLogo">
+<div class="logo"><a href="__ROOT__/"><img src="__PUBLIC__/Uploads/logo/{$config.sitelogo}" alt="{$config.sitetitle}"></a></div>
+</div>
+<div class="TopInfo">
+<div class="link"><script src="{:U('Api/login_js')}"></script> | <a href="{:U('Guestbook/index')}">留言反馈</a></div>
+<div class="clearfix"></div>
+<div class="tel"><p class="telW">热线电话</p><p class="telN">{:label(6)}</p></div>
+<div class="juhaoyongTopSearchClass">
+	<form id="globalsearchform" method="post" action="{:U('/s');}">
+	<span class="SearchBar">
+	<input type="text" name="k" id="search-text" size="15" onBlur="if(this.value=='') this.value='请输入关键词';" onfocus="if(this.value=='请输入关键词') this.value='';" value="请输入关键词" />
+	<input type="submit" id="search-submit" value="搜索" />
+	</span>
+	</form>
+</div>
+</div>
+</div>
+<!--top end-->
+
+<!--nav start-->
+<div id="NavLink">
+<div class="NavBG">
+<!--头部菜单-->
+<ul id="headermenu_nav">
+<li><a href='__ROOT__/'>首页</a></li>
+<volist name="menu" id="vo" offset="0" length='7' key="k"> 
+<li><a href="<eq name="vo.url" value="">{$vo.typeid|url=lists,###}<else/>__ROOT__{$vo.url}</eq>" target="<eq name="vo.target" value="1">_self<else/>_blank</eq>">{$vo.typename}</a>
+<!--第二级-->
+<php>if($vo[submenu]){</php>
+<!--[if lte IE 6]><table><tr><td><![endif]-->
+<ul>
+<volist name="vo[submenu]" id="sub" key="m">
+<li><a href="{$sub.typeid|url=lists,###}">{$sub.typename}</a>
+<!--第三级-->
+<php>if(have_child($sub[typeid])){</php>
+<!--[if lte IE 6]><table><tr><td><![endif]-->
+<ul>
+<arclist model="type" where="fid=$sub[typeid]" order="drank asc" id="tree">
+<li><a href='{$tree.typeid|url=lists,###}'>{$tree.typename}</a></li>
+</arclist>
+</ul>
+<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+<php>}</php>
+</li>
+</volist>
+</ul>
+<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+<php>}</php>
+</li>
+</volist>
+<!--单页调用-->
+<li><a href='{:U('Public/single',array('aid'=>133))}'>售后服务</a></li>
+</ul>
+</div>
+<div class="clearfix"></div>
+</div>
+<!--头部菜单结束-->
+<!--幻灯片左右箭头onmouseover="jhyLunboShowPreNextBut(1)" onmouseout="jhyLunboShowPreNextBut(2)"-->
+<div id="Focus">
+<ul>
+<arclist model="flash" where="status=1" order="`rank` asc" id="vo">
+<li><a href='{$vo.url}' target='_blank'><img src='__PUBLIC__/Uploads/hd/{$vo.pic}' /></a></li>
+</arclist>
+</ul>
+</div>
+<!--幻灯结束-->
+<div class="HeightTab clearfix"></div>
+</div>

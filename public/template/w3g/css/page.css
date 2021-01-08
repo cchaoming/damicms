@@ -1,0 +1,17 @@
+.PageN {
+	PADDING-RIGHT: 3px; PADDING-LEFT: 3px; PADDING-BOTTOM: 3px; MARGIN: 3px; PADDING-TOP: 3px; TEXT-ALIGN: center;margin-top:15px;font-size:1em;
+}
+.PageN A {
+font-size: 16px;
+padding: .7em 1em;
+text-align: center;
+text-overflow: ellipsis;
+overflow: hidden;
+white-space: nowrap;
+cursor: pointer;
+background-color: #ededed;
+border-color: #ddd;
+color: #333;
+text-shadow: 0 1px 0 #f3f3f3;
+TEXT-DECORATION: none;	
+}

@@ -1,0 +1,187 @@
+<include file="./head_inner"/>
+<php>$first_id = get_first_father($type['typeid']);$all_ids=get_children($first_id);$c_arr = explode('|',$article['color']);$p_arr = explode('|',$article['price']);if(count($c_arr)!=count($p_arr) || count($c_arr)<1){echo('参数错误');exit();}</php>
+<div id="body">
+	<!--focus start-->
+	<div id="InnerBanner">
+
+	</div>
+	<!--foncus end-->
+	<div class="HeightTab clearfix"></div>
+	<!--inner start -->
+	<div class="inner">
+		<!--left start-->
+		<div class="left">
+			<div class="Sbox">
+				<div class="topic"><a href="#">公司产品&nbsp;&nbsp;&nbsp;Product</a></div>
+				<div class="ClassNav">
+					<div class="NavTree">
+						<ul id='suckertree1'>
+							<category parentid="$first_id" id="vo">
+								<li><A href='{$vo.typeid|url=lists,###}'>{$vo.typename}</A>
+									<!--判定是否有子类-->
+									<php>$cid = get_children($vo['typeid']);if($vo['typeid'] != $cid){</php>
+									<ul>
+										<category parentid="$vo[typeid]" id="voo">
+											<li><a href='{$voo.typeid|url=lists,###}' >{$voo.typename}</a></li>
+										</category>
+									</ul>
+									<php>}</php>
+								</li>
+							</category>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+			<div class="HeightTab clearfix"></div>
+			<div class="Sbox">
+				<div class="topic">点击排行&nbsp;&nbsp;&nbsp;Hot</div>
+				<div class="list">
+
+					<dl>
+						<arclist model="article" where="typeid in($all_ids)" order="hits desc" num="10">
+							<dd><a href='{$vo.aid|url='articles',###}' target='_blank' title='{$vo.title}'>{$vo.title}</a></dd>
+						</arclist>
+					</dl>
+				</div>
+
+			</div>
+			<include file="Public:contact"/>
+		</div>
+		<!--left end-->
+		<!--right start-->
+		<div class="right">
+			<div class="Position"><span>你的位置：{$nav}</span></div>
+			<div class="HeightTab clearfix"></div>
+			<!--main start-->
+			<div class="main">
+				<!--content start-->
+				<div class="content">
+					<div class="ProInfo">
+						<div class="image"><a href="__ROOT__{$article.imgurl|ret_pic}" rel="clearbox"><img src="__ROOT__{$article.imgurl|ret_pic}"  height="270" width="270" id="product_pic"></a></div>
+						<div class="column">
+							<div class="title"><h3><notempty name="article.titlecolor"><font color="{$article.titlecolor}"></notempty>{$article.title}<present name="nowpage">({$nowpage})</present><notempty name="article.titlecolor"></font></notempty></h3></div>
+							<div class="infos">更新：{$article.addtime}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;点击：<span id="page_hits"></span></div>
+							<ul>
+								<!--后台自定义字段调用自己可以diy-->
+								<li><span>型号：</span>{$article.product_xinghao}</li>
+								<li  style="width:100%;">类别/级别/颜色：
+									<volist name="c_arr" id="vo">
+										<input type="button" value="{$vo}" onclick="$('#servial').val('{$vo}');$('#gprice').val('{$p_arr[$key]}');" style="padding:2px 4px;margin-right:10px;"  />
+									</volist></li>
+								<li  class='NPrice'>价格：<input name="gprice" id="gprice" type="text" value="{$p_arr[0]}" style="border:0px;" readonly="readonly" /> </li>
+								<!--开启在线购买-->
+								<if condition="is_numeric($p_arr[0])">
+									<eq name='config.istrade' value='1'><li>
+										<!--有多个颜色或型号请写JS将其赋值到隐藏域型号中-->
+										数量：<input type="text" class="inputtext" style="width:60px; height:22px;line-height:22px;" value="1" id="gnum" />
+										<input name="gid" id="gid" type="hidden" value="{$article.aid}" />
+										<input name="gname" id="gname" type="hidden" value="{$article.title}" />
+										<input name="servial" id="servial" type="hidden" value="{$c_arr[0]}" />
+										<div style="margin:5px;"><input type="button" class="buy_btn" id="go_buy" value="" />&nbsp;<input type="button" class="Q-buy-btn cart_btn" id="add_cart" value="" /></div>
+										<!--J-shoping-->
+										<div class="J-shoping J-shoping-small">
+											<div class="J-shoping-item">
+												<div class="baseBg J-L-ico J-shoping-pos"></div>
+												<div class="J-shoping-main">
+													<div class="J-shoping-title">
+														<a href="#" title="" class="J-go"><em class="baseBg"></em>购物车</a>
+														<div class="baseBg J-shoping-num">0</div>
+													</div>
+													<div class="baseBg J-shoping-mx"></div>
+													<div class="J-shoping-px"></div>
+													<div class="J-shoping-body">
+														<div class="J-shoping-buy">
+															<a class="baseBg" href="__ROOT__/index.php?m=Member&a=gobuy&iscart=1" title="去购物车结算"></a>
+														</div>
+													</div>
+												</div>
+												<div class="baseBg J-R-ico J-shoping-pos"></div>
+											</div>
+										</div>
+
+										<link href="__TMPL__/css/shopping.css" rel="stylesheet" type="text/css" />
+										<script>var url_root = '__ROOT__';</script>
+										<script type="text/javascript" src="__PUBLIC__/js/jQuery-shopping.js"></script>
+										<script type="text/javascript" >
+											//初始化购物车
+											function cart_init(){
+												$.getJSON("__ROOT__/index.php?m=Public&a=ajax_cart_list",{},function(ret){
+													var data = ret.data;
+													var num=0;
+													$.each(data,function(key,val) {
+														if(typeof(val.name) != "undefined"){
+															num++;
+															if(typeof(val.option.pic) != "undefined" && val.option.pic !=''){var pic=val.option.pic;}else{var pic='__ROOT__/Public/image/nopic.gif';}
+															$('.J-shoping-body').prepend('<div class="J-shoping-list" data-bid="' + val.id + '" data-id="' + val.option.gid + '" data-type="' + val.option.gtype + '"><a href="#" title=""><img src="' + pic + '" width="50"height="50"/></a><div class="J-shoping-list-a"><p>' + val.name + '【' + val.qty + '件】</p><p><span class="shop_left">'+ val.option.gtype + '</span><span class="shop_right"><em>' + val.price + '</em>元</span></p></div><div class="baseBg J-shoping-close"></div></div>');
+														};
+														$('.J-shoping-num').text(num);
+
+													});
+												});
+											}
+											$(function(){
+												cart_init();
+												$('.Q-buy-btn').shoping(); //调用shoping函数
+												$('#go_buy').click(function(){
+													var id = $('#gid').val();
+													var name=$('#gname').val();
+													var qty= $('#gnum').val();
+													var price= $('#gprice').val();
+													var gtype= $('#servial').val();
+													var pic = $('#product_pic').attr('src');
+													location.href="__ROOT__/index.php?m=Member&a=gobuy&iscart=0&id="+id+"&name="+name+"&qty="+qty+"&price="+price+"&gtype="+gtype+"&pic="+pic;
+												})
+											});
+										</script>
+									</li></eq></if>
+							</ul>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+
+					<div class="maincontent clearfix">
+						<div class="IntroTitle">介绍</div>
+						　{$article.content}
+					</div>
+					<eq name="config.isping" value="1">
+						<div class="IntroTitle">评论</div>
+						<div class='clearfix'></div>
+						<link href="__TMPL__/css/pl.css" rel="stylesheet" type="text/css"/>
+						<div id="pinglun">
+							<div id="pinglunt">以下是网友对 <span class="blue">{$article.title}</span> 的评论：</div>
+							<div id="list"></div>
+							<div id="MultiPage"></div><!--评论分页 -->
+							<div id="pinglunother">
+								<div id="pinglunym"></div><!--评论信息 -->
+							</div>
+							<div id="pinglunfb">
+								<div id="pinglunfbt">发表评论</div>
+								<input type="hidden" name="aid" id="aid" value="{$article.aid}">
+								<textarea rows="20" name="content" cols="50"  style="width:100%; height:90px; border:1px solid #e6e6e6;" id="plContent"></textarea>
+								<div class="qdfb">大名:<input name="author" class="button" type="text" value="<neq name='_SESSION.dami_username' value=''>{$_SESSION.dami_username}<else/>游客</neq>" id="Author"  maxlength="20" size="12"/>
+									<input type="button" value="确认发表" name="submit"  id="sendGuest" class="button submit" onClick="AddNew()"></div>
+							</div>
+						</div>
+						<script type="text/javascript" src="__TMPL__/js/ajaxpl.js"></script>
+						<script>
+							var root = '__ROOT__';
+							$(function(){
+								$('#page_hits').load('{:U('Api/hits_js?aid='.$article['aid'])}');
+								showre({$article.aid},1);
+							});
+						</script>
+						<br>
+
+					</eq>
+					<div class="prenext">{$updown}</div>
+					<!--content end-->
+				</div>
+				<!--main end-->
+			</div>
+			<!--right end-->
+		</div>
+		<!--inner end-->
+	</div>
+</div>
+<include file="$footer"/>

@@ -1,0 +1,76 @@
+<include file="./head_inner"/>
+<link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<div id="body">    
+<!--focus start-->
+<div id="InnerBanner">
+
+</div>
+<!--foncus end-->
+<div class="HeightTab clearfix"></div>
+<!--inner start -->
+<div class="inner">
+<!--left start-->
+<div class="left">
+<div class="Sbox">
+<div class="topic"><a href="#">用户中心&nbsp;&nbsp;&nbsp;UserCenter</a></div>
+<div class="ClassNav">
+<div class="NavTree">
+<ul id='suckertree1'>
+<volist name='member_menu' id='vo'>
+<li><A h<a href="__ROOT__{$vo.url}" target="_self">{$vo.name}</A>
+<!--判定是否有子类-->
+</li>
+</volist>
+</ul>
+</div>
+</div>
+
+</div>
+
+<include file="Public:contact"/>
+</div>
+<!--left end-->
+<!--right start-->
+<div class="right">
+<div class="Position"><span>你的位置：{$nav}我的收藏夹</span></div>
+<div class="HeightTab clearfix"></div>
+<!--main start-->
+<div class="main">
+<!--content start-->
+<div class="panel panel-default">
+  <div class="panel-heading">收藏列表</div>
+  <div class="panel-body">
+    <table class="table table-bordered">
+<tr><th width="80" align="center">文章编号</th><th>文章标题</th><th>操作</th>
+ </tr>
+<volist name="list" id="vo">
+<tr><td align="center">{$vo.id}</td><td> <a target="_blank" href="{$vo.aid|url=articles,###}">{$vo.title}</a></td>
+<td><a class="btn btn-danger btn-sm active" href="javascript:del_fav({$vo.aid});">删除</a>
+</td></tr>
+</volist>
+</table>
+  </div>    
+</div>
+<script>
+//ajax删除收藏
+function del_fav(aid){
+if(confirm('您确定删除吗?')){
+$.getJSON('__ROOT__/index.php?m=Member&a=fav_del',{ aid:aid },function(data){
+						if(data.status == 1){
+						location.reload();
+						}else{
+						aert(data.info);
+						}
+});
+}
+}
+
+</script>
+<!--main end-->
+</div>
+<!--right end-->
+</div>
+<!--inner end-->
+</div>
+</div>
+<include file="$footer"/>

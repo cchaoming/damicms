@@ -1,0 +1,94 @@
+<include file="./head_inner"/>
+<link href="__PUBLIC__/css/bootstrap-theme.min.css" type=text/css rel=stylesheet>
+<div id="body">
+<!--focus start-->
+<div id="InnerBanner">
+</div>
+<!--foncus end-->
+<div class="HeightTab clearfix"></div>
+<!--inner start -->
+<div class="inner">
+<!--left start-->
+<div class="left">
+<div class="Sbox">
+<div class="topic"><a href="#">公司产品&nbsp;&nbsp;&nbsp;Product</a></div>
+<div class="ClassNav">
+<div class="NavTree">
+<ul id='suckertree1'>
+<php>$first_id = get_first_father(22);</php>
+<category parentid="$first_id" id="vo">
+<li><A href='{$vo.typeid|url=lists,###}'>{$vo.typename}</A>
+<!--判定是否有子类-->
+<php>$cid = get_children($vo['typeid']);if($vo['typeid'] != $cid){</php>
+<ul>
+<category parentid="$vo[typeid]" id="voo">
+<li><a href='{$voo.typeid|url=lists,###}' >{$voo.typename}</a></li> 
+</category>
+</ul>
+<php>}</php>
+</li>
+</category>
+</ul>
+</div>
+</div>
+
+</div>
+<div class="HeightTab clearfix"></div>
+<div class="Sbox">
+<div class="topic">点击排行&nbsp;&nbsp;&nbsp;Hot</div>
+<div class="list">
+
+<dl>
+<php>$all_ids=get_children($first_id);</php>
+<arclist model="article" where="typeid in($all_ids)" order="hits desc" num="10">
+<dd><a href='{$vo.aid|url='articles',###}' target='_blank' title='{$vo.title}'>{$vo.title}</a></dd>
+</arclist>
+</dl>
+</div>
+
+</div>
+<include file="Public:contact"/>
+</div>
+<!--left end-->
+<!--right start-->
+<div class="right">
+<div class="Position"><span>你的位置：{$nav}</span></div>
+<div class="HeightTab clearfix"></div>
+<!--main start-->
+<div class="main">
+
+<!--content start-->
+<div class="content">
+<div class='MorePro'>
+<volist name="list" id="vo">
+<div class="title" style="margin-bottom:8px;">
+ <table width="100%" border="0" align="center" cellpadding="7" cellspacing="1" bgcolor="#CCCCCC" class="table table-bordered">
+              <tbody><tr style="height:25px; line-height:25px; ">
+                <td bgcolor="#F7F7F7" width="16%"><div align="center">招聘职位:</div></td>
+                <td bgcolor="#FFFFFF" width="29%">&nbsp;<a href="{$vo.aid|url=articles,###}"><notempty name="vo.titlecolor"><font color="{$vo.titlecolor}"></notempty>{$vo.title|msubstr=###,0,38,'utf-8'}<notempty name="vo.titlecolor"></font></notempty></a></td>
+                <td bgcolor="#F7F7F7" width="8%"><div align="center">描述:</div></td>
+                <td bgcolor="#FFFFFF" width="21%">&nbsp;{$vo.description}</td>
+				  <td bgcolor="#F7F7F7" width="10%"><div align="center">发布日期:</div></td>
+                <td bgcolor="#FFFFFF"  width="17%">&nbsp;{$vo.addtime|strtotime|date='Y-m-d',###}</td>
+                </tr>
+              <tr>
+                <td bgcolor="#F7F7F7"><div align="center">职位要求：</div></td>
+                <td colspan="5" bgcolor="#FFFFFF">{$vo.content}</td>
+                </tr>
+            </tbody></table>
+</div>
+</volist>
+</div>
+<div class="clearfix"></div>
+<div class='t_page ColorLink'>{$page}</div>
+</div>
+<!--content end-->
+
+</div>
+<!--main end-->
+</div>
+<!--right end-->
+</div>
+<!--inner end-->
+</div>
+<include file="$footer"/>

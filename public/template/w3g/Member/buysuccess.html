@@ -1,0 +1,64 @@
+<include file="$head"/>
+<link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<style>
+label.valid {
+		  width: 24px;
+		  height: 24px;
+		  background: url(__PUBLIC__/image/valid.png) center center no-repeat;
+		  display: inline-block;
+		  text-indent: -9999px;
+		}
+		label.error {
+			font-weight: bold;
+			color: red;
+			padding: 2px 8px;
+			margin-top: 2px;
+		}
+</style>
+<div id='content' style='width:1002px;height:574px;background:url(__TMPL__/images/cbg2.jpg) repeat-y;margin:0px auto'>
+
+
+<!-- 当前位置提示条 -->
+
+<div id='pdv_15179' class='pdv_class'  title='订单成功' style='width:960px;height:40px;top:0px;left:20px; z-index:11'>
+<div id='spdv_15179' class='pdv_content' style='overflow:hidden;width:100%;height:100%'>
+<div class="pdv_border" style="border:0px;height:100%;padding:0;margin:0;background:url(__TMPL__/images/border/788/images/title.jpg) 0px 0px no-repeat">
+	<div style="float:left;font:14px/40px Simsun;color:#000;padding-left:36px;">订单成功</div><div style="float:right;height:100%;width:17px;background:url(__TMPL__/images/border/788/images/title.jpg) -983px 0px no-repeat;"></div>
+ 
+<link href="__TMPL__/images/product/templates/css/nav.css" rel="stylesheet" type="text/css" />
+<div id="nav">
+您现在的位置：{$nav} 
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+<!-- 登陆位置 -->
+
+<div id='pdv_15180' class='pdv_class'  title='' style='width:460px;height:494px;top:80px;left:266px; z-index:12'>
+<div id='spdv_15180' class='pdv_content' style='overflow:visible;width:100%;'>
+<div class="pdv_border" style="margin:0;padding:0;height:100%;border:0px  solid;background:;">
+<div style="padding:0px">
+<link href="__TMPL__/images/list/css/newsquery.css" rel="stylesheet" type="text/css" />
+
+<div>
+ 	<table width="650" align="center" cellpadding="0" cellspacing="0"><tr><td height="90">
+    <div style="width:90px;height:90px; background:url(__TMPL__/images/base_bg.png) no-repeat; background-position:-140px 5px;"></div>    
+    </td><td valign="middle">订单号:<font style="font-size:16px; color:#F00; font-weight:bold;">{$group_trade_no}</font>,您的订单提交成功!<br>
+    <p align="center"><a href="{:U('Member/buylist')}" class="btn btn-danger active">查看我的订单</a></p>
+    </td></tr></table>
+ <br><br>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+<include file="$footer"/>

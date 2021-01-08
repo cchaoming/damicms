@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data page="{$nowpage}" P_Nums="{$pages}" A_Nums="{$allnum}" D_Nums="{$lastnum}" ID="{$aid}">
+<volist name="list" id="vo" key="k">
+<NoI>{$vo.num}</NoI>
+<IP>{$vo.ip}</IP>
+<Author PostTime="{$vo.ptime}"><![CDATA[{$vo.author}]]></Author>
+<Content><![CDATA[{$vo.content}]]></Content>
+<reContent><![CDATA[{$vo.recontent}]]></reContent>
+</volist>
+</data>

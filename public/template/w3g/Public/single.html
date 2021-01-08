@@ -1,0 +1,94 @@
+<include file="$head"/>
+<div id='content' style='width:1002px;height:574px;background:url(__TMPL__/images/cbg.jpg) repeat-y;margin:0px auto'>
+
+
+<!-- 产品搜索表单 -->
+
+<div id='pdv_15178' class='pdv_class'  title='' style='width:224px;height:187px;top:235px;left:10px; z-index:9'>
+<div id='spdv_15178' class='pdv_content' style='overflow:visible;width:100%;'>
+<div class="pdv_border" style="border:0px;height:100%;padding:0;margin:0;">
+<div style="height:45px;border:0px;padding:0;margin:0;background:url(__TMPL__/images/border/782/images/title.jpg) 0px 0px no-repeat">
+	<div style="float:right;width:14px;height:45px;background:url(__TMPL__/images/border/782/images/title.jpg) -986px 0px no-repeat;"></div>
+</div>
+<div style="margin:0px;padding:0px;">
+<link href="__TMPL__/images/product/templates/css/product_searchform_dolphin.css" rel="stylesheet" type="text/css" />
+<div class="productsearchformzone">
+<form id="newssearchform" name="search" method="POST" action="{:U('s/search');}">  
+    <div class="productsearchform">
+    <input name="k" type="text" id="productsearchform_key" value="" style="width:160px;" class="inputtext">
+  </div>
+  <div class="productsearchform2">
+  <input name="imageField" id="button" type="image" src="__TMPL__/images/product/templates/images/search5.gif" >
+  </div>
+</form>
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- 产品分类（列表） -->
+
+<div id='pdv_15177' class='pdv_class'  title='' style='width:224px;height:225px;top:0px;left:10px; z-index:10'>
+<div id='spdv_15177' class='pdv_content' style='overflow:visible;width:100%;'>
+<div class="pdv_border" style="border:0px;height:100%;padding:0;margin:0;">
+<div style="height:45px;border:0px;padding:0;margin:0;background:url(__TMPL__/images/border/776/images/title.jpg) 0px 0px no-repeat">
+	<div style="float:right;width:14px;height:45px;background:url(__TMPL__/images/border/776/images/title.jpg) -986px 0px no-repeat;"></div>
+</div>
+<div style="margin:0px;padding:0px;">
+
+<link href="__TMPL__/images/product/templates/css/productclass_dolphin.css" rel="stylesheet" type="text/css" />
+<div class="productclass_dolphin">
+
+<!--单页导航-->
+<a href="{:U('Public/single',array('aid'=>55))}" target="_self" class="productclass_dolphin">公司简介</a>
+<a href="{:U('Public/single',array('aid'=>56))}" target="_self" class="productclass_dolphin">企业文化</a>
+<a href="{:U('Public/single',array('aid'=>57))}" target="_self" class="productclass_dolphin">企业荣誉</a>
+<a href="{:U('Public/single',array('aid'=>124))}" target="_self" class="productclass_dolphin">联系我们</a>
+ 
+ 
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- 当前位置提示条 -->
+
+<div id='pdv_15179' class='pdv_class'  title='{$type.typename}' style='width:696px;height:40px;top:0px;left:263px; z-index:11'>
+<div id='spdv_15179' class='pdv_content' style='overflow:hidden;width:100%;height:100%'>
+<div class="pdv_border" style="border:0px;height:100%;padding:0;margin:0;background:url(__TMPL__/images/border/788/images/title.jpg) 0px 0px no-repeat">
+	<div style="float:left;font:14px/40px Simsun;color:#000;padding-left:36px;"> {:get_field('article','aid='.$_GET[aid],'title')}</div><div style="float:right;height:100%;width:17px;background:url(__TMPL__/images/border/788/images/title.jpg) -983px 0px no-repeat;"></div>
+ 
+<link href="__TMPL__/images/product/templates/css/nav.css" rel="stylesheet" type="text/css" />
+<div id="nav">
+
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+<!-- 产品检索搜索 -->
+
+<div id='pdv_15180' class='pdv_class'  title='' style='width:700px;height:494px;top:80px;left:266px; z-index:12'>
+<div id='spdv_15180' class='pdv_content' style='overflow:visible;width:100%;'>
+<div class="pdv_border" style="margin:0;padding:0;height:100%;border:0px  solid;background:;">
+<div style="padding:0px">
+<link href="__TMPL__/images/product/templates/css/productquery_dolphin.css" rel="stylesheet" type="text/css" />
+<!--单页内容-->
+ {:get_field('article','aid='.$_GET[aid],'content')}
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+<include file="$footer"/>

@@ -1,0 +1,251 @@
+<include file="./head_inner"/>
+<link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<div id="body">    
+<!--focus start-->
+<div id="InnerBanner">
+
+</div>
+<!--foncus end-->
+<div class="HeightTab clearfix"></div>
+<!--inner start -->
+<div class="inner">
+<!--left start-->
+<div class="left">
+<div class="Sbox">
+<div class="topic"><a href="#">用户中心&nbsp;&nbsp;&nbsp;UserCenter</a></div>
+<div class="ClassNav">
+<div class="NavTree">
+<ul id='suckertree1'>
+<volist name='member_menu' id='vo'>
+<li><A h<a href="__ROOT__{$vo.url}" target="_self">{$vo.name}</A>
+<!--判定是否有子类-->
+</li>
+</volist>
+</ul>
+</div>
+</div>
+
+</div>
+
+<include file="Public:contact"/>
+</div>
+<!--left end-->
+<!--right start-->
+<div class="right">
+<div class="Position"><span>你的位置：{$nav}用户充值/提现</span></div>
+<div class="HeightTab clearfix"></div>
+<!--main start-->
+<div class="main">
+<!--content start-->
+<style>
+#tnav ul,li,div {padding:0;margin:0;}
+#tnav ul li {float:left;width:100px;height:30px;line-height:30px;text-align:center;background-color:#ccc;border:1px #bbb solid;border-bottom:none;}
+#tnav ul li.fli {background-color:#fff;color:red;}
+#tnav ul {overflow:hidden;zoom:1;list-style-type:none;}
+#tab_con {width:304px;height:240px;}
+#tab_con div {width:700px;height:200px;display:none;border:1px #bbb solid;padding:20px;}
+#tab_con div.fdiv {display:block;background-color:#fff;}
+</style>
+<div id="tnav">
+<ul id="tab">
+<li class="fli">在线充值</li>
+<li>用充值卡充值</li>
+<li>充值记录</li>
+<li>我要提现</li>
+</ul>
+</div>
+<div id="tab_con">
+<div class="fdiv">
+            <form name=alipayment action="<if condition="C('AP_TYPE') eq 1">./Trade/ap_jishi/alipayapi.php<else/>./Trade/ap_danbao/alipayapi.php</if>" method=post target="_blank">
+            <table width="600" border="0" cellpadding="0" cellspacing="0">
+            <tr><td height="25">您的余额：</td><td><span class="null-star">*</span>
+                        <font color=red>{$row[money]}</font>
+                        <span>元
+</span>
+            </td></tr>           
+		   <tr><td height="25">付款金额</td><td><span class="null-star">*</span>
+                        <input size="30" name="WIDtotal_fee" value="1" />
+                        <span>(元)必填
+</span>
+            </td></tr>
+            <tr><td height="25">付款名称：</td><td>
+                        <span class="null-star">*</span>
+                        <input size="30" name="WIDsubject" value="{$config.sitetitle}会员在线充值" />
+                        <span>必填
+</span>
+            </td></tr>
+					<tr><td height="25">备注 ：</td><td>
+                   
+                        <span class="null-star">*</span>
+                        <input size="30" name="WIDbody" />
+                        <span></span>
+                   </td></tr>
+                   
+					
+					 <tr><td height="25">联系人手机号码：</td><td>
+                   
+                        <span class="null-star">*</span>
+                        <input size="30" name="WIDreceive_mobile" />
+                        <span>如：13312341234</span>
+                   </td></tr>
+                  <tr><td colspan="2">
+					<span style="display:none;">
+					<dt>商户订单号：</dt>
+                    <dd>
+                        <span class="null-star">*</span>
+                        <input size="30" name="WIDout_trade_no" value="CZ{:time()}-{$_SESSION[dami_uid]}" />
+                        <span>商户网站订单系统中唯一订单号，必填
+</span>
+                    </dd>
+					
+                    <dt>商品展示地址：</dt>
+                    <dd>
+                        <span class="null-star">*</span>
+                        <input size="30" name="WIDshow_url" value="http://{$_SERVER['HTTP_HOST']}" />
+                        <span>需以http://开头的完整路径，如：http://www.xxx.com/myorder.html
+</span>
+                    </dd>
+                    <dt>收货人姓名：</dt>
+                    <dd>
+                        <span class="null-star">*</span>
+                        <input size="30" name="WIDreceive_name" /> <input size="30" name="WIDseller_email" value="{:C('AP_EMAIL')}" />
+                        <span>如：张三
+</span>
+                    </dd>
+                    <dt>收货人地址：</dt>
+                    <dd>
+                        <span class="null-star">*</span>
+                        <input size="30" name="WIDreceive_address" />
+                        <span>如：XX省XXX市XXX区XXX路XXX小区XXX栋XXX单元XXX号
+</span>
+                    </dd>
+                    <dt>收货人邮编：</dt>
+                    <dd>
+                        <span class="null-star">*</span>
+                        <input size="30" name="WIDreceive_zip" />
+                        <span>如：123456
+</span>
+                    </dd>
+                    <dt>收货人电话号码：</dt>
+                    <dd>
+                        <span class="null-star">*</span>
+                        <input size="30" name="WIDreceive_phone" />
+                        <span>如：0571-88158090
+</span>
+                    </dd>
+					</span>
+                    </td></tr>
+                    <tr><td></td>
+                   
+					<td>
+                        <span class="new-btn-login-sp">
+                            <button class="new-btn-login" type="submit" style="text-align:center;">立即充值</button>
+                        </span>
+                    </td></tr></table>
+</form>
+</div>
+
+<div>
+<form name=tixian action="{:U('Member/card_money')}" method="post">
+            <table width="600" border="0" cellpadding="0" cellspacing="0">
+			
+            <tr><td height="25">输入卡号：</td><td><span class="null-star">*</span>
+                        <input type="text" size="30" name="card_number" />
+                        <span>必填
+</span>
+            </td></tr>
+            <tr>
+              <td height="25">密码:</td>
+              <td><span class="null-star">*</span>
+                        <input type="password" size="30" name="card_pwd" value="" />
+                        <span>必填
+</span>
+            </td></tr>
+                  
+                    <tr><td></td>
+                   
+					<td height="25">
+                        <span class="new-btn-login-sp">
+                            <button class="new-btn-login" type="submit" style="text-align:center;">立即充值</button>
+                        </span>
+                    </td></tr></table>
+</form>
+</div>
+
+<div>
+<table class="table table-bordered">
+<tr>
+  <th width="80" align="center">系统编号</th>
+  <th width="150">充值金额</th>
+  <th width="200" align="center">时间</th>
+  <th align="center">备注</th>
+  </tr>
+<arclist model="money_log" where="log_type=0 and uid=$_SESSION[dami_uid]" id="vo" order="addtime desc">
+<tr>
+  <td align="center">{$vo.log_id}</td>
+  <td align="center">{$vo.price}</td>
+  <td>{$vo.addtime|date='Y-m-d H:i:s',###}</td>
+  <td>{$vo.remark}</td></tr>
+</arclist>
+</table>
+</div>
+
+<div>
+<form name=tixian action="{:U('Member/tixian')}" method="post">
+            <table width="600" border="0" cellpadding="0" cellspacing="0">
+			<tr><td height="25">您的余额：</td><td><span class="null-star">*</span>
+                        <font color=red>{$row[money]}</font>
+                        <span>元
+</span>
+            </td></tr>
+            <tr><td height="25">您的支付宝帐户：</td><td><span class="null-star">*</span>
+                        <input type="text" size="30" name="your_email" />
+                        <span>必填
+</span>
+            </td></tr>
+            <tr>
+              <td height="25">提现金额</td>
+              <td><span class="null-star">*</span>
+                        <input type="text" size="30" name="money" value="1" />
+                        <span>(元)必填
+</span>
+            </td></tr>
+                  
+                    <tr><td></td>
+                   
+					<td height="25">
+                        <span class="new-btn-login-sp">
+                            <button class="new-btn-login" type="submit" style="text-align:center;">立即提现</button>
+                        </span>
+                    </td></tr></table>
+</form>
+</div>
+</div>
+<script type="text/javascript">
+var tabs=document.getElementById("tab").getElementsByTagName("li");
+var divs=document.getElementById("tab_con").getElementsByTagName("div");
+for(var i=0;i<tabs.length;i++){
+tabs[i].onclick=function(){change(this);}
+}
+function change(obj){
+for(var i=0;i<tabs.length;i++)
+{
+if(tabs[i]==obj){
+tabs[i].className="fli";
+divs[i].className="fdiv";
+}
+else{
+tabs[i].className="";
+divs[i].className="";
+}
+}
+}
+</script>	
+<!--main end-->
+</div>
+<!--right end-->
+</div>
+<!--inner end-->
+</div>
+</div>
+<include file="$footer"/>

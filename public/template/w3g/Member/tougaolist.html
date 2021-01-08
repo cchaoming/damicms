@@ -1,0 +1,29 @@
+<include file="$head"/>
+<script>$(document).ready(function() {
+$('.ui-title').text('投稿列表');//标题
+});
+</script>
+<div data-role="content"  class="content">
+<style>
+.ui-btn-icon-right .ui-btn-inner {
+/*padding-right: 20px;*/
+}</style>
+
+<a href="{:U('Member/tougao')}" data-role="button" data-theme="b" data-ajax="false">我要投稿</a>
+<ul data-role="listview" data-inset="true">
+<volist name="list" id="vo">
+    <li>
+<a href="#">
+<h2>{$vo.title}【<eq name="vo.status" value="1"><font color="#006600">审核通过</font></eq><eq name="vo.status" value="0"><font color="#FF0000">待审核</font></eq><eq name="vo.status" value="2"><font color="#FF0000">被拒绝</font></eq>
+】</h2>
+<p style="padding-left:10px;">
+<a href="{:U('Member/modpage',array('aid'=>$vo[aid]))}" data-role="button" data-inline="true" data-icon="edit" data-ajax="false">修改</a>
+</p></a>
+<neq name="vo.status" value="1"><a href="javascript:if(confirm('您确定要删除吗?')){
+location.href='{:U('Member/delpage',array('aid'=>$vo[aid]))}';
+}" data-icon="delete">删除</a>
+</neq>
+    </li>
+</volist>
+</ul>
+  </div>   

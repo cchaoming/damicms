@@ -1,0 +1,38 @@
+/*guestbook css  produced by i@追影 QQ:279197963.info*/
+#content{height:auto;border:#d4d4d4 1px solid;margin-bottom:8px;text-align:left;}
+#content h6{background:url(bg2010.gif) no-repeat 4px -350px;padding:8px 0 4px 35px;border-bottom:1px solid #d4d4d4;font-size:14px;color:#333;font-weight: bold;}
+#content hr{width:98%;}
+#content a{ font-size:14px;height:25px; line-height:25px;border:1px solid #ccc; padding:2px 6px 2px 6px; margin-right:5px;}
+.guestbook_note{margin:10px;}
+.guestbook_note span{float:right;}
+.reply{color:red;font-weight:bold;}
+.input_field {
+padding: 5px;
+color: #333;
+font-family: Tahoma, Geneva, sans-serif;
+font-size: 12px;
+border: 1px solid #ccc;
+background: #fff;
+}
+textarea {
+-webkit-appearance: textarea;
+background-color: white;
+border: 1px solid #ccc;
+border-image: initial;
+-webkit-rtl-ordering: logical;
+-webkit-user-select: text;
+-webkit-box-orient: vertical;
+resize: auto;
+cursor: auto;
+padding: 2px;
+white-space: pre-wrap;
+word-wrap: break-word;
+width:100%;
+height:120px;
+}
+.button{
+margin: 10px 0px;
+padding: 5px 14px;
+border: 1px solid #ccc;
+background: #fff;
+}

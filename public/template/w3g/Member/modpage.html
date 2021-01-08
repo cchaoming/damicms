@@ -1,0 +1,31 @@
+<include file="$head"/>
+<script charset="gbk" src="__PUBLIC__/Editor/kindeditor-min.js"></script>
+<script charset="utf-8" src="__PUBLIC__/Editor/lang/zh_CN.js"></script>
+<script> 
+KindEditor.options.filterMode = false;
+KindEditor.ready(function(K) {
+K.create('#Content_page',{ items : [
+						'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+						'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+						'insertunorderedlist', '|', 'emoticons', 'image', 'link'],afterBlur: function(){this.sync();}
+});
+});
+</script>
+<div  >
+<!-- 登陆位置 -->
+<div>
+
+<select ID="Typeid" name="typeid" class="form-control">
+<option value="">请选择分类</option>{$op}
+</select>
+<script>KindEditor.ready(function(K){var editor = K.editor({allowFileManager : true});K("#insertfile_sl").click(function() {
+	editor.loadPlugin("insertfile", function() {editor.plugin.fileDialog({fileUrl : K("#sl").val(),clickFn : function(url, title) {	
+	K("#sl").val(url);editor.hideDialog();}});});});});</script><input type="text" id="sl" name="imgurl" value="{$info.imgurl}" placeholder="缩略图"  /> 
+	<input type="button" id="insertfile_sl" value="上传缩略图" />
+<textarea id="Content_page" name="content" placeholder="文章内容">{$info.content}</textarea>  
+   
+  <input name="aid" type="hidden" value="{$info.aid}" />
+      <button type="submit" class="btn btn-success" data-theme="b">确定修改</button> <button type="button" class="btn btn-default" onclick="history.go(-1);">取消返回</button>
+</form>
+</div>
+</div>

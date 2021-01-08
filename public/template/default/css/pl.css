@@ -1,0 +1,40 @@
+/*评论*/
+#pinglun{margin:0 2px 0 0px;text-align:left;overflow:hidden;}
+#pinglunt{background:url(bg2010.gif) no-repeat 0 -453px;padding:12px 0 5px 30px;font-size:13px;font-weight:bold;}
+.plun {padding:5px;border-bottom:1px dashed #A2D0E5;}
+.ptitle {margin:3px 0;}
+.pnoi {float:left;width:60px;}
+.pIP {float:left;width:130px;}
+.pname {float:left;width:140px;color:#FF0000;}
+.ptime {float:left;width:100px;}
+.pings{line-height:18px;padding:10px 0 0 0;margin-bottom:7px;}
+.repings {margin:0 3px;padding:0 15px}
+.sub{height:20px; width:48px; background:url(input_bg.gif); border:0; padding:2px 0 0; font-size:12px;}
+#MultiPage{margin:10px 20px;font: 12px Arial, Helvetica, sans-serif;overflow:hidden;}
+#MultiPage a{float:left;display:block;padding:2px 6px;text-decoration: none;border: 1px solid #A2D0E5;height:16px;}
+#MultiPage a:hover {font-weight: bold;background:#FF8900;color:#FFFFFF;}
+#MultiPage .total {/*margin:0 2px 0 -1px;*/height:16px;border:1px solid #A2D0E5;}
+#MultiPage .pages {margin:0 1px 0 -1px;height:16px;background:#FFFFFF;}
+#MultiPage .pages span {position:relative; /*top:-11px;*/ }
+.num {margin-right:1px}
+.redirect{margin-right:1px;height: 16px !important;height:15px}
+#MultiPage .curpage{margin-right:1px;height:16px;background:#FF8900;color:white;}
+.pingp {float:right;width:250px;height:200px;margin:3px 1px;text-align:left;overflow: auto;overflow-x:hidden;scrollbar-arrow-color:#E70000;scrollbar-base-color:#EFF7FF;}
+.pingp img {cursor:pointer;margin:5px 8px;}
+
+/*评论页码及翻页*/
+#pinglunother{height:36px;line-height:36px;}
+#pinglunym{padding-left:30px;text-align:left;color:#777;}/*评论页码*/
+#pinglunfy{float:right;padding:0 0 20px 30px;text-align:left;}/*评论翻页*/
+#pinglunfy a{display:inline;border:1px solid #d4d4d4;color:#000;padding:2px 5px;margin:0px 3px;}
+#pinglunfy a:hover{display:inline;border:1px solid #ff0000;color:#fff;background:#ff6600;padding:2px 5px;margin:0px 3px;text-decoration: none;}
+#pinglunfy span{display:inline;border:1px solid #ff0000;color:#fff;background:#ff6600;padding:2px 5px;margin:0px 3px;text-decoration: none;}
+/*发表评论*/
+#pinglunfb{border:1px solid #d4d4d4;text-align:left;overflow:hidden;}
+#pinglunfb .pltextarea{height:100px;border:1px solid #fff;text-align:left;width:560px;overflow:hidden;}/*评论输入框*/
+#pinglunfb .submit{padding:1px 8px;font-size:12px;background:#ffffff;margin-top:5px;}
+#pinglunfb .submit:hover,.submit:active,.submit:focus{background:#F6F7F5;}
+#pinglunfbt{background:url(bg2010.gif) repeat-x 0 -742px;height:32px;line-height:32px;padding-left:6px;border-bottom:1px solid #d4d4d4;}
+#pinglunfb .qdfb  img{margin-bottom:5px;}
+#pinglunfb .qdfb input{border:1px solid; border-color:#ececec #d8d8d8 #d8d8d8 #eeeeee; color:#666666;}
+#pinglunfb .qdfb{border-top:1px solid #d4d4d4;height:28px;line-height:28px;padding-left:6px;}

@@ -1,0 +1,114 @@
+<include file="./head_inner"/>
+<link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="__PUBLIC__/js/bootstrap.min.js" type=text/css rel=stylesheet>
+<style>
+label.valid {
+		  width: 24px;
+		  height: 24px;
+		  background: url(__PUBLIC__/image/valid.png) center center no-repeat;
+		  display: inline-block;
+		  text-indent: -9999px;
+		}
+		label.error {
+			font-weight: bold;
+			color: red;
+			padding: 2px 8px;
+			margin-top: 2px;
+		}
+</style>
+<div id='body'>
+<div class="inner" style="width:980px;">
+<div class="right" style="width:100%;">
+<div class="Position"><span>你的位置：<a href="/">首页</a>&nbsp;&gt;&nbsp;用户注册</span></div>
+<div class="HeightTab clearfix"></div>
+<div class="main" style="width:550px;margin:0 auto;">
+<div>
+ 	<form action="{:U('Member/doreg')}" name="reg_form" id="regform" method="post" class="form-horizontal">
+   <div class="form-group">
+    <label for="username">用户名</label><div class="controls">
+    <input type="text" name="username" id="username" class="form-control" placeholder="输入用户名" datatype="s5-16" errormsg="昵称至少5个字符,最多16个字符！"></div>
+  </div>
+        <php>$mv = C('MOBILE_VERIFY');</php>
+<eq name="mv" value="1">
+        <div class="form-group">
+            <label for="username">手机号：</label><div class="controls">
+            <input type="text" name="tel" id="mobileIpt" class="form-control" placeholder="输入手机号"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="username">短信验证码：</label>
+            <div class="controls">
+                <div class="col-md-6" style="text-align: left;padding-left: 0px; padding-right: 0px;">
+                <input type="text" name="verify" class="form-control" placeholder="输入手机验证码">
+                </div>
+                <div class="col-md-4">
+                <button type="button"  id="timeb1" onclick="f_timeout();" class="btn btn-info btn-sm">
+                    免费获取验证码
+                </button>
+                </div>
+            </div>
+        </div>
+        <script tpye="text/javasccript">
+            var timer;
+            //校验手机号是否合法
+            function isPhoneNum(){
+                var phonenum = $('#mobileIpt').val().toString();
+                var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+                if(phonenum.length!=11){
+                    return false;
+                }else{
+                    return true;
+                }
+            }
+            function f_timeout(){
+                if(isPhoneNum()){
+                    $.getJSON("__ROOT__/index.php?m=Member&a=sms_verify&mobile=" + $("#mobileIpt").val(), function(json){
+                        alert("JSON Data: " + json.users[3].name);
+                    });
+                    $('#timeb1').html('<span id="timeb2">60</span>秒后重新获取');
+                    timer = self.setInterval(addsec,1000);
+                    $('#timeb1').attr("disabled","disabled");
+                }else{
+                    $('#timeb1').html('请输入正确的手机号');
+                }
+            }
+            function addsec(){
+                var t = $('#timeb2').html();
+                //alert(t);
+                if(t > 0){
+                    $('#timeb2').html(t-1);
+                    //alert(t);
+                }else{
+                    window.clearInterval(timer);
+                    $('#timeb1').removeAttr("disabled");
+                    $('#timeb1').html('<span id="timeb2"></span>重新获取验证码');
+                }
+            }
+        </script>
+</eq>
+   <div class="form-group">
+    <label for="userpwd">密码</label><div class="controls">
+    <input type="password" id="userpwd" name="userpwd" class="form-control" placeholder="输入密码"></div>
+  </div>
+   <div class="form-group">
+    <label for="userpwd2">确认密码</label><div class="controls">
+    <input type="password" name="userpwd2" id="userpwd2" class="form-control" placeholder="再次输入密码确认"></div>
+  </div>
+  <div class="form-group">
+    <label for="email">Email</label><div class="controls">
+    <input type="text" name="email" id="email" class="form-control" placeholder="输入Email"></div>
+    </div>
+
+   <div class="form-group">
+  <button type="submit" class="btn btn-success">确定注册</button> 
+  <a href="{:U('Member/login')}">登陆?</a>
+  </div>
+</form>
+<br><br>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+<include file="$footer"/>
