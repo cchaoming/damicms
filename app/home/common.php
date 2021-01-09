@@ -421,11 +421,11 @@ function send_smsmess($to_mobile, $content, $isvail = 0)
 {
     $target = "http://106.ihuyi.cn/webservice/sms.php?method=Submit";
     if ($isvail == 1) {
-        $config = F('basic', '', './Web/Conf/');
+        $config = config('basic');
         $mobile_code = mt_rand(100000, 999999);
         $content = "您的验证码是：" . $mobile_code . "。请不要把验证码泄露给其他人。";
     }
-    $data = ("account=" . C('SMS_USER') . "&password=" . C('SMS_PWD') . "&mobile=" . $to_mobile . "&content=" . rawurlencode($content));//短信用户名与密码请在这里改
+    $data = ("account=" .config('app.SMS_USER') . "&password=" . config('app.SMS_PWD') . "&mobile=" . $to_mobile . "&content=" . rawurlencode($content));//短信用户名与密码请在这里改
 //密码可以使用明文密码或使用32位MD5加密
     $gets = xml_to_array(SPost($data, $target));
     //var_dump($gets);

@@ -515,3 +515,7 @@ function D($name){
         return false;
     }
 }
+
+function U($url){
+    return url($url);
+}
