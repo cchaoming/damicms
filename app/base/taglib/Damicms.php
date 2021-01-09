@@ -33,7 +33,7 @@ class Damicms extends TagLib {
         $showpager = isset($tag['showpager']) ? (bool)$tag['showpager'] : true;
         $pagesize = !empty($tag['pagesize']) ? intval($tag['pagesize']) : '10';
         //是否用缓存,默认是false
-        $cache = isset($tag['cache']) ? (bool)$tag['cache'] : false;
+        $cache = !empty($tag['cache']) ? (int)$tag['cache'] : false;
         $query = !empty($tag['sql']) ? $tag['sql'] : '';
         $field = !empty($tag['field']) ? $tag['field'] : '';
         $debug = isset($tag['debug']) ? (bool)$tag['debug'] : false;
@@ -57,7 +57,7 @@ class Damicms extends TagLib {
         if ($query) {
             if ($cache != false) {
                 $html .= '$cache_key="key_".md5("' . $query . '");';
-                $html .= 'if(!$ret=S($cache_key)){ $ret=\think\facade\Db::query("' . $query . '");S($cache_key,$ret);}';
+                $html .= 'if(!$ret=S($cache_key)){ $ret=\think\facade\Db::query("' . $query . '");S($cache_key,$ret,'.$cache.');}';
             } else {
                 $html .= '$ret=$m->query("' . $query . '");';
             }

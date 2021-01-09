@@ -493,8 +493,9 @@ function send_http_status($code)
  * @param mixed $options 缓存参数
  * @return mixed
  */
-function S($name, $value = '', $options = null)
+function S($name, $value = '', $options = 3600)
 {
+    //$options=0 永久 也可以具体时间2020-02-05 15:00:00
     return cache($name, $value, $options);
 }
 

@@ -139,10 +139,18 @@ class Base extends BaseController
             $this->assign('roll', $roll);
         }
         //网站导航
-        $menu = $type->whereRaw('ismenu=1')->orderRaw('drank asc')->select()->toArray();
-        foreach ($menu as $k => $v) {
-            $menuson[$k] = $type->removeOption()->whereRaw('fid=' . $v['typeid'] . ' AND drank <> 0')->orderRaw('drank asc')->select()->toArray();
-            $menu[$k]['submenu'] = $menuson[$k];
+        $all_menu = S('web_menu');
+        if(is_array($all_menu) && count($all_menu)==2){
+            $menuson = $all_menu[0];
+            $menu = $all_menu[1];
+        }else{
+            $menu = $type->whereRaw('ismenu=1')->orderRaw('drank asc')->select()->toArray();
+            foreach ($menu as $k => $v) {
+                $menuson[$k] = $type->removeOption()->whereRaw('fid=' . $v['typeid'] . ' AND drank <> 0')->orderRaw('drank asc')->select()->toArray();
+                $menu[$k]['submenu'] = $menuson[$k];
+            }
+            $all_menu = [$menuson,$menu];
+            S('web_menu',$all_menu);
         }
         //dd($menu);
         $this->assign('menuson', $menuson);
