@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | 模板设置
 // +----------------------------------------------------------------------
-$cur_template = '/template/'.strval(cookie('think_template')?:'default').'/';
+$cur_template = '/template/default/';
 return [
     // 模板路径
     'view_path'       => '.'.$cur_template,

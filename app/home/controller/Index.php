@@ -11,7 +11,7 @@ class Index extends Base
 
     public function index()
     {
-        echo config('basic.sitetcp');
+        return view('/index');
     }
 
 }

@@ -6,7 +6,9 @@ use think\Model;
 
 class Type extends Model
 {
-    public function Articles()
+    protected $pk = 'typeid';
+
+    public function Article()
     {
         return $this->hasMany(Article::class,'typeid','typeid');
     }

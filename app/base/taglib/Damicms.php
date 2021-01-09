@@ -7,9 +7,11 @@ class Damicms extends TagLib {
     protected $tags = array(
         // 标签定义： attr 属性列表 close 是否闭合（0 或者1 默认1） alias 标签别名 level 嵌套层次
         //大米万能标签
-        'arclist' => array('attr' => 'model,where,order,num,id,page,pagesize,pagevar,sql,field,cache,prefix,group,distinct,showpager', 'level' => 3),
+        'arclist' => ['attr' => 'model,where,order,num,id,page,pagesize,pagevar,sql,field,cache,prefix,group,distinct,showpager', 'close' => 1],
         //类别
-        'category' => array('attr' => 'parentid,withself,order,id,other', 'level' => 3),
+        'category' => ['attr' => 'parentid,withself,order,id,other', 'close' => 1],
+
+        'close'     => ['attr' => 'time,format', 'close' => 0], //闭合标签，默认为不闭合
     );
 
     /*万能标签
@@ -23,7 +25,7 @@ class Damicms extends TagLib {
         $pagevar = !empty($tag['pagevar']) ? $tag['pagevar'] : 'page';
         $order = !empty($tag['order']) ? $tag['order'] : '';
         $group = !empty($tag['group']) ? $tag['group'] : '';
-        $num = !empty($tag['num']) ? $tag['num'] : '';
+        $num = !empty($tag['num']) ? intval($tag['num']) : 0;
         $id = !empty($tag['id']) ? $tag['id'] : 'vo';
         $key = !empty($tag['key']) ? $tag['key'] : 'i';
         $where = !empty($tag['where']) ? $tag['where'] : '';
@@ -75,22 +77,36 @@ class Damicms extends TagLib {
             //有缓存
             if ($cache != false) {
                 //包含缓存判断
-                $html .= '$cache_key="key_".md5($m->Distinct(' . $distinct . ')->field("' . $field . '")->where("' . $where . '")->group("' . $group . '")->order("' . $order . '")->limit("' . $num . '")->select(false));';
-                $html .= 'if(!$ret=S($cache_key)){ $ret=$m->distinct(' . $distinct . ')->field("' . $field . '")->whereRaw("' . $where . '")->group("' . $group . '")->orderRaw("' . $order . '")->limit("' . $num . '")->select(); S($cache_key,$ret,' . $cache . '); }';
+                $html .= '$cache_key="key_".md5("' . $distinct . $field .  $where .  $group . $order . $num . '");';
+                $html .= 'if(!$ret=S($cache_key)){ $ret=$m';
+                if($distinct){$html.= '->distinct(' . $distinct . ')';}
+                if($field){$html.= '->field("' . $field . '")';}
+                $html.='->whereRaw("' . $where . '")';
+                if($group){$html.='->group("' . $group . '")';}
+                if($order){$html.='->orderRaw("' . $order . '")';}
+                if($num){$html.='->limit(' . $num . ')';}
+                $html.='->select()->toArray(); S($cache_key,$ret,' . $cache . '); }';
             } else {
                 //没有缓存
-                $html .= '$ret=$m->distinct(' . $distinct . ')->field("' . $field . '")->whereRaw("' . $where . '")->group("' . $group . '")->orderRaw("' . $order . '")->limit("' . $num . '")->select();';
+                $html .= '$ret=$m';
+                if($distinct){$html.= '->distinct(' . $distinct . ')';}
+                if($field){$html.= '->field("' . $field . '")';}
+                $html.='->whereRaw("' . $where . '")';
+                if($group){$html.='->group("' . $group . '")';}
+                if($order){$html.='->orderRaw("' . $order . '")';}
+                if($num){$html.='->limit(' . $num . ')';}
+                $html.='->select()->toArray(); ';
             }
 
         }
         if ($debug != false) {
             $html .= 'dump($ret);dump($m->getLastSql());';
         }
-        $html .= 'if(is_array($ret)):$' . $key . ' = 0;';
-        $html .= 'foreach($ret as $key=>$' . $id . '):';
-        $html .= '++$' . $key . ';?>';
-        $html .= $this->tpl->parse($content);
-        $html .= '<?php endforeach;endif; ?>';
+        $html .= 'if(is_array($ret)){';
+        $html .=  'foreach($ret as $'.$key.'=>$'.$id.'){ ?>';
+        $html .= $content;
+        $html .= '<?php }?>';
+        $html .= '<?php }?>';
         if ($page && $showpager) $html .= '<div class="t_page"><?php echo $pagerInfo;?></div>';
         return $html;
     }
@@ -122,13 +138,26 @@ class Damicms extends TagLib {
             $where .= $other . ' and ';
         }
         $where .= '1=1';
-        $parsestr = "<?php \$result=\\think\\facade\\Db::name('type')->whereRaw(\"$where\")->orderRaw(\"$order\")->select();";
+        $parsestr = "<?php \$result=\\think\\facade\\Db::name('type')->whereRaw(\"$where\")->orderRaw(\"$order\")->select()->toArray();";
         $parsestr .= 'if(is_array($result)): $' . $key . ' = 0;';
         $parsestr .= 'foreach($result as $key=>$' . $ret . '):';
         $parsestr .= '++$' . $key . ';?>';
         $parsestr .= $this->tpl->parse($content);
         $parsestr .= '<?php endforeach;endif;?>';
         return $parsestr;
+    }
+
+    /**
+     * 这是一个闭合标签的简单演示
+     */
+    public function tagClose($tag)
+    {
+        $format = empty($tag['format']) ? 'Y-m-d H:i:s' : $tag['format'];
+        $time = empty($tag['time']) ? time() : $tag['time'];
+        $parse = '<?php ';
+        $parse .= 'echo date("' . $format . '",' . $time . ');';
+        $parse .= ' ?>';
+        return $parse;
     }
 
 }

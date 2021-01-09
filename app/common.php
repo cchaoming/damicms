@@ -1,5 +1,7 @@
 <?php
 // 应用公共文件
+use think\exception\ClassNotFoundException;
+
 function get_back_url()
 {
     if (isset($_SERVER["HTTP_REFERER"]) && !empty($_SERVER["HTTP_REFERER"])) {
@@ -494,4 +496,22 @@ function send_http_status($code)
 function S($name, $value = '', $options = null)
 {
     return cache($name, $value, $options);
+}
+
+function M($name,$with_prefix=true){
+    return $with_prefix?\think\facade\Db::name($name):\think\facade\Db::table($name);
+}
+function D($name){
+    try {
+        if(strpos($name,'\\')===false){
+            $name = '\\app\\base\\model\\'.ucfirst($name);
+            if(!class_exists($name)){
+                $name = app()->getNamespace().'\\model\\'.ucfirst($name);
+            }
+        }
+        return new $name();
+    }catch (\Exception $e){
+        throw new ClassNotFoundException('class not exists: ' . $name, $name);
+        return false;
+    }
 }

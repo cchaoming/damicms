@@ -1,46 +1,24 @@
 <?php
-declare (strict_types = 1);
+declare (strict_types=1);
+
 namespace app\home\controller;
 
 use app\base\model\ArticleView;
-use app\home\middleware\After;
-use app\home\middleware\Before;
+use app\home\middleware\ControllerBefore;
 use think\App;
-use think\exception\HttpResponseException;
-use think\exception\ValidateException;
-use think\facade\Config;
-use think\facade\Request;
-use think\Response;
-use think\Validate;
+use app\BaseController;
 
-use app\common\model\System;
 /**
  * 控制器基础类
  */
-abstract class Base
+class Base extends BaseController
 {
-    protected $appName;        //当前应用名称
-    protected $controllerName; //获取当前的控制器名
-    protected $public;         //公共目录
     protected $template;       //模板目录
-    /**
-     * Request实例
-     * @var \think\Request
-     */
-    protected $request;
-
-    /**
-     * 应用实例
-     * @var \think\App
-     */
-    protected $app;
-
-
     /**
      * 控制器中间件
      * @var array
      */
-    protected $middleware = [Before::class];
+    protected $middleware = [ControllerBefore::class];
 
     /**
      * 构造方法
@@ -49,9 +27,7 @@ abstract class Base
      */
     public function __construct(App $app)
     {
-        $this->app = $app;
-        $this->request = $this->app->request;
-
+        parent::__construct($app);
         // 控制器初始化
         $this->initialize();
     }
@@ -60,12 +36,12 @@ abstract class Base
     protected function initialize()
     {
         // 查找所有系统设置表数据
-        $this->template = './template/'.cookie('think_templatge').'/';
-        config('view.view_path',$this->template);
+        $this->template = './template/' . TMPL_NAME . '/';
+        config('view.view_path', $this->template);
         //获取访客权限
         if (intval(cookie('first_look')) != 1 && !session('dami_uid')) {
             if (config('basic.isread') == 1) {
-                $group_vail = get_field('member_group','group_id=' . config('basic.defaultup'),'group_vail');
+                $group_vail = get_field('member_group', 'group_id=' . config('basic.defaultup'), 'group_vail');
                 seesion('dami_uservail', $group_vail);
             }
             cookie('first_look', 1);
@@ -92,20 +68,20 @@ abstract class Base
         //查询数据库
         $article = new ArticleView();
         //封装条件
-        $map[] = ['status','=',1];
+        $map[] = ['status', '=', 1];
         //准备工作
         //追影 QQ:279197963修改让其支持无限极
         $arr = get_children($typeid);
         //模式判断
         switch ($mode) {
             case 0:
-                $map[] = ['article.typeid','in', $arr];
+                $map[] = ['article.typeid', 'in', $arr];
                 break;
             case 1:
-                $map[] = ['article.typeid','=',$typeid];
+                $map[] = ['article.typeid', '=', $typeid];
                 break;
             default:
-                $map[] = ['article.typeid','in', $arr];
+                $map[] = ['article.typeid', 'in', $arr];
                 break;
         }
         $alist = $article->getTableInstance()->where($map)->orderRaw($order)->limit($limit)->select();
@@ -140,131 +116,4 @@ abstract class Base
         $this->assign($assign, $t);
     }
 
-    
-    /**
-     * 操作错误跳转
-     * @param  mixed   $msg 提示信息
-     * @param  string  $url 跳转的URL地址
-     * @param  mixed   $data 返回的数据
-     * @param  integer $wait 跳转等待时间
-     * @return void
-     */
-    protected function error($msg = '', string $url = null, $data = '', int $wait = 3): Response
-    {
-        if (is_null($url)) {
-            $url = request()->isAjax() ? '' : 'javascript:history.back(-1);';
-        } elseif ($url) {
-            $url = (strpos($url, '://') || 0 === strpos($url, '/')) ? $url : app('route')->buildUrl($url)->__toString();
-        }
-
-        $result = [
-            'code' => 0,
-            'message'  => $msg,
-            'data' => $data,
-            'jumpUrl'  => $url,
-            'waitSecond' => $wait,
-        ];
-        $err = (string)app('config')->get('app.error_tmpl');
-        $type = (request()->isJson() || request()->isAjax()) ? 'json' : 'html';
-        if ($type == 'html'){
-            $response = view($err, $result);
-        } else if ($type == 'json') {
-            $response = json($result);
-        }
-        throw new HttpResponseException($response);
-    }
-
-    /**
-     * 返回封装后的API数据到客户端
-     * @param  mixed   $data 要返回的数据
-     * @param  integer $code 返回的code
-     * @param  mixed   $msg 提示信息
-     * @param  string  $type 返回数据格式
-     * @param  array   $header 发送的Header信息
-     * @return Response
-     */
-    protected function ajaxReturn($data, $info='', $status=1, $type='', array $header = [], int $code=0): Response
-    {
-        $result = [
-            'code' => $code,
-            'status'  => $status,
-            'info' => $info,
-            'data' => $data,
-        ];
-
-        $type     = $type ?: 'json';
-        $response = Response::create($result, $type)->header($header);
-
-        throw new HttpResponseException($response);
-    }
-
-    /**
-     * 操作成功跳转
-     * @param  mixed     $msg 提示信息
-     * @param  string    $url 跳转的URL地址
-     * @param  mixed     $data 返回的数据
-     * @param  integer   $wait 跳转等待时间
-     * @return void
-     */
-    protected function success($msg = '', string $url = null, $data = '', int $wait = 3): Response
-    {
-        if (is_null($url) && isset($_SERVER["HTTP_REFERER"])) {
-            $url = $_SERVER["HTTP_REFERER"];
-        } elseif ($url) {
-            $url = (strpos($url, '://') || 0 === strpos($url, '/')) ? $url : app('route')->buildUrl($url, get_back_url())->__toString();
-        }
-
-        $result = [
-            'code' => 1,
-            'message'  => $msg,
-            'data' => $data,
-            'jumpUrl'  => $url,
-            'waitSecond' => $wait,
-        ];
-
-        $type = (request()->isJson() || request()->isAjax()) ? 'json' : 'html';
-        if ($type == 'html'){
-            $response = view(Config::get('app.success_tmpl'), $result);
-        } else if ($type == 'json') {
-            $response = json($result);
-        }
-        throw new HttpResponseException($response);
-    }
-
-    /**
-     * 验证数据
-     * @access protected
-     * @param  array        $data     数据
-     * @param  string|array $validate 验证器名或者验证规则数组
-     * @param  array        $message  提示信息
-     * @param  bool         $batch    是否批量验证
-     * @return array|string|true
-     * @throws ValidateException
-     */
-    protected function validate(array $data, $validate, array $message = [], bool $batch = false)
-    {
-        if (is_array($validate)) {
-            $v = new Validate();
-            $v->rule($validate);
-        } else {
-            if (strpos($validate, '.')) {
-                // 支持场景
-                [$validate, $scene] = explode('.', $validate);
-            }
-            $class = false !== strpos($validate, '\\') ? $validate : $this->app->parseClass('validate', $validate);
-            $v     = new $class();
-            if (!empty($scene)) {
-                $v->scene($scene);
-            }
-        }
-
-        $v->message($message);
-
-        // 是否批量验证
-        if ($batch || $this->batchValidate) {
-            $v->batch(true);
-        }
-
-        return $v->failException(true)->check($data);
-    }
 }
