@@ -44,14 +44,14 @@ class Damicms extends TagLib {
         // if($where!='')  $where.=' and '.$flag;
         $className = "\\app\\base\\model\\".ucfirst($model);
         if (class_exists($className)) {
-            $html .= '<?php $m=new ' . $className . '();';
+            $html .= '<?php $mdl=new ' . $className . '();';
         } else {
             if ($prefix == false) {
                 $model = config('database.connections.mysql.prefix') . $model;
             } else {
                 $model = $tag['model'];
             }
-            $html .= '<?php $m=\\think\\facade\\Db::table("' . $model . '");';
+            $html .= '<?php $mdl=\\think\\facade\\Db::table("' . $model . '");';
         }
         //如果使用了query,将忽略使用where,num,order,page,field,cache 等,使用query无法实现分页
         if ($query) {
@@ -59,14 +59,14 @@ class Damicms extends TagLib {
                 $html .= '$cache_key="key_".md5("' . $query . '");';
                 $html .= 'if(!$ret=S($cache_key)){ $ret=\think\facade\Db::query("' . $query . '");S($cache_key,$ret,'.$cache.');}';
             } else {
-                $html .= '$ret=$m->query("' . $query . '");';
+                $html .= '$ret=$mdl->query("' . $query . '");';
             }
         }
         //如果使用了分页,缓存也不生效
         if ($page && !$query) {
-            //$html .= '$count=$m->whereRaw("' . $where . '")->count();';
+            //$html .= '$count=$mdl->whereRaw("' . $where . '")->count();';
             //如果使用了分页，num将不起作用
-            $html .= '$rows=$m';
+            $html .= '$rows=$mdl';
             if($distinct){$html.= '->distinct(true)';}
             if($field){$html.= '->field("' . $field . '")';}
             if($where){$html.='->whereRaw("' . $where . '")';}
@@ -81,7 +81,7 @@ class Damicms extends TagLib {
             if ($cache != false) {
                 //包含缓存判断
                 $html .= '$cache_key="key_".md5("' . $distinct . $field .  $where .  $group . $order . $num . '");';
-                $html .= 'if(!$ret=S($cache_key)){ $ret=$m';
+                $html .= 'if(!$ret=S($cache_key)){ $ret=$mdl';
                 if($distinct){$html.= '->distinct(' . $distinct . ')';}
                 if($field){$html.= '->field("' . $field . '")';}
                 if($where){$html.='->whereRaw("' . $where . '")';}
@@ -91,7 +91,7 @@ class Damicms extends TagLib {
                 $html.='->select()->toArray(); S($cache_key,$ret,' . $cache . '); }';
             } else {
                 //没有缓存
-                $html .= '$ret=$m';
+                $html .= '$ret=$mdl';
                 if($distinct){$html.= '->distinct(' . $distinct . ')';}
                 if($field){$html.= '->field("' . $field . '")';}
                 if($where){$html.='->whereRaw("' . $where . '")';}
@@ -103,7 +103,7 @@ class Damicms extends TagLib {
 
         }
         if ($debug != false) {
-            $html .= 'dump($ret);dump($m->getLastSql());';
+            $html .= 'dump($ret);dump($mdl->getLastSql());';
         }
         $html .= 'if(is_array($ret)){';
         $html .=  'foreach($ret as $'.$key.'=>$'.$id.'){ ?>';
