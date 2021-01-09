@@ -11,7 +11,8 @@ class Index extends Base
 
     public function index()
     {
-        return view('/index');
+        $this->assign('tp',5);
+        return $this->display('/index');
     }
 
 }

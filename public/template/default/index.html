@@ -1,5 +1,3 @@
-<damicms:arclist model='link' where="status=1" order='rank asc' id='vo' name="rangdfldlkf" debug="true">
+<damicms:arclist model='article' where="status=1" order='`addtime` asc' showpager="0" id='vo' debug="true" page="1" pagesize="10">
 {$vo.title}
 </damicms:arclist>
-
-<damicms:close name='demo_name'/>

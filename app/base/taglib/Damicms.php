@@ -31,17 +31,16 @@ class Damicms extends TagLib {
         $where = !empty($tag['where']) ? $tag['where'] : '';
         //使where支持 条件判断,添加不等于的判断
         $where = $this->parseCondition($where);
-        $page = false;
-        if (!empty($tag['page'])) $page = $tag['page'];
-        $showpager = !empty($tag['showpager']) ? $tag['showpager'] : true;
-        $pagesize = !empty($tag['pagesize']) ? $tag['pagesize'] : '10';
+        $page = isset($tag['page'])?(bool)$tag['page']:false;
+        $showpager = isset($tag['showpager']) ? (bool)$tag['showpager'] : true;
+        $pagesize = !empty($tag['pagesize']) ? intval($tag['pagesize']) : '10';
         //是否用缓存,默认是false
-        $cache = !empty($tag['cache']) ? $tag['cache'] : false;
+        $cache = isset($tag['cache']) ? (bool)$tag['cache'] : false;
         $query = !empty($tag['sql']) ? $tag['sql'] : '';
         $field = !empty($tag['field']) ? $tag['field'] : '';
-        $debug = !empty($tag['debug']) ? $tag['debug'] : false;
-        $prefix = !empty($tag['prefix']) ? $tag['prefix'] : false;
-        $distinct = !empty($tag['distinct']) ? $tag['distinct'] : false;
+        $debug = isset($tag['debug']) ? (bool)$tag['debug'] : false;
+        $prefix = isset($tag['prefix']) ? (bool)$tag['prefix'] : false;
+        $distinct = isset($tag['distinct']) ? (bool)$tag['distinct'] : false;
         //使query 支持条件判断
         $query = $this->parseCondition($query);
         // if($where!='')  $where.=' and '.$flag;
@@ -67,10 +66,16 @@ class Damicms extends TagLib {
         }
         //如果使用了分页,缓存也不生效
         if ($page && !$query) {
-            $html .= '$count=$m->whereRaw("' . $where . '")->count();';
+            //$html .= '$count=$m->whereRaw("' . $where . '")->count();';
             //如果使用了分页，num将不起作用
-            $html .= '$ret=$m->distinct(' . $distinct . ')->field("' . $field . '")->whereRaw("' . $where . '")->group("' . $group . '")->orderRaw("' . $order . '")->paginate('.$pagesize.');';
-            $html .= '$pagerInfo=$ret->render();';
+            $html .= '$rows=$m';
+            if($distinct){$html.= '->distinct(true)';}
+            if($field){$html.= '->field("' . $field . '")';}
+            $html.='->whereRaw("' . $where . '")';
+            if($group){$html.='->group("' . $group . '")';}
+            if($order){$html.='->orderRaw("' . $order . '")';}
+            $html.=  '->paginate('.$pagesize.');$ret=$rows->getCollection()->toArray();';
+            $html.= '$pagerInfo=$rows->render();';
         }
         //如果没有使用分页，并且没有 query
         if (!$page && !$query) {

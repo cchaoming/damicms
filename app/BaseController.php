@@ -7,6 +7,7 @@ use think\App;
 use think\exception\HttpResponseException;
 use think\exception\ValidateException;
 use think\facade\Config;
+use think\facade\View;
 use think\Response;
 use think\Validate;
 
@@ -183,6 +184,18 @@ abstract class BaseController
             $response = json($result);
         }
         throw new HttpResponseException($response);
+    }
+//兼容以前版本的写法
+    public function assign($var,$value){
+        View::assign($var,$value);
+    }
+
+    public function display($tpl=null,$data = []){
+        return View::fetch($tpl,$data);
+    }
+
+    public function fetch($tpl=null,$data =[]){
+        return View::display($tpl,$data);
     }
 
 }
