@@ -30,6 +30,7 @@ class Base extends BaseController
         parent::__construct($app);
         // 控制器初始化
         $this->initialize();
+        $this->head();
     }
 
     // 初始化
@@ -114,6 +115,61 @@ class Base extends BaseController
         $dao = M('type');
         $t = $dao->where('typeid in(' . $str . ')')->order('typeid')->select();
         $this->assign($assign, $t);
+    }
+
+    public function head()
+    {
+        //读取数据库和缓存
+        $type = M('type');
+        $article = M('article');
+        $config = config('basic');
+        //封装网站配置
+        $this->assign('config', $config);
+        $this->assign('keywords', $config['sitekeywords']);
+        $this->assign('description', $config['sitedescription']);
+        if (cookie('think_template') == 'xinwen') {
+            //滚动公告
+            $data[] = ['status','=',1];
+            $data[] = ['typeid','=',$config['noticeid']];
+            $roll = $article->where($data)->field('aid,title')->orderRaw('addtime desc')->limit($config['rollnum'])->select()->toArray();
+            //处理标题:防止标题过长撑乱页面
+            foreach ($roll as $k => $v) {
+                $roll[$k]['title'] = msubstr($v['title'], 0, 20, 'utf-8');
+            }
+            $this->assign('roll', $roll);
+        }
+        //网站导航
+        $menu = $type->whereRaw('ismenu=1')->orderRaw('drank asc')->select()->toArray();
+        foreach ($menu as $k => $v) {
+            $menuson[$k] = $type->whereRaw('fid=' . $v['typeid'] . ' AND drank <> 0')->orderRaw('drank asc')->select()->toArray();
+            $menu[$k]['submenu'] = $menuson[$k];
+        }
+        $this->assign('menuson', $menuson);
+        $this->assign('menu', $menu);
+        //位置导航
+        $nav = '<a href="' . $config['siteurl'] . '">首页</a>';
+        if ($this->request->param('aid')) {
+            $typeid = get_field('article','aid=' . intval($this->request->param('aid')),'typeid');
+        } elseif($this->request->param('typeid')) {
+            $typeid = intval($this->request->param('typeid'));
+        }
+        if(!empty($typeid)){
+        $typename = get_field('type','typeid=' . $typeid,'typename');
+        $path = get_field('type','typeid=' . $typeid,'path');
+        $typelist = explode('-', $path);
+        //拼装导航栏字符串
+        foreach ($typelist as $v) {
+            if ($v == 0) continue;
+            $s = $type->whereRaw('typeid=' . $v)->value('typename');
+            $nav .= "&nbsp;&gt;&nbsp;<a href=\"" . U('lists/' . $v) . "\">{$s}</a>";
+        }
+        $nav .= "&nbsp;&gt;&nbsp;<a href=\"" . U('lists/' . $typeid) . "\">{$typename}</a>";
+        }
+        $this->assign('nav', $nav);
+        //释放内存
+        unset($type, $article);
+        $this->assign('head', TMPL_PATH . TMPL_NAME . '/head.html');
+        $this->assign('footer', TMPL_PATH . TMPL_NAME . '/footer.html');
     }
 
 }

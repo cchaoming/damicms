@@ -77,7 +77,6 @@ class ControllerBefore
                 @mk_dir(dirname($static_file));
             }
             @file_put_contents($static_file, $c);
-
         }
     }
 }

@@ -435,4 +435,18 @@ function send_smsmess($to_mobile, $content, $isvail = 0)
     return $gets['SubmitResult']['code'];
 }
 
+function geturl($model,$id){
+    if($model=='lists'){
+        $cache_url = S('url_'.$id);
+        if($cache_url){
+            return $cache_url;
+        }
+        $url = get_field('type','typeid='.intval($id) . ' and islink=1','url');
+        if($url != ''){
+            S('url_'.$id,$url);
+            return $url;
+        }
+    }
+    return U($model.'/'.$id);
+}
 ?>

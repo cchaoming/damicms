@@ -11,7 +11,6 @@ class Index extends Base
 
     public function index()
     {
-        $this->assign('tp',5);
         return $this->display('/index');
     }
 
