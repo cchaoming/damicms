@@ -407,7 +407,7 @@ LEFT: -9999px; POSITION: absolute; TOP: -9999px
 	padding-top: 20px;
 	padding-bottom: 20px;
 	overflow: hidden;
-	color#FFF;
+	color:#FFF;
 }
 #light_footer_wrapper {
 	font-size:12px;
@@ -428,7 +428,7 @@ LEFT: -9999px; POSITION: absolute; TOP: -9999px
  width: 50px;
  height:50px;
  line-height: 1.2;
- background:url(../images/back_top.html) left top;;
+ background:url(../images/totop.png) left top;
  color: #fff;
  font-size: 12px;
  text-align: center;
@@ -531,39 +531,6 @@ LEFT: -9999px; POSITION: absolute; TOP: -9999px
 	FONT-SIZE: 12px;
 	z-index:10000;
 }
-
-
-#juhaoyong_xuanfukefuBut {
-	POSITION: relative;
-	TOP: 65px;
-	right: 0px;
-	display:block;
-}
-.juhaoyong_xuanfukefuBut_table {
-	cursor:pointer;
-	width:26px;
-	height:135px;
-	BACKGROUND-IMAGE: url(../images/Kf_bg_but.gif); BACKGROUND-REPEAT: no-repeat;
-}
-
-
-#juhaoyong_xuanfukefuContent {
-	width:143px;
-	display:none;
-}
-.juhaoyong_xuanfukefuContent01 {
-	height:32px;
-	text-align:right;
-	BACKGROUND-IMAGE: url(../images/Kf_bg1.gif); BACKGROUND-REPEAT: no-repeat;
-}
-.juhaoyong_xuanfukefuContent02 {
-	BACKGROUND-IMAGE: url(../images/Kf_bg2.gif); BACKGROUND-REPEAT: no-repeat;
-}
-.juhaoyong_xuanfukefuContent03 {
-	height:51px;
-	BACKGROUND-IMAGE: url(../images/Kf_bg3.gif); BACKGROUND-REPEAT: no-repeat;
-}
-
 
 .jhykefu_box1 {
 	PADDING-BOTTOM: 0px; PADDING-TOP: 5px; MARGIN: 0px 3px; HEIGHT: 18px; text-align:center;

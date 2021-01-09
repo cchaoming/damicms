@@ -47,20 +47,21 @@
 <ul id="headermenu_nav">
 <li><a href='__ROOT__/'>首页</a></li>
 <volist name="menu" id="vo" offset="0" length='7' key="k"> 
-<li><a href="<eq name="vo.url" value="">{$vo.typeid|url=lists,###}<else/>__ROOT__{$vo.url}</eq>" target="<eq name="vo.target" value="1">_self<else/>_blank</eq>">{$vo.typename}</a>
+<li><a href="<eq name="vo.url" value="">{$vo.typeid|geturl='lists',###}<else/>{$vo.url}</eq>" target="<eq name="vo.target" value="1">_self<else/>_blank</eq>">{$vo.typename}</a>
 <!--第二级-->
-<php>if($vo[submenu]){</php>
+<php>if(is_array($vo['submenu'])){</php>
 <!--[if lte IE 6]><table><tr><td><![endif]-->
 <ul>
-<volist name="vo[submenu]" id="sub" key="m">
-<li><a href="{$sub.typeid|url=lists,###}">{$sub.typename}</a>
+<volist name="vo['submenu']" id="sub" key="sub_k">
+<li><a href="{$sub.typeid|geturl='lists',###}">{$sub.typename}</a>
 <!--第三级-->
-<php>if(have_child($sub[typeid])){</php>
+<php>if(have_child($sub['typeid'])){</php>
 <!--[if lte IE 6]><table><tr><td><![endif]-->
+	<php>$sub_typeid=$sub['typeid'];</php>
 <ul>
-<arclist model="type" where="fid=$sub[typeid]" order="drank asc" id="tree">
-<li><a href='{$tree.typeid|url=lists,###}'>{$tree.typename}</a></li>
-</arclist>
+<damicms:arclist model="type" where="fid=$sub_typeid" order="drank asc" id="tree">
+<li><a href='{$tree.typeid|geturl='lists',###}'>{$tree.typename}</a></li>
+</damicms:arclist>
 </ul>
 <!--[if lte IE 6]></td></tr></table></a><![endif]-->
 <php>}</php>
@@ -81,9 +82,9 @@
 <!--幻灯片左右箭头onmouseover="jhyLunboShowPreNextBut(1)" onmouseout="jhyLunboShowPreNextBut(2)"-->
 <div id="Focus">
 <ul>
-<arclist model="flash" where="status=1" order="`rank` asc" id="vo">
+<damicms:arclist model="flash" where="status=1" order="`rank` asc" id="vo">
 <li><a href='{$vo.url}' target='_blank'><img src='__PUBLIC__/Uploads/hd/{$vo.pic}' /></a></li>
-</arclist>
+</damicms:arclist>
 </ul>
 </div>
 <!--幻灯结束-->

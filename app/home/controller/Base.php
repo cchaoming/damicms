@@ -141,9 +141,10 @@ class Base extends BaseController
         //网站导航
         $menu = $type->whereRaw('ismenu=1')->orderRaw('drank asc')->select()->toArray();
         foreach ($menu as $k => $v) {
-            $menuson[$k] = $type->whereRaw('fid=' . $v['typeid'] . ' AND drank <> 0')->orderRaw('drank asc')->select()->toArray();
+            $menuson[$k] = $type->removeOption()->whereRaw('fid=' . $v['typeid'] . ' AND drank <> 0')->orderRaw('drank asc')->select()->toArray();
             $menu[$k]['submenu'] = $menuson[$k];
         }
+        //dd($menu);
         $this->assign('menuson', $menuson);
         $this->assign('menu', $menu);
         //位置导航

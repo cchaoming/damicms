@@ -18,11 +18,11 @@
 <!--当前级的上一级菜单，本级循环二级-->
 <php>$first_id=get_first_father($type['typeid']);$fid=get_field('type','typeid='.$type[typeid],'fid');if($fid==0){ $pid=$type[typeid]; }else{ $pid=$fid; }</php>
 <category parentid="$pid" id="vo">
-<li><A href='{$vo.typeid|url=lists,###}'>{$vo.typename}</A><!--判定是否有子类-->
+<li><A href='{$vo.typeid|geturl='lists',###}'>{$vo.typename}</A><!--判定是否有子类-->
 <php>$cid = get_children($vo['typeid']);if($vo['typeid'] != $cid){</php>
 <ul>
 <category parentid="$vo[typeid]" id="voo">
-<li><a href='{$voo.typeid|url=lists,###}' >{$voo.typename}</a></li> 
+<li><a href='{$voo.typeid|geturl='lists',###}' >{$voo.typename}</a></li>
 </category>
 </ul>
 <php>}</php>
@@ -41,7 +41,7 @@
 <dl>
 <php>$all_ids=get_children($first_id);</php>
 <arclist model="article" where="typeid in($all_ids)" order="hits desc" num="10">
-<dd><a href='{$vo.aid|url='articles',###}' target='_blank' title='{$vo.title}'>{$vo.title}</a></dd>
+<dd><a href='{$vo.aid|geturl='articles',###}' target='_blank' title='{$vo.title}'>{$vo.title}</a></dd>
 </arclist>
 </dl>
 </div>
@@ -61,7 +61,7 @@
 <div class="content">
 <div class='MorePro'>
 <volist name="list" id="vo">
-<div class='albumblock'><div class='inner'><a href='{$vo.aid|url=articles,###}' target='_blank'><img src='__ROOT__{$vo.imgurl|ret_pic}' /></a></div><div class='albumtitle'><a href='{$vo.aid|url=articles,###}' target='_blank'><notempty name="vo.titlecolor"><font color="{$vo.titlecolor}"></notempty>{$vo.title|msubstr=###,0,38,'utf-8'}<notempty name="vo.titlecolor"></font></notempty></a></div></div>
+<div class='albumblock'><div class='inner'><a href='{$vo.aid|geturl='articles',###}' target='_blank'><img src='__ROOT__{$vo.imgurl|ret_pic}' /></a></div><div class='albumtitle'><a href='{$vo.aid|geturl='articles',###}' target='_blank'><notempty name="vo.titlecolor"><font color="{$vo.titlecolor}"></notempty>{$vo.title|msubstr=###,0,38,'utf-8'}<notempty name="vo.titlecolor"></font></notempty></a></div></div>
 </volist>
 </div>
 <div class="clearfix"></div>

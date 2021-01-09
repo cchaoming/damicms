@@ -40,7 +40,7 @@ vertical-align: top;word-break: break-all;}
 <ul>
 <php>$first_id = get_first_father(15);</php>
 <category parentid="$first_id" id="vo">
-<li><A href='{$vo.typeid|url=lists,###}'>{$vo.typename}</A></li>
+<li><A href='{$vo.typeid|geturl='lists',###}'>{$vo.typename}</A></li>
 </category>
 </ul></div></div>
 <div class='HeightTab clearfix'></div>
@@ -49,7 +49,7 @@ vertical-align: top;word-break: break-all;}
 <div class="list">
 <dl>
 <arclist model="article" where="typeid in(19,20)" order="addtime desc" num="5">
-<dd><a href='{$vo.aid|url='articles',###}' target='_blank' title='{$vo.title}'>{$vo.title}</a></dd>
+<dd><a href='{$vo.aid|geturl='articles',###}' target='_blank' title='{$vo.title}'>{$vo.title}</a></dd>
 </arclist>
 </dl>
 </div>

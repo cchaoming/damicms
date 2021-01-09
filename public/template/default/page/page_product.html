@@ -17,12 +17,12 @@
 					<div class="NavTree">
 						<ul id='suckertree1'>
 							<category parentid="$first_id" id="vo">
-								<li><A href='{$vo.typeid|url=lists,###}'>{$vo.typename}</A>
+								<li><A href='{$vo.typeid|geturl='lists',###}'>{$vo.typename}</A>
 									<!--判定是否有子类-->
 									<php>$cid = get_children($vo['typeid']);if($vo['typeid'] != $cid){</php>
 									<ul>
 										<category parentid="$vo[typeid]" id="voo">
-											<li><a href='{$voo.typeid|url=lists,###}' >{$voo.typename}</a></li>
+											<li><a href='{$voo.typeid|geturl='lists',###}' >{$voo.typename}</a></li>
 										</category>
 									</ul>
 									<php>}</php>
@@ -40,7 +40,7 @@
 
 					<dl>
 						<arclist model="article" where="typeid in($all_ids)" order="hits desc" num="10">
-							<dd><a href='{$vo.aid|url='articles',###}' target='_blank' title='{$vo.title}'>{$vo.title}</a></dd>
+							<dd><a href='{$vo.aid|geturl='articles',###}' target='_blank' title='{$vo.title}'>{$vo.title}</a></dd>
 						</arclist>
 					</dl>
 				</div>

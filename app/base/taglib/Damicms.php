@@ -10,8 +10,6 @@ class Damicms extends TagLib {
         'arclist' => ['attr' => 'model,where,order,num,id,page,pagesize,pagevar,sql,field,cache,prefix,group,distinct,showpager', 'close' => 1],
         //类别
         'category' => ['attr' => 'parentid,withself,order,id,other', 'close' => 1],
-
-        'close'     => ['attr' => 'time,format', 'close' => 0], //闭合标签，默认为不闭合
     );
 
     /*万能标签
@@ -71,7 +69,7 @@ class Damicms extends TagLib {
             $html .= '$rows=$m';
             if($distinct){$html.= '->distinct(true)';}
             if($field){$html.= '->field("' . $field . '")';}
-            $html.='->whereRaw("' . $where . '")';
+            if($where){$html.='->whereRaw("' . $where . '")';}
             if($group){$html.='->group("' . $group . '")';}
             if($order){$html.='->orderRaw("' . $order . '")';}
             $html.=  '->paginate('.$pagesize.');$ret=$rows->getCollection()->toArray();';
@@ -86,7 +84,7 @@ class Damicms extends TagLib {
                 $html .= 'if(!$ret=S($cache_key)){ $ret=$m';
                 if($distinct){$html.= '->distinct(' . $distinct . ')';}
                 if($field){$html.= '->field("' . $field . '")';}
-                $html.='->whereRaw("' . $where . '")';
+                if($where){$html.='->whereRaw("' . $where . '")';}
                 if($group){$html.='->group("' . $group . '")';}
                 if($order){$html.='->orderRaw("' . $order . '")';}
                 if($num){$html.='->limit(' . $num . ')';}
@@ -96,7 +94,7 @@ class Damicms extends TagLib {
                 $html .= '$ret=$m';
                 if($distinct){$html.= '->distinct(' . $distinct . ')';}
                 if($field){$html.= '->field("' . $field . '")';}
-                $html.='->whereRaw("' . $where . '")';
+                if($where){$html.='->whereRaw("' . $where . '")';}
                 if($group){$html.='->group("' . $group . '")';}
                 if($order){$html.='->orderRaw("' . $order . '")';}
                 if($num){$html.='->limit(' . $num . ')';}
@@ -150,19 +148,6 @@ class Damicms extends TagLib {
         $parsestr .= $this->tpl->parse($content);
         $parsestr .= '<?php endforeach;endif;?>';
         return $parsestr;
-    }
-
-    /**
-     * 这是一个闭合标签的简单演示
-     */
-    public function tagClose($tag)
-    {
-        $format = empty($tag['format']) ? 'Y-m-d H:i:s' : $tag['format'];
-        $time = empty($tag['time']) ? time() : $tag['time'];
-        $parse = '<?php ';
-        $parse .= 'echo date("' . $format . '",' . $time . ');';
-        $parse .= ' ?>';
-        return $parse;
     }
 
 }

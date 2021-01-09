@@ -24,7 +24,7 @@ background-repeat:no-repeat;
 <ul>
 <php>$first_id = get_first_father($type['typeid']);</php>
 <category parentid="$first_id" id="vo">
-<li><A href='{$vo.typeid|url=lists,###}'>{$vo.typename}</A></li>
+<li><A href='{$vo.typeid|geturl='lists',###}'>{$vo.typename}</A></li>
 </category>
 </ul></div></div>
 
@@ -35,7 +35,7 @@ background-repeat:no-repeat;
 <dl>
 <php>$all_ids=get_children($first_id);</php>
 <arclist model="article" where="typeid in($all_ids)" order="addtime desc" num="5">
-<dd><a href='{$vo.aid|url='articles',###}' target='_blank' title='{$vo.title}'>{$vo.title}</a></dd>
+<dd><a href='{$vo.aid|geturl='articles',###}' target='_blank' title='{$vo.title}'>{$vo.title}</a></dd>
 </arclist>
 </dl>
 </div>
@@ -48,7 +48,7 @@ background-repeat:no-repeat;
 <div class="list">
 <dl>
 <arclist model="article" where="typeid in($all_ids)" order="istop desc,ishot desc" num="5">
-<dd><a href='{$vo.aid|url='articles',###}' target='_blank' title='{$vo.title}'>{$vo.title}</a></dd>
+<dd><a href='{$vo.aid|geturl='articles',###}' target='_blank' title='{$vo.title}'>{$vo.title}</a></dd>
 </arclist>
 </dl>
 </div>

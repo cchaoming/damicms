@@ -129,7 +129,7 @@ function get_children($typeid, $withself = 1, $ret = 0)
     $t = $dao->whereRaw('typeid =' . $typeid)->find();
     if ($t) {
         $str = $t["path"] . "-" . $t["typeid"];
-        $mylist = $dao->whereRaw("1 = instr(path,'" . $str . "')")->select();
+        $mylist = \think\facade\Db::name('type')->whereRaw("1 = instr(path,'" . $str . "')")->select()->toArray();
         foreach ($mylist as $kk => $vv) {
             $temp[] = $vv['typeid'];
         }
@@ -430,7 +430,7 @@ function send_smsmess($to_mobile, $content, $isvail = 0)
     $gets = xml_to_array(SPost($data, $target));
     //var_dump($gets);
     if ($gets['SubmitResult']['code'] == 2 && $isvail == 1) {
-        $_SESSION['mobile_verify'] = md5($mobile_code);
+        session('mobile_verify',md5($mobile_code));
     }
     return $gets['SubmitResult']['code'];
 }
