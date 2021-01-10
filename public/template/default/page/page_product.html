@@ -16,18 +16,18 @@
 				<div class="ClassNav">
 					<div class="NavTree">
 						<ul id='suckertree1'>
-							<category parentid="$first_id" id="vo">
+							<damicms:category parentid="$first_id" id="vo">
 								<li><A href='{$vo.typeid|geturl='lists',###}'>{$vo.typename}</A>
 									<!--判定是否有子类-->
 									<php>$cid = get_children($vo['typeid']);if($vo['typeid'] != $cid){</php>
 									<ul>
-										<category parentid="$vo[typeid]" id="voo">
+										<damicms:category parentid="$vo[typeid]" id="voo">
 											<li><a href='{$voo.typeid|geturl='lists',###}' >{$voo.typename}</a></li>
-										</category>
+										</damicms:category>
 									</ul>
 									<php>}</php>
 								</li>
-							</category>
+							</damicms:category>
 						</ul>
 					</div>
 				</div>
@@ -39,9 +39,9 @@
 				<div class="list">
 
 					<dl>
-						<arclist model="article" where="typeid in($all_ids)" order="hits desc" num="10">
+						<damicms:arclist model="article" where="typeid in($all_ids)" order="hits desc" num="10">
 							<dd><a href='{$vo.aid|geturl='articles',###}' target='_blank' title='{$vo.title}'>{$vo.title}</a></dd>
-						</arclist>
+						</damicms:arclist>
 					</dl>
 				</div>
 
@@ -51,14 +51,14 @@
 		<!--left end-->
 		<!--right start-->
 		<div class="right">
-			<div class="Position"><span>你的位置：{$nav}</span></div>
+			<div class="Position"><span>你的位置：{$nav|raw}</span></div>
 			<div class="HeightTab clearfix"></div>
 			<!--main start-->
 			<div class="main">
 				<!--content start-->
 				<div class="content">
 					<div class="ProInfo">
-						<div class="image"><a href="__ROOT__{$article.imgurl|ret_pic}" rel="clearbox"><img src="__ROOT__{$article.imgurl|ret_pic}"  height="270" width="270" id="product_pic"></a></div>
+						<div class="image"><a href="{$article.imgurl|ret_pic}" rel="clearbox"><img src="{$article.imgurl|ret_pic}"  height="270" width="270" id="product_pic"></a></div>
 						<div class="column">
 							<div class="title"><h3><notempty name="article.titlecolor"><font color="{$article.titlecolor}"></notempty>{$article.title}<present name="nowpage">({$nowpage})</present><notempty name="article.titlecolor"></font></notempty></h3></div>
 							<div class="infos">更新：{$article.addtime}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;点击：<span id="page_hits"></span></div>
@@ -92,7 +92,7 @@
 													<div class="J-shoping-px"></div>
 													<div class="J-shoping-body">
 														<div class="J-shoping-buy">
-															<a class="baseBg" href="__ROOT__/index.php?m=Member&a=gobuy&iscart=1" title="去购物车结算"></a>
+															<a class="baseBg" href="/index.php?m=Member&a=gobuy&iscart=1" title="去购物车结算"></a>
 														</div>
 													</div>
 												</div>
@@ -106,7 +106,7 @@
 										<script type="text/javascript" >
 											//初始化购物车
 											function cart_init(){
-												$.getJSON("__ROOT__/index.php?m=Public&a=ajax_cart_list",{},function(ret){
+												$.getJSON(url_root + "index.php/Public/ajax_cart_list",{},function(ret){
 													var data = ret.data;
 													var num=0;
 													$.each(data,function(key,val) {
@@ -130,7 +130,7 @@
 													var price= $('#gprice').val();
 													var gtype= $('#servial').val();
 													var pic = $('#product_pic').attr('src');
-													location.href="__ROOT__/index.php?m=Member&a=gobuy&iscart=0&id="+id+"&name="+name+"&qty="+qty+"&price="+price+"&gtype="+gtype+"&pic="+pic;
+													location.href="/index.php/Member/gobuy?iscart=0&id="+id+"&name="+name+"&qty="+qty+"&price="+price+"&gtype="+gtype+"&pic="+pic;
 												})
 											});
 										</script>
@@ -142,7 +142,7 @@
 
 					<div class="maincontent clearfix">
 						<div class="IntroTitle">介绍</div>
-						　{$article.content}
+						　{$article.content|raw}
 					</div>
 					<eq name="config.isping" value="1">
 						<div class="IntroTitle">评论</div>
@@ -159,7 +159,7 @@
 								<div id="pinglunfbt">发表评论</div>
 								<input type="hidden" name="aid" id="aid" value="{$article.aid}">
 								<textarea rows="20" name="content" cols="50"  style="width:100%; height:90px; border:1px solid #e6e6e6;" id="plContent"></textarea>
-								<div class="qdfb">大名:<input name="author" class="button" type="text" value="<neq name='_SESSION.dami_username' value=''>{$_SESSION.dami_username}<else/>游客</neq>" id="Author"  maxlength="20" size="12"/>
+								<div class="qdfb">大名:<input name="author" class="button" type="text" value="<if session('dami_username')>{:session('dami_username')}<else/>游客</if>" id="Author"  maxlength="20" size="12"/>
 									<input type="button" value="确认发表" name="submit"  id="sendGuest" class="button submit" onClick="AddNew()"></div>
 							</div>
 						</div>
@@ -174,7 +174,7 @@
 						<br>
 
 					</eq>
-					<div class="prenext">{$updown}</div>
+					<div class="prenext">{$updown|raw}</div>
 					<!--content end-->
 				</div>
 				<!--main end-->

@@ -9,7 +9,7 @@
 <title>页面提示</title>
 <meta http-equiv='Refresh' content='{$waitSecond};URL={$jumpUrl}'>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="__PUBLIC__/css/bootstrap.min.css" type=text/css rel=stylesheet>
+<link href="__PUBLIC__css/bootstrap.min.css" type=text/css rel=stylesheet>
 </head>
 <body>
 <div class="panel panel-default" style="width:96%;margin:20% auto;">

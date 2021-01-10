@@ -4,7 +4,7 @@ declare (strict_types = 1);
 namespace app\home\controller;
 
 use app\base\model\ArticleView;
-use extend\until\Page;
+use until\Page;
 
 class Article extends Base
 {
@@ -70,7 +70,7 @@ class Article extends Base
             $alist['content'] = $this->mouseimg($alist['content']);
         }
 //文章内分页处理
-        if ($alist['pagenum'] == 0) {
+        if (intval($alist['pagenum']) <= 0) {
 //手动分页
             $alist['content'] = $this->diypage($alist['content']);
         } else {
@@ -78,7 +78,9 @@ class Article extends Base
             $alist['content'] = $this->autopage($alist['pagenum'], $alist['content']);
         }
 //文章内投票
+        if(intval($alist['voteid'])>0){
         $this->vote($alist['voteid']);
+        }
 //心情投票
         $url = $this->request->root();//用于心情js的根路径变量
         $this->assign('url', $url);
@@ -117,14 +119,13 @@ class Article extends Base
         unset($rows, $updown, $up, $down, $map, $lastpage, $nextpage);
         //相关文章
         if ($alist['keywords'] != '') {
-            $map[] = ['status','=',1];
-            $relate = $article->removeOption()->where($map);
+            $relate = $article->removeOption()->where('status','=',1);
             $keywords = explode(",", $alist['keywords']);
             foreach ($keywords as $k => $v) {
                 if ($k == 0) {
-                    $relate = $relate->where(['keywords','like',"%{$v}%"]);
+                    $relate = $relate->where('keywords','like',"%{$v}%");
                 } else {
-                    $relate = $relate->whereOr(['keywords','like',"%{$v}%"]);
+                    $relate = $relate->whereOr('keywords','like',"%{$v}%");
                 }
             }
             $klist = $relate->field('aid,title,imgurl,addtime')->limit(6)->select()->toArray();
@@ -135,7 +136,7 @@ class Article extends Base
 //释放内存
         unset($article, $alist, $klist, $map);
 //模板输出
-        $this->display($this->template. $page_model);
+        return $this->display($this->template. $page_model);
     }
 
     //投票模块

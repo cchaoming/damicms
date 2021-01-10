@@ -11,8 +11,8 @@
     <h3 class="panel-title">操作信息</h3>
   </div>
   <div class="panel-body">
-  <img SRC='../Public/images/update.gif' class='img' align='absmiddle' BORDER='0'> {$error|htmlspecialchars|nl2br}<br>
-  您可以选择 [ <a href="{$FCS.SERVER.PHP_SELF}">重试</a> ] [ <a href="javascript:history.back()">返回</a> ] 或者 [ <a href="__URL__?m=index&a=index">回到首页</a> ]
+  <img SRC='__PUBLIC__/images/error.png' class='img' align='absmiddle' BORDER='0'> {$error|htmlspecialchars|nl2br}<br>
+  您可以选择 [ <a href="javascript:history.back()">返回</a> ] 或者 [ <a href="/">回到首页</a> ]
   </div></div>
 </body>
 </html>
