@@ -19,6 +19,7 @@ class Base extends BaseController
      * @var array
      */
     protected $middleware = [ControllerBefore::class];
+    protected $title;
 
     /**
      * 构造方法
@@ -37,8 +38,10 @@ class Base extends BaseController
     protected function initialize()
     {
         // 查找所有系统设置表数据
-        $this->template = './template/' . TMPL_NAME . '/';
+        $abs_path = '/template/' . TMPL_NAME . '/';
+        $this->template = '.' . $abs_path;
         config('view.view_path', $this->template);
+        config('view.tpl_replace_string.__TMPL__', $abs_path);
         //获取访客权限
         if (intval(cookie('first_look')) != 1 && !session('dami_uid')) {
             if (config('basic.isread') == 1) {
@@ -124,6 +127,7 @@ class Base extends BaseController
         $article = M('article');
         $config = config('basic');
         //封装网站配置
+        $this->assign('title', $this->title);
         $this->assign('config', $config);
         $this->assign('keywords', $config['sitekeywords']);
         $this->assign('description', $config['sitedescription']);
@@ -131,7 +135,7 @@ class Base extends BaseController
             //滚动公告
             $data[] = ['status','=',1];
             $data[] = ['typeid','=',$config['noticeid']];
-            $roll = $article->where($data)->field('aid,title')->orderRaw('addtime desc')->limit($config['rollnum'])->select()->toArray();
+            $roll = $article->where($data)->field('aid,title')->orderRaw('addtime desc')->limit($config['rollnum'])->cache(300)->select()->toArray();
             //处理标题:防止标题过长撑乱页面
             foreach ($roll as $k => $v) {
                 $roll[$k]['title'] = msubstr($v['title'], 0, 20, 'utf-8');
@@ -163,13 +167,13 @@ class Base extends BaseController
             $typeid = intval($this->request->param('typeid'));
         }
         if(!empty($typeid)){
-        $typename = get_field('type','typeid=' . $typeid,'typename');
-        $path = get_field('type','typeid=' . $typeid,'path');
+        $typename = get_field('type','typeid=' . $typeid,'typename',60);
+        $path = get_field('type','typeid=' . $typeid,'path',60);
         $typelist = explode('-', $path);
         //拼装导航栏字符串
         foreach ($typelist as $v) {
             if ($v == 0) continue;
-            $s = $type->whereRaw('typeid=' . $v)->value('typename');
+            $s = get_field('type','typeid=' . $v,'typename',60);
             $nav .= "&nbsp;&gt;&nbsp;<a href=\"" . U('lists/' . $v) . "\">{$s}</a>";
         }
         $nav .= "&nbsp;&gt;&nbsp;<a href=\"" . U('lists/' . $typeid) . "\">{$typename}</a>";

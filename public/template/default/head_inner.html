@@ -45,37 +45,37 @@
 <div id="NavLink">
 <div class="NavBG">
 <!--头部菜单-->
-<!--头部菜单-->
-<ul id="headermenu_nav">
-<li><a href='__ROOT__/'>首页</a></li>
-<volist name="menu" id="vo" offset="0" length='7' key="k"> 
-<li><a href="<eq name="vo.url" value="">{$vo.typeid|geturl='lists',###}<else/>__ROOT__{$vo.url}</eq>" target="<eq name="vo.target" value="1">_self<else/>_blank</eq>">{$vo.typename}</a>
-<!--第二级-->
-<php>if($vo[submenu]){</php>
-<!--[if lte IE 6]><table><tr><td><![endif]-->
-<ul>
-<volist name="vo[submenu]" id="sub" key="m">
-<li><a href="{$sub.typeid|geturl='lists',###}">{$sub.typename}</a>
-<!--第三级-->
-<php>if(have_child($sub[typeid])){</php>
-<!--[if lte IE 6]><table><tr><td><![endif]-->
-<ul>
-<arclist model="type" where="fid=$sub[typeid]" order="drank asc" id="tree">
-<li><a href='{$tree.typeid|geturl='lists',###}'>{$tree.typename}</a></li>
-</arclist>
-</ul>
-<!--[if lte IE 6]></td></tr></table></a><![endif]-->
-<php>}</php>
-</li>
-</volist>
-</ul>
-<!--[if lte IE 6]></td></tr></table></a><![endif]-->
-<php>}</php>
-</li>
-</volist>
-<!--单页调用-->
-<li><a href='{:U('Public/single',array('aid'=>133))}'>售后服务</a></li>
-</ul>
+	<ul id="headermenu_nav">
+		<li><a href='__ROOT__/'>首页</a></li>
+		<volist name="menu" id="vo" offset="0" length='7' key="k">
+			<li><a href="<eq name="vo.url" value="">{$vo.typeid|geturl='lists',###}<else/>{$vo.url}</eq>" target="<eq name="vo.target" value="1">_self<else/>_blank</eq>">{$vo.typename}</a>
+				<!--第二级-->
+				<php>if(is_array($vo['submenu'])){</php>
+				<!--[if lte IE 6]><table><tr><td><![endif]-->
+				<ul>
+					<volist name="vo['submenu']" id="sub" key="sub_k">
+						<li><a href="{$sub.typeid|geturl='lists',###}">{$sub.typename}</a>
+							<!--第三级-->
+							<php>if(have_child($sub['typeid'])){</php>
+							<!--[if lte IE 6]><table><tr><td><![endif]-->
+							<php>$sub_typeid=$sub['typeid'];</php>
+							<ul>
+								<damicms:arclist model="type" where="fid=$sub_typeid" order="drank asc" id="tree">
+									<li><a href='{$tree.typeid|geturl='lists',###}'>{$tree.typename}</a></li>
+								</damicms:arclist>
+							</ul>
+							<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+							<php>}</php>
+						</li>
+					</volist>
+				</ul>
+				<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+				<php>}</php>
+			</li>
+		</volist>
+		<!--单页调用-->
+		<li><a href='{:U('Public/single',array('aid'=>133))}'>售后服务</a></li>
+	</ul>
 </div>
 <div class="clearfix"></div>
 </div>

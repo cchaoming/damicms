@@ -126,15 +126,15 @@ class Damicms extends TagLib {
         $other = isset($tag['other']) ? $tag['other'] : '';
         $order = !empty($tag['order']) ? $tag['order'] : 'drank asc';
         $key = !empty($tag['key']) ? $tag['key'] : 'i';
-        $withself = 'false';
+        $withself = false;
         if (!empty($tag['withself'])) $withself = $tag['withself'];
 //定义页面解析的变量
         $ret = !empty($tag['id']) ? $tag['id'] : 'vo'; //定义数据查询的结果存放变量
 //拼凑输出字符
         $where = '';
-        if ($withself == 'false') {
+        if ($withself == false) {
             $where .= "fid={$parentid} and ";
-        } else if ($withself == 'true') {
+        } else if ($withself) {
             $where .= "(typeid={$parentid} or fid={$parentid}) and ";
         }
         if ($other != '') {
@@ -145,7 +145,7 @@ class Damicms extends TagLib {
         $parsestr .= 'if(is_array($result)): $' . $key . ' = 0;';
         $parsestr .= 'foreach($result as $key=>$' . $ret . '):';
         $parsestr .= '++$' . $key . ';?>';
-        $parsestr .= $this->tpl->parse($content);
+        $parsestr .= $content;
         $parsestr .= '<?php endforeach;endif;?>';
         return $parsestr;
     }

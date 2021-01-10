@@ -83,7 +83,7 @@
 <!--links start-->
 <div id="Links">
 <span>友情链接：</span>
-<damicms:arclist model='link' where="status=1" order='rank asc' id='vo'>
+<damicms:arclist model='link' where="status=1" order=' `rank` asc' id='vo' >
 <a href='{$vo.url}' target='_blank' >{$vo.title}</a>
 </damicms:arclist>
 </div>

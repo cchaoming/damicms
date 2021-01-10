@@ -23,10 +23,10 @@ function get_back_url()
 }
 
 //获取某一字段
-function get_field($table, $where, $field, $with_prefix = true)
+function get_field($table, $where, $field, $cache=false,$with_prefix = true)
 {
     $db_model = $with_prefix ? \think\facade\Db::name($table) : \think\facade\Db::table($table);
-    $t = $db_model->whereRaw($where)->value($field);
+    $t = $db_model->whereRaw($where)->cache($cache)->value($field);
     //echo $db_model->getLastSql();
     return $t;
 }
@@ -88,19 +88,12 @@ function alert($msg, $url = null)
     header('Content-type: text/html; charset=utf-8');
     $str = "<script language=\"javascript\">";
     $str .= "alert('{$msg}');";
-    switch ($url) {
-        case 1:
-            $s = "window.history.go(-1);";
-            break;
-        case 2:
-            $s = "location.href='{$url}';";
-            break;
-        case 3:
-            $s = "self.close();";
-            break;
-        default:
-            $s = "window.history.go(-1);";
-
+    if($url ==3){
+        $s = "self.close();";
+    }else if(is_string($url)){
+        $s = "location.href='{$url}';";
+    }else{
+        $s = "window.history.go(-1);";
     }
     $str .= $s;
     $str .= "</script>";

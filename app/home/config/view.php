@@ -11,7 +11,5 @@ return [
         '__ROOT__'=> '/',
         '__PUBLIC__'=>'/public/',
         '__TMPL__'=> $cur_template,
-        '__CSS__'=>  $cur_template.'css/',
-        '__JS__'=> $cur_template.'js/',
     ]
 ];

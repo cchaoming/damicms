@@ -186,7 +186,7 @@ function get_first_father($typeid, $i = 1)
 {
     $t = \think\facade\Db::name('type')->whereRaw('typeid =' . $typeid)->find();
     if ($t) {
-        if ($t[fid] == 0) {
+        if ($t['fid'] == 0) {
             return $typeid;
         } else {
             $arr = explode("-", $t["path"]);
