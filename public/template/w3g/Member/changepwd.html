@@ -6,7 +6,7 @@ $('.ui-title').text('修改密码');//标题
 <div data-role="content">
 <form class="form-horizontal" role="form" method="post" action="" data-ajax="false">
   <div class="form-group">
-    <label for="inputEmail3" class="col-sm-2 control-label">用户名:{$_SESSION.dami_username}</label>
+    <label for="inputEmail3" class="col-sm-2 control-label">用户名:{:session('dami_username')}</label>
   </div>
 
       <input type="password" class="form-control" id="oldpwd" name="oldpwd" value="" placeholder="您的旧密码">

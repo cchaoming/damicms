@@ -24,7 +24,7 @@ function goods_calc(){
 //删除某购物车产品
 function goods_del(obj,id){
     if(confirm('您确定不需要购买此物品？')){
-        $.post("__ROOT__/index.php?m=Public&a=ajax_del_cart",{id:id},function(result){});
+        $.post("/index.php/Publics/ajax_del_cart",{id:id},function(result){});
         $(obj).parent().parent().remove();
         goods_calc();
     }

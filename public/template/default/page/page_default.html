@@ -69,12 +69,12 @@ background-repeat:no-repeat;
 	(<span id="dianzhan_num_{$article.aid}"></span>) <a href="javascript:dianzhan({$article[aid]});">点赞</a></div>
 <div class="maincontent clearfix">
 <div id="MainContent" class="maincontent clearfix">
-{$article.content}
+{$article.content|raw}
 </div>
 </div>
 <!--详细页的分页自己美化-->
 <div class="clearfix">{$page|raw}</div>
-<div class="prenext">{$updown}</div>
+<div class="prenext">{$updown|raw}</div>
 <!--评论区-->
 
 <div class="IntroTitle">评论</div>
@@ -91,13 +91,13 @@ background-repeat:no-repeat;
 			  <div id="pinglunfbt">发表评论</div>
 			  <input type="hidden" name="aid" id="aid" value="{$article.aid}">
 			  <textarea rows="20" name="content" cols="50"  style="width:100%; height:90px; border:1px solid #e6e6e6;" id="plContent"></textarea>
-			  <div class="qdfb">大名:<input name="author" class="button" type="text" value="<neq name='_SESSION.dami_username' value=''>{$_SESSION.dami_username}<else/>游客</neq>" id="Author"  maxlength="20" size="12"/>
+			  <div class="qdfb">大名:<input name="author" class="button" type="text" value="<if session('dami_username')>{:session('dami_username')}<else/>游客</neq>" id="Author"  maxlength="20" size="12"/>
 			  <input type="button" value="确认发表" name="submit"  id="sendGuest" class="button submit" onClick="AddNew()"></div>
 			  </div>
          </div>
 <script type="text/javascript" src="__TMPL__/js/ajaxpl.js"></script>
 <script>
-var root = '__ROOT__';
+var root = '';
 $(function(){
 	showre({$article.aid},1);
 	$('#page_hits').load('{:U('Api/hits_js?aid='.$article['aid'])}');

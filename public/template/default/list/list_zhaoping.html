@@ -67,7 +67,7 @@
                 <td bgcolor="#F7F7F7" width="16%"><div align="center">招聘职位:</div></td>
                 <td bgcolor="#FFFFFF" width="29%">&nbsp;<a href="{$vo.aid|geturl='articles',###}"><notempty name="vo.titlecolor"><font color="{$vo.titlecolor}"></notempty>{$vo.title|msubstr=###,0,38,'utf-8'}<notempty name="vo.titlecolor"></font></notempty></a></td>
                 <td bgcolor="#F7F7F7" width="8%"><div align="center">描述:</div></td>
-                <td bgcolor="#FFFFFF" width="21%">&nbsp;{$vo.description}</td>
+                <td bgcolor="#FFFFFF" width="21%">&nbsp;{$vo.description|raw}</td>
 				  <td bgcolor="#F7F7F7" width="10%"><div align="center">发布日期:</div></td>
                 <td bgcolor="#FFFFFF"  width="17%">&nbsp;{:msubstr($vo.addtime,0,10)}</td>
                 </tr>

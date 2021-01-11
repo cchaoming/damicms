@@ -17,7 +17,7 @@
 <div class="NavTree">
 <ul id='suckertree1'>
 <volist name='member_menu' id='vo'>
-<li><A h<a href="__ROOT__{$vo.url}" target="_self">{$vo.name}</A>
+<li><A h<a href="{$vo.url}" target="_self">{$vo.name}</A>
 <!--判定是否有子类-->
 </li>
 </volist>
@@ -93,7 +93,7 @@
 					<dt>商户订单号：</dt>
                     <dd>
                         <span class="null-star">*</span>
-                        <input size="30" name="WIDout_trade_no" value="CZ{:time()}-{$_SESSION[dami_uid]}" />
+                        <input size="30" name="WIDout_trade_no" value="CZ{:time()}-{:session('dami_uid')}" />
                         <span>商户网站订单系统中唯一订单号，必填
 </span>
                     </dd>
@@ -180,7 +180,8 @@
   <th width="200" align="center">时间</th>
   <th align="center">备注</th>
   </tr>
-<damicms:arclist model="money_log" where="log_type=0 and uid=$_SESSION[dami_uid]" id="vo" order="addtime desc">
+    <php>$uid=session('dami_uid');</php>
+<damicms:arclist model="money_log" where="log_type=0 and uid=$uid" id="vo" order="addtime desc">
 <tr>
   <td align="center">{$vo.log_id}</td>
   <td align="center">{$vo.price}</td>

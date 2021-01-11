@@ -11,20 +11,21 @@
 @Date 2011-11-18 11:58:00 $
  *************************************************************/
 namespace app\home\controller;
+use think\facade\Cookie;
+
 class Vote extends Base
 {
 
     public function index()
     {
-        if(empty($_GET['id']))
+        $id = (int)$this->request->param('id',0);
+        if(!$id)
         {
             alert('非法操作!',3);
         }
-        inject_check($_GET['id']);
-
         //读取数据库
         $vote = M('vote');
-        $vo = $vote->whereRaw('id='.intval($_GET['id']))->find();
+        $vo = $vote->whereRaw('id='.$id)->find();
 
         //业务处理
         if(!$vo)
@@ -73,7 +74,7 @@ class Vote extends Base
             alert('请选择投票项!',1);
         }
         inject_check($_POST['id']);
-        if(Cookie::is_set('vote'.$_POST['id']))
+        if(Cookie::has('vote'.$_POST['id']))
         {
             alert('您已投过票了!',1);
         }

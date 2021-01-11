@@ -112,7 +112,7 @@
 													$.each(data,function(key,val) {
 														if(typeof(val.name) != "undefined"){
 															num++;
-															if(typeof(val.option.pic) != "undefined" && val.option.pic !=''){var pic=val.option.pic;}else{var pic='__ROOT__/Public/image/nopic.gif';}
+															if(typeof(val.option.pic) != "undefined" && val.option.pic !=''){var pic=val.option.pic;}else{var pic='/Public/image/nopic.gif';}
 															$('.J-shoping-body').prepend('<div class="J-shoping-list" data-bid="' + val.id + '" data-id="' + val.option.gid + '" data-type="' + val.option.gtype + '"><a href="#" title=""><img src="' + pic + '" width="50"height="50"/></a><div class="J-shoping-list-a"><p>' + val.name + '【' + val.qty + '件】</p><p><span class="shop_left">'+ val.option.gtype + '</span><span class="shop_right"><em>' + val.price + '</em>元</span></p></div><div class="baseBg J-shoping-close"></div></div>');
 														};
 														$('.J-shoping-num').text(num);

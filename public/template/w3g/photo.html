@@ -43,7 +43,7 @@
   <div class="gallerycontent">
     <volist name='list' id='vo' key='k'>
 	<a href="#imgshow" data-transition="pop" data-rel="dialog" <eq name='k' value='1'>class="first"</eq>  <eq name='k' value='$count'>class="last"</eq>>
-      <img src="__ROOT__{$vo.imgurl}" alt="{$vo.title}" width="80" height="80"/>
+      <img src="{$vo.imgurl}" alt="{$vo.title}" width="80" height="80"/>
     </a>
 	</volist>
   </div>

@@ -24,7 +24,7 @@ $action = "./Trade/Wxpay/dopay/jsapi.php";
         <input name="WIDsubject" value="{$config.sitetitle}会员在线充值" placeholder="充值名称(*）"/>
         <input size="30" name="WIDbody" value="{$config.sitetitle}会员在线充值" placeholder="{$config.sitetitle}会员在线充值"/>
         <input size="30" name="WIDreceive_mobile" placeholder="联系电话"/>
-        <input size="30" name="WIDout_trade_no" type="hidden" value="CZ{:time()}-{$_SESSION[dami_uid]}"/>
+        <input size="30" name="WIDout_trade_no" type="hidden" value="CZ{:time()}-{:session('dami_uid')}"/>
         <?php if (strpos($user_agent, 'MicroMessenger') === false) { ?>
 					<span style="display:none;">
                     <dt>商品展示地址：</dt>

@@ -61,7 +61,7 @@
 <div class="content">
 <div class='MorePro'>
 <volist name="list" id="vo">
-<div class='albumblock'><div class='inner'><a href='{$vo.aid|geturl='articles',###}' target='_blank'><img src='__ROOT__{$vo.imgurl|ret_pic}' /></a></div><div class='albumtitle'><a href='{$vo.aid|geturl='articles',###}' target='_blank'><notempty name="vo.titlecolor"><font color="{$vo.titlecolor}"></notempty>{$vo.title|msubstr=###,0,38,'utf-8'}<notempty name="vo.titlecolor"></font></notempty></a></div></div>
+<div class='albumblock'><div class='inner'><a href='{$vo.aid|geturl='articles',###}' target='_blank'><img src='{$vo.imgurl|ret_pic}' /></a></div><div class='albumtitle'><a href='{$vo.aid|geturl='articles',###}' target='_blank'><notempty name="vo.titlecolor"><font color="{$vo.titlecolor}"></notempty>{$vo.title|msubstr=###,0,38,'utf-8'}<notempty name="vo.titlecolor"></font></notempty></a></div></div>
 </volist>
 </div>
 <div class="clearfix"></div>

@@ -20,7 +20,7 @@
 <div data-role="header">
 		<a href="#"  data-transition="slidefade" class="ui-btn-right ui-btn ui-shadow ui-corner-all ui-icon-back ui-btn-icon-notext" data-theme="a" data-rel="back"></a>
 		<h1>{$type.typename}</h1>
-		<a href="__ROOT__/"  data-direction="reverse" class="ui-btn-left ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext" data-ajax="false"></a>
+		<a href="__ROOT__"  data-direction="reverse" class="ui-btn-left ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext" data-ajax="false"></a>
 </div><!-- /header -->
 <div  data-role="content">
 		<php>if($child_list){</php>
@@ -37,7 +37,7 @@
 		<volist name="list" id="vo">
 		<li>
 				<a href="{$vo.aid|url=articles,###}" rel="external">
-	<img src="__ROOT__{$vo.imgurl}" alt="{$vo.title}" style="width:80px; height:54px;border-radius:5px; margin-top:15px;" />
+	<img src="{$vo.imgurl}" alt="{$vo.title}" style="width:80px; height:54px;border-radius:5px; margin-top:15px;" />
 										<h3>{$vo.title} </h3>
 					<p>{$vo.description}</p></a>
 	</li>

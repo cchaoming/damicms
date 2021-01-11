@@ -62,7 +62,7 @@ label.valid {
             }
             function f_timeout(){
                 if(isPhoneNum()){
-                    $.getJSON("__ROOT__/index.php?m=Member&a=sms_verify&mobile=" + $("#mobileIpt").val(), function(json){
+                    $.getJSON("/index.php/Member/sms_verify?mobile=" + $("#mobileIpt").val(), function(json){
                         alert("JSON Data: " + json.users[3].name);
                     });
                     $('#timeb1').html('<span id="timeb2">60</span>秒后重新获取');

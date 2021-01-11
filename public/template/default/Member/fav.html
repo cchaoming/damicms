@@ -17,7 +17,7 @@
 <div class="NavTree">
 <ul id='suckertree1'>
 <volist name='member_menu' id='vo'>
-<li><A h<a href="__ROOT__{$vo.url}" target="_self">{$vo.name}</A>
+<li><A h<a href="{$vo.url}" target="_self">{$vo.name}</A>
 <!--判定是否有子类-->
 </li>
 </volist>
@@ -55,7 +55,7 @@
 //ajax删除收藏
 function del_fav(aid){
 if(confirm('您确定删除吗?')){
-$.getJSON('__ROOT__/index.php?m=Member&a=fav_del',{ aid:aid },function(data){
+$.getJSON('/index.php/Member/fav_del',{ aid:aid },function(data){
 						if(data.status == 1){
 						location.reload();
 						}else{

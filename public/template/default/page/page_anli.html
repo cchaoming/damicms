@@ -59,15 +59,15 @@
 <!--content start-->
 <div class="content">
 <div class="ProInfo" style="text-align:center;">
-<img src="__ROOT__{$article.imgurl}" width="500" height="350"  >
+<img src="{$article.imgurl}" width="500" height="350"  >
 </div>
 
 <div class="maincontent clearfix">
 <div class="IntroTitle">介绍</div>
-　{$article.content}	
+　{$article.content|raw}
 </div>
 
-<div class="prenext">{$updown}</div>
+<div class="prenext">{$updown|raw}</div>
 <!--content end-->
 </div>
 <!--main end-->

@@ -38,7 +38,7 @@ $(document).bind("mobileinit", function() {
 <else/>
 <damicms:arclist model="member_menu" where="is_show=1" order="drand asc" key="k">
 <eq name="k" value="4"><li><a href="{:U('Member/gobuy',array('iscart'=>1))}" data-role="button" data-icon="grid" data-ajax="false">我的购物车</a></li></eq>
-<li><a href="__ROOT__{$vo.url}" data-role="button">{$vo.name}</a></li>
+<li><a href="{$vo.url}" data-role="button">{$vo.name}</a></li>
 </damicms:arclist>
 
 <li><a href="{:U('Member/dologout')}" data-role="button" data-ajax="false">注销登陆</a></li>
@@ -59,7 +59,7 @@ $(document).bind("mobileinit", function() {
        <!-- 特殊处理下单页关于我们-->
         <li><a href="{:url(lists,14)}"><img src="__TMPL__/images/icon/contact.png" alt="News" class="ui-li-icon">关于我们</a></li>
 		<volist name="menu" id="vo" offset="1" length='7' key='k'> 
-			<li><a href="<eq name="vo.url" value="">{$vo.typeid|url=lists,###}<else/>__ROOT__{$vo.url}</eq>" rel="external" data-transition="slidedown" <eq name='vo.typeid' value='26'>data-ajax="false"</eq>>
+			<li><a href="<eq name="vo.url" value="">{$vo.typeid|url=lists,###}<else/>{$vo.url}</eq>" rel="external" data-transition="slidedown" <eq name='vo.typeid' value='26'>data-ajax="false"</eq>>
 			<neq name="icon[$k+1]" value=""><img src="__TMPL__/images/icon/{$icon[$k+1]}" alt="News" class="ui-li-icon"></neq>{$vo.typename}</a></li> 
 			</volist>
 			<li><a href="#links" data-transition="slidedown"><img src="__TMPL__/images/icon/links.png" alt="Links" class="ui-li-icon">友情链接</a></li>		

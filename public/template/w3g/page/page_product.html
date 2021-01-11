@@ -26,13 +26,13 @@ max-width:100%;}
 		<div data-role="header">
 		<a href="#"  data-transition="slidefade" class="ui-btn-right ui-btn ui-shadow ui-corner-all ui-icon-back ui-btn-icon-notext" data-theme="a" data-rel="back"></a>
 		<h1>{$type.typename}</h1>
-		<a href="__ROOT__/"  data-direction="reverse" class="ui-btn-left ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext" data-ajax="false"></a>
+		<a href="__ROOT__"  data-direction="reverse" class="ui-btn-left ui-btn ui-shadow ui-corner-all ui-icon-home ui-btn-icon-notext" data-ajax="false"></a>
 	</div><!-- /header -->
 	<div data-role="content" >
 		
 <div id="wrapper">
 <h1><notempty name="article.titlecolor"><font color="{$article.titlecolor}"></notempty>{$article.title}<present name="nowpage">({$nowpage})</present><notempty name="article.titlecolor"></font></notempty></h1>
-<p align="center"><img src="__ROOT__{$article.imgurl}" border="0"  style="max-width:305px; max-height:260px;"  id="product_pic"></p>
+<p align="center"><img src="{$article.imgurl}" border="0"  style="max-width:305px; max-height:260px;"  id="product_pic"></p>
 
 <p>类别/级别/颜色：<php>$c_arr = explode('|',$article['color']);$p_arr = explode('|',$article['price']);if(count($c_arr)!=count($p_arr) || count($c_arr)<1){echo('参数错误');exit();}</php>
 									<volist name="c_arr" id="vo">
@@ -63,7 +63,7 @@ max-width:100%;}
 			<div class="J-shoping-px"></div>
 			<div class="J-shoping-body">
 				<div class="J-shoping-buy">
-					<a class="baseBg" href="__ROOT__/index.php?m=Member&a=gobuy&iscart=1" title="去购物车结算"></a>
+					<a class="baseBg" href="/index.php/Member/gobuy?iscart=1" title="去购物车结算"></a>
 				</div>
 			</div>
 		</div>
@@ -74,7 +74,7 @@ max-width:100%;}
 <link href="__TMPL__/css/shopping.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="__PUBLIC__/js/jQuery-shopping.js"></script>
 <script type="text/javascript" >
-var url_root = '__ROOT__';
+var url_root = '';
 //初始化购物车
 function cart_init(){
 $.getJSON("/index.php/Publics/ajax_cart_list",{},function(ret){
@@ -116,16 +116,16 @@ var qty= $('#gnum').val();
 var price= $('#gprice').val();
 var gtype= $('#servial').val();
 var pic = $('#product_pic').attr('src');
-location.href="__ROOT__/index.php?m=Member&a=gobuy&iscart=0&id="+id+"&name="+name+"&qty="+qty+"&price="+price+"&gtype="+gtype+"&pic="+pic;
+location.href="/index.php/Member/gobuy?iscart=0&id="+id+"&name="+name+"&qty="+qty+"&price="+price+"&gtype="+gtype+"&pic="+pic;
 })
 });
 </script>
 </eq>
 </if>
-<p>{$article.content}</p>
+<p>{$article.content|raw}</p>
 </p>
-    <neq name="lastpage" value=""><div class="ui-bar ui-bar-a ui-corner-all" data-icon="arrow-l" data-theme="a" data-iconpos="left">{$lastpage}</div></neq>
-    <neq name="nextpage" value=""><div class="ui-bar ui-bar-a ui-corner-all" data-icon="arrow-r" data-theme="a" data-iconpos="left">{$nextpage}</div></neq>
+<neq name="lastpage" value=""><div class="ui-bar ui-bar-a ui-corner-all" data-icon="arrow-l" data-theme="a" data-iconpos="left">{$lastpage}</div></neq>
+<neq name="nextpage" value=""><div class="ui-bar ui-bar-a ui-corner-all" data-icon="arrow-r" data-theme="a" data-iconpos="left">{$nextpage}</div></neq>
 
 <p></p>
 </div>
