@@ -12,6 +12,7 @@
  *************************************************************/
 namespace app\home\controller;
 use think\facade\Session;
+use until\Page;
 
 class Guestbook extends Base
 {
@@ -91,13 +92,11 @@ class Guestbook extends Base
             exit;
         }
         //分页处理
-        C('VAR_PAGE','page');
-        import('ORG.Util.Page');
         $count = $pl->removeOption()->where($data)->count();
         $this->assign('allnum',$count);
         //每10条分页
         $pagenum = 5;
-        $p = new Page($count,$pagenum);
+        $p = new Page($count,$pagenum,'','page');
         //总页数
         $pages = ceil($count / $pagenum);
         $plist = $pl->removeOption()->where($data)->orderRaw('addtime desc')->limit($p->firstRow,$pagenum)->select()->toArray();
@@ -119,7 +118,7 @@ class Guestbook extends Base
         $this->assign('lastnum',$pagenum);
         $this->assign('list',$pp);
         header("Content-type: text/xml; charset=utf-8");
-        return $this->display(TMPL_PATH.cookie('think_template').'/guestbook_pl.html');
+        return $this->display($this->template.'/guestbook_pl.html');
     }
 }
 ?>
