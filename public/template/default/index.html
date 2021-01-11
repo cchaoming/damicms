@@ -61,8 +61,8 @@
 <div class='jhyArticleListMainBlock'>
 <!--行业新闻开始-->
 <div class='juhaoyongALCommonUnit2'><div class='topic'><div class='TopicTitle'><a  href='{:geturl('lists',19)}' target='_blank'>行业新闻</a></div><div class='TopicMore'> <a  href='{:geturl('lists',19)}' target='_blank'><img src='__TMPL__/images/more.png'></a></div></div><div class='juhaoyongCommonUnitArticleList'><table class='JHYBlockTable' width='100%' border='0' cellspacing='0' cellpadding='0'>
-<arclist model='article' where="typeid=19" order='ishot desc,addtime desc' num='16' id='vo'>
-<tr><td width='75%' class='ListTitle'><a href='{$vo.aid|geturl='articles',###}' target='_blank' title='{$vo.title}'>{$vo.title|msubstr=###,0,14}</a></td><td width='25%'><span>{:date('Y-m-d',strtotime($vo['addtime']))}</span></td></tr></arclist></table></div></div><!--行业新闻结束-->
+<damicms:arclist model='article' where="typeid=19" order='ishot desc,addtime desc' num='16' id='vo'>
+<tr><td width='75%' class='ListTitle'><a href='{$vo.aid|geturl='articles',###}' target='_blank' title='{$vo.title}'>{$vo.title|msubstr=###,0,14}</a></td><td width='25%'><span>{:date('Y-m-d',strtotime($vo['addtime']))}</span></td></tr></damicms:arclist></table></div></div><!--行业新闻结束-->
 <div class='WidthTab2'></div>
 <!--公司新闻开始-->
 <div class='juhaoyongALCommonUnit1'><div class='topic'><div class='TopicTitle'><a  href='{:geturl('lists',20)}' target='_blank'>公司新闻</a></div><div class='TopicMore'> <a  href='{:geturl('lists',20)}' target='_blank'><img src='__TMPL__/images/more.png'></a></div></div><div class='juhaoyongCommonUnitArticleList'><table class='JHYBlockTable' width='100%' border='0' cellspacing='0' cellpadding='0'>

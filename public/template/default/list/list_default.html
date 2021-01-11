@@ -13,18 +13,18 @@
 <div class="NavTree">
 <ul id='suckertree1'>
 <!--当前级的上一级菜单，本级循环二级-->
-<php>$first_id=get_first_father($type['typeid']);$fid=get_field('type','typeid='.$type[typeid],'fid');if($fid==0){ $pid=$type[typeid]; }else{ $pid=$fid; }</php>
-<category parentid="$pid" id="vo">
+<php>$first_id=get_first_father($type['typeid']);$fid=get_field('type','typeid='.$type['typeid'],'fid');if($fid==0){ $pid=$type['typeid']; }else{ $pid=$fid; }</php>
+<damicms:category parentid="$pid" id="vo">
 <li><A href='{$vo.typeid|geturl='lists',###}'>{$vo.typename}</A><!--判定是否有子类-->
 <php>$cid = get_children($vo['typeid']);if($vo['typeid'] != $cid){</php>
 <ul>
-<category parentid="$vo[typeid]" id="voo">
+<damicms:category parentid="$vo[typeid]" id="voo">
 <li><a href='{$voo.typeid|geturl='lists',###}' >{$voo.typename}</a></li>
-</category>
+</damicms:category>
 </ul>
 <php>}</php>
 </li>
-</category>
+</damicms:category>
 </ul></div></div></div>
 <php>if(!in_array($type['typeid'],array(14,15,16,17,35))){</php>
 <div class='HeightTab clearfix'></div>
@@ -33,9 +33,9 @@
 <div class="list">
 <dl>
 <php>$all_ids=get_children($first_id);</php>
-<arclist model="article" where="typeid in($all_ids)" order="addtime desc" num="5">
+<damicms:arclist model="article" where="typeid in($all_ids)" order="addtime desc" num="5">
 <dd><a href='{$vo.aid|geturl='articles',###}' target='_blank' title='{$vo.title}'>{$vo.title}</a></dd>
-</arclist>
+</damicms:arclist>
 </dl>
 </div>
 
@@ -46,9 +46,9 @@
 <div class="topic">热门推荐&nbsp;&nbsp;&nbsp;Hot</div>
 <div class="list">
 <dl>
-<arclist model="article" where="typeid in($all_ids)" order="istop desc,ishot desc" num="5">
+<damicms:arclist model="article" where="typeid in($all_ids)" order="istop desc,ishot desc" num="5">
 <dd><a href='{$vo.aid|geturl='articles',###}' target='_blank' title='{$vo.title}'>{$vo.title}</a></dd>
-</arclist>
+</damicms:arclist>
 </dl>
 </div>
 </div>
@@ -58,7 +58,7 @@
 <!--left end-->
 <!--right start-->
 <div class="right">
-<div class="Position"><span>你的位置：{$nav}</span></div>
+<div class="Position"><span>你的位置：{$nav|raw}</span></div>
 <div class="HeightTab clearfix"></div>
 <!--main start-->
 <div class="main">
@@ -78,7 +78,7 @@
         
       </table>
 <div class="clearfix"></div>
-	  <div class='t_page ColorLink'>{$page}</div>
+	  <div class='t_page ColorLink'>{$page|raw}</div>
 </div>
 <php>}</php>
 </div>

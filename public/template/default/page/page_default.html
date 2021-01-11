@@ -23,9 +23,9 @@ background-repeat:no-repeat;
 <div class='blank'>
 <ul>
 <php>$first_id = get_first_father($type['typeid']);</php>
-<category parentid="$first_id" id="vo">
+<damicms:category parentid="$first_id" id="vo">
 <li><A href='{$vo.typeid|geturl='lists',###}'>{$vo.typename}</A></li>
-</category>
+</damicms:category>
 </ul></div></div>
 
 <div class='HeightTab clearfix'></div>
@@ -34,9 +34,9 @@ background-repeat:no-repeat;
 <div class="list">
 <dl>
 <php>$all_ids=get_children($first_id);</php>
-<arclist model="article" where="typeid in($all_ids)" order="addtime desc" num="5">
+<damicms:arclist model="article" where="typeid in($all_ids)" order="addtime desc" num="5">
 <dd><a href='{$vo.aid|geturl='articles',###}' target='_blank' title='{$vo.title}'>{$vo.title}</a></dd>
-</arclist>
+</damicms:arclist>
 </dl>
 </div>
 
@@ -47,9 +47,9 @@ background-repeat:no-repeat;
 <div class="topic">热门推荐&nbsp;&nbsp;&nbsp;Hot</div>
 <div class="list">
 <dl>
-<arclist model="article" where="typeid in($all_ids)" order="istop desc,ishot desc" num="5">
+<damicms:arclist model="article" where="typeid in($all_ids)" order="istop desc,ishot desc" num="5">
 <dd><a href='{$vo.aid|geturl='articles',###}' target='_blank' title='{$vo.title}'>{$vo.title}</a></dd>
-</arclist>
+</damicms:arclist>
 </dl>
 </div>
 </div>
@@ -59,7 +59,7 @@ background-repeat:no-repeat;
 <!--left end-->
 <!--right start-->
 <div class="right">
-<div class="Position"><span>你的位置：{$nav}</span></div>
+<div class="Position"><span>你的位置：{$nav|raw}</span></div>
 <div class="HeightTab clearfix"></div>
 <!--main start-->
 <div class="main">
@@ -73,7 +73,7 @@ background-repeat:no-repeat;
 </div>
 </div>
 <!--详细页的分页自己美化-->
-<div class="clearfix">{$page}</div>
+<div class="clearfix">{$page|raw}</div>
 <div class="prenext">{$updown}</div>
 <!--评论区-->
 

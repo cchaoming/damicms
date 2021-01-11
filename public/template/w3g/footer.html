@@ -11,9 +11,9 @@
 <li><a href="tel:15982072714" data-icon="star">致电我们</a></li>
 <li><a href="sms:15982072714?body=哇，再不用大米CMS，您就错过移动APP时代了！http://www.damicms.com" data-icon="info">短信分享</a></li>
 <else/>
-<arclist model="member_menu" where="is_show=1" order="drand asc">
+<damicms:arclist model="member_menu" where="is_show=1" order="drand asc">
 <li><a href="__ROOT__{$vo.url}" data-ajax="false">{$vo.name}</a></li>
-</arclist>
+</damicms:arclist>
 <li><a href="{:U('Member/dologout')}" data-ajax="false">注销</a></li>
 </eq>
 </ul>

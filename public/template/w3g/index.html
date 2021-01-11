@@ -36,10 +36,10 @@ $(document).bind("mobileinit", function() {
 <li><a href="tel:15982072714" data-role="button" data-icon="star">致电我们</a></li>
 <li><a href="sms:15982072714?body=哇，再不用大米CMS，您就错过移动APP时代了！http://www.damicms.com" data-role="button" data-icon="info">短信分享</a></li>
 <else/>
-<arclist model="member_menu" where="is_show=1" order="drand asc" key="k">
+<damicms:arclist model="member_menu" where="is_show=1" order="drand asc" key="k">
 <eq name="k" value="4"><li><a href="{:U('Member/gobuy',array('iscart'=>1))}" data-role="button" data-icon="grid" data-ajax="false">我的购物车</a></li></eq>
 <li><a href="__ROOT__{$vo.url}" data-role="button">{$vo.name}</a></li>
-</arclist>
+</damicms:arclist>
 
 <li><a href="{:U('Member/dologout')}" data-role="button" data-ajax="false">注销登陆</a></li>
 </eq>
@@ -75,9 +75,9 @@ $(document).bind("mobileinit", function() {
 	</div><!-- /header -->
 	<div >	
 		<ul data-role="listview" data-inset="true">
-		<arclist model='link' where="status=1" order='rank asc' id='vo'>
+		<damicms:arclist model='link' where="status=1" order='rank asc' id='vo'>
 			<li><a href='{$vo.url}'>{$vo.title}</a></li>
-		</arclist>
+		</damicms:arclist>
 		</ul>
 	</div><!-- /content -->
 </div>

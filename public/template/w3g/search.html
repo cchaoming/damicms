@@ -30,7 +30,7 @@
 		<volist name="list" id="vo" empty="暂无搜索结果!">
 		    <li><a href="{$vo.aid|url=articles,###}" rel="external"><h3><notempty name="vo.titlecolor"><font color="{$vo.titlecolor}"></notempty>{$vo.title|msubstr=###,0,38,'utf-8'}<notempty name="vo.titlecolor"></font></notempty></a></h3></a></li>
 		</volist>
-		<li><div class="PageN">{$page}</div></li>
+		<li><div class="PageN">{$page|raw}</div></li>
 		</ul>
 </div><!-- /content -->
 </div><!-- /page -->

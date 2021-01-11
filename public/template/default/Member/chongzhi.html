@@ -32,7 +32,7 @@
 <!--left end-->
 <!--right start-->
 <div class="right">
-<div class="Position"><span>你的位置：{$nav}用户充值/提现</span></div>
+<div class="Position"><span>你的位置：{$nav|raw}用户充值/提现</span></div>
 <div class="HeightTab clearfix"></div>
 <!--main start-->
 <div class="main">
@@ -180,13 +180,13 @@
   <th width="200" align="center">时间</th>
   <th align="center">备注</th>
   </tr>
-<arclist model="money_log" where="log_type=0 and uid=$_SESSION[dami_uid]" id="vo" order="addtime desc">
+<damicms:arclist model="money_log" where="log_type=0 and uid=$_SESSION[dami_uid]" id="vo" order="addtime desc">
 <tr>
   <td align="center">{$vo.log_id}</td>
   <td align="center">{$vo.price}</td>
   <td>{$vo.addtime|date='Y-m-d H:i:s',###}</td>
   <td>{$vo.remark}</td></tr>
-</arclist>
+</damicms:arclist>
 </table>
 </div>
 

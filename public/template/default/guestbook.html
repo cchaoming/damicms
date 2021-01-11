@@ -39,18 +39,18 @@ vertical-align: top;word-break: break-all;}
 <div class='blank'>
 <ul>
 <php>$first_id = get_first_father(15);</php>
-<category parentid="$first_id" id="vo">
+<damicms:category parentid="$first_id" id="vo">
 <li><A href='{$vo.typeid|geturl='lists',###}'>{$vo.typename}</A></li>
-</category>
+</damicms:category>
 </ul></div></div>
 <div class='HeightTab clearfix'></div>
 <div class="Sbox">
 <div class="topic">新闻资讯&nbsp;&nbsp;&nbsp;New</div>
 <div class="list">
 <dl>
-<arclist model="article" where="typeid in(19,20)" order="addtime desc" num="5">
+<damicms:arclist model="article" where="typeid in(19,20)" order="addtime desc" num="5">
 <dd><a href='{$vo.aid|geturl='articles',###}' target='_blank' title='{$vo.title}'>{$vo.title}</a></dd>
-</arclist>
+</damicms:arclist>
 </dl>
 </div>
 </div>
