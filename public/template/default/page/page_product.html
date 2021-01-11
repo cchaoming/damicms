@@ -46,7 +46,7 @@
 				</div>
 
 			</div>
-			<include file="Public:contact"/>
+			<include file="Publics:contact"/>
 		</div>
 		<!--left end-->
 		<!--right start-->
@@ -101,12 +101,12 @@
 										</div>
 
 										<link href="__TMPL__/css/shopping.css" rel="stylesheet" type="text/css" />
-										<script>var url_root = '__ROOT__';</script>
+										<script>var url_root = '';</script>
 										<script type="text/javascript" src="__PUBLIC__/js/jQuery-shopping.js"></script>
 										<script type="text/javascript" >
 											//初始化购物车
 											function cart_init(){
-												$.getJSON(url_root + "index.php/Public/ajax_cart_list",{},function(ret){
+												$.getJSON("/index.php/Publics/ajax_cart_list",{},function(ret){
 													var data = ret.data;
 													var num=0;
 													$.each(data,function(key,val) {
@@ -165,7 +165,7 @@
 						</div>
 						<script type="text/javascript" src="__TMPL__/js/ajaxpl.js"></script>
 						<script>
-							var root = '__ROOT__';
+							var root = '';
 							$(function(){
 								$('#page_hits').load('{:U('Api/hits_js?aid='.$article['aid'])}');
 								showre({$article.aid},1);

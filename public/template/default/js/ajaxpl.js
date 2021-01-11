@@ -33,7 +33,7 @@ function GetXmlHttpObject(handler)
 /* 显示留言 */
 function showre(aid,no)
 {   document.getElementById("list").innerHTML = "";
-	var url = "http://"+window.location.host+root+"/index.php?m=Pl&a=index&aid="+aid+"&page="+no;
+	var url = "http://"+window.location.host+root+"/index.php/Pl/index?aid="+aid+"&page="+no;
 	//alert(url);
 	xmlHttp=GetXmlHttpObject(showlist)
 	xmlHttp.open("GET", url , true)
@@ -102,7 +102,7 @@ function AddNew() {
 	}
     addNew = GetXmlHttpObject(sendGuest);
     var GuestInfo = "author="+Author+"&aid="+aid+"&content="+Content;
-    addNew.open("POST","http://"+window.location.host+root+"/index.php?m=Pl&a=update",false); 
+    addNew.open("POST","http://"+window.location.host+root+"/index.php/Pl/update",false);
     addNew.setRequestHeader("Content-Type","application/x-www-form-urlencoded") 
     addNew.send(GuestInfo); 
 } 

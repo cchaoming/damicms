@@ -1,6 +1,6 @@
 <?php
 use think\facade\Route;
-$cate = \app\base\model\Type::field('typeid,typename,url,islink')->where([['url','<>',''],['islink','=',1]])->cache(600)->select();
+$cate = \app\base\model\Type::field('typeid,typename,url,islink')->where([['url','<>',''],['islink','=',1]])->cache(600)->select()->toArray();
 foreach ($cate as $k => $v) {
             // 当栏目设置了[栏目目录]字段时注册路由
             Route::any($v['url'],  'List/index')->append(['typeid'=>$v['typeid']]);

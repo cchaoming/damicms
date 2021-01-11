@@ -21,7 +21,7 @@ class Publics extends Base
     function rss()
     {
         $myRss = new RSS("大米CMS", config('app.SERVER_URL'), "大米CMS");
-        $list = M('article')->where('1=1')->select();
+        $list = M('article')->where('1=1')->select()->toArray();
         foreach ($list as $k => $v) {
             $myRss->AddItem($v['title'], 'http://' . $_SERVER['SERVER_NAME'] . url('articles', $v['aid']), $v['addtime']);
         }

@@ -88,7 +88,7 @@ class Base extends BaseController
                 $map[] = ['article.typeid', 'in', $arr];
                 break;
         }
-        $alist = $article->getTableInstance()->where($map)->orderRaw($order)->limit($limit)->select();
+        $alist = $article->getTableInstance()->where($map)->orderRaw($order)->limit($limit)->select()->toArray();
         $this->assign($param, $alist);
     }
 
@@ -100,9 +100,9 @@ class Base extends BaseController
         if ($t) {
             if ($show_all == 1) {
                 $str = $t["path"] . "-" . $t["typeid"];
-                $mylist = $dao->where("1 = instr(path,'" . $str . "')")->select();
+                $mylist = $dao->removeOption()->where("1 = instr(path,'" . $str . "')")->select()->toArray();
             } else {
-                $mylist = $dao->where("fid = " . $t["typeid"])->select();
+                $mylist = $dao->removeOption()->where("fid = " . $t["typeid"])->select()->toArray();
             }
             $this->assign($assign, $mylist);
         }
@@ -116,7 +116,7 @@ class Base extends BaseController
         }
         $str = get_all_tree($typeid);
         $dao = M('type');
-        $t = $dao->where('typeid in(' . $str . ')')->order('typeid')->select();
+        $t = $dao->where('typeid in(' . $str . ')')->order('typeid')->select()->toArray();
         $this->assign($assign, $t);
     }
 

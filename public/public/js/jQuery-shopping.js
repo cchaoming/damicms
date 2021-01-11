@@ -55,7 +55,7 @@ var qty= $('#gnum').val();
 var price= $('#gprice').val();
 var pic = $('#product_pic').attr('src');
 if(is_add){
-											$.post(url_root + "/index.php?m=Public&a=ajax_insert_cart",{id:id,name:name,qty:qty,price:price,gtype:gtype,pic:pic},function(result){ });
+											$.post(url_root + "/index.php/Publics/ajax_insert_cart",{id:id,name:name,qty:qty,price:price,gtype:gtype,pic:pic},function(result){ });
 											
 											$body.prepend('<div class="J-shoping-list" data-id="'+id+'" data-type="' + gtype + '"><a href="#"title=""><img src="' + pic + '" width="50"height="50"/></a><div class="J-shoping-list-a"><p>'+ name + '【' + qty + '件】</p><p><span class="shop_left">' + gtype + '</span><span class="shop_right"><em>' + price + '</em>元</span></p></div><div class="baseBg J-shoping-close"></div></div>');
 										    $num.text(num+1);
@@ -95,7 +95,7 @@ if(is_add){
 						$parent=$target.parents('.J-shoping-list'),
 						id=$parent.attr('data-bid');
 //alert(url_root+ ' ' + id);
-$.post(url_root + "/index.php?m=Public&a=ajax_del_cart",{id:id},function(result){});
+$.post(url_root + "/index.php/Publics/ajax_del_cart",{id:id},function(result){});
 						
 					$parent.addClass('J-shoping-list-remove').fadeOut(300,function(){
 						$('#'+id).data('click',true).removeClass('dis-click');

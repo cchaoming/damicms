@@ -77,7 +77,7 @@ max-width:100%;}
 var url_root = '__ROOT__';
 //初始化购物车
 function cart_init(){
-$.getJSON("__ROOT__/index.php?m=Public&a=ajax_cart_list",{},function(ret){
+$.getJSON("/index.php/Publics/ajax_cart_list",{},function(ret){
 	var data = ret.data;
 	var num=0;		
 $.each(data,function(key,val) {
@@ -99,7 +99,7 @@ var qty= $('#gnum').val();
 var price= $('#gprice').val();
 var gtype= $('#servial').val();
 var pic = $('#product_pic').attr('src');
-$.post("__ROOT__/index.php?m=Public&a=ajax_insert_cart",{id:id,name:name,qty:qty,price:price,gtype:gtype,pic:pic},function(result){
+$.post("/index.php/Publics/ajax_insert_cart",{id:id,name:name,qty:qty,price:price,gtype:gtype,pic:pic},function(result){
     //alert(result);
   });
 }

@@ -84,7 +84,7 @@ function ShowArt($num, $num2, $target, $conditions, $typeid = 0)
             $data = '';
 
     }
-    $list = $article->where($map)->field($field)->orderRaw($data)->limit($num . ',' . $num2)->select();
+    $list = $article->where($map)->field($field)->orderRaw($data)->limit($num . ',' . $num2)->select()->toArray();
     //释放内存
     unset($map, $field, $num, $num2, $article);
     if (!$list) {
@@ -273,7 +273,7 @@ function lists($typeid, $mode, $limit, $param, $order = 'addtime desc')
             $map[] = ['Article.typeid','in', $arr];
             break;
     }
-    $alist = $article->view('Type','typename')->where($map)->orderRaw($order)->limit($limit)->select();
+    $alist = $article->view('Type','typename')->where($map)->orderRaw($order)->limit($limit)->select()->toArray();
     //封装变量
     return $alist;
 }

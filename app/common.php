@@ -510,6 +510,6 @@ function D($name){
     }
 }
 
-function U($url){
-    return url($url);
+function U($url,$par = []){
+    return url($url,$par);
 }

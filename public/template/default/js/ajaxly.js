@@ -33,7 +33,7 @@ function GetXmlHttpObject(handler)
 /* 显示留言 */
 function showre(no)
 {   document.getElementById("list").innerHTML = "";
-	var url = "http://"+window.location.host+root+"/index.php?m=Guestbook&a=show&page="+no;
+	var url = "http://"+window.location.host+root+"/index.php/Guestbook/show?page="+no;
 	//alert(url);
 	xmlHttp=GetXmlHttpObject(showlist)
 	xmlHttp.open("GET", url , true)
@@ -121,7 +121,7 @@ function AddNew() {
 	}
     addNew = GetXmlHttpObject(sendGuest);
     var GuestInfo = "title="+title+"&tel="+tel+"&author="+Author+"&content="+Content;
-    addNew.open("POST","http://"+window.location.host+root+"/index.php?m=Guestbook&a=update",false); 
+    addNew.open("POST","http://"+window.location.host+root+"/index.php/Guestbook/update",false);
     addNew.setRequestHeader("Content-Type","application/x-www-form-urlencoded") 
     addNew.send(GuestInfo); 
 } 
