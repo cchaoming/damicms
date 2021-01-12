@@ -551,8 +551,8 @@ class Member extends Base
     function payagain()
     {
         self::is_login();
-        $group_trade_no = I('get.group_trade_no');
-        $list = M('member_trade')->where("group_trade_no='{$group_trade_no}'")->select();
+        $group_trade_no = $this->request->get('group_trade_no');
+        $list = M('member_trade')->whereRaw("group_trade_no='{$group_trade_no}'")->select()->toArray();
         if ($list) {
             $trade_type = intval($list[0]['trade_type']);
             $total_fee = 0;
@@ -569,17 +569,17 @@ class Member extends Base
             $new_trade_no = $group_trade_no . '-' . time();
             if ($trade_type == 1) {
 //支付宝支付
-                $t_path = (intval(C('AP_TYPE')) == 1) ? 'ap_jishi' : 'ap_danbao';
-                $url = "http://" . $_SERVER['HTTP_HOST'] . __ROOT__ . "/Trade/" . $t_path . "/alipayapi.php";
-                $post_data = array("WIDtotal_fee" => $total_fee, "WIDsubject" => $subject, "WIDreceive_name" => $list[0]['sh_name'], "WIDreceive_address" => $list[0]['province'] . $list[0]['city'] . $list[0]['area'] . $list[0]['address'], "WIDreceive_mobile" => $list[0]['sh_tel'], "WIDreceive_phone" => "", "WIDout_trade_no" => $new_trade_no, "WIDshow_url" => "http://www.damicms.com/Public/donate", "WIDbody" => "", "WIDreceive_zip" => "", "WIDseller_email" => C("AP_EMAIL"));
+                $code = 'alipay';
+                $post_data = array('trade_type'=>1,"WIDtotal_fee" => $total_fee, "WIDsubject" => $subject, "WIDreceive_name" => $list[0]['sh_name'], "WIDreceive_address" => $list[0]['province'] . $list[0]['city'] . $list[0]['area'] . $list[0]['address'], "WIDreceive_mobile" => $list[0]['sh_tel'], "WIDreceive_phone" => "", "WIDout_trade_no" => $new_trade_no, "WIDshow_url" => "http://www.damicms.com/Public/donate", "WIDbody" => "", "WIDreceive_zip" => "", "WIDseller_email" => C("AP_EMAIL"));
             } else {
 //微信支付
+                $code = 'wxpay';
                 if ($trade_type == 4) {
                     $url = "http://" . $_SERVER['HTTP_HOST'] . __ROOT__ . "/Trade/Wxpay/dopay/jsapi.php";
                 } else {
                     $url = "http://" . $_SERVER['HTTP_HOST'] . __ROOT__ . "/Trade/Wxpay/dopay/native.php";
                 }
-                $post_data = array("WIDtotal_fee" => $total_fee, "WIDsubject" => $subject, "WIDout_trade_no" => $new_trade_no, "WIDbody" => strip_tags('支付订单' . $group_trade_no));
+                $post_data = array('trade_type'=>$trade_type,"WIDtotal_fee" => $total_fee, "WIDsubject" => $subject, "WIDout_trade_no" => $new_trade_no, "WIDbody" => strip_tags('支付订单' . $group_trade_no));
             }
             //var_dump($post_data);
             $ch = curl_init();
