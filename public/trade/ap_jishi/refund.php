@@ -2,7 +2,7 @@
 $alipay_config =[];
 require_once("alipay.config.php");
 require_once("lib/alipay_submit.class.php");
-$trade_no =  $_POST['trade_no'];
+$trade_no =  $_POST['trade_no'];//支付宝的订单号
 $reason =  $_POST['reason'];
 $refund_amount  = $_POST['refund_amount'];
         //批次号，必填，格式：当天日期[8位]+序列号[3至24位]，如：201603081000001
@@ -21,6 +21,7 @@ $refund_amount  = $_POST['refund_amount'];
 		"refund_date"	=> trim(date('Y-m-d H:i:s')),
 		"batch_no"	=> $batch_no,
 		"batch_num"	=> $batch_num,
+        'sign_type' => 'MD5',
 		"detail_data"	=> $detail_data,
 		"_input_charset"	=> 'utf-8'
         );
