@@ -101,7 +101,7 @@ function alert($msg, $url = null)
 }
 
 /*获取远程url内容*/
-function get_url_contents($url)
+function get_url_contents($url,$data = [])
 {
     if (function_exists('curl_init')) {
         $ch = curl_init();
@@ -109,6 +109,10 @@ function get_url_contents($url)
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_URL, $url);
+        if($data){
+            curl_setopt($ch, CURLOPT_POST, 1); // 发送一个常规的Post请求
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data)); // Post提交的数据包
+        }
         $result = curl_exec($ch);
         curl_close($ch);
         return $result;

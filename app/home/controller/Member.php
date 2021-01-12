@@ -16,6 +16,7 @@ namespace app\home\controller;
 use think\captcha\facade\Captcha;
 use think\exception\ValidateException;
 use think\facade\Session;
+use until\Cart;
 
 class Member extends Base
 {
@@ -437,10 +438,7 @@ class Member extends Base
             $data['addtime'] = date('Y-m-d H:i:s', time());
             $data['dami_uid'] = $_SESSION['dami_uid'];
             $arc = M('article');
-            $check = $this->request->checkToken(config('app.TOKEN_NAME'));
-            if(false === $check) {
-                $this->error('Token验证失败');
-            }//防止乱提交表单
+            $this->verify_token();
             $arc->save($data);
             $this->success('发布成功请等待管理员审核~');
         } else {
@@ -449,12 +447,14 @@ class Member extends Base
         }
     }
 
+
+
 //订单列表
     function buylist()
     {
         self::is_login();
         $dao = D('TradeView');
-        $list = $dao->where('uid=' . (int)session('dami_uid'))->select();
+        $list = $dao->whereRaw('member_trade.uid=' . (int)session('dami_uid'))->select()->toArray();
         $this->assign('list', $list);
         $this->display();
     }
@@ -463,33 +463,34 @@ class Member extends Base
     function tixian()
     {
         self::is_login();
-        $money = floatval($_POST['money']);
-        if ($_POST['your_email'] == '' || $money <= 0) {
+        if($this->request->isPost()){
+        $money = floatval($this->request->post('money'));
+        if (!$this->request->post('your_email') || $money <= 0) {
             $this->error('提现参数有错误!');
         }
-        $have_money = M('member')->where('id=' . $_SESSION['dami_uid'])->getField('money');
+        $have_money = M('member')->whereRaw('id=' . (int)session('dami_uid'))->value('money');
         if (floatval($have_money) < $money) {
             $this->error('提现金额大于您的余额,提现失败!');
         }
-        $data = array_map('strval', $_POST);
+        $data = array_map('strval', $this->request->post());
         $data = loopxss($data);
         $data['status'] = 0;
-        $data['uid'] = $_SESSION['dami_uid'];
+        $data['uid'] = session('dami_uid');
         $data['addtime'] = time();
         $tx = M('tixian');
-        if (C('TOKEN_ON') && !$tx->autoCheckToken($_POST)) {
-            $this->error(L('_TOKEN_ERROR_'));
-        }//防止乱提交表单
-        $tx->add($data);
+        $this->verify_token();
+        $tx->save($data);
         unset($data);
         $this->success('提现申请成功，等待2-3个工作日处理!');
+        }
     }
 
     //公共分类
     private function pub_class($type_value = 0)
     {
         $type = M('type');
-        $oplist = $type->where('islink=0 and isuser=1')->field("typeid,typename,fid,concat(path,'-',typeid) as bpath")->group('bpath')->select();
+        $count = [];
+        $oplist = $type->whereRaw('islink=0 and isuser=1')->field("typeid,typename,fid,concat(path,'-',typeid) as bpath")->group('bpath')->select()->toArray();
         foreach ($oplist as $k => $v) {
             $check = '';
             if ($v['typeid'] == $type_value) {
@@ -511,7 +512,7 @@ class Member extends Base
     function gobuy()
     {
         self::is_login();
-        $lastbuy = M('member_trade')->where('uid=' . $_SESSION['dami_uid'])->order('addtime desc')->find();
+        $lastbuy = M('member_trade')->whereRaw('uid=' . (int)session('dami_uid'))->orderRaw('addtime desc')->find();
         if ($lastbuy) {
             $info['realname'] = $lastbuy['sh_name'];
             $info['tel'] = $lastbuy['sh_tel'];
@@ -520,12 +521,11 @@ class Member extends Base
             $info['area'] = $lastbuy['area'];
             $info['address'] = $lastbuy['address'];
         } else {
-            $info = M('member')->where('id=' . $_SESSION['dami_uid'])->find();
+            $info = M('member')->whereRaw('id=' . (int)session('dami_uid'))->find();
         }
         $this->assign('uinfo', $info);
-        $iscart = $_REQUEST['iscart'];
+        $iscart = $this->request->param('iscart');
         if ($iscart == 1) {
-            import('ORG.Util.Cart');
             $cart = new Cart();
             $list = $cart->contents();
             foreach ($list as $k => $v) {

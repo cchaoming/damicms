@@ -197,4 +197,11 @@ abstract class BaseController
         return View::display($tpl,$data);
     }
 
+    public function verify_token(){
+        $check = $this->request->checkToken(config('app.TOKEN_NAME'));
+        if(false === $check) {
+            $this->error('Token验证失败');
+        }
+    }
+
 }
