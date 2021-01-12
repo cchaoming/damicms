@@ -416,6 +416,19 @@ function SPost($curlPost, $url)
     return $return_str;
 }
 
+//递归处理stripslashes
+function stripslashesRecursive(array $array)
+{
+    foreach ($array as $k => $v) {
+        if (is_string($v)) {
+            $array[$k] = stripslashes($v);
+        } else if (is_array($v)) {
+            $array[$k] = stripslashesRecursive($v);
+        }
+    }
+    return $array;
+}
+
 //发送验证码
 function send_smsmess($to_mobile, $content, $isvail = 0)
 {

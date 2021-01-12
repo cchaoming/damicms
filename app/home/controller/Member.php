@@ -13,6 +13,10 @@
  *************************************************************/
 
 namespace app\home\controller;
+use think\captcha\facade\Captcha;
+use think\exception\ValidateException;
+use think\facade\Session;
+
 class Member extends Base
 {
     private $qqconfig = [];
@@ -39,9 +43,9 @@ class Member extends Base
     private function is_login()
     {
         header("Content-type: text/html; charset=utf-8");
-        if (!isset($_SESSION['dami_uid']) || $_SESSION['dami_uid'] == '' || $_SESSION['dami_uid'] == 0) {
+        if (!session('dami_uid')) {
             $lasturl = urlencode(htmlspecialchars('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']));
-            $this->assign('jumpUrl', __ROOT__ . '/index.php?m=Member&a=login&lasturl=' . $lasturl);
+            $this->assign('jumpUrl', '/index.php/Member/login?lasturl=' . $lasturl);
             $this->success('未登陆或登陆超时，请重新登陆,页面跳转中~');
         }
     }
@@ -49,7 +53,7 @@ class Member extends Base
 //用户登陆
     public function login()
     {
-        if (isset($_SESSION['dami_uid']) && $_SESSION['dami_uid'] != '') {
+        if (session('dami_uid')) {
             $this->redirect('Member/main');
         }
         $refer = $_SERVER['HTTP_REFERER'];
@@ -58,16 +62,16 @@ class Member extends Base
             $lasturl = $_REQUEST['lasturl'];
         }
         $this->assign('lasturl', $lasturl);
-        $this->display();
+        return $this->display();
     }
 
 //登录
     function dologin()
     {
-        if (!isset($_SESSION['err_number'])) {
-            $_SESSION['err_number'] = 0;
+        if (!Session::has('err_number')) {
+            session('err_number',0);
         }
-        if ($_SESSION['err_number'] >= 3) {
+        if (session('err_number') >= 3) {
             self::check_verify();
         }
         $username = inject_check($_REQUEST['username']);
@@ -76,20 +80,20 @@ class Member extends Base
             $this->error('请输入用户名和密码?');
             exit();
         }
-        $info = M('member')->where("username='{$username}' and is_lock=0")->find();
+        $info = M('member')->whereRaw("username='{$username}' and is_lock=0")->find();
         if (!$info) {
             $this->error('用户不存在或账户未激活!');
         } else {
             if ($info['userpwd'] != md5(md5($userpwd))) {
-                $_SESSION['err_number'] += 1;
+                session('err_number',session('err_number')+1);
                 $this->error('密码错误，请重新登录!');
             } else {
-                $_SESSION['err_number'] = 0;
-                $_SESSION['dami_uid'] = $info['id'];
-                $_SESSION['dami_username'] = $info['username'];
-                $_SESSION['dami_usericon'] = $info['icon'];
-                $_SESSION['dami_usergroup'] = $info['group_id'];
-                $_SESSION['dami_uservail'] = get_field('member_group', 'group_id=' . $info['group_id'], 'group_vail');
+                session('err_number',0);
+                session('dami_uid',$info['id']);
+                session('dami_username',$info['username']);
+                session('dami_usericon',$info['icon']);
+                session('dami_usergroup',$info['group_id']);
+                session('dami_uservail', get_field('member_group', 'group_id=' . $info['group_id'], 'group_vail'));
                 if (!empty($_REQUEST['lasturl'])) {
                     $this->assign('jumpUrl', htmlspecialchars(urldecode($_REQUEST['lasturl'])));
                 } else {
@@ -104,40 +108,39 @@ class Member extends Base
     function chongzhi()
     {
         self::is_login();
-        $info = M('member')->where('id=' . $_SESSION['dami_uid'])->find();
+        $info = M('member')->whereRaw('id=' . intval(session('dami_uid')))->find();
         $this->assign('row', $info);
-        $this->display();
+        return $this->display();
     }
 
 //卡充值
     function card_money()
     {
         self::is_login();
-        $uid = intval($_SESSION['dami_uid']);
-        $User = D("card"); // 实例化User对象
-        if (!$User->create()) {
-            $this->error($User->getError());
-        } else {
+        $uid = intval(session('dami_uid'));
+        $User = M("card"); // 实例化User对象
+        if ($this->request->isPost()) {
             $data = array_map('strval', $_POST);
             $data = loopxss($data);
             $card_number = $data['card_number'];
             $card_pwd = $data['card_pwd'];
-            $t = $User->where("card_num='$card_number' and status=0")->find();
+            $t = $User->whereRaw("card_num='$card_number' and status=0")->find();
             if (!$t) {
                 $this->error('卡号错误或已使用');
             }
             if ($t['card_pwd'] != $card_pwd) {
                 $this->error('卡号密码有误!充值失败!');
             } else {
-                M('member')->where('id=' . $uid)->setInc('money', floatval($t['money']));
+                M('member')->whereRaw('id=' . $uid)->inc('money', floatval($t['money']))->update();
                 //logResult(M('dami_common_member',null)->getLastSql().'<BR>');
+                $data = [];
                 $data['uid'] = $uid;
                 $data['addtime'] = time();
                 $data['price'] = floatval($t['money']);
                 $data['trade_no'] = $card_number;
                 $data['remark'] = "用户用卡号:{$card_number}充值";
                 $data['log_type'] = 0;
-                M('money_log')->add($data);
+                M('money_log')->save($data);
                 $this->success('恭喜您充值成功!');
             }
         }
@@ -146,11 +149,7 @@ class Member extends Base
 //注销登录
     function dologout()
     {
-        unset($_SESSION['dami_uid']);
-        unset($_SESSION['dami_username']);
-        unset($_SESSION['dami_usericon']);
-        unset($_SESSION['dami_uservail']);
-        session_destroy();
+        Session::clear();
         $this->assign('jumpUrl', U('Member/login'));
         $this->success('注销成功~');
     }
@@ -158,27 +157,28 @@ class Member extends Base
 //用户注册
     public function register()
     {
-        $this->display();
+        return $this->display();
     }
 
 //确认注册
     function doreg()
     {
-        if (intval(C('MOBILE_VERIFY')) == 1) {
+        if($this->request->isPost()){
+        if (intval(config('app.MOBILE_VERIFY')) == 1) {
             self::check_verify(1);
         }
-        $User = D("Member"); // 实例化User对象
-        if (!$User->create()) {
-            $this->error($User->getError());
-        } else {
-            $data = array_map('strval', $_POST);
-            if (strlen($data['username']) > 16) {
-                $this->error('用户名太长!');
-            }
+        try {
+            validate(\app\base\validate\Member::class)->check($this->request->post());
+        } catch (ValidateException $e) {
+            // 验证失败 输出错误信息
+            $this->error($e->getError());
+        }
+        $User = M("Member"); // 实例化User对象
+        $data = array_map('strval', $_POST);
             $data['userpwd'] = md5(md5($_POST['userpwd']));
             $data['money'] = 0;
-            $config = F('basic', '', './Web/Conf/');
-            if (intval(C('MAIL_REG')) == 1) {
+            $config = config('basic');
+            if (intval(config('app.MAIL_REG')) == 1) {
                 $data['is_lock'] = 1;
                 $body = '点击或复制以下链接,激活您的账号:<br><a href="http://' . $_SERVER['HTTP_HOST'] . '/' . U('Member/doactive', array('username' => $data['username'])) . '">http://' . $_SERVER['HTTP_HOST'] . '/' . U('Member/doactive', array('username' => $data['username'])) . '</a>';
                 send_mail($data['email'], $config[sitetitle] . '用户', '用户注册激活邮件', $body);
@@ -190,30 +190,31 @@ class Member extends Base
 
             $data['group_id'] = intval($config['defaultmp']);
             $data['addtime'] = time();
-            $User->add($data);
+            $User->save($data);
             $this->assign('jumpUrl', U('Member/login'));
             $this->success($message);
         }
+
     }
 
 //找回密码
     function find_password()
     {
-        if ($_POST) {
+        if ($this->request->isPost()) {
             self::check_verify();
             $_POST = array_map('strval', $_POST);
             if (empty($_POST['username']) || empty($_POST['email']) || !preg_match("/^[\w\-\.]+@[\w\-\.]+(\.\w+)+$/", $_POST['email'])) {
                 $this->error('请输入用户名与注册邮件');
             }
-            $map['username'] = inject_check($_POST['username']);
-            $map['email'] = inject_check($_POST['email']);
+            $map[] = ['username','=',inject_check($_POST['username'])];
+            $map['email'] = ['email','=',inject_check($_POST['email'])];
             $t = M('member')->where($map)->find();
             if (!$t) {
                 $this->error('用户名与邮件不匹配');
             } else {
                 $map['hash'] = dami_encrypt(time());
                 $map['addtime'] = time();
-                M('find_password')->add($map);
+                M('find_password')->save($map);
                 $url = 'http://' . $_SERVER['HTTP_HOST'] . '/' . U('Member/reset_password', $map);
                 $body = "您在" . date('Y-m-d H:i:s') . "提交了找回密码请求。请点击下面的链接重置密码（48小时内有效）。<br><a href=\"{$url}\" target=\"_blank\">{$url}</a>";
                 send_mail($t['email'], $t['email'] . '用户', '用户找回密码邮件', $body);
@@ -222,7 +223,7 @@ class Member extends Base
                 $this->success('找回密码成功！请在48小时内登陆邮箱重置密码!');
             }
         } else {
-            $this->display();
+            return $this->display();
         }
     }
 
@@ -243,7 +244,7 @@ class Member extends Base
         } else {
             if (time > $t['addtime'] + 48 * 3600) {
                 $this->error('URL已经过期');
-                M('find_password')->where('id=' . $t['id'])->delete();
+                M('find_password')->removeOption()->whereRaw('id=' . $t['id'])->delete();
             }
         }
         if ($_POST) {
@@ -252,11 +253,11 @@ class Member extends Base
             }
             unset($map['hash']);
             unset($map['addtime']);
-            M('member')->where($map)->setField('userpwd', md5(md5($_POST['newpwd'])));
+            M('member')->where($map)->save(['userpwd'=>md5(md5($_POST['newpwd']))]);
             $this->assign("jumpUrl", U('Member/login'));
             $this->success('密码已经修改成功！请登陆');
         } else {
-            $this->display();
+            return $this->display();
         }
     }
 
@@ -264,7 +265,7 @@ class Member extends Base
     function doactive()
     {
         $username = inject_check($_REQUEST['username']);
-        $t = M('member')->where("username='{$username}' and last_uptime is null")->find();
+        $t = M('member')->whereRaw("username='{$username}' and last_uptime is null")->find();
         if (!$t) {
             $this->error('邮件已过期或已经激活!');
         } else {
@@ -279,26 +280,29 @@ class Member extends Base
     //生成验证码
     public function verify()
     {
-        import('ORG.Util.Image');
-        ob_end_clean();
-        Image::buildImageVerify(5, 1, 'png', 78, 20, 'verify');
+        return Captcha::create();
     }
 
     //手机验证码
     public function sms_verify()
     {
-        $mobile = $_GET['mobile'];
+        $mobile = $this->request->get('mobile');
         $this->ajaxReturn(send_smsmess($mobile, null, 1));
     }
 
 //验证验证码(包括手机验证码)
-    private function check_verify($type = 0)
+    private function check_verifycheck_verify($type = 0)
     {
-        if (empty($_POST['verify']) && cookie('think_template') != C('DEFAULT_WAP_THEME')) {
+        if ($this->request->param('verify') && TMPL_NAME != config('app.DEFAULT_WAP_THEME')) {
             $this->error('验证码必须!');
         }
-        $verify = ($type == 1 ? 'mobile_verify' : 'verify');
-        if (md5($_POST['verify']) != $_SESSION[$verify] && cookie('think_template') != C('DEFAULT_WAP_THEME')) {
+        if($type==0 && cookie('think_template') != config('app.DEFAULT_WAP_THEME')){
+            if( !captcha_check($this->request->post('verify')))
+            {
+                $this->error('验证码错误!');
+            }
+
+        }else if (md5($this->request->post('verify')) != session('mobile_verify') && cookie('think_template') != config('app.DEFAULT_WAP_THEME')) {
             $this->error('验证码错误!');
         }
     }
@@ -307,8 +311,8 @@ class Member extends Base
     function main()
     {
         self::is_login();
-        if ($_POST) {
-            $data = array_map('strval', $_POST);
+        if ($this->request->isPost()) {
+            $data = array_map('strval',$this->request->isPost());
             $data = loopxss($data);
             $data = array_map('htmlentities', $data);
             unset($data['username']);//禁止修改用户名
@@ -316,12 +320,14 @@ class Member extends Base
             unset($data['is_lock']);//禁止修改锁定状态
             unset($data['group_id']);//禁止修改锁定状态
             $data['id'] = $_SESSION['dami_uid'];
-            $User = D("Member"); // 实例化User对象
-            if (!$User->create($_POST, 2)) {
-                $this->error($User->getError());
-            } else {
+            $User = M("Member"); // 实例化User对象
+            try {
+                $this->validate($data, \app\base\validate\Member::class);
                 $User->save($data);
                 $this->success('资料保存成功~');
+            } catch (ValidateException $e) {
+                // 验证失败 输出错误信息
+                $this->error($e->getError());
             }
         } else {
             $info = M('member')->where('id=' . $_SESSION['dami_uid'])->find();
@@ -334,30 +340,27 @@ class Member extends Base
     function changepwd()
     {
         self::is_login();
-        if ($_POST) {
-            if ($_POST['oldpwd'] == '') {
+        if ($this->request->isPost()) {
+            if (!$this->request->post('oldpwd')) {
                 $this->error('请输入旧密码!');
             }
-            if ($_POST['newpwd'] == '' || $_POST['newpwd'] != $_POST['newpwd2']) {
+            if (!$this->request->post('newpwd') || $this->request->post('newpwd') != $this->request->post('newpwd2')) {
                 $this->error('密码输入不一致!');
             }
-            $info = M('member')->where("id=" . $_SESSION['dami_uid'] . " and userpwd='" . md5(md5($_POST['oldpwd'])) . "'")->find();
+            $info = M('member')->whereRaw("id=" . $_SESSION['dami_uid'] . " and userpwd='" . md5(md5($_POST['oldpwd'])) . "'")->find();
             if (!$info) {
                 $this->error('旧密码不正确!');
             } else {
-                $data['id'] = $_SESSION['dami_uid'];
-                $data['userpwd'] = md5(md5($_POST['newpwd']));
+                $data['id'] = session('dami_uid');
+                $data['userpwd'] = md5(md5($this->request->post('newpwd')));
                 M('member')->save($data);
-                unset($_SESSION['dami_uid']);
-                unset($_SESSION['dami_username']);
-                unset($_SESSION['dami_usericon']);
-                unset($_SESSION['dami_uservail']);
+                Session::clear();
                 $this->assign('jumpUrl', U('Member/login'));
                 $this->success('密码修改成功~,请重新登录!');
             }
 
         } else {
-            $this->display();
+            return $this->display();
         }
     }
 
@@ -365,7 +368,7 @@ class Member extends Base
     function tougaolist()
     {
         self::is_login();
-        $list = M('article')->where('dami_uid=' . $_SESSION['dami_uid'])->select();
+        $list = M('article')->where('dami_uid=' . (int)session('dami_uid'))->select()->toArray();
         $this->assign('list', $list);
         $this->display();
     }
@@ -373,24 +376,25 @@ class Member extends Base
     function modpage()
     {
         self::is_login();
-        $aid = intval($_REQUEST['aid']);
-        if ($_POST) {
+        $aid = intval($this->request->param('aid',0));
+        if ($this->request->isPost()) {
             //模拟关闭magic_quotes_gpc 不关闭有时视频用不起
             if (get_magic_quotes_gpc()) {
                 $_POST = stripslashesRecursive($_POST);
             }
             $_POST['status'] = 0;
             $arc = M('article');
-            if (C('TOKEN_ON') && !$arc->autoCheckToken($_POST)) {
-                $this->error(L('_TOKEN_ERROR_'));
+            $check = $this->request->checkToken(config('app.TOKEN_NAME'));
+            if(false === $check) {
+                $this->error('Token验证失败');
             }//防止乱提交表单
-            $data = array_map('strval', $_POST);
+            $data = array_map('strval', $this->request->post());
             $data = loopxss($data);
-            $arc->where('dami_uid=' . $_SESSION['dami_uid'] . ' and aid=' . $aid)->save($data);
+            $arc->whereRaw('dami_uid=' . (int)session('dami_uid') . ' and aid=' . $aid)->save($data);
             $this->assign('jumpUrl', U('Member/tougaolist'));
             $this->success('修改成功~,请等待审核!');
         } else {
-            $info = M('article')->where('dami_uid=' . $_SESSION['dami_uid'] . ' and aid=' . $aid)->find();
+            $info = M('article')->whereRaw('dami_uid=' . (int)session('dami_uid') . ' and aid=' . $aid)->find();
             if (!$info) {
                 $this->error('记录不存在');
                 exit();
@@ -398,14 +402,14 @@ class Member extends Base
             self::pub_class($info['typeid']);
             $this->assign('info', $info);
         }
-        $this->display();
+        return $this->display();
     }
 
     function delpage()
     {
         self::is_login();
-        $aid = intval($_REQUEST['aid']);
-        M('article')->where('dami_uid=' . $_SESSION['dami_uid'] . ' and status=0 and aid=' . $aid)->delete();
+        $aid = intval($this->request->param('aid'));
+        M('article')->whereRaw('dami_uid=' . (int)session('dami_uid') . ' and status=0 and aid=' . $aid)->delete();
         $this->success('删除成功!');
     }
 
@@ -418,10 +422,10 @@ class Member extends Base
             if (get_magic_quotes_gpc()) {
                 $_POST = stripslashesRecursive($_POST);
             }
-            if (empty($_POST['verify']) && !check_wap()) {
+            if ((!isset($_POST['verify']) || !$_POST['verify']) && !check_wap()) {
                 $this->error('验证码必须!');
             }
-            if (md5($_POST['verify']) != $_SESSION['verify'] && !check_wap()) {
+            if (!captcha_check($this->request->post('verify')) && !check_wap()) {
                 $this->error('验证码错误!');
             }
             $data = array_map('strval', $_POST);
@@ -433,14 +437,15 @@ class Member extends Base
             $data['addtime'] = date('Y-m-d H:i:s', time());
             $data['dami_uid'] = $_SESSION['dami_uid'];
             $arc = M('article');
-            if (C('TOKEN_ON') && !$arc->autoCheckToken($_POST)) {
-                $this->error(L('_TOKEN_ERROR_'));
+            $check = $this->request->checkToken(config('app.TOKEN_NAME'));
+            if(false === $check) {
+                $this->error('Token验证失败');
             }//防止乱提交表单
-            $arc->add($data);
+            $arc->save($data);
             $this->success('发布成功请等待管理员审核~');
         } else {
             self::pub_class();
-            $this->display();
+            return $this->display();
         }
     }
 
@@ -449,7 +454,7 @@ class Member extends Base
     {
         self::is_login();
         $dao = D('TradeView');
-        $list = $dao->where('uid=' . $_SESSION['dami_uid'])->select();
+        $list = $dao->where('uid=' . (int)session('dami_uid'))->select();
         $this->assign('list', $list);
         $this->display();
     }

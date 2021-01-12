@@ -28,7 +28,7 @@ label.valid {
     <label for="username">用户名</label><div class="controls">
     <input type="text" name="username" id="username" class="form-control" placeholder="输入用户名" datatype="s5-16" errormsg="昵称至少5个字符,最多16个字符！"></div>
   </div>
-        <php>$mv = C('MOBILE_VERIFY');</php>
+        <php>$mv = config('app.MOBILE_VERIFY');</php>
 <eq name="mv" value="1">
         <div class="form-group">
             <label for="username">手机号：</label><div class="controls">
