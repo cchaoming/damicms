@@ -19,7 +19,7 @@ background-repeat:no-repeat;
 <!--left start-->
 <div class="left">
 <div class='Sbox'>
-<div class='topic'><a href="#">{:get_first_sortName($type[typeid]);}</a></div>
+<div class='topic'><a href="#">{:get_first_sortName($type['typeid']);}</a></div>
 <div class='blank'>
 <ul>
 <php>$first_id = get_first_father($type['typeid']);</php>
@@ -66,17 +66,16 @@ background-repeat:no-repeat;
 <div class="content">
 <div class="title"><h3><notempty name="article.titlecolor"><font color="{$article.titlecolor}"></notempty>{$article.title}<present name="nowpage">({$nowpage})</present><notempty name="article.titlecolor"></font></notempty> </h3></div>
 <div class="infos">作者：{$article.author}&nbsp;&nbsp; 来源：{$article.copyfrom}&nbsp;&nbsp;已浏览【<span id="page_hits"></span>】次&nbsp;文字：【<a  href="javascript:fontZoom(16)">大</a>】【<a  href="javascript:fontZoom(14)">中</a>】【<a   href="javascript:fontZoom(12)">小</a>】 <a href="javascript:goto_fav({$article.aid})"><span class="gofav"></span>加入收藏夹</a> <span class="icon-dianzan"></span>
-	(<span id="dianzhan_num_{$article.aid}"></span>) <a href="javascript:dianzhan({$article[aid]});">点赞</a></div>
+	(<span id="dianzhan_num_{$article.aid}"></span>) <a href="javascript:dianzhan({$article.aid});">点赞</a></div>
 <div class="maincontent clearfix">
 <div id="MainContent" class="maincontent clearfix">
 {$article.content|raw}
 </div>
 </div>
 <!--详细页的分页自己美化-->
-<div class="clearfix">{$page|raw}</div>
+<div class="clearfix">{:isset($page)?raw($page):''}</div>
 <div class="prenext">{$updown|raw}</div>
 <!--评论区-->
-
 <div class="IntroTitle">评论</div>
 <div class='clearfix'></div>
     <link href="__TMPL__/css/pl.css" rel="stylesheet" type="text/css"/>
@@ -91,7 +90,7 @@ background-repeat:no-repeat;
 			  <div id="pinglunfbt">发表评论</div>
 			  <input type="hidden" name="aid" id="aid" value="{$article.aid}">
 			  <textarea rows="20" name="content" cols="50"  style="width:100%; height:90px; border:1px solid #e6e6e6;" id="plContent"></textarea>
-			  <div class="qdfb">大名:<input name="author" class="button" type="text" value="<if session('dami_username')>{:session('dami_username')}<else/>游客</neq>" id="Author"  maxlength="20" size="12"/>
+			  <div class="qdfb">大名:<input name="author" class="button" type="text" value="<if session('dami_username')>{:session('dami_username')}<else/>游客</if>" id="Author"  maxlength="20" size="12"/>
 			  <input type="button" value="确认发表" name="submit"  id="sendGuest" class="button submit" onClick="AddNew()"></div>
 			  </div>
          </div>
