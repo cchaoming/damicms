@@ -498,7 +498,11 @@ function S($name, $value = '', $options = 3600)
     return cache($name, $value, $options);
 }
 
-function M($name,$with_prefix=true){
+function M($name,$save = false,$with_prefix=true){
+    if($save){
+        $model = new \app\base\model\General([],$name);
+        return $model;
+    }
     return $with_prefix?\think\facade\Db::name($name):\think\facade\Db::table($name);
 }
 function D($name){

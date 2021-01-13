@@ -149,7 +149,7 @@ class Member extends Base
                 $data['trade_no'] = $card_number;
                 $data['remark'] = "用户用卡号:{$card_number}充值";
                 $data['log_type'] = 0;
-                M('money_log')->save($data);
+                M('money_log',true)->save($data);
                 $this->success('恭喜您充值成功!');
             }
         }
@@ -182,7 +182,7 @@ class Member extends Base
                 // 验证失败 输出错误信息
                 $this->error($e->getError());
             }
-            $User = M("Member"); // 实例化User对象
+            $User = M("Member",true); // 实例化User对象
             $data = array_map('strval', $_POST);
             $data['userpwd'] = md5(md5($_POST['userpwd']));
             $data['money'] = 0;
@@ -223,7 +223,7 @@ class Member extends Base
             } else {
                 $map['hash'] = dami_encrypt(time());
                 $map['addtime'] = time();
-                M('find_password')->save($map);
+                M('find_password',true)->save($map);
                 $url = 'http://' . $_SERVER['HTTP_HOST'] . '/' . U('Member/reset_password', $map);
                 $body = "您在" . date('Y-m-d H:i:s') . "提交了找回密码请求。请点击下面的链接重置密码（48小时内有效）。<br><a href=\"{$url}\" target=\"_blank\">{$url}</a>";
                 send_mail($t['email'], $t['email'] . '用户', '用户找回密码邮件', $body);
@@ -262,7 +262,7 @@ class Member extends Base
             }
             unset($map['hash']);
             unset($map['addtime']);
-            M('member')->where($map)->save(['userpwd' => md5(md5($_POST['newpwd']))]);
+            M('member',true)->where($map)->save(['userpwd' => md5(md5($_POST['newpwd']))]);
             $this->assign("jumpUrl", U('Member/login'));
             $this->success('密码已经修改成功！请登陆');
         } else {
@@ -280,7 +280,7 @@ class Member extends Base
         } else {
             $data['is_lock'] = 0;
             $data['last_uptime'] = time();
-            M('member')->where("username='{$username}' and last_uptime is null")->save($data);
+            M('member',true)->where("username='{$username}' and last_uptime is null")->save($data);
             $this->assign('jumpUrl', 'http://' . $_SERVER['HTTP_HOST']);
             $this->success('邮件激活，请登陆`');
         }
@@ -300,7 +300,7 @@ class Member extends Base
     }
 
 //验证验证码(包括手机验证码)
-    private function check_verifycheck_verify($type = 0)
+    private function check_verify($type = 0)
     {
         if ($this->request->param('verify') && TMPL_NAME != config('app.DEFAULT_WAP_THEME')) {
             $this->error('验证码必须!');
@@ -328,7 +328,7 @@ class Member extends Base
             unset($data['is_lock']);//禁止修改锁定状态
             unset($data['group_id']);//禁止修改锁定状态
             $data['id'] = $_SESSION['dami_uid'];
-            $User = M("Member"); // 实例化User对象
+            $User = M("Member",true); // 实例化User对象
             try {
                 $this->validate($data, \app\base\validate\Member::class);
                 $User->save($data);
@@ -338,7 +338,7 @@ class Member extends Base
                 $this->error($e->getError());
             }
         } else {
-            $info = M('member')->where('id=' . $_SESSION['dami_uid'])->find();
+            $info = M('member')->where('id=' . (int)session('dami_uid'))->find();
             $this->assign('info', $info);
             $this->display();
         }
@@ -361,7 +361,7 @@ class Member extends Base
             } else {
                 $data['id'] = session('dami_uid');
                 $data['userpwd'] = md5(md5($this->request->post('newpwd')));
-                M('member')->save($data);
+                M('member',true)->save($data);
                 Session::clear();
                 $this->assign('jumpUrl', U('Member/login'));
                 $this->success('密码修改成功~,请重新登录!');
@@ -398,7 +398,7 @@ class Member extends Base
             }//防止乱提交表单
             $data = array_map('strval', $this->request->post());
             $data = loopxss($data);
-            $arc->whereRaw('dami_uid=' . (int)session('dami_uid') . ' and aid=' . $aid)->save($data);
+            M('article',true)->whereRaw('dami_uid=' . (int)session('dami_uid') . ' and aid=' . $aid)->save($data);
             $this->assign('jumpUrl', U('Member/tougaolist'));
             $this->success('修改成功~,请等待审核!');
         } else {
@@ -446,7 +446,7 @@ class Member extends Base
             $data['dami_uid'] = $_SESSION['dami_uid'];
             $arc = M('article');
             $this->verify_token();
-            $arc->save($data);
+            M('article',true)->save($data);
             $this->success('发布成功请等待管理员审核~');
         } else {
             self::pub_class();
@@ -483,7 +483,7 @@ class Member extends Base
             $data['status'] = 0;
             $data['uid'] = session('dami_uid');
             $data['addtime'] = time();
-            $tx = M('tixian');
+            $tx = M('tixian',true);
             $this->verify_token();
             $tx->save($data);
             unset($data);
@@ -610,7 +610,7 @@ class Member extends Base
             $cart->destroy();
         }
         $_POST = loopxss($_POST);
-        $trade = M('member_trade');
+        $trade = M('member_trade',true);
         $this->verify_token();
 //循环出购物车 写进数据库
         try {
@@ -806,7 +806,7 @@ class Member extends Base
             }
             $config = config('basic');
             $data['group_id'] = intval($config['defaultmp']);
-            $dao = M('member');
+            $dao = M('member',true);
             $dao->save($data);
             $uid = $dao->getLastInsID();
             $data['id'] = $uid;
@@ -851,7 +851,7 @@ class Member extends Base
                     if ($icon != '') {
                         $data['icon'] = $icon;
                     }
-                    M('member')->whereRaw("username='{$username}' and is_lock=0")->save($data);
+                    M('member',true)->whereRaw("username='{$username}' and is_lock=0")->save($data);
                     if (!empty($_REQUEST['lasturl'])) {
                         $this->assign('jumpUrl', urldecode(htmlspecialchars($_REQUEST['lasturl'])));
                     } else {
@@ -887,7 +887,7 @@ class Member extends Base
                 $data['aid'] = $aid;
                 $data['uid'] = $_SESSION['dami_uid'];
                 $data['addtime'] = time();
-                M('favorites')->save($data);
+                M('favorites',true)->save($data);
                 $this->ajaxReturn(array('status' => 1, 'info' => '收藏成功!'));
             }
         } else {

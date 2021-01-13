@@ -12,7 +12,7 @@
 <link href="__PUBLIC__css/bootstrap.min.css" type=text/css rel=stylesheet>
 </head>
 <body>
-<div class="panel panel-default" style="width:96%;margin:20% auto;">
+<div class="panel panel-default" style="width:80%;margin:20% auto;">
   <div class="panel-heading">
     <h3 class="panel-title">操作信息</h3>
   </div>

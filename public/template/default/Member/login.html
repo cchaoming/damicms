@@ -17,7 +17,7 @@
     <label for="exampleInputPassword1">密码</label>
     <input type="password" name="userpwd" class="form-control" placeholder="输入密码">
   </div>
-  <EGT name="_SESSION['err_number']" value="3">
+  <EGT name=":session('err_number')" value="3">
   <div class="form-group">
     <label for="exampleInputPassword1">验证码:</label>
     <div>
@@ -28,7 +28,7 @@
   </EGT>
    <div class="form-group" style="width:100%; clear:both;padding-top:10px;"><input name="lasturl" type="hidden" value="{$lasturl}" />
   <button type="submit" class="btn btn-success">登陆</button> 
-  <if condition="C('QQ_LOGIN') eq 1"><a href="{:U('Member/qqlogin')}"><img src="__TMPL__/images/qq_login.png" border="0" /></a></if><a href="{:U('Member/register')}">立即注册</a>&nbsp;&nbsp;<a href="{:U('Member/find_password')}">忘记密码?</a>
+  <if config('app.QQ_LOGIN') == 1><a href="{:U('Member/qqlogin')}"><img src="__TMPL__/images/qq_login.png" border="0" /></a></if><a href="{:U('Member/register')}">立即注册</a>&nbsp;&nbsp;<a href="{:U('Member/find_password')}">忘记密码?</a>
   </div>
 </form>
 <br><br>

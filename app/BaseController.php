@@ -160,7 +160,7 @@ abstract class BaseController
      * @param integer $wait 跳转等待时间
      * @return void
      */
-    protected function error($msg = '', string $url = null, $data = '', int $wait = 3): Response
+    protected function error($msg = '', string $url = null, $data = '', int $wait = 4): Response
     {
         if (is_null($url)) {
             $url = request()->isAjax() ? '' : 'javascript:history.back(-1);';
@@ -170,7 +170,7 @@ abstract class BaseController
 
         $result = [
             'code' => 0,
-            'message' => $msg,
+            'error' => $msg,
             'data' => $data,
             'jumpUrl' => $url,
             'waitSecond' => $wait,
@@ -189,12 +189,16 @@ abstract class BaseController
         View::assign($var,$value);
     }
 
-    public function display($tpl=null,$data = []){
+    public function display($tpl='',$data = []){
         return View::fetch($tpl,$data);
     }
 
     public function fetch($tpl=null,$data =[]){
         return View::display($tpl,$data);
+    }
+
+    public function redirect($url){
+        redirect($url);
     }
 
     public function verify_token(){
