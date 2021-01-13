@@ -128,11 +128,6 @@ abstract class BaseController
      */
     protected function success($msg = '', string $url = null, $data = '', int $wait = 3): Response
     {
-        if (is_null($url) && isset($_SERVER["HTTP_REFERER"])) {
-            $url = $_SERVER["HTTP_REFERER"];
-        } elseif ($url) {
-            $url = (strpos($url, '://') || 0 === strpos($url, '/')) ? $url : app('route')->buildUrl($url, get_back_url())->__toString();
-        }
         $result = [
             'code' => 1,
             'message' => $msg,
@@ -162,12 +157,6 @@ abstract class BaseController
      */
     protected function error($msg = '', string $url = null, $data = '', int $wait = 4): Response
     {
-        if (is_null($url)) {
-            $url = request()->isAjax() ? '' : 'javascript:history.back(-1);';
-        } elseif ($url) {
-            $url = (strpos($url, '://') || 0 === strpos($url, '/')) ? $url : app('route')->buildUrl($url)->__toString();
-        }
-
         $result = [
             'code' => 0,
             'error' => $msg,

@@ -25,10 +25,10 @@
   <font color=red>{$error}</font>
 </present>
 <present name="closeWin" >
-系统将在 <span style="color:blue;font-weight:bold" id="wait">{$waitSecond}</span> 秒后自动关闭，如果不想等待,直接点击 <a href="{$jumpUrl}" id="href" >这里</a> 关闭
+系统将在 <span style="color:blue;font-weight:bold" id="wait">{$waitSecond}</span> 秒后自动关闭，如果不想等待,直接点击 <a href="{$jumpUrl|raw}" id="href" >这里</a> 关闭
 </present>
 <notpresent name="closeWin" >
-系统将在 <span style="color:blue;font-weight:bold" id="wait">{$waitSecond}</span> 秒后自动跳转,如果不想等待,直接点击 <a href="{$jumpUrl}" id="href" >这里</a> 跳转
+系统将在 <span style="color:blue;font-weight:bold" id="wait">{$waitSecond}</span> 秒后自动跳转,如果不想等待,直接点击 <a href="{$jumpUrl|raw}" id="href" >这里</a> 跳转
 </notpresent>	
 <script type="text/javascript">
 (function(){

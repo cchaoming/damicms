@@ -97,8 +97,9 @@ class Member extends Base
                 $this->login_session($info);
                 if (!empty($_REQUEST['lasturl'])) {
                     $refer = $_REQUEST['lasturl'];
-                    $lasturl = ($refer && (stripos($refer, 'login') !== false || stripos($refer, 'dologin') !== false || stripos($refer, 'dologout') !== false || stripos($refer, 'doreg') !== false || stripos($refer, 'register') !== false)) ? '' : urlencode($refer);
-                    $this->assign('jumpUrl', htmlspecialchars(urldecode($lasturl)));
+                    $lasturl = ($refer && (stripos($refer, 'login') !== false || stripos($refer, 'dologin') !== false || stripos($refer, 'dologout') !== false || stripos($refer, 'doreg') !== false || stripos($refer, 'register') !== false)) ? '' : urldecode($refer);
+                    $lasturl = htmlspecialchars($lasturl);
+                    $this->assign('jumpUrl', $lasturl);
                 } else {
                     $this->assign('jumpUrl', U('Member/main'));
                 }
