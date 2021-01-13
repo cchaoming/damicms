@@ -46,15 +46,32 @@ function remove_html_xss($string){
     require_once '../extend/htmlpurifier/library/HTMLPurifier.auto.php';
     // 生成配置对象
     $_clean_xss_config = HTMLPurifier_Config::createDefault();
+    $_clean_xss_config->set('HTML.DefinitionID', 'html5-definitions');
+    $_clean_xss_config->set('HTML.DefinitionRev', 1);
     // 以下就是配置：
     $_clean_xss_config->set('Core.Encoding', 'UTF-8');
     // 设置允许使用的HTML标签
-    $_clean_xss_config->set('HTML.Allowed','div,b,strong,i,em,a[href|title],ul,ol,li,p[style],br,span[style],img[width|height|alt|src],video[autoplay|controls|height|loop|src|width]');
+    $_clean_xss_config->set('HTML.Allowed','div,b,strong,i,em,a[href|title],ul,ol,li,p[style],br,span[style],img[width|height|alt|src]');
     // 设置允许出现的CSS样式属性
     $_clean_xss_config->set('CSS.AllowedProperties', 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align');
     // 设置a标签上是否允许使用target="_blank"
     $_clean_xss_config->set('HTML.TargetBlank', TRUE);
     // 使用配置生成过滤用的对象
+    // $config->set('HTML.SafeIframe', true);
+    // $config->set('URI.SafeIframeRegexp', '%^(https?:)?//(www\.youtube(?:-nocookie)?\.com/embed/|player\.vimeo\.com/video/)|(player.youku.com/embed/)%');
+    if ($def = $_clean_xss_config->maybeGetRawHTMLDefinition()) {
+        $def->addElement('video', 'Block', 'Optional: (source, Flow) | (Flow, source) | Flow', 'Common', [
+            'src' => 'URI',
+            'type' => 'Text',
+            'poster' => 'URI',
+            'preload' => 'Enum#auto,metadata,none',
+            'controls' => 'Bool',
+        ]);
+        $def->addElement('source', 'Block', 'Flow', 'Common', [
+            'src' => 'URI',
+            'type' => 'Text',
+        ]);
+    }
     $_clean_xss_obj = new HTMLPurifier($_clean_xss_config);
     // 过滤字符串
     return $_clean_xss_obj->purify($string);
@@ -64,9 +81,9 @@ function remove_html_xss($string){
 function inject_check($str)
 {
     $str=urldecode($str);
-    $tmp = preg_match('/select(\s|"|\'|`)+|insert(\s|"|\'|`)+|update(\s|"|\'|`)+|and(\s|"|\'|`)+|or(\s|"|\'|`)+|delete|\'|\/\*|\*|\.\.\/|\.\/|union|into(\s|"|\'|`)+|load_file|outfile/is', $str);
+    $tmp = preg_match('/select(\s|"|\'|`)+|insert(\s|"|\'|`)+|update(\s|"|\'|`)+|and(\s|"|\'|`)+|or(\s|"|\'|`)+|delete|union|into(\s|"|\'|`)+|load_file|outfile/is', $str);
     if ($tmp) {
-        alert("非法操作,请联系管理员!");
+        alert("非法操作,请联系管理员!".msubstr($str,0,10));
     } else {
         return $str;
     }
@@ -277,6 +294,15 @@ function msubstr($str, $start = 0, $length, $charset = "utf-8", $suffix = false)
         $slice = join("", array_slice($match[0], $start, $length));
     }
     return $suffix ? $slice . '...' : $slice;
+}
+//是否微信访问
+function is_weixin_visit()
+{
+    if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 //html无损裁剪

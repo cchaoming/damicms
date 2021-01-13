@@ -122,9 +122,18 @@ class Member extends Base
     function chongzhi()
     {
         self::is_login();
+        if($this->request->isPost()){
+            $data = $this->request->post();
+            if($data['paymethod']){
+                $code = $data['paymethod'];
+                $payment = new \payment\Payment($code);
+                $payment->gateway($data);
+            }
+        }else{
         $info = M('member')->whereRaw('id=' . intval(session('dami_uid')))->find();
         $this->assign('row', $info);
         return $this->display();
+        }
     }
 
 //卡充值
@@ -367,9 +376,8 @@ class Member extends Base
             if (!$info) {
                 $this->error('旧密码不正确!');
             } else {
-                $data['id'] = session('dami_uid');
                 $data['userpwd'] = md5(md5($this->request->post('newpwd')));
-                M('member',true)->save($data);
+                M('member',true)->whereRaw("id=" . (int)session('dami_uid'))->save($data);
                 Session::clear();
                 $this->assign('jumpUrl', U('Member/login'));
                 $this->success('密码修改成功~,请重新登录!');
@@ -386,7 +394,7 @@ class Member extends Base
         self::is_login();
         $list = M('article')->where('dami_uid=' . (int)session('dami_uid'))->select()->toArray();
         $this->assign('list', $list);
-        $this->display();
+        return $this->display();
     }
 
     function modpage()
@@ -403,10 +411,15 @@ class Member extends Base
             $check = $this->request->checkToken(config('app.TOKEN_NAME'));
             if (false === $check) {
                 $this->error('Token验证失败');
-            }//防止乱提交表单
+            }
+            //防止乱提交表单
             $data = array_map('strval', $this->request->post());
+            unset($data['__hash__']);
             $data = loopxss($data);
-            M('article',true)->whereRaw('dami_uid=' . (int)session('dami_uid') . ' and aid=' . $aid)->save($data);
+            $arc = M('article',true)->whereRaw('dami_uid=' . (int)session('dami_uid') . ' and aid=' . $aid)->find();
+            if($arc){
+                $arc->save($data);
+            }
             $this->assign('jumpUrl', U('Member/tougaolist'));
             $this->success('修改成功~,请等待审核!');
         } else {
@@ -426,7 +439,7 @@ class Member extends Base
         self::is_login();
         $aid = intval($this->request->param('aid'));
         M('article')->whereRaw('dami_uid=' . (int)session('dami_uid') . ' and status=0 and aid=' . $aid)->delete();
-        $this->success('删除成功!');
+        $this->success('删除成功!',U('Member/tougaolist'));
     }
 
 //用户投稿可以搞成游客投稿会员投稿只做简单演示表单按自己需求改进
@@ -455,7 +468,7 @@ class Member extends Base
             $arc = M('article');
             $this->verify_token();
             M('article',true)->save($data);
-            $this->success('发布成功请等待管理员审核~');
+            $this->success('发布成功请等待管理员审核~',U('Member/tougaolist'));
         } else {
             self::pub_class();
             return $this->display();
@@ -468,9 +481,9 @@ class Member extends Base
     {
         self::is_login();
         $dao = D('TradeView');
-        $list = $dao->whereRaw('member_trade.uid=' . (int)session('dami_uid'))->select()->toArray();
+        $list = $dao->getTableInstance()->whereRaw('member_trade.uid=' . (int)session('dami_uid'))->select()->toArray();
         $this->assign('list', $list);
-        $this->display();
+        return $this->display();
     }
 
 //提现
@@ -504,15 +517,16 @@ class Member extends Base
     {
         $type = M('type');
         $count = [];
+        $op = '';
         $oplist = $type->whereRaw('islink=0 and isuser=1')->field("typeid,typename,fid,concat(path,'-',typeid) as bpath")->group('bpath')->select()->toArray();
+        //dd($oplist);
         foreach ($oplist as $k => $v) {
             $check = '';
+            $count[$k] = '';
             if ($v['typeid'] == $type_value) {
                 $check = 'selected="selected"';
             }
-            if ($v['fid'] == 0) {
-                $count[$k] = '';
-            } else {
+            if ($v['fid'] != 0) {
                 for ($i = 0; $i < count(explode('-', $v['bpath'])) * 2; $i++) {
                     $count[$k] .= '&nbsp;';
                 }
@@ -582,7 +596,7 @@ class Member extends Base
             }
             $new_trade_no = $group_trade_no . '-' . time();
             $post_data = array('trade_type' => $trade_type, "WIDtotal_fee" => $total_fee, "WIDsubject" => $subject, "WIDreceive_name" => $list[0]['sh_name'], "WIDreceive_address" => $list[0]['province'] . $list[0]['city'] . $list[0]['area'] . $list[0]['address'], "WIDreceive_mobile" => $list[0]['sh_tel'], "WIDreceive_phone" => "", "WIDout_trade_no" => $new_trade_no, "WIDshow_url" => "http://www.damicms.com/Public/donate", "WIDbody" => strip_tags('支付订单' . $group_trade_no), "WIDreceive_zip" => "", "WIDseller_email" => config("app.AP_EMAIL"));
-            $code = config("app.TRADE_TYPE.{$trade_type}.title");
+            $code = config("app.TRADE_TYPE.{$trade_type}.code");
             $payment = new \payment\Payment($code);
             $payment->gateway($post_data);
         } else {

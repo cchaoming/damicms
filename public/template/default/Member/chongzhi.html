@@ -56,18 +56,23 @@
 </div>
 <div id="tab_con">
 <div class="fdiv">
-            <form name=alipayment action="<if condition="C('AP_TYPE') eq 1">./Trade/ap_jishi/alipayapi.php<else/>./Trade/ap_danbao/alipayapi.php</if>" method=post target="_blank">
+            <form name=alipayment action="{:U('Member/chongzhi')}" method=post target="_blank">
             <table width="600" border="0" cellpadding="0" cellspacing="0">
             <tr><td height="25">您的余额：</td><td><span class="null-star">*</span>
-                        <font color=red>{$row[money]}</font>
+                        <font color=red>{$row['money']}</font>
                         <span>元
 </span>
             </td></tr>           
 		   <tr><td height="25">付款金额</td><td><span class="null-star">*</span>
-                        <input size="30" name="WIDtotal_fee" value="1" />
+                        <input size="30" name="WIDtotal_fee" value="100" />
                         <span>(元)必填
 </span>
             </td></tr>
+                <tr><td height="25">付款方式</td><td><span class="null-star">*</span>
+                    <input type="radio" name="paymethod" value="alipay" checked>支付宝 <input type="radio" name="paymethod" value="wxpay">微信扫码支付
+                    <span>
+</span>
+                </td></tr>
             <tr><td height="25">付款名称：</td><td>
                         <span class="null-star">*</span>
                         <input size="30" name="WIDsubject" value="{$config.sitetitle}会员在线充值" />
@@ -108,7 +113,7 @@
                     <dt>收货人姓名：</dt>
                     <dd>
                         <span class="null-star">*</span>
-                        <input size="30" name="WIDreceive_name" /> <input size="30" name="WIDseller_email" value="{:C('AP_EMAIL')}" />
+                        <input size="30" name="WIDreceive_name" /> <input size="30" name="WIDseller_email" value="{:config('app.AP_EMAIL')}" />
                         <span>如：张三
 </span>
                     </dd>
@@ -136,7 +141,6 @@
 					</span>
                     </td></tr>
                     <tr><td></td>
-                   
 					<td>
                         <span class="new-btn-login-sp">
                             <button class="new-btn-login" type="submit" style="text-align:center;">立即充值</button>
@@ -185,7 +189,7 @@
 <tr>
   <td align="center">{$vo.log_id}</td>
   <td align="center">{$vo.price}</td>
-  <td>{$vo.addtime|date='Y-m-d H:i:s',###}</td>
+  <td>{:date('Y-m-d H:i:s',$vo.addtime)}</td>
   <td>{$vo.remark}</td></tr>
 </damicms:arclist>
 </table>
@@ -195,7 +199,7 @@
 <form name=tixian action="{:U('Member/tixian')}" method="post">
             <table width="600" border="0" cellpadding="0" cellspacing="0">
 			<tr><td height="25">您的余额：</td><td><span class="null-star">*</span>
-                        <font color=red>{$row[money]}</font>
+                        <font color=red>{$row['money']}</font>
                         <span>元
 </span>
             </td></tr>

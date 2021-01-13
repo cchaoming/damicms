@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 ini_set('date.timezone','Asia/Shanghai');
 require_once 'JSON.php';
 require_once 'thumb.php';
