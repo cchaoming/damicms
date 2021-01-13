@@ -104,9 +104,9 @@ abstract class BaseController
      * @param array $header 发送的Header信息
      * @return Response
      */
-    protected function ajaxReturn($data, $info = '', $status = 1, $type = '', array $header = [], int $code = 0): Response
+    protected function ajaxReturn($data, $info = null, $status = null, $type = '', array $header = [], int $code = 0): Response
     {
-        $result = ($type=='html' || is_array($data))?$data:[
+        $result = ($type=='html' || (is_array($data) && !$info && !$status))?$data:[
             'code' => $code,
             'status' => $status,
             'info' => $info,

@@ -147,7 +147,7 @@ class Member extends Base
             $data = loopxss($data);
             $card_number = $data['card_number'];
             $card_pwd = $data['card_pwd'];
-            $t = $User->whereRaw("card_num='$card_number' and status=0")->find();
+            $t = $User->whereRaw("card_number='$card_number' and status=0")->find();
             if (!$t) {
                 $this->error('卡号错误或已使用');
             }
@@ -164,7 +164,7 @@ class Member extends Base
                 $data['remark'] = "用户用卡号:{$card_number}充值";
                 $data['log_type'] = 0;
                 M('moneyLog',true)->save($data);
-                $this->success('恭喜您充值成功!');
+                $this->success('恭喜您充值成功!',U('Member/chongzhi'));
             }
         }
     }
@@ -572,7 +572,7 @@ class Member extends Base
             exit();
         }
         $this->assign('list', $list);
-        $this->display();
+        return $this->display();
     }
 
 //下单后付款
@@ -591,8 +591,8 @@ class Member extends Base
                     $subject .= get_field('article', 'aid=' . $v['gid'], 'title');
                 }
             }
-            if ($trade_type == 0 || $trade_type == 2) {
-                $this->error('该订单为货到付款无须支付!');
+            if ($trade_type == 0 || $trade_type == 2 || $trade_type == 3) {
+                $this->error('该订单为站内付款或货到付款无须线上支付!');
             }
             $new_trade_no = $group_trade_no . '-' . time();
             $post_data = array('trade_type' => $trade_type, "WIDtotal_fee" => $total_fee, "WIDsubject" => $subject, "WIDreceive_name" => $list[0]['sh_name'], "WIDreceive_address" => $list[0]['province'] . $list[0]['city'] . $list[0]['area'] . $list[0]['address'], "WIDreceive_mobile" => $list[0]['sh_tel'], "WIDreceive_phone" => "", "WIDout_trade_no" => $new_trade_no, "WIDshow_url" => "http://www.damicms.com/Public/donate", "WIDbody" => strip_tags('支付订单' . $group_trade_no), "WIDreceive_zip" => "", "WIDseller_email" => config("app.AP_EMAIL"));
@@ -611,6 +611,7 @@ class Member extends Base
         if (!$this->request->isPost()) {
             exit();
         }
+        $this->verify_token();
         if (!is_array($_POST['id'])) {
             $this->error('您的购物为空!');
             exit();
@@ -633,7 +634,7 @@ class Member extends Base
         }
         $_POST = loopxss($_POST);
         $trade = M('memberTrade',true);
-        $this->verify_token();
+
 //循环出购物车 写进数据库
         try {
             $title = '';
@@ -682,7 +683,7 @@ class Member extends Base
             }
             if ($trade_type == 2) { //货到付款
                 $this->assign('group_trade_no', $group_trade_no);
-                $this->display('buysuccess');
+                return $this->display('buysuccess');
             } else if ($trade_type == 3) {
                 $have_money = get_field('member', 'id=' . (int)session('dami_uid'), 'money');
                 if ($have_money < $total_fee) {
@@ -693,11 +694,11 @@ class Member extends Base
 //扣款
                 M('member')->whereRaw('id=' . (int)session('dami_uid'))->dec('money', $total_fee)->update();
                 $this->assign('group_trade_no', $group_trade_no);
-                $this->display('buysuccess');
+                return $this->display('buysuccess');
             } else {
                 $post_data = array('trade_type' => $trade_type, "WIDtotal_fee" => $total_fee, "WIDsubject" => $subject, "WIDreceive_name" => $_POST['realname'], "WIDreceive_address" => $_POST['address'], "WIDreceive_mobile" => $_POST['tel'], "WIDreceive_phone" => "", "WIDout_trade_no" => $group_trade_no, "WIDshow_url" => "http://www.damicms.com/Public/donate", "WIDbody" => strip_tags('支付订单' . $group_trade_no), "WIDreceive_zip" => "", "WIDseller_email" => config("app.AP_EMAIL"));
                 $payment = new \payment\Payment($code);
-                $payment->gateway($post_data);
+                return $payment->gateway($post_data);
             }
         } catch (\Exception $e) {
             $this->error($e->getMessage());
@@ -711,7 +712,7 @@ class Member extends Base
         $buyid = intval($_REQUEST['buyid']);
         M('member_trade')->whereRaw('buy_id=' . $buyid . ' and uid=' . (int)session('dami_uid'))->delete();
 //echo M('member_trade')->getLastSql();
-        $this->success('删除成功!');
+        $this->success('删除成功!',U('Member/buylist'));
     }
 
 //QQ登陆
@@ -888,10 +889,10 @@ class Member extends Base
 //收藏夹列表
     function fav()
     {
-        $this->title = '我的收藏';
+        $this->assign('title', '我的收藏');
         $list = D('FavoritesView')->getTableInstance()->whereRaw('favorites.uid=' . (int)session('dami_uid'))->select()->toArray();
-        $this->list = $list;
-        $this->display();
+        $this->assign('list',$list);
+        return $this->display();
     }
 
 //加入收藏夹
@@ -924,7 +925,7 @@ class Member extends Base
             $this->ajaxReturn(array('status' => 0, 'info' => '您还没有登录，请登录!'));
         }
         $aid = intval($_REQUEST['aid']);
-        M('favorites')->whereRaw('aid=' . $aid . ' and uid=' . (int)session('dami_uid'))->delete();
+        M('favorites')->whereRaw('aid=' . (int)$aid . ' and uid=' . (int)session('dami_uid'))->delete();
         $this->ajaxReturn(array('status' => 1, 'info' => '收藏删除成功!'));
     }
 //类结束

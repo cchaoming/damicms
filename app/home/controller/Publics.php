@@ -48,7 +48,7 @@ class Publics extends Base
         }
         $items = array(
             array(
-                'id' => time(),
+                'id' =>(int)$_REQUEST['id'],
                 'qty' => (int)$_REQUEST['qty'],
                 'price' => $_REQUEST['price'],
                 'name' => $_REQUEST['name'],
@@ -73,7 +73,7 @@ class Publics extends Base
         $id = intval($_REQUEST['id']);
         $cart = new Cart();
         $arr = array(
-            'rowid' => md5($id),
+            'rowid' => md5(strval($id)),
             'qty' => 0//清楚该物品只要设置为0即可
         );
         $cart->update($arr);

@@ -48,11 +48,11 @@
 <tr><td align="center">{$vo.group_trade_no}</td><td>{$vo.title}/{$vo.servial}</td>
   <td>{$vo.price}</td>
   <td>{$vo.num}</td><td align="center">
-{:C('TRADE_STATUS.'.$vo[status])}<br>
+{:config('app.TRADE_STATUS.'.$vo['status'])}<br>
 <eq name="vo.status" value="0"><a href="{:U('member/payagain',array('group_trade_no'=>$vo['group_trade_no']))}" class="btn btn-success btn-sm active">付款</a>&nbsp;</eq>
-<php>if(in_array($vo[status],array(0,3,6,9,10,11))){</php>
+<php>if(in_array($vo['status'],array(0,3,6,9,10,11))){</php>
 <a class="btn btn-danger btn-sm active" href="javascript:if(confirm('您确定删除吗?')){
-location.href='{:U('Member/deltrade',array('buyid'=>$vo[buy_id]))}';}">删除</a>
+location.href='{:U('Member/deltrade',array('buyid'=>$vo['buy_id']))}';}">删除</a>
 <php>}</php>&nbsp;<a href="{$vo.gid|geturl='articles',###}" class="btn btn-success btn-sm active">评价</a>
 </td></tr>
 </volist>

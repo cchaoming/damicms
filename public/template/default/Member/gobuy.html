@@ -86,7 +86,7 @@ label.valid {
     <button type="button" class="numbersubtract number1" onclick="$('#gnum_{$i}').val(parseInt($('#gnum_{$i}').val())+1);goods_calc();">+</button>
 </td>
 <td align="center" valign="middle"><span class="row_price">{$vo.price}</span><input name="price[]" type="hidden" value="{$vo.price}" /></td>
-<td align="center" valign="middle"><span class="row_total"><php>$total_fee += ($vo[qty]*$vo[price])*1; echo $vo[qty]*$vo[price];</php></span>&nbsp;<gt name="vo.id" value="0"><span class="glyphicon glyphicon glyphicon-remove-circle" aria-hidden="true" onclick="goods_del(this,{$vo.id})"></span></gt></td></tr></neq>
+<td align="center" valign="middle"><span class="row_total"><php>$total_fee += ($vo['qty']*$vo['price'])*1; echo $vo['qty']*$vo['price'];</php></span>&nbsp;<gt name="vo.id" value="0"><span class="glyphicon glyphicon glyphicon-remove-circle" aria-hidden="true" onclick="goods_del(this,{$vo.id})"></span></gt></td></tr></neq>
 </volist>
 </table>
 </div>
@@ -107,9 +107,9 @@ label.valid {
   <td align="left" valign="middle" width="260"><select  name="province" id="province"  ></select><select  name="city" id="city"></select><select  name="area" id="area" ></select></td>
   <td align="center" valign="middle"><input type="text" value="{$uinfo.address}" name="address" class="dline" style=" width:337px;" /></td>
   <td align="center" valign="middle"><select name="trade_type">
-  <php>$trade_type = C('TRADE_TYPE');</php>
+  <php>$trade_type = config('app.TRADE_TYPE');</php>
   <volist name='trade_type' id="vo" key='k'>
-  <option value="{$key}">{$vo}</option>
+  <option value="{$k}">{$vo.title}</option>
   </volist>
   </select></td>
  </tr>
@@ -117,7 +117,9 @@ label.valid {
 </div>
   </div>
   <div style="text-align:right">合计：<font style="color:#F00; font-size:14px; font-weight:bold;" id="total_money">{$total_fee}</font>元&nbsp;&nbsp;&nbsp;&nbsp;
-  <input name="iscart" type="hidden" value="{$_REQUEST['iscart']}" /><input type="submit" class="btn btn-danger" value="提交订单" /><br><br>
+  <input name="iscart" type="hidden" value="{$_REQUEST['iscart']}" />
+      {:token_field('__hash__')}
+      <input type="submit" class="btn btn-danger" value="提交订单" /><br><br>
   </form>
 </div>
 </div>
