@@ -500,7 +500,8 @@ function S($name, $value = '', $options = 3600)
 
 function M($name,$save = false,$with_prefix=true){
     if($save){
-        $model = new \app\base\model\General([],$name);
+        $name = '\\app\\base\\model\\'.ucfirst($name);
+        $model = new $name();
         return $model;
     }
     return $with_prefix?\think\facade\Db::name($name):\think\facade\Db::table($name);

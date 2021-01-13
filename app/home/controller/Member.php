@@ -154,7 +154,7 @@ class Member extends Base
                 $data['trade_no'] = $card_number;
                 $data['remark'] = "用户用卡号:{$card_number}充值";
                 $data['log_type'] = 0;
-                M('money_log',true)->save($data);
+                M('moneyLog',true)->save($data);
                 $this->success('恭喜您充值成功!');
             }
         }
@@ -231,7 +231,7 @@ class Member extends Base
             } else {
                 $map['hash'] = dami_encrypt(time());
                 $map['addtime'] = time();
-                M('find_password',true)->save($map);
+                M('findPassword',true)->save($map);
                 $url = 'http://' . $_SERVER['HTTP_HOST'] . '/' . U('Member/reset_password', $map);
                 $body = "您在" . date('Y-m-d H:i:s') . "提交了找回密码请求。请点击下面的链接重置密码（48小时内有效）。<br><a href=\"{$url}\" target=\"_blank\">{$url}</a>";
                 send_mail($t['email'], $t['email'] . '用户', '用户找回密码邮件', $body);
@@ -328,17 +328,17 @@ class Member extends Base
     {
         self::is_login();
         if ($this->request->isPost()) {
-            $data = array_map('strval', $this->request->isPost());
+            $data = array_map('strval', $this->request->post());
             $data = loopxss($data);
             $data = array_map('htmlentities', $data);
             unset($data['username']);//禁止修改用户名
             unset($data['money']);//禁止修改money
             unset($data['is_lock']);//禁止修改锁定状态
             unset($data['group_id']);//禁止修改锁定状态
-            $data['id'] = $_SESSION['dami_uid'];
-            $User = M("Member",true); // 实例化User对象
+            $uid = session('dami_uid');
+            $user_model = D("Member");
+            $User = $user_model->find($uid); // 实例化User对象
             try {
-                $this->validate($data, \app\base\validate\Member::class);
                 $User->save($data);
                 $this->success('资料保存成功~');
             } catch (ValidateException $e) {
@@ -363,7 +363,7 @@ class Member extends Base
             if (!$this->request->post('newpwd') || $this->request->post('newpwd') != $this->request->post('newpwd2')) {
                 $this->error('密码输入不一致!');
             }
-            $info = M('member')->whereRaw("id=" . $_SESSION['dami_uid'] . " and userpwd='" . md5(md5($_POST['oldpwd'])) . "'")->find();
+            $info = M('member')->whereRaw("id=" . (int)session('dami_uid') . " and userpwd='" . md5(md5($_POST['oldpwd'])) . "'")->find();
             if (!$info) {
                 $this->error('旧密码不正确!');
             } else {
@@ -451,7 +451,7 @@ class Member extends Base
             $data['content'] = htmlspecialchars($_POST['content']);
             $data['status'] = 0;
             $data['addtime'] = date('Y-m-d H:i:s', time());
-            $data['dami_uid'] = $_SESSION['dami_uid'];
+            $data['dami_uid'] = session('dami_uid');
             $arc = M('article');
             $this->verify_token();
             M('article',true)->save($data);
@@ -618,7 +618,7 @@ class Member extends Base
             $cart->destroy();
         }
         $_POST = loopxss($_POST);
-        $trade = M('member_trade',true);
+        $trade = M('memberTrade',true);
         $this->verify_token();
 //循环出购物车 写进数据库
         try {
@@ -631,7 +631,7 @@ class Member extends Base
                     continue;
                 }
                 $data['gid'] = $_POST['id'][$i];
-                $data['uid'] = $_SESSION['dami_uid'];
+                $data['uid'] = session('dami_uid');
                 $data['price'] = floatval(get_field('article', 'aid=' . intval($_POST['id'][$i]), 'price'));//$_POST['price'][$i];//信任客户端表单可以改写哈$_POST['price'][$i]
                 $data['province'] = $_POST['province'];
                 $data['city'] = $_POST['city'];
@@ -640,7 +640,7 @@ class Member extends Base
                 $data['sh_tel'] = $_POST['tel'];
                 $data['address'] = $_POST['address'];
                 $data['group_trade_no'] = $group_trade_no;
-                $data['out_trade_no'] = "DB" . time() . "-" . $_SESSION['dami_uid'];
+                $data['out_trade_no'] = "DB" . time() . "-" . session('dami_uid');
                 $data['servial'] = $_POST['gtype'][$i];
                 $data['status'] = 0;
                 $data['trade_type'] = $trade_type;
@@ -893,7 +893,7 @@ class Member extends Base
                 $this->ajaxReturn(array('status' => 0, 'info' => '您已经收藏过该文章!'));
             } else {
                 $data['aid'] = $aid;
-                $data['uid'] = $_SESSION['dami_uid'];
+                $data['uid'] = (int)session('dami_uid');
                 $data['addtime'] = time();
                 M('favorites',true)->save($data);
                 $this->ajaxReturn(array('status' => 1, 'info' => '收藏成功!'));
