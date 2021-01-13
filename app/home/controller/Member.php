@@ -57,11 +57,13 @@ class Member extends Base
 //用户登陆
     public function login()
     {
-        if (session('dami_uid')) {
-            $this->redirect('Member/main');
+
+        $uid = session('dami_uid');
+        if ($uid) {
+            return $this->redirect('Member/main');
         }
-        $refer = $_SERVER['HTTP_REFERER'];
-        $lasturl = stripos($refer, 'dologout') !== false || stripos($refer, 'doreg') !== false || stripos($refer, 'register') !== false ? '' : urlencode($refer);
+        $refer = isset($_SERVER['HTTP_REFERER'])?$_SERVER['HTTP_REFERER']:'';
+        $lasturl = ($refer && (stripos($refer, 'dologin') !== false || stripos($refer, 'dologout') !== false || stripos($refer, 'doreg') !== false || stripos($refer, 'register') !== false)) ? '' : urlencode($refer);
         if (isset($_REQUEST['lasturl']) && strlen($_REQUEST['lasturl']) > 4) {
             $lasturl = $_REQUEST['lasturl'];
         }
@@ -94,7 +96,9 @@ class Member extends Base
             } else {
                 $this->login_session($info);
                 if (!empty($_REQUEST['lasturl'])) {
-                    $this->assign('jumpUrl', htmlspecialchars(urldecode($_REQUEST['lasturl'])));
+                    $refer = $_REQUEST['lasturl'];
+                    $lasturl = ($refer && (stripos($refer, 'login') !== false || stripos($refer, 'dologin') !== false || stripos($refer, 'dologout') !== false || stripos($refer, 'doreg') !== false || stripos($refer, 'register') !== false)) ? '' : urlencode($refer);
+                    $this->assign('jumpUrl', htmlspecialchars(urldecode($lasturl)));
                 } else {
                     $this->assign('jumpUrl', U('Member/main'));
                 }
@@ -158,9 +162,12 @@ class Member extends Base
 //注销登录
     function dologout()
     {
-        Session::clear();
-        $this->assign('jumpUrl', U('Member/login'));
-        $this->success('注销成功~');
+        session('dami_uid',null);
+        session('dami_username',null);
+        session('dami_usericon',null);
+        session('dami_uservail',null);
+        session(null);
+        $this->success('注销成功~',U('Member/login'));
     }
 
 //用户注册
@@ -340,7 +347,7 @@ class Member extends Base
         } else {
             $info = M('member')->where('id=' . (int)session('dami_uid'))->find();
             $this->assign('info', $info);
-            $this->display();
+            return $this->display();
         }
     }
 

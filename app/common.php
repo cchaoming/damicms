@@ -521,5 +521,5 @@ function D($name){
 }
 
 function U($url,$par = []){
-    return url($url,$par);
+    return (string)url($url,$par);
 }

@@ -133,15 +133,15 @@ abstract class BaseController
         } elseif ($url) {
             $url = (strpos($url, '://') || 0 === strpos($url, '/')) ? $url : app('route')->buildUrl($url, get_back_url())->__toString();
         }
-
         $result = [
             'code' => 1,
             'message' => $msg,
             'data' => $data,
-            'jumpUrl' => $url,
             'waitSecond' => $wait,
         ];
-
+        if($url){
+            $result['jumpUrl'] = $url;
+        }
         $type = (request()->isJson() || request()->isAjax()) ? 'json' : 'html';
         if ($type == 'html') {
             $response = view(Config::get('app.success_tmpl'), $result);
@@ -172,9 +172,11 @@ abstract class BaseController
             'code' => 0,
             'error' => $msg,
             'data' => $data,
-            'jumpUrl' => $url,
             'waitSecond' => $wait,
         ];
+        if($url){
+            $result['jumpUrl'] = $url;
+        }
         $err = (string)app('config')->get('app.error_tmpl');
         $type = (request()->isJson() || request()->isAjax()) ? 'json' : 'html';
         if ($type == 'html') {
@@ -198,7 +200,8 @@ abstract class BaseController
     }
 
     public function redirect($url){
-        redirect($url);
+        $url = url($url);
+        return redirect((string)$url);
     }
 
     public function verify_token(){

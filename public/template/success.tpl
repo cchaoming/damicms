@@ -7,11 +7,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>页面提示</title>
-<meta http-equiv='Refresh' content='{$waitSecond};URL={$jumpUrl}'>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="__PUBLIC__css/bootstrap.min.css" type=text/css rel=stylesheet>
 </head>
 <body>
+<php>$jumpUrl = !isset($jumpUrl)?'javascript:history.back(-1)':$jumpUrl;</php>
 <div class="panel panel-default" style="width:80%;margin:20% auto;">
   <div class="panel-heading">
     <h3 class="panel-title">操作信息</h3>
@@ -32,15 +32,19 @@
 </notpresent>	
 <script type="text/javascript">
 (function(){
-var wait = document.getElementById('wait'),href = document.getElementById('href').href;
-var interval = setInterval(function(){
-	var time = --wait.innerHTML;
-	wait.innerHTML = time;
-	if(time <= 0) {
-		location.href = href;
-		clearInterval(interval);
-	};
-}, 1000);
+  var init_wait = {$waitSecond};
+  if(init_wait >0) {
+    var wait = document.getElementById('wait'), href = document.getElementById('href').href;
+    var interval = setInterval(function () {
+      var time = --wait.innerHTML;
+      wait.innerHTML = time;
+      if (time <= 0) {
+        location.href = href;
+        clearInterval(interval);
+      }
+      ;
+    }, 1000);
+  }
 })();
 </script>
   </div>
