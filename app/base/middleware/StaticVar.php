@@ -42,8 +42,8 @@ class StaticVar
      */
     public function handle($request, Closure $next)
     {
-        define('MODULE_NAME', app('http')->getName());
-        define('CONTROLLER_NAME', $request->controller());
+        define('APP_NAME', app('http')->getName());
+        define('MODULE_NAME', $request->controller());
         define('ACTION_NAME', $request->action());
         define('TMPL_PATH', './template/');
         $cookie_template = cookie('think_template');

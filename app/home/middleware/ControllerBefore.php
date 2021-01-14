@@ -35,7 +35,7 @@ class ControllerBefore
             ob_start();
             $request_data = $request->param();
             $allow_param = ['page', 'author_id','keyword'];
-            $static_file = './html/' . TMPL_NAME . '/' . CONTROLLER_NAME.'/'.ACTION_NAME;
+            $static_file = './html/' . TMPL_NAME . '/' . MODULE_NAME.'/'.ACTION_NAME;
             $mid_str = '';
             if (is_array($request_data)) {
                 foreach (is_array($request_data) as $k => $v) {
@@ -46,7 +46,7 @@ class ControllerBefore
             }
             $static_file .= ($mid_str . '.html');
             define('HTML_STATIC_FILE', $static_file);
-            $php_file = app()->getAppPath().'controller'.DIRECTORY_SEPARATOR.CONTROLLER_NAME.'.php';
+            $php_file = app()->getAppPath().'controller'.DIRECTORY_SEPARATOR.MODULE_NAME.'.php';
             $this->html_init($static_file, $php_file, $is_build);
         }
         return $next($request);
