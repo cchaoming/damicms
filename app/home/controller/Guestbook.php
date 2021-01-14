@@ -34,8 +34,8 @@ class Guestbook extends Base
             alert('非法操作!',3);
         }
         //读取数据库和缓存
-        $pl = M('guestbook');
-        $config = F('basic','','./Web/Conf/');
+        $pl = M('guestbook',true);
+        $config = config('basic');
         //相关判断
         if(Session::has('posttime'))
         {
@@ -87,8 +87,8 @@ class Guestbook extends Base
 
         if(!$list)
         {
-
-            $this->display(TMPL_PATH.cookie('think_template').'/guestbook_nopl.html');
+            $content = $this->display($this->template.'/guestbook_nopl.html');
+            $this->ajaxReturn($content,null,null,'xml');
             exit;
         }
         //分页处理
@@ -117,8 +117,8 @@ class Guestbook extends Base
         //最后一条记录数
         $this->assign('lastnum',$pagenum);
         $this->assign('list',$pp);
-        header("Content-type: text/xml; charset=utf-8");
-        return $this->display($this->template.'/guestbook_pl.html');
+        $content = $this->display($this->template.'/guestbook_pl.html');
+        $this->ajaxReturn($content,null,null,'xml');
     }
 }
 ?>

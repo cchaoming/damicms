@@ -86,14 +86,14 @@ return true;}
 
 //加入收藏夹
 function goto_fav(aid) {
-	$.getJSON( root + '/index.php?m=Member&a=fav_save', {aid: aid}, function (data) {
+	$.getJSON( root + '/index.php/Member/fav_save', {aid: aid}, function (data) {
 		//获得服务器响应
 		alert(data.info);
 	});
 }
 //点赞
 function dianzhan(aid){
-	$.getJSON(root + "/index.php?m=Api&a=ajax_dianzhan", { aid:aid }, function(json){
+	$.getJSON(root + "/index.php/Api/ajax_dianzhan", { aid:aid }, function(json){
 		if(parseInt(json)==1){
 			//后面预约加1
 			var yuyue = parseInt($('#dianzhan_num_'+aid).text()) + 1 ;

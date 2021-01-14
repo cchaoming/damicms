@@ -279,7 +279,8 @@ class Member extends Base
             }
             unset($map['hash']);
             unset($map['addtime']);
-            M('member',true)->where($map)->save(['userpwd' => md5(md5($_POST['newpwd']))]);
+            $t = M('member',true)->where($map)->find();
+            if($t){$t->save(['userpwd' => md5(md5($_POST['newpwd']))]);}
             $this->assign("jumpUrl", U('Member/login'));
             $this->success('密码已经修改成功！请登陆');
         } else {
@@ -379,8 +380,7 @@ class Member extends Base
                 $data['userpwd'] = md5(md5($this->request->post('newpwd')));
                 M('member',true)->whereRaw("id=" . (int)session('dami_uid'))->save($data);
                 Session::clear();
-                $this->assign('jumpUrl', U('Member/login'));
-                $this->success('密码修改成功~,请重新登录!');
+                $this->success('密码修改成功~,请重新登录!',U('Member/login'));
             }
 
         } else {

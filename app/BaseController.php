@@ -106,7 +106,7 @@ abstract class BaseController
      */
     protected function ajaxReturn($data, $info = null, $status = null, $type = '', array $header = [], int $code = 0): Response
     {
-        $result = ($type=='html' || (is_array($data) && !$info && !$status))?$data:[
+        $result = ($type=='html' || $type=='xml' || (is_array($data) && !$info && !$status))?$data:[
             'code' => $code,
             'status' => $status,
             'info' => $info,

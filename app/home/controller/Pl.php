@@ -12,7 +12,9 @@
  *************************************************************/
 namespace  app\home\controller;
 use app\BaseController;
+use think\exception\HttpResponseException;
 use think\facade\Session;
+use think\Response;
 
 class Pl extends BaseController
 {
@@ -108,8 +110,8 @@ class Pl extends BaseController
         $this->assign('lastnum',$lastnum);//最后一条记录数
         $this->assign('list',$pp);
         //模板输出
-        header("Content-type: text/xml; charset=utf-8");
-        return $this->display(TMPL_PATH.TMPL_NAME.'/pl_pl.html');
+        $result = $this->display(TMPL_PATH.TMPL_NAME.'/pl_pl.html');
+        $this->ajaxReturn($result,null,null,'xml');
     }
 }
 ?>
