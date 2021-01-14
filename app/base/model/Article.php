@@ -12,4 +12,13 @@ class Article extends Model
     {
         return $this->hasOne(Type::class,'typeid','typeid');
     }
+
+    public function pl(){
+        return $this->hasMany(Pl::class,'aid','aid');
+    }
+
+    public function mood(){
+        return $this->hasOne(Mood::class,'aid','aid');
+    }
+
 }
