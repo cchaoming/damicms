@@ -12,8 +12,10 @@
 *************************************************************/
 namespace app\admin\controller;
 
+use app\BaseController;
+use until\Image;
 use until\UploadFile;
-
+const __PUBLIC__ = '/public';
 class File extends Damicms{
 	//默认上传幻灯
 	public function hd()
@@ -250,7 +252,7 @@ class File extends Damicms{
 	{
 		$upload=new UploadFile();
 		$upload->maxSize='20480000';  
-		$upload->savePath='./Public/Uploads/hd/';       
+		$upload->savePath='./public/Uploads/hd/';
 		$upload->saveRule= time;   
 		$upload->uploadReplace=true;     
 		$upload->allowExts=array('jpg','jpeg','png','gif');     //准许上传的文件后缀
@@ -262,7 +264,7 @@ class File extends Damicms{
 			if($config['watermark'] == 1)
 			{
 			import('ORG.Util.Image');
-			Image::water($info[0]['savepath'].$info[0]['savename'], './Public/Uploads/logo/'.$config['watermarkimg']);
+			Image::water($info[0]['savepath'].$info[0]['savename'], './public/Uploads/logo/'.$config['watermarkimg']);
 			}
 			return $info;
 		}
@@ -276,7 +278,7 @@ class File extends Damicms{
 	{
 		$upload=new UploadFile();
 		$upload->maxSize='20480000';  
-		$upload->savePath='./Public/Uploads/logo/';       
+		$upload->savePath='./public/Uploads/logo/';
 		$upload->saveRule='logo_'.date('YmdHis');   
 		$upload->uploadReplace=true;     
 		$upload->allowExts=array('jpg','jpeg','png','gif');     //准许上传的文件后缀
@@ -298,7 +300,7 @@ class File extends Damicms{
 	{
 		$upload=new UploadFile();
 		$upload->maxSize='20480000';  
-		$upload->savePath='./Public/Uploads/logo/';       
+		$upload->savePath='./public/Uploads/logo/';
 		$upload->saveRule='watermark_'.date('YmdHis');   
 		$upload->uploadReplace=true;     
 		$upload->allowExts=array('jpg','jpeg','png','gif');     //准许上传的文件后缀
@@ -318,7 +320,7 @@ class File extends Damicms{
 	{
 		$upload=new UploadFile();
 		$upload->maxSize= '20480000';  
-		$upload->savePath= './Public/Uploads/ad/'; 
+		$upload->savePath= './public/Uploads/ad/';
 		$upload->saveRule= time;   
 		$upload->uploadReplace= true;     
 		$upload->allowExts= array('jpg','jpeg','png','gif');     //准许上传的文件后缀
@@ -327,11 +329,10 @@ class File extends Damicms{
 		if($upload->upload())
 		{
 			$info=$upload->getUploadFileInfo();
-			$config = F('basic','','./Web/Conf/');
+			$config = config('basic');
 			if($config['watermark'] == 1)
 			{
-				import('ORG.Util.Image');
-				Image::water($info[0]['savepath'].$info[0]['savename'], './Public/Uploads/logo/'.$config['watermarkimg']);
+				Image::water($info[0]['savepath'].$info[0]['savename'], './public/Uploads/logo/'.$config['watermarkimg']);
 			}
 			return $info;
 		}
@@ -346,7 +347,7 @@ class File extends Damicms{
 	{
 		$upload=new UploadFile();
 		$upload->maxSize='20480000';  
-		$upload->savePath='./Public/Uploads/link/'; 
+		$upload->savePath='./public/Uploads/link/';
 		$upload->saveRule= time;   
 		$upload->uploadReplace=true;     
 		$upload->allowExts=array('jpg','jpeg','png','gif');     //准许上传的文件后缀
@@ -368,22 +369,21 @@ class File extends Damicms{
 	{
 		$upload=new UploadFile();
 		$upload->maxSize='20480000';  
-		$upload->savePath='./Public/Uploads/thumb/';       
+		$upload->savePath='./public/Uploads/thumb/';
 		$upload->saveRule= time;   
 		$upload->uploadReplace=true;     
 		$upload->allowExts=array('jpg','jpeg','png','gif');     //准许上传的文件后缀
 		$upload->allowTypes=array('image/jpeg','image/pjpeg','image/png','image/gif','image/x-png');//准许上传的文件类型
-		$upload->imageClassPath = 'ORG.Util.Image';
 		/*$upload->thumb=true;   //是否开启图片文件缩略,true表示开启
 		$upload->thumbMaxWidth='500';  //以字串格式来传，如果你希望有多个，那就在此处，用,分格，写上多个最大宽
 		$upload->thumbMaxHeight='400';	
 		$upload->thumbPrefix='thumb_';//缩略图文件前缀
-		$upload->thumbPath='./Public/Uploads/thumb/' ; 
+		$upload->thumbPath='./public/Uploads/thumb/' ;
 		$upload->thumbRemoveOrigin=1;*/	
 		if($upload->upload())
 		{
 			$info=$upload->getUploadFileInfo();
-			$config = F('basic','','./Web/Conf/');
+			$config = config('basic');
 			if($config['watermark'] == 1)
 			{
 			    //Image::water($info[0]['savepath'].'/thumb_'.$info[0]['savename'], $info[0]['savepath'].'/../logo/'.$config['watermarkimg']);
@@ -403,8 +403,8 @@ class File extends Damicms{
 	{
 		$upload=new UploadFile();
 		$upload->maxSize='20480000';  
-		$upload->savePath='./Public/Uploads/attach/';       
-		$upload->saveRule= time;   
+		$upload->savePath='./public/Uploads/attach/';
+		$upload->saveRule= 'time';
 		$upload->uploadReplace = true; 
 		$upload->allowExts = array('zip','rar','txt','ppt','pptx','cls','clsx','doc','docx','swf','jpg','png','gif','tar.gz','.7z');     //准许上传的文件后缀
 		if($upload->upload())

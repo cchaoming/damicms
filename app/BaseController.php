@@ -155,7 +155,7 @@ abstract class BaseController
      * @param integer $wait 跳转等待时间
      * @return void
      */
-    protected function error($msg = '', string $url = null, $data = '', int $wait = 4): Response
+    protected function error($msg = '', string $url = null, $data = '', int $wait = 3): Response
     {
         $result = [
             'code' => 0,
