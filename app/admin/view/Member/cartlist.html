@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="lib/html5shiv.js"></script>
+    <script type="text/javascript" src="lib/respond.min.js"></script>
+    <![endif]-->
+    <link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+    <!--[if IE 6]>
+    <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <import file= "Admin.setdate.WdatePicker,Admin.js.admin,Admin.js.Ajax,Admin.js.Jquery"/>
+    <title>订单管理</title>
+</head>
+
+<body>
+<table border="0" cellspacing="2" cellpadding="3"  align="center" class="admintable" style="width:98%;margin-bottom:5px;">
+    <tr>
+      <td width="6%" height="25" bgcolor="f7f7f7">快速查找：      </td>
+      <td width="93%" align="left" valign="top" bgcolor="f7f7f7">
+	  <form name="form1" method="POST" action="/cartlist">
+	    日期从&nbsp;
+	    <input name="start_time" type="text" id="start_time" value="" class="s26"  onClick="WdatePicker({dateFmt:'yyyy-MM-dd'})">&nbsp;到&nbsp;<input name="end_time" type="text" id="end_time" value="" class="s26"  onClick="WdatePicker({dateFmt:'yyyy-MM-dd'})">&nbsp;关键字:&nbsp;
+        <input name="keyword" type="text" id="keyword" value="" class="s26">
+        <input type="submit" class="btn btn-danger btn-sm" value="搜索">
+      </form></td>
+      <td width="1%" align="right" bgcolor="f7f7f7"></td>
+    </tr>
+</table>
+<div class="main_center">
+<table width="95%" border="0"  align=center cellpadding="3" cellspacing="1" bgcolor="#F2F9E8" class="table table-bordered">
+<tr> 
+<td colspan="6" align=left class="admintitle">订单列表(说明:本系统与淘宝交易状态自动同步的)</td></tr>
+    <tr bgcolor="#f1f3f5" style="font-weight:bold;">
+    <td width="10%" height="30" align="center" class="ButtonList">订单号</td>
+    <td width="10%" align="center" class="ButtonList">支付方式</td>
+	<td width="10%" align="center" class="ButtonList">价格</td>
+        <td width="5%" align="center" class="ButtonList">订购姓名</td>
+    <td width="25%" height="25" align="center" class="ButtonList">送货信息</td>  
+    <td width="20%" height="25" align="center" class="ButtonList">状态</td>      
+    </tr>
+	<volist name="list" id="vo"> 
+    <tr bgcolor="#ffffff" onMouseOver="this.style.backgroundColor='#EAFCD5';" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+    <td height="25"><a href='javascript:void(0);' onclick="layer_show('订单详情','/showtrade/buyid/{$vo.group_trade_no}','','')">{$vo.group_trade_no}</a></td>
+     <td height="25" align="center">{:C('TRADE_TYPE.'.$vo['trade_type'])}</td>
+	 <td height="25" align="center">订单合计:{$vo.sub_total_price}元</td>
+        <td height="25">{$vo.sh_name}</td>
+    <td align="left">{$vo.province}{$vo.city}{$vo.area}<br>{$vo.address}<br>{$vo.sh_tel}</td>
+    <td align="center">
+    <php>$status_arr = C('TRADE_STATUS');</php>
+    <select class="trade_status" name="trade_status" rel="{$vo.group_trade_no}">
+    <volist name='status_arr' id='voo' key='z'>
+    <option value="{$z-1}" <eq name="vo[status]" value="$z-1">selected="selected"</eq> >{$voo}</option>
+    </volist>
+    </select>
+        <a class="btn btn-info btn-sm active" href="javascript:layer_show('订单详情','/showtrade/buyid/{$vo.group_trade_no}','','');">详情</a>
+    <a class="btn btn-danger btn-sm active" href="javascript:if(confirm('您确定删除吗?')){
+location.href='{:U('Member/deltrade',array('buyid'=>$vo[group_trade_no]))}';}">删除</a>
+    </td>
+    </tr>
+	</volist>
+	<tr><td bgcolor="f7f7f7" colspan="6" align="left"><ul class="pagination">{$page}</ul></td></tr>
+</table>
+<script>
+$(function(){
+$('.trade_status').each(function(){
+    var old_val = $(this).val();
+$(this).change(function(){
+	if(confirm('您确定交易状态将设置为:' + $(this).find("option:selected").text() )){
+var status = $(this).val();
+var buyid= $(this).attr('rel');
+$.getJSON("/ajax_change_trade", {status: status,buyid:buyid}, function(json){
+		alert(json.data);
+});
+	}else{
+        $(this).val(old_val);
+    }
+	});	
+});
+});
+</script>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+</body>
+</html>

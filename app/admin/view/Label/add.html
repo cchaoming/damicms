@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<script src="/public/js/jquery.js"></script>
+<script charset="gbk" src="/public/Editor/kindeditor-min.js"></script>
+<script charset="utf-8" src="/public/Editor/lang/zh_CN.js"></script>
+<script> 
+KindEditor.options.filterMode = false;
+KindEditor.ready(function(K) {
+K.create('#Content',{  
+					resizeType : 1,
+					allowPreviewEmoticons : false,
+					allowImageUpload : false,
+					items : [
+						'source','fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+						'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+						'insertunorderedlist', '|', 'emoticons', 'image', 'link'],
+					afterBlur: function(){this.sync();}
+});
+});
+</script>
+<title>添加标签</title>
+</head>
+<body>
+ 
+<table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
+<form name="myform" action="/doadd" method=post>
+<tr> 
+    <td colspan="5" class="admintitle">添加标签</td></tr>
+<tr>
+  <td width="20%" bgcolor="#FFFFFF" class="b1_1">标题</td>
+  <td colspan=4 class=b1_1><input name="title" type="text" value="" size="40" maxlength="50"></td>
+</tr>
+<tr>
+  <td bgcolor="#FFFFFF" class="b1_1">内容</td>
+  <td colspan=4 class=b1_1><textarea name="content" cols="80" rows="10" id="Content"></textarea></td>
+</tr>
+<tr> 
+<td width="20%" class="b1_1"></td>
+<td colspan=4 class=b1_1><input type="hidden" name="addtime" value="{:date("Y-m-d H:i:s");}"><input name="Submit" type="submit" class="btn btn-info" value="提 交">&nbsp;&nbsp;<input type="button" onclick="history.go(-1);" class="btn btn-info" value="返 回"></td>
+</tr>
+</form>
+</table>
+<div style="text-align:center;margin:10px;">
+<hr>
+<include file="Publics:copy"/>
+</div>
+</body>
+</html>

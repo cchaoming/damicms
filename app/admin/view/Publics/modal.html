@@ -1,0 +1,29 @@
+<!--操作提示-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" backdrop="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="modal_title">操作提示</h4>
+      </div>
+      <div class="modal-body" id="modal_body">
+       勾选左侧选框,点击底部操作按钮完成批量操作,左侧底部最后一个选框为全选,点击栏目切换到当前栏目所有文章,点击文章链接查看前台内容,左侧顶部可以按条件选择文章,右侧顶部可以快速查找其它栏目文章,顶部中间支持文章标题关键字搜索
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--/操作提示-->
+<script>
+function dami_alert(title,content){
+if(title !=''){ $('#modal_title').html(title); }
+if(content !=''){ $('#modal_body').html(content); }	
+$('#myModal').modal({'backdrop':false}).css({
+    'padding-top': function () {
+        return (($(this).height())/2-200);
+    }
+});
+}
+</script>

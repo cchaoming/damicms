@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网站后台管理</title>
+<link href="/public/Admin/images/Admin_css.css" type="text/css" rel="stylesheet">
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<import file= "Admin.js.admin,Admin.js.Jquery"/>
+<script charset="gbk" src="/public/Editor/kindeditor-min.js"></script>
+<script charset="utf-8" src="/public/Editor/lang/zh_CN.js"></script>
+<style type="text/css">
+<!--
+.style5 {
+	color: #FF0000;
+	font-weight: bold;
+}
+.del_a{cursor: pointer;}
+-->
+</style>
+</head>
+<body>
+<script>
+function dosubmit(a){
+$('#act').val(a);
+document.form1.submit();
+}
+$(function() {
+			$("#add_role").click(function() {
+				var tr = '<tr><td class=b1_1><select name="field[]"><volist name="list_field" id="vo"><option value="{$vo.Field}">{$vo.Field}</option></volist></select></td><td colspan=4 class=b1_1><input type="text" name="role[]" id="textfield" style="width:350px;"><img src="/public/Admin/images/icon/del.png" border="0" onclick="$(this).parent().parent().remove()" class="del_a"/> （表达式格式(jquery样的选择器)）</td></tr>';
+				$("#caiji_table").append(tr);
+			});
+		});		
+</script>
+<form name="form1" action="/docaiji" method="POST">
+<table id="caiji_table" width="100%" border="0" align="center" cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
+<tr> 
+  <td colspan="5" class="admintitle">大米CMS版本数据采集（<font color="#FF0000"><b>采集前请先备份您的数据库，如遇错误方便恢复</b></font>）  </td>
+</tr>
+
+<tr>
+  <td class=b1_1>采集的列表页URL：</td>
+  <td width="81%" colspan=4 class=b1_1><input type="text" name="url_list" id="url_list" style="width:350px;" value="{$form_data.url_list}">
+    （表达式： http://www.dangdaitushu.com/zuixinxiaoxi/page_&#123;2,3}.html）</td>
+</tr>
+
+<tr>
+  <td class=b1_1>详细页URL(不含http)：</td>
+  <td colspan=4 class=b1_1><input type="text" name="page_list" id="page_list" style="width:350px;" value="{$form_data.page_list}">
+    （表达式/zuixinxiaoxi/&#123;*}.html或/zuixinxiaoxi/&#123;(\d)+}.html）</td>
+</tr>
+
+<tr>
+<td colspan="5" class=b1_1>以下是字段匹配规则：</td>
+</tr>
+<tr>
+  <td class=b1_1>所属分类：</td>
+  <td colspan=4 class=b1_1>
+<select ID="Typeid" name="typeid">
+    <option value="">请选择分类</option>{$option}</select> 　
+被采集的网页编码:
+    <input type="radio" name="charset" value="utf-8" checked="checked">utf-8&nbsp;&nbsp;　　
+    <input type="radio" name="charset" value="gb2312">gb2312
+  <if condition="$form_data[charset]">
+      <script>$(":radio[name='charset'][value='{$form_data.charset}']").attr("checked", "checked");</script>
+  </if>
+  </td>
+</tr>
+<tr>
+<td width="19%" class=b1_1>标题：<input name="field[]" type="hidden" value="title"></td>
+<td colspan=4 class=b1_1><input type="text" name="role[]" style="width:350px;" value="{$form_data['role'][0]}">
+  （表达式格式(jquery样的选择器)：.title 、 #title 、 h3:eq(2) 、title ）</td>
+</tr>
+<tr>
+  <td class=b1_1>内容：<input name="field[]" type="hidden" value="content"></td>
+  <td colspan=4 class=b1_1><p>
+    <input type="text" name="role[]" style="width:350px;" value="{$form_data['role'][1]}" >
+      （表达式格式(jquery样的选择器)：.content 、 #content 、 c3:eq(2) ）</p>
+    <br>图片本地化:<input type="radio" name="islocal" value="1">是&nbsp;&nbsp;　　
+    <input type="radio" name="islocal" value="0" checked="checked">否
+      <script>$(":radio[name='islocal'][value='{$form_data.islocal}']").attr("checked", "checked");</script>
+  </td>
+</tr>
+<php>$role=$form_data['role'];$field=$form_data['field'];$role_len = count($role);if($role_len>2){for($m=2;$m<$role_len;$m++){</php>
+    <tr><td class=b1_1><select name="field[]"><volist name="list_field" id="vo"><option value="{$vo.Field}" <eq name="field[$m]" value="$vo[Field]">selected="selected"</eq>>{$vo.Field}</option></volist></select></td>
+        <td colspan=4 class=b1_1><input type="text" name="role[]" id="textfield" style="width:350px;" value="<?php echo $role[$m];?>"><img src="/public/Admin/images/icon/del.png" border="0" onclick="$(this).parent().parent().remove()" class="del_a"/>（表达式格式(jquery样的选择器)）</td></tr></tr>
+<php>}}</php>
+</table>
+<table id="but_save">
+<tr> 
+<td width="14%" ></td>
+<td colspan=4>
+<input name="act" id="act" type="hidden" value="0">
+<input name="button2" type="button" class="btn btn-success" value="保存SQL" onClick="dosubmit(0);">
+<input name="button" type="button" class="btn btn-warning" value="采集入库" onClick="dosubmit(1);">
+&nbsp;&nbsp;
+<input type="button" name="add_role" id="add_role" class="btn btn-default" value="新增字段规则">
+    <input name="button2" type="button" class="btn btn-success" value="预览上次采集的SQL" onClick="location.href='/review';">
+	<input name="button2" type="button" class="btn btn-warning" value="删除SQL文件" onClick="location.href='/del_sqlfile';">
+</td></tr>
+</table>
+</form>
+</body>
+</html>

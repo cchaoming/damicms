@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta name="renderer" content="webkit">
+	<php>$site_title=get_field('config','1=1','sitetitle',true);</php>
+	<title>{$site_title}后台管理</title>
+	<link rel="stylesheet" href="/static/h-ui.admin/css/H-ui.login.css">
+	<script type="text/javascript" src="/public/js/jquery.js"></script>
+	<script type="text/javascript">
+		function show(obj){
+			obj.src="{:U('Publics/verify')}?random="+Math.random();
+		}
+		function chk(){
+			if(document.getElementById('AdminName').value==""){
+				alert('用户名不能为空!');
+				document.getElementById('AdminName').focus();
+				return false;
+			}
+			if(document.getElementById('adminpwd').value==""){
+				alert('密码不能为空!');
+				document.getElementById('adminpwd').focus();
+				return false;
+			}
+			if(document.getElementById('verify').value==""){
+				alert('验证码不能为空!');
+				document.getElementById('verify').focus();
+				return false;
+			}
+		}
+	</script>
+</head>
+<body>
+<div class="bg"></div>
+<div class="container">
+	<div class="line  bouncein">
+		<div class="xs6 xm4 xs3-move xm4-move">
+			<div style="height:130px;"></div>
+			<div class="media media-y margin-big-bottom">
+			</div>
+			<form name="form1" method="post" action="{:U('Publics/checklogin')}" onsubmit="return chk();">
+				<div class="panel loginbox">
+					<div class="text-center margin-big padding-big-top">
+						<h1>后台管理中心</h1>
+					</div>
+					<div class="panel-body" style="padding:30px; padding-bottom:10px; padding-top:10px;">
+						<div class="form-group">
+							<div class="field field-icon-right">
+								<input type="text" class="input input-big" name="username" id="AdminName" placeholder="登录账号" autocomplete="off" />
+								<span class="icon icon-user margin-small"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="field field-icon-right">
+								<input type="password" class="input input-big" name="password" id="adminpwd"  placeholder="登录密码" autocomplete="off" />
+								<span class="icon icon-key margin-small"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="field">
+								<input type="text" class="input input-big" name="verify" id="verify" placeholder="填写右侧的验证码"  autocomplete="off"/>
+								<img src="{:U('Publics/verify')}" alt="" width="100" height="32" class="passcode" style="height:43px;cursor:pointer;" onClick="this.src=this.src+'?'">
+							</div>
+						</div>
+					</div>
+					<div style="padding:30px;">
+						<input type="submit" id="button" class="button button-block bg-main text-big input-big" value="登录">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+</body>
+</html>

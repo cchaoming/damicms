@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网站后台管理</title>
+<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<import file= "Admin.setdate.WdatePicker,Admin.js.admin,Admin.js.Ajax,Admin.js.Jquery"/>
+<script type="text/javascript" language="javascript" src="/public/js/jsAddress.js"></script>
+<script>
+$(document).ready(function() {
+	addressInit('province', 'city', 'area','{$info.province}','{$info.city}','{$info.area}');});
+                                    </script> 
+</head>
+<body>
+<div class="main_center" style="margin-top:10px;">
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">修改会员资料</h3>
+  </div>
+  <div class="panel-body">
+<form class="form-horizontal" role="form" method="post" action="">
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">用户名</label>
+    <div class="col-sm-10">
+     {$info.username}<input name="id" type="hidden" value="{$info.id}">
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">所在会员组</label>
+    <div class="col-sm-10">
+	<select class="form-control" name="group_id">
+	<option value="0">请选择</option>
+	<arclist model="member_group" id="vo">
+	<option value="{$vo.group_id}" <eq name="info.group_id" value="$vo[group_id]">selected="selected"</eq>>{$vo.group_name}</option>
+	</arclist>
+	</select>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="userpwd1" name="userpwd1" value="" placeholder="如需修改密码请输入，不修改不输入">
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">确认密码</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="userpwd2" name="userpwd2" value="" placeholder="如需修改密码请再次输入，不修改不输入">
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">真实姓名</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="realname" name="realname" value="{$info.realname}" placeholder="您的真实姓名用于收货确认等">
+    </div>
+  </div>
+   <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">本站资金(元)</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="money" name="money" value="{$info.money}" placeholder="在本站拥有的资金">
+    </div>
+  </div>
+  
+    <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">联系电话</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="tel" name="tel" value="{$info.tel}" placeholder="您的收货联系电话">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">居住地区</label>
+  
+    <div class="col-sm-10">
+    
+    <div class="col-sm-4" style="padding-left:0px;"><select  name="province" id="province"  class="form-control"></select></div><div class="col-sm-4" ><select  name="city" id="city"  class="form-control"></select></div><div class="col-sm-4"><select  name="area" id="area"  class="form-control"></select></div>
+     
+    </div>
+  </div>
+  
+    <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">居住地</label>
+    
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="address" id="address" placeholder="您的居住地用于收货" value="{$info.address}">
+    </div>
+  </div>
+    <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">性别</label>
+    <div class="col-sm-10">
+    <select  name="sex" id="sex"  class="form-control">
+    <neq name="info.sex" value=""><option value="{$info.sex}">{$info.sex}</option></neq>
+    <option value="男">男</option>
+    <option value="女">女</option>
+    </select>
+    </div>
+  </div>
+    
+    <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">出生日期</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="birthday" name="birthday" value="{$info.birthday}" placeholder="您的出生年月 格式: 1986-07-22">
+    </div>
+  </div>
+    <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">职务</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="zhiwu" value="{$info.zhiwu}" name="zhiwu" placeholder="">
+    </div>
+  </div>
+    <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">血型</label>
+    <div class="col-sm-10">
+    <select  name="xuexing" id="xuexing"  class="form-control">
+    <neq name="info.xuexing" value=""><option value="{$info.xuexing}">{$info.xuexing}</option></neq>
+    <option value="A型">A型</option>
+     <option value="B型">B型</option>
+      <option value="AB型">AB型</option>
+       <option value="O型">O型</option>
+    </select>
+    
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-success">保&nbsp;&nbsp;存</button>&nbsp;&nbsp;<button type="button" class="btn btn-default" onClick="history.go(-1);">返&nbsp;&nbsp;回</button>
+    </div>
+  </div>
+</form>
+    
+  </div>
+</div>
+</div>
+</body>
+</html>

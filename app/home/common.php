@@ -118,25 +118,6 @@ function get_imagesarray($str)
     }
 }
 
-//获取我以及子孙返回字符串10,45,478
-function get_children($typeid, $withself = 1, $ret = 0)
-{
-    $temp = array();
-    if ($withself == 1) {
-        $temp[] = $typeid;
-    }
-    $dao = \think\facade\Db::name('type');
-    $t = $dao->whereRaw('typeid =' . $typeid)->find();
-    if ($t) {
-        $str = $t["path"] . "-" . $t["typeid"];
-        $mylist = \think\facade\Db::name('type')->whereRaw("1 = instr(path,'" . $str . "')")->select()->toArray();
-        foreach ($mylist as $kk => $vv) {
-            $temp[] = $vv['typeid'];
-        }
-    }
-    return $ret == 0 ? join(',', $temp) : $temp;
-}
-
 //是否有子孙
 function have_child($typeid)
 {

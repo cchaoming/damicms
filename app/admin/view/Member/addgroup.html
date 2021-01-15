@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+
+<import file= "Admin.js.admin,Admin.js.Ajax"/> 
+<link rel="StyleSheet" href="/public/css/dtree.css" type="text/css" />
+<script type="text/javascript" src="/public/js/dtree2.js"></script>
+<script src="/public/js/jquery.js"></script>
+<script src="/public/js/bootstrap.min.js"></script>
+<script>var mypath='/public/js/';</script>
+<style> 
+.classlist {float:left;margin:0;padding:0;}
+.classlist ul {float:left;margin:0;padding:0;}
+.classlist li {margin:0;padding:0;padding:3px 0;border-bottom:1px solid #ffffff;}
+.classlist li span {float:right;margin-top:-3px;}
+.classlist .bigclass {font-weight:bold;clear:both;list-style:none;margin:5px 0;}
+.classlist .yaoclass {font-weight:normal;list-style:none;padding-left:10px;}
+</style>
+<title>管理员管理</title>
+</head>
+<body>
+<script language="javascript">
+function chk(){
+		var a=document.getElementById('name');
+		if(a.value==""){
+		alert('组名称不能为空!');
+		a.focus();
+		return false;
+	}
+}
+</script> <form action="/addgroup" method="post" onSubmit="return chk();">
+<table width="600" border="0" align="center" cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">  <tr>
+    <td colspan="2" class="admintitle"> <neq name="info.group_id" value="">修改<input name="group_id" type="hidden" value="{$info.group_id}"><else/>添加</neq>会员组</td>
+  </tr>
+  
+  <tr>
+    <td width="28%" height="25" bgcolor="f7f7f7">组名称：</td>
+    <td width="72%" height="25" bgcolor="f7f7f7"><input name="group_name" type="text" size="30" id="name" value="{$info.group_name}" ></td>
+  </tr>
+  <tr>
+    <td height="25" bgcolor="f7f7f7">内容权限：</td>
+    <td height="25" bgcolor="f7f7f7">
+    <script>
+    t = new dTree('t');
+		t.add(0,-1,'管理内容权限');
+<volist name="type_tree" id="vo">
+		t.add({$vo.typeid},{$vo.fid},'<input class="udgp" name="typeids[]" type="checkbox" value="{$vo.typeid}" id="l{$vo.typeid}" pId="l{$vo.fid}" />{$vo.typename}');
+</volist>
+        document.write(t);
+		<neq name="info.group_id" value="">
+		$(function(){
+		var lids = '{$info.group_vail}';
+		var arr = lids.split(",");
+		for(var i=0;i<arr.length;i++){
+		$("#l" + arr[i]).attr("checked",true);
+		}
+		});
+		</neq>
+		$("input[type='checkbox']").click(function(){  
+                   var pId=this.id;
+				   var id =  $(this).attr("pId");
+				  //alert(id); 
+                   var checked=this.checked;  
+				   //$("input[id='"+ id +"']").attr("checked",checked);  
+                  //findparent(id);
+				  findChild(pId);
+				  //选中父节点
+				  function findparent(id){
+				   var children=$("input[id='"+ id +"']").attr("checked",checked);  
+                        if(children.length>0){  
+                               children.each(function(){
+								   var tid =  $(this).attr("pId");
+                                   findparent(tid);  
+                       });  
+                        }  	  
+				 }  
+				 //选中子节点
+                  function findChild(pId){  
+                        var children=$("input[pId='"+pId+"']").attr("checked",checked);  
+                        if(children.length>0){  
+                               children.each(function(){  
+                                   findChild(this.id);  
+                       });  
+                        }  
+         }  
+      }); 
+		</script>    </td>
+  </tr>
+  <tr>
+    <td height="25" bgcolor="f7f7f7">备注:</td>
+    <td height="25" bgcolor="f7f7f7"><label for="textarea"></label>
+      <textarea name="descript" id="textarea" cols="45" rows="5">{$info.descript}</textarea></td>
+  </tr>
+  <tr>
+    <td height="25"  bgcolor="f7f7f7" align="left"></td><td height="25" bgcolor="f7f7f7"><input type="submit" name="Submit" class="btn btn-success" value="保存">&nbsp;&nbsp;<input name="Submit22" type="button" class="btn btn-info" onClick="history.go(-1)"  value="返 回"></td>
+  </tr>
+</table>
+  </form>
+</body>
+</html>

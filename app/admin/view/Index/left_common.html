@@ -1,0 +1,23 @@
+<php>$id_arr = array('menu-article','menu-product','menu-comments','menu-member','menu-system');$wd_arr=array('&#xe616;','&#xe620;','&#xe622;','&#xe60d;','&#xe62e;');</php>
+<volist name="admin_menu" id="item" key="i">
+	<dl id="{$id_arr[$i-1]}">
+		<dt><i class="Hui-iconfont">{$wd_arr[$i-1]}</i> {$item.title}<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+		<dd>
+	  <ul> 	    
+      <volist name="item.submenu" id="subitem" key="k">
+	    <li><a data-href="{$subitem.url}" data-title="{$subitem.title}">{$subitem.title}</a> </li>
+       </volist>
+       <eq name="item['id']" value="1">
+       <php>$where = "enable=1 and typeid in(".session(C('USER_CONTENT_KEY')).")";</php>
+        <arclist model="extend_menu" where="$where">        
+        <gt name='vo.typeid' value='0'>
+        <li><a data-title="{$vo.menu_name}" data-href="__APP__/Article/index/typeid/{$vo.typeid}" target="main">{$vo.menu_name}</a> </li>
+        <else/>
+        <li><a data-href="__APP__/{$vo.action_name}/index" data-title="{$vo.menu_name}">{$vo.menu_name}</a> </li>
+        </gt>
+        </arclist>
+        </eq>
+	  </ul>
+			</dd>
+	</dl>
+    </volist>

@@ -305,6 +305,25 @@ function is_weixin_visit()
     }
 }
 
+//获取我以及子孙返回字符串10,45,478
+function get_children($typeid, $withself = 1, $ret = 0)
+{
+    $temp = array();
+    if ($withself == 1) {
+        $temp[] = $typeid;
+    }
+    $dao = \think\facade\Db::name('type');
+    $t = $dao->whereRaw('typeid =' . $typeid)->find();
+    if ($t) {
+        $str = $t["path"] . "-" . $t["typeid"];
+        $mylist = \think\facade\Db::name('type')->whereRaw("1 = instr(path,'" . $str . "')")->select()->toArray();
+        foreach ($mylist as $kk => $vv) {
+            $temp[] = $vv['typeid'];
+        }
+    }
+    return $ret == 0 ? join(',', $temp) : $temp;
+}
+
 //html无损裁剪
 function htmlsubstr($str, $num, $more = false)
 {
@@ -510,7 +529,6 @@ function send_http_status($code)
         header('Status:' . $code . ' ' . $_status[$code]);
     }
 }
-
 /**
  * 缓存管理
  * @param mixed $name 缓存名称，如果为数组表示进行缓存设置

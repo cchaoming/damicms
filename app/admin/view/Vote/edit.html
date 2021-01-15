@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网站后台管理</title>
+<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<import file= "Admin.js.admin"/> 
+</head>
+<body>
+  <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#f7f7f7" class="admintable">
+  <form name="add" method="post" action="/doedit">
+  <tr>
+      <td colspan="2" align="center" class="admintitle">修改投票</td>
+    </tr>
+    <tr>
+      <td width="15%" align="center" bgcolor="#FFFFFF">投票名称：      </td>
+      <td width="85%" bgcolor="#FFFFFF"><input name="title" type="text" class="input" id="t0" value="{$list.title}" size="50" maxlength="50"></td>
+    </tr>
+    <tr>
+      <td align="center" bgcolor="#FFFFFF">投票选项：      </td>
+      <td bgcolor="#FFFFFF"><input name='stype' type='radio' class="noborder" value='0' <eq name="list.stype" value="0">checked</eq>/>
+      单选 <input  name='stype' type='radio' class="noborder" value='1' <eq name="list.stype" value="1">checked</eq>/>
+      多选</td>
+    </tr>
+    <tr>
+      <td align="center" bgcolor="#FFFFFF">项目内容：</td>
+      <td bgcolor="#FFFFFF">
+      <textarea name="vote" id="votes" cols="50" rows="10">{$list.vote}</textarea></td>
+    </tr>
+    <tr>
+      <td align="center" bgcolor="#FFFFFF">投票时间：</td>
+      <td bgcolor="#FFFFFF"><input name="starttime" type="text" class="input" value="{$list.starttime}" size="20">
+        -
+        <input name="overtime" type="text" class="input" value="{$list.overtime}" size="20"></td>
+    </tr>
+    <tr>
+      <td align="center" bgcolor="#FFFFFF">排序：</td>
+      <td bgcolor="#FFFFFF"><input name="rank" type="text" id="Px" value="{$list.rank}" size="6" maxlength="5">
+        <span class="note">数字小的排在前面</span></td>
+    </tr>
+	 
+    <tr>
+	  <td bgcolor="#FFFFFF">&nbsp;</td>
+	  <input type="hidden" name="id" value="{$list.id}">
+      <td bgcolor="#FFFFFF"><input name="Submit" type="submit" class="btn btn-info" value="保 存">
+        <input name="Submit22" type="button" class="btn btn-info" onClick="history.go(-1)" value="返 回"></td>
+    </tr>
+	</form>
+  </table>
+
+</body>
+</html>

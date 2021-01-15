@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网站后台管理</title>
+<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<import file= "Admin.js.admin"/> 
+</head>
+<body>
+ 
+<table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#f7f7f7" class="admintable">
+<tr>
+      <td width="45%" align="center" class="admintitle" >选项</td>
+      <td width="45%" class="admintitle" >比例 </td>
+      <td width="10%" class="admintitle" >票数</td>
+    </tr>
+ 
+ <volist name="list" id="vo">
+    <tr>
+	  <td height="25" bgcolor="#FFFFFF">{$i}.{$vo.title}</td>
+      <td bgcolor="#FFFFFF"><div style='border:1px solid #ccc;'>
+<div style='width:{$vo.percent}%;background:#f00;height:5px;'></div></div></td>
+      <td align="center" bgcolor="#FFFFFF">{$vo.num}
+ ({$vo.percent}%)</td>
+    </tr>
+ </volist>
+ 
+ 
+<tr>
+    <td colspan="3" align="center" bgcolor="#FFFFFF" ><input name="Submit2" type="button" class="btn btn-info" onClick="history.go(-1)" value="返 回"></td>
+  </tr>
+</table>
+
+</body>
+</html>

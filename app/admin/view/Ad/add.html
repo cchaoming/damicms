@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网站后台管理</title>
+<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<import file= "Admin.js.admin,Admin.js.Jquery"/>
+<script charset="gbk" src="/public/Editor/kindeditor-min.js"></script>
+<script charset="utf-8" src="/public/Editor/lang/zh_CN.js"></script>
+</head>
+<body>
+<script>
+function chk(){
+if (document.myform.Title.value==""){
+	alert("请填写标题！");
+	document.myform.Title.focus();
+	return false;
+  }
+}
+var KE;
+KindEditor.options.filterMode = false;
+KindEditor.ready(function(K) {
+KE = K.create('#Content',{ afterBlur: function(){this.sync();}
+});
+});
+</script>
+<table width="100%" border="0" align="center" cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
+<tr>
+  <td colspan="5" class="admintitle">添加广告</th></tr>
+<form action="/doadd" method="post" name="myform" onsubmit="return chk();">
+<tr>
+<td width="20%" class=b1_1>广告名称</td>
+<td colspan=4 class=b1_1><input name="title" type="text" id="Title" size="40" maxlength="20"></td>
+</tr>
+<tr>
+  <td class=b1_1>图片上传</td>
+  <td colspan=4 class=b1_1><iframe src="__APP__/File/ad/" width="400" height="25" frameborder="0" scrolling="no"></iframe></td>
+</tr>
+<tr>
+<td width="20%" class=b1_1>广告代码</td>
+<td colspan=4 class=b1_1><textarea id="Content" name="content" class="form-control kindeditor" style="width:670px;height:400px;"></textarea></textarea></td>
+</tr>
+<tr>
+  <td class=b1_1>广告类型</td>
+  <td colspan=4 class=b1_1><select id="type" name="type">
+		<option value="0" selected>公共广告</option>
+		<option value="1">首页广告</option>
+		<option value="2">列表页广告</option>
+		<option value="3">文章页广告</option>
+		<option value="4">留言本广告</option>
+</select></td>
+</tr>
+<tr>
+  <td class=b1_1>广告说明</td>
+  <td colspan=4 class=b1_1><input name="description" type="text" id="Note" value="" size="40"></td>
+</tr>
+<tr>
+<td width="20%" class=b1_1></td>
+<td class=b1_1 colspan=4><input name="submit" type="submit" class="btn btn-info" value="添 加">&nbsp;&nbsp;<input type="button" onclick="history.go(-1);" class="btn btn-info" value="返 回"></td>
+</tr></form>
+</table>
+
+</body>
+</html>

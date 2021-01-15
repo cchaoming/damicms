@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网站后台管理</title>
+<link href="/public/Admin/images/Admin_css.css" type="text/css" rel="stylesheet">
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<import file= "Admin.js.admin,Admin.js.Jquery"/>
+<script charset="gbk" src="/public/Editor/kindeditor-min.js"></script>
+<script charset="utf-8" src="/public/Editor/lang/zh_CN.js"></script>
+</head>
+<body>
+<script>
+KindEditor.options.filterMode = false;
+KindEditor.ready(function(K) {
+K.create();
+});
+function chk(){
+if (document.myform.vip_name.value==""){
+	alert("请填写标题！");
+	document.myform.vip_name.focus();
+	return false;
+  }
+}
+</script>
+<table width="100%" border="0" align="center" cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
+<tr> 
+  <td colspan="5" class="admintitle">推送云消息</th></tr>
+<tr>
+<td width="20%" class=b1_1>APK标志：</td>
+<td colspan=4 class=b1_1>
+<input name="apk_sign" type="text" iid="apk_sign" size="40" maxlength="60" value="">
+</td>
+</tr>
+
+  
+<tr>
+<td width="20%" class=b1_1>标题：</td>
+<td colspan=4 class=b1_1>
+<input name="title" type="text" id="title" size="40" maxlength="60">
+<input name="apk_sign" id="apk_sign" type="hidden" value="1449648942">
+</td>
+</tr>
+<tr>
+<td width="20%" class=b1_1>内容：</td>
+<td colspan=4 class=b1_1><textarea id="content" class="form-control kindeditor" style="width:670px;height:400px;"></textarea></td>
+</tr>
+<tr> 
+<td width="20%" class=b1_1></td>
+<td class=b1_1 colspan=4>
+<input name="submit" type="button" class="btn btn-success" value="发送" onclick="send_bcs();">&nbsp;&nbsp;
+<input type="button" onClick="history.go(-1);" class="btn btn-info" value="返 回">
+</tr>
+</table>
+<script>
+function send_bcs(){
+var apk_sign = $('#apk_sign').val();
+var title = $('#title').val();
+var content = $('#content').val();
+if(apk_sign =='' || title =='' || content ==''){alert('请填写完整信息！');return false;}
+$.getJSON("http://www.damicms.com/Bcs/ajax_bcs_mess?apk_sign=" + apk_sign + "&title=" + title + "&content=" + content + "&jsoncallback=?", function(json){}); 
+}
+
+function callback(json){
+alert(json.info);
+}
+
+</script>
+</body>
+</html>

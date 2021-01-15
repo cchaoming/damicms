@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<script src="/public/js/jquery.js"></script>
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<style type="text/css">
+<!--
+.STYLE1 {
+	color: #FF0000;
+	font-weight: bold;
+}
+-->
+</style>
+</head>
+<body>
+<script>
+function chk(){
+if(document.getElementById("field_type").value==""){
+	alert("字段类型不能为空，请选择字段类型!");
+	return false;
+}
+if(document.getElementById("field_name").value==""){
+	alert("字段名称不能!");
+	return false;
+}
+if(document.getElementById("show_text").value==""){
+	alert("表单显示文本不能为空!");
+	return false;
+}
+}
+</script>
+<table width="100%" border="0" align="center" cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
+<tr> 
+  <td colspan="6" class="admintitle">添加扩展字段
+  </th></tr>
+<form action="{:url('Fields/doadd')}" method="post" onSubmit="return chk();">
+<tr>
+  <td class=b1_1>字段类型</td>
+  <td colspan=4 class=b1_1>
+<select ID="field_type" name="field_type" style="width:250px" onChange="if(this.value>2 && this.value <7){ $('#set_option').show();$('#zy_php').hide();  } else{ $('#set_option').hide();$('#zy_php').show(); }">
+ <option value="">请选择</option>
+  <volist name='list_type' id='vo' key='k'>
+  <option value="{$k-1}">{$vo}</option>
+  </volist>
+</select></td>
+  <td width="56%" class=b1_1>&nbsp;</td>
+</tr>
+
+
+<tr>
+<td width="19%" class=b1_1>表单显示文本</td>
+<td colspan=4 class=b1_1><input type="text" name="show_text" size="40" id="show_text" maxlength="20"></td>
+<td class=b1_1>例如:姓名</td>
+</tr>
+<tr>
+  <td class=b1_1>字段名称</td>
+  <td colspan=4 class=b1_1><input type="text" name="field_name" size="40" id="field_name" maxlength="20"></td>
+  <td class=b1_1>最好英文 例如:name</td>
+</tr>
+
+
+<tr id="set_option" style="display:none;">
+
+  <td class=b1_1>预设选项</td>
+  <td colspan=4 class=b1_1 valign="top"><textarea name="options" style="width:270px; height:90px;"></textarea></td>
+  <td class=b1_1 valign="top">多个选项之间用<span class="STYLE1">回车</span>符号，每个选项以|分隔 <span class="STYLE1">显示文本|值 </span><br>    如果显示文本等于值就直接 写显示文本<br>(支持PHP代码模式:&lt;php&gt;echo '&lt;option&gt;300&lt;/option&gt;';&lt;/php&gt;) 例如:<br>
+  张三|3<br>
+  李四|4 </td>
+</tr>
+<tr>
+  <td class=b1_1>预设默认值</td>
+  <td colspan=4 class=b1_1><textarea name="default_option"  style=" width:270px; height:50px;"></textarea></td>
+  <td class=b1_1>例如:name字段默认值：李刚 默认可以为空<span id="zy_php">(支持PHP代码模式:&lt;php&gt;echo '300';&lt;/php&gt;)</span></td>
+</tr>
+
+<tr>
+  <td class=b1_1>附加CSS</td>
+  <td colspan=4 class=b1_1><textarea name="css" style=" width:270px; height:50px;"></textarea></td>
+  <td class=b1_1>例如：style='width:350px; height:30px'<br>
+  class='red'</td>
+</tr>
+<tr>
+  <td class=b1_1>排序</td>
+  <td colspan=4 class=b1_1><input name="orders" type="text" id="orders" value="255" size="10" maxlength="20"></td>
+  <td class=b1_1>越小越靠前显示</td>
+</tr>
+
+
+<tr> 
+<td width="19%" class=b1_1></td>
+<td class=b1_1 colspan=4><input name="Submit" type="submit" class="btn btn-success" value="添 加">&nbsp;&nbsp;<input type="button" onClick="history.go(-1);" class="btn btn-info" value="返 回"></td>
+<td class=b1_1>&nbsp;</td>
+</tr>
+</form>
+</table>
+
+</body>
+</html>

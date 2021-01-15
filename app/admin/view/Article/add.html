@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网站后台管理</title>
+<link href="/public/Admin/images/Admin_css.css" type="text/css" rel="stylesheet">
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<import file= "Admin.js.admin,Admin.js.Jquery"/>
+<script charset="gbk" src="/public/Editor/kindeditor-min.js"></script>
+<script charset="utf-8" src="/public/Editor/lang/zh_CN.js"></script>
+<script> 
+var KE;
+KindEditor.options.filterMode = false;
+KindEditor.ready(function(K) {
+KE = K.create('#Content',{ afterBlur: function(){this.sync();}
+});
+});
+   
+function round(){
+	document.myform.Hits.value=Math.ceil(Math.random()*(1000-1)+1);
+	}
+	
+	function CheckForm()
+	{ 
+  if (document.myform.Title.value==""){
+	alert('标题不能为空!');
+	document.myform.Title.focus();
+	return false;
+	}
+  if (document.myform.Title.value.length>50){
+	alert("标题不能超过50个字符");
+	document.myform.Title.focus();
+	return false;
+  }
+  if (document.myform.Typeid.value==""){
+	alert("请选择分类！");
+	document.myform.Typeid.focus();
+	return false;
+  }
+  if (document.myform.Hits.value==""){
+	alert("请填写浏览次数！");
+	document.myform.Hits.focus();
+	return false;
+  }
+  var filter=/^\s*[0-9]{1,6}\s*$/;
+  if (!filter.test(document.myform.Hits.value)) { 
+	alert("浏览次数填写不正确,请重新填写！"); 
+	document.myform.Hits.focus();
+	return false; 
+  }
+  function ResumeError()
+			{return true;}
+			window.onerror = ResumeError;
+}
+	function showhelp(){
+	alert('点击 随机,获取随机点击数,关键字和描述是用于被搜索引擎收录的内容,不在网页里显示,文章摘要是在文章页上方的一段内容提示,文章摘要不填,系统将截取正文内容前130字作为文章摘要');
+	}
+	//数组删除元素
+Array.prototype.remove=function(obj)
+{
+    if(null==obj){return;}
+    for(var i=0,n=0;i<this.length;i++)
+    {
+        if(this[i]!=obj)
+        {
+            this[n++]=this[i];
+        }
+    }
+    this.length-=1
+}
+//相册加载预览
+function load_picyulan(val,obj){
+    if(val==''){return false;}
+	$('#yulan_pics').html('');
+    var arr = val.split(";");
+    var html= '<div class="clearfix" style="width:100%;clear:both;height:auto;padding: 5px;" id="yulan_pics">';
+    for(var i=0;i<arr.length;i++)
+    {
+	var src = arr[i];
+	 if(!/\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test(src))
+     {
+     src = '/public/image/file.png';
+     }
+	 html += '<div style="width:130px;float:left;padding:5px;" id="' + obj + i + '"><img src="' + src +  '" border="0" width="120" height="120"/><p style="text-align: center;"><button type="button" class="btn btn-default" style="margin-top: 8px;"  onclick="del_picyulan(\''+ arr[i] + '\',\''+ val + '\',\''+ obj + i +'\',\'' + obj + '\');">删除</button></p></div>';
+    }
+    html += '</div>';
+    $('#' + obj + '_btn').after(html);
+}
+//删除当前预览
+function del_picyulan(cur_value,old_value,cur_obj,old_obj){
+    old_value = $('#' + old_obj).val();
+    var old_arr = old_value.split(';');
+    old_arr.remove(cur_value);
+    old_value = old_arr.join(";");
+    $('#'+old_obj).val(old_value);
+    $('#'+cur_obj).remove();
+}
+</script>
+</head>
+<body>
+<table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
+<form action="{:url('Article/doadd')}" onSubmit="return CheckForm();" name="myform" method="post" id="myform" enctype="multipart/form-data">
+<tr> 
+    <td colspan="2" align=left class="admintitle">添加文章[<a onClick="showhelp();">操作提示</a>]</td></tr>
+<eq name='arr[0]' value='1'>
+<tr> 
+<td width="20%" class="b1_1">标题</td>
+<td class="b1_1"><input name="title" type="text" id="Title" size="40" maxlength="50"><input name="TitleFontColor" type="hidden" id="TitleFontColor" onClick="Getcolor(ColorBG,'TitleFontColor');" Readonly>
+	  <img border=0 src="/public/Admin/images/Rect.gif" style="cursor:pointer;" onClick="Getcolor(this,'TitleFontColor');" title="选取标题颜色" align="absmiddle" ID="ColorBG">&nbsp;<span class="note">注：最多50个字符</span></td>
+</tr>
+</eq>
+<eq name='arr[1]' value='1'>
+<tr>
+  <td class="b1_1">关键字</td>
+
+  <td class="b1_1"><input name="keywords" type="text" id="KeyWord" size="40" maxlength="50">&nbsp;<span class="note">多个关键字用,隔开</span></td>
+</tr>
+</eq>
+<eq name='arr[2]' value='1'>
+<tr>
+  <td class="b1_1">描述</td>
+  <td class="b1_1"><input name="description" type="text" size="40" maxlength="50">&nbsp;<span class="note">用于搜索引擎抓取</span></td>
+</tr>
+</eq>
+<eq name='arr[3]' value='1'>
+<tr>
+  <td class="b1_1">作者</td>
+  <td class="b1_1">
+    <input name="author" type="text" id="Author" value="不详" size="40" maxlength="200">    </td>
+</tr>
+</eq>
+<eq name='arr[4]' value='1'>
+<tr>
+  <td class="b1_1">来源</td>
+  <td class="b1_1"><span class="td">
+    <input name="copyfrom" type="text" id="CopyFrom" value="网络" size="40" maxlength="200">
+  </span></td>
+</tr>
+</eq>
+<eq name='arr[5]' value='1'>
+<tr>
+  <td class="b1_1">浏览次数</td>
+  <td class="b1_1"><input name="hits" type="text" id="Hits" value="1" size="6" maxlength="10">&nbsp;&nbsp;<input name="get" type="button" class="btn btn-info" onClick="round();" value="随 机"></td>
+  </tr>
+</eq>
+
+<tr <neq name='arr[6]' value='1'>style="display:none"</neq>>
+  <td class="b1_1">分类</td>
+  <td class="b1_1"><select ID="Typeid" name="typeid">
+    <option value="">请选择分类</option>{$option}
+</select></td>
+</tr>
+
+<eq name='arr[7]' value='1'>
+<tr>
+  <td class="b1_1">转向链接</td>
+  <td class="b1_1"><input name="linkurl" type="text" size="50" >
+		  <INPUT name="islink" type="checkbox" class="noborder" id="UseLinkUrl" value="1">
+      使用转向链接</td>
+</tr>
+</eq>
+<eq name='arr[8]' value='1'>
+<tr>
+  <td rowspan="2" class="b1_1">缩略图</td>
+  <td class="b1_1"><input name="imgurl" type="text" id="Images" size="50" maxlength="200">
+  <INPUT name="isimg" type="checkbox" class="noborder" id="Useimg" value="1">
+      使用缩略图</td>
+</tr>
+<tr>
+  <td class="b1_1"><iframe src="__APP__/File/thumb/" width="400" height="25" frameborder="0" scrolling="no"></iframe></td>
+</tr>
+</eq>
+<eq name='arr[9]' value='1'>
+<tr>
+  <td bgcolor="#FFFFFF" class="b1_1">文章摘要<br/>[为空自动截取内容前130字]</td>
+  <td colspan=4 class=b1_1><textarea name="note" id="Note" cols="60" rows="6"></textarea></td></tr>
+</eq>
+<eq name='arr[10]' value='1'>
+ <tr>
+  <td class="b1_1">附件上传</td>
+  <td class="b1_1"><iframe src="__APP__/File/attach/" width="400" height="25" frameborder="0" scrolling="no"></iframe></td>
+</tr>
+</eq>
+<eq name='arr[11]' value='1'>
+<tr>
+  <td valign="top" class="b1_1"><p>内容</p>
+    <p><br>
+    </p>
+  <td class="b1_1"><textarea id="Content" name="content" style="width:700px;height:300px;">
+</textarea></td>
+</tr>
+</eq>
+<eq name='arr[12]' value='1'>
+<tr>
+  <td class="b1_1">发布时间</td>
+  <td class="b1_1"><input name="addtime" type="text" id="DateAndTime" value="{:date('Y-m-d H:i:s')}"></td>
+</tr>
+</eq>
+<eq name='arr[13]' value='1'>
+<tr>
+  <td class="b1_1">附加选项</td>
+  <td class="b1_1">固顶
+    <input name="istop" type="checkbox" class="noborder" id="IsTop" value="1">
+    推荐
+    <input name="ishot" type="checkbox" class="noborder" id="IsHot" value="1">
+    幻灯
+    <input name="isflash" type="checkbox" class="noborder" id="IsFlash" value="1">
+	<INPUT type=button class="btn btn-info" onClick="javascript:KE.insertHtml('[dami_page]');" value="插入分页符"></td>
+</tr>
+</eq>
+<eq name='arr[14]' value='1'>
+<tr>
+  <td class="b1_1">自动分页<strong>字数</strong></td>
+  <td class="b1_1"><input name="pagenum" type="text" id="PageNum" value="0" size="6" maxlength="4">
+    <span class="note">　注:如果在内容中加入了手动分页符,请填写0</span></td>
+</tr>
+</eq>
+<eq name='arr[15]' value='1'>
+<tr>
+  <td bgcolor="#FFFFFF" class="b1_1">本文显示投票</td>
+  <td colspan=4 class=b1_1><select name="voteid" size=4 id="Vote">
+	{$votehtml}
+ </select>
+    <span class="note">取消投票请选择不投票</span></td>
+</tr></eq>
+<volist name="extend_field" id="vo">
+<tr>
+  <td bgcolor="#FFFFFF" class="b1_1">{$vo.show_text}</td>
+  
+  <td colspan=4 class=b1_1>{:show_field($vo["field_type"],$vo["field_name"],$vo["default_option"],$vo["set_option"],$vo["css"])}
+  </td>
+</tr>
+</volist>
+<tr>
+<td width="20%" class="b1_1"></td>
+<td class="b1_1"><input name="submit" type="submit" class="btn btn-success" value="添 加">&nbsp;&nbsp;<input type="button" onClick="history.go(-1);" class="btn btn-info" value="返 回"></td>
+</tr>
+</form>
+</table>
+<div style="text-align:center;margin:10px;">
+</div>
+</body>
+</html>

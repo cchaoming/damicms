@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网站后台管理</title>
+<link href="/public/Admin/images/Admin_css.css" type="text/css" rel="stylesheet">
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<import file= "Admin.js.admin,Admin.js.Jquery"/>
+<script charset="gbk" src="/public/Editor/kindeditor-min.js"></script>
+<script charset="utf-8" src="/public/Editor/lang/zh_CN.js"></script>
+</head>
+<body>
+<script>
+KindEditor.options.filterMode = false;
+KindEditor.ready(function(K) {
+K.create();
+});
+function chk(){
+if (document.myform.Title.value==""){
+	alert("请填写标题！");
+	document.myform.Title.focus();
+	return false;
+  }
+}
+</script>
+<table width="100%" border="0" align="center" cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
+<tr> 
+  <td colspan="6" class="admintitle">APK配置</th></tr>
+<form action="/doconfig" method="post" name="myform" onSubmit="return chk();">
+<tr>
+<td width="20%" class=b1_1>APK名称：</td>
+<td colspan=5 class=b1_1><input name="company" type="text" id="company" size="40" maxlength="20" value="{$list.company}"></td>
+</tr>
+<tr>
+  <td class=b1_1>APK应用ICON：</td>
+  <td colspan=3 class="b1_1" valign="middle"><script>KindEditor.ready(function(K){var editor = K.editor({allowFileManager : true});K("#insertfile_icon_img").click(function() {					editor.loadPlugin("insertfile", function() {editor.plugin.fileDialog({fileUrl : K("#icon_img").val(),clickFn : function(url, title) {
+  if(url.toLowerCase().indexOf('.png') == -1){alert('仅允许png图片，其他图片系统将无法识别!');K("#icon_img").val('');return;}
+  K("#icon_img").val(url);K("#look_icon_img").html('<img src="'+url+'" border="0" style="width:75px; height:75px;">');editor.hideDialog();}});});});});</script><input type="text" id="icon_img" name="icon_img" value="{$list.icon}" /> <input type="button" id="insertfile_icon_img" value="选择文件" />   </td>
+  <td width="13%" valign="middle" class="b1_1">&nbsp;
+    <span id="look_icon_img"><neq name='list.icon' value=''><img src="__ROOT__{$list.icon}" border="0" style="width:75px; height:75px;"></neq>
+    </span></td>
+  <td width="46%" valign="middle" class="b1_1"><span id="look_icon_img">请选择png格式图片,否则系统有可能无法识别(尺寸：72px*72px)</span></td>
+</tr>
+<tr>
+  <td class=b1_1>APK启动画面：</td>
+  <td colspan=3 class=b1_1 valign="middle"><script>KindEditor.ready(function(K){var editor = K.editor({allowFileManager : true});K("#insertfile_start_img").click(function() {					editor.loadPlugin("insertfile", function() {editor.plugin.fileDialog({fileUrl : K("#start_img").val(),clickFn : function(url, title) { if(url.toLowerCase().indexOf('.jpg') == -1){alert('仅允许jpg图片，其他图片系统将无法识别!');K("#start_img").val('');return;}
+  K("#start_img").val(url);K("#look_start_pic").html('<img src="'+url+'" border="0" style="width:75px; height:150px;">');editor.hideDialog();}});});});});</script><input type="text" id="start_img" name="start_img" value="{$list.start_pic}" /> <input type="button" id="insertfile_start_img" value="选择文件" />   </td>
+  <td class=b1_1 valign="middle"><span id="look_start_pic"><neq name='list.start_pic' value=''><img src="__ROOT__{$list.start_pic}" border="0" style="width:75px;height:150px;"></neq>
+  </span></td>
+  <td class=b1_1 valign="middle">请选择jpg图片,否则系统有可能无法识别(尺寸:480px*800px)</td>
+</tr>
+
+<tr> 
+<td width="20%" class=b1_1>手机网介绍：</td>
+<td colspan=5 class=b1_1><textarea name="content" cols="50" rows="8" id="Content">{$list.descript}</textarea></td>
+</tr>
+
+<tr>
+  <td class=b1_1>&nbsp;</td>
+  <td colspan=5 class=b1_1>&nbsp;</td>
+</tr>
+<tr> 
+<td width="20%" class=b1_1></td>
+<input type="hidden" name="id" value="{$list.id}">
+<td class=b1_1 colspan=5><input name="submit" type="submit" class="btn btn-success" value="保 存">&nbsp;&nbsp;<input type="button" onClick="history.go(-1);" class="btn btn-info" value="返 回"></td>
+</tr></form>
+</table>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>字段显示控制</title>
+<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<script src="/public/js/jquery.js"></script>
+</head>
+<body>
+<table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
+<form action="/doshow_field" name="myform" method="post" id="myform">
+<input name="typeid" type="hidden" value="{$_GET.typeid}">
+<tr> 
+    <td colspan="2" align=left class="admintitle"><font color="#FF0000">{$field_name}</font>&nbsp;栏字段显示控制[<a onClick="showhelp();">操作提示</a>]</td></tr>
+<volist name='list' id='vo' key='k'>
+<tr> 
+<td width="28%" class="b1_1">{$vo.txt}:<b>{$vo.field_name}</b></td>
+<td width="72%" class="b1_1"><input type="radio" name="a{$k}" value="1" <eq name="vo['show']" value='1'> checked="checked"</eq> />
+  显示
+     <input type="radio" name="a{$k}" value="0" <neq name="vo['show']" value='1'> checked="checked"</neq> />隐藏</td>
+</tr>
+</volist>
+<volist name='list_extend' id='vo'>
+<tr>
+  <td class="b1_1">{$vo.show_text}:<b>{$vo.field_name}</b></td>
+  <td class="b1_1"><input type="radio" name="field_{$vo.field_id}" value="1" <eq name="vo['is_show']" value='1'> checked="checked"</eq> />
+  显示
+     <input type="radio" name="field_{$vo.field_id}" value="0" <neq name="vo['is_show']" value='1'> checked="checked"</neq> />隐藏</td>
+</tr>
+</volist>
+<tr>
+  <td class="b1_1">下一级是否统一以上设置</td>
+  <td class="b1_1"><input name="nset" type="checkbox" value="1">&nbsp;&nbsp;排除栏目ID：<input name="outids" type="text">
+  注:多个ID用|分融</td>
+</tr>
+
+<tr>
+<td width="31%" class="b1_1"></td>
+<td class="b1_1"><input name="submit" type="submit" class="btn btn-info" value="保存设置">&nbsp;&nbsp;<input type="button" onClick="history.go(-1);" class="btn btn-info" value="返 回"></td>
+</tr>
+</form>
+</table>
+
+</body>
+</html>

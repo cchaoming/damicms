@@ -1,0 +1,71 @@
+<dl id="menu-article">
+	<dt><i class="Hui-iconfont">&#xe616;</i> 系统核心<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+	<dd>
+	  <ul> 	    
+	    <li><a data-href="__APP__/Fields/index" data-title="扩展字段">扩展字段</a> </li>
+		<li><a data-href="__APP__/Type/index" data-title="栏目管理">栏目管理</a> </li>
+		<li><a data-href="__APP__/Article/index" data-title="内容管理">内容管理</a> </li>
+        <damicms:arclist model="extend_menu" where="enable=1">
+        <gt name='vo.typeid' value='0'>
+        <li><a data-href="__APP__/Article/index/typeid/{$vo.typeid}" data-title="{$vo.menu_name}">{$vo.menu_name}</a> </li>
+        <else/>
+        <li><a data-href="__APP__/{$vo.action_name}/index" data-title="{$vo.menu_name}">{$vo.menu_name}</a> </li>
+        </gt>
+        </damicms:arclist>
+	  </ul>
+	</dd>
+</dl>
+
+<dl id="menu-product">
+	<dt><i class="Hui-iconfont">&#xe620;</i> 基本管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+	<dd>
+	  <ul> 	    
+		<li><a data-href="__APP__/Config/index" data-title="网站配置">网站配置</a></li><li><a data-href="__APP__/Admin/index" data-title="管 理 员">管 理 员</a></li>
+		<li><a data-href="__APP__/Flash/index" data-title="幻灯管理">幻灯管理</a></li><li><a data-href="__APP__/Clear" data-title="附件清理">附件清理</a></li>
+		<li><a data-href="__APP__/Label/index" data-title="单页标签">单页标签</a></li><li><a data-href="__APP__/Ad/index" data-title="广告管理">广告管理</a></li>
+	  </ul>
+	</dd>
+</dl>
+<dl id="menu-comments">
+	<dt><i class="Hui-iconfont">&#xe622;</i> 插件工具<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+	<dd>
+	  <ul> 
+		<li><a data-href="__APP__/Guestbook/index" data-title="留言管理">留言管理</a></li><li><a data-href="__APP__/Pl/index" data-title="评论管理">评论管理</a></li>
+        <li><a data-href="__APP__/Link/index" data-title="友情链接">友情链接</a></li><li><a data-href="__APP__/Vote/index" data-title="投票管理">投票管理</a></li>
+        <li><a data-href="__APP__/Key/index" data-title="文章内链">文章内链</a></li><li><a data-href="__APP__/Tpl/index" data-title="模板管理">模板管理</a></li>
+        <li><a data-href="__APP__/Backup/index" data-title="数据备份">数据备份</a></li><li><a data-href="__APP__/Backup/restore" data-title="数据还原">数据还原</a></li>
+		<li><a data-href="__APP__/Caiji/caiji" data-title="数据采集">数据采集</a></li><li><a data-href="__APP__/Build/index" data-title="生成静态">生成静态页</a></li>
+        <li><a data-href="__APP__/Mtable/index" data-title="万能表格">万能表格</a></li>
+	  </ul>
+	</dd>
+</dl>
+
+<dl id="menu-member">
+	<dt><i class="Hui-iconfont">&#xe60d;</i> 会员系统<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+	<dd>
+	  <ul> 
+	  <li><a data-href="__APP__/Member/wx_set" data-title="微信基础配置">微信基础配置</a></li>
+	  <li><a data-href="__APP__/Member/wx_menu" data-title="微信自定义菜单">微信自定义菜单</a></li>
+		<li><a data-href="__APP__/Member/ap_set" data-title="支付宝配置" >支付宝配置</a></li>
+        <li><a data-href="__APP__/Member/qq_set" data-title="QQ快捷登陆">QQ快捷登陆</a></li>
+        <li><a data-href="__APP__/Member/cartlist" data-title="订单管理">订单管理</a></li>
+		<li><a data-href="__APP__/Card/index" data-title="会员充值卡管理">会员充值卡管理</a></li>
+		<li><a data-href="__APP__/Member/usergroup" data-title="会员分组">会员分组</a></li>
+        <li><a data-href="__APP__/Member/userlist" data-title="会员管理">会员管理</a></li>
+        <li><a data-href="__APP__/Member/tixianlist" data-title="用户提现">用户提现</a></li>
+	  </ul>
+	</dd>
+</dl>
+
+<dl id="menu-system">
+	<dt><i class="Hui-iconfont">&#xe62e;</i> APK配置<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+	<dd>
+		<ul>
+			<li><a data-href="__APP__/Apk/config" data-title="PK基础配置">APK基础配置</a></li>
+			<li><a data-href="__APP__/Apk/down" data-title="在线生成APK">在线生成APK</a></li>
+			<li><a data-href="__APP__/Apk/vip_config" data-title="VIP账户配置" >VIP账户配置</a></li>
+			<li><a data-href="http://www.damicms.com/Public/donate" data-title="升级VIP">升级VIP</a></li>
+			<li><a data-href="__APP__/Apk/push_bcs" data-title="APK云消息推送" >APK云消息推送</a></li>
+		</ul>
+	</dd>
+</dl>

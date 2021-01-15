@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网站后台管理</title>
+<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<import file= "Admin.setdate.WdatePicker,Admin.js.admin,Admin.js.Ajax,Admin.js.Jquery"/>
+</head>
+<body>
+<div class="main_center" style="margin-top:10px;">
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">会员资料详细</h3>
+  </div>
+  <div class="panel-body">
+<form class="form-horizontal" role="form" method="post" action="">
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">用户名</label>
+    <div class="col-sm-10">
+     {$info.username}<input name="id" type="hidden" value="{$info.id}">
+    </div>
+  </div>
+  
+ 
+  
+  <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">真实姓名</label>
+    <div class="col-sm-10">
+      {$info.realname}
+    </div>
+  </div>
+   
+    <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">联系电话</label>
+    <div class="col-sm-10">
+      {$info.tel}
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">居住地区</label>  
+    <div class="col-sm-10">
+    {$info.province}{$info.city}{$info.area}
+    </div>
+  </div>
+  
+    <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">居住地</label>    
+    <div class="col-sm-10">
+      {$info.address}
+    </div>
+  </div>
+  
+    <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">性别</label>
+    <div class="col-sm-10">
+    {$info.sex}
+    </div>
+  </div>
+    
+    <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">出生日期</label>
+    <div class="col-sm-10">
+      {$info.birthday}
+    </div>
+  </div>
+    <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">职务</label>
+    <div class="col-sm-10">
+     {$info.zhiwu}
+    </div>
+  </div>
+<div class="form-group">
+     <label for="inputPassword3" class="col-sm-2 control-label">职务</label>
+    <div class="col-sm-10">
+     {$info.xuexing}
+    </div>
+</div>
+
+<div class="form-group">
+     <label for="inputPassword3" class="col-sm-2 control-label">本站余额</label>
+    <div class="col-sm-10">
+     {$info.money}元
+    </div>
+</div>
+ 
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+     <button type="button" class="btn btn-default" onClick="history.go(-1);">确&nbsp;&nbsp;定</button>
+    </div>
+  </div>
+</form>
+    
+  </div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+</head>
+ 
+<body>
+ <script>
+ function showhelp(){
+	var str = '蓝色:文章数 eg:(1),[外]代表外链栏目;红色:顶级导航排序,绿色:二级导航排序,-:不参与首页栏目内容排序,√代表支持,x代表不支持,点击编辑,修改栏目相关属性';
+	alert(str);
+ }
+ </script>
+<div class="main_center">
+<table border="0" cellspacing="2" cellpadding="3"  align="center" class="table table-bordered">
+<tr> 
+  <td colspan="5" align=left class="admintitle">扩展字段列表　[<a href="{:url('Fields/add')}"><font color="#FF0000">添加扩展字段</font></a>] [<a onClick="showhelp();">操作提示</a>]</td>
+</tr>
+  <tr align="center"> 
+    <td width="20%" class="ButtonList">表单中文字</td>
+    <td width="8%" class="ButtonList">字段名</td>
+    <td width="30%" class="ButtonList">字段类型</td>
+    <td width="8%" class="ButtonList">排序</td>
+    <td width="23%" class="ButtonList">操 作</td>
+  </tr>
+ <volist name= "list" id="vo"> 
+    <tr bgcolor="#f1f3f5" onMouseOver="this.style.backgroundColor='#EAFCD5';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+    <td height="24" class="tdleft">{$vo.show_text}	</td>
+    <td height="24" align="center">{$vo.field_name}</td>
+    <td height="24" align="center" class="tdleft">{:config('app.FIELD_TYPE.'.$vo["field_type"])}</td>
+    <td height="24" align="center">{$vo.orders}</td>
+    <td width="23%" align="center"><a href="{:url('Fields/edit',['field_id'=>$vo['field_id']])}">编辑</a> | <a href="{:url('Fields/del',['field_id'=>$vo['field_id'],'field_name'=>$vo['field_name']])}" onClick="JavaScript:return confirm('确定删除该字段！确定？')">删除</a> </td>
+  </tr>
+ </volist> 
+</table>
+</div>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网站后台管理</title>
+<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<import file= "Admin.setdate.WdatePicker,Admin.js.admin,Admin.js.Ajax,Admin.js.Jquery"/> 
+</head>
+<body>
+<div class="main_center">
+<table width="95%" border="0"  align=center cellpadding="3" cellspacing="1" bgcolor="#F2F9E8" class="table table-bordered">
+<tr> 
+<td colspan="5" align=left class="admintitle">幻灯列表　[<a href="/add">添加</a>][<a href="__APP__/Clear">清理附件</a>]</td></tr>
+    <tr bgcolor="#f1f3f5" style="font-weight:bold;">
+    <td width="5%" height="30" align="center" class="ButtonList">排序</td>
+    <td width="25%" align="center" class="ButtonList">幻灯标题</td>
+	<td width="30%" align="center" class="ButtonList">幻灯网址</td>
+	<td width="10%" align="center" class="ButtonList">幻灯状态</td>
+    <td width="30%" height="25" align="center" class="ButtonList">幻灯管理</td>    
+    </tr>
+	<volist name="list" id="vo"> 
+    <tr bgcolor="#ffffff" onMouseOver="this.style.backgroundColor='#EAFCD5';" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+    <td height="25">{$vo.rank}</td>
+    <td height="25" align="center"><a href="/edit/id/{$vo.id}">{$vo.title}</a></td>
+    <td height="25" align="center">{$vo.url}</td>
+	 <td height="25" align="center"><a href="/status/id/{$vo.id}/status/{$vo.status}"><eq name= "vo.status" value= "1">正常<else/><font color="red">隐藏</font></eq></a></td>
+    <td align="center"><a href="/edit/id/{$vo.id}">编辑</a>|<a href="/del/id/{$vo.id}" onClick="JavaScript:return confirm('确定要删除?')">删除</a></td>
+    </tr>
+	</volist>
+	<tr><td bgcolor="f7f7f7" colspan="5" align="left">文章幻灯模式下当前模块操作前台无效果,如需要启用手动幻灯请移步网站配置->首页配置 里修改</td></tr>
+</table>
+</div>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<style> 
+.classlist {float:left;margin:0;padding:0;}
+.classlist ul {float:left;margin:0;padding:0;}
+.classlist li {margin:0;padding:0;padding:3px 0;border-bottom:1px solid #ffffff;}
+.classlist li span {float:right;margin-top:-3px;}
+.classlist .bigclass {font-weight:bold;clear:both;list-style:none;margin:5px 0;}
+.classlist .yaoclass {font-weight:normal;list-style:none;padding-left:10px;}
+</style>
+<title>管理员管理</title>
+</head>
+<body>
+<script>
+ function chk(){
+		var a=document.getElementById('username');
+		if(a.value==""){
+		alert('用户名不能为空!');
+		a.focus();
+		return false;
+	}
+	if(a.value.length<3){
+	alert('用户名不能小于3位!');
+	a.focus();
+	return false;
+	}
+	if(a.value.length>16){
+	alert('用户名不能大于16位!');
+	a.focus();
+	return false;
+	}
+	if(document.getElementById('password').value==""){
+		alert('密码不能为空!');
+		document.getElementById('password').focus();
+		return false;
+	}
+	var e=document.getElementById('password');
+	if(e.value.length< 6){
+		alert('密码位数不能小于6位');
+		document.getElementById('password').focus();
+		return false;
+	}
+	if(e.value.length> 16){
+		alert('密码位数不能大于16位');
+		document.getElementById('password').focus();
+		return false;
+	}
+}
+</script>
+<table border="0" align="center" cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
+  <tr>
+    <td colspan="2" class="admintitle"> 修改管理员资料</td>
+  </tr>
+  <form action="/doedit" method="post" onSubmit="return chk();">
+  <tr>
+    <td height="25" colspan="2" bgcolor="f7f7f7" style="font-weight:bold;">注：用户名和密码请不要包含任何特殊字符或者危险字符[如or,and,delete等]&nbsp;<font color="red">支持同时修改帐户和密码</font></td>
+    </tr>
+  <tr>
+    <td width="20%" height="25" bgcolor="f7f7f7">&nbsp;用户名称：</td>
+    <td height="25" bgcolor="f7f7f7"><input name="username" value="{$list.username}" type="text" size="30"></td>
+  </tr>
+  <tr>
+    <td height="25" bgcolor="f7f7f7">&nbsp;用户密码：</td>
+    <td height="25" bgcolor="f7f7f7"><input name="password"type="text" size="30">*注：留空为不修改密码</td>
+  </tr>
+  <tr>
+    <td height="25" bgcolor="f7f7f7">所属管理组</td>
+    <td height="25" bgcolor="f7f7f7"><label for="select"></label>
+      <select name="role_id" id="role_id">
+      <volist name="role_list" id="vo">
+      <option value="{$vo.id}" <eq name="role_id" value="$vo['id']">selected="selected"</eq>>{$vo.name}</option>
+      </volist>
+      </select></td>
+  </tr>
+  <tr>
+  <input type="hidden" name="id" value="{$list.id}"/>
+    <td height="25" colspan="2" align="center" class="tabletd2"><input type="submit" name="Submit" class="btn btn-success" value="确定修改">&nbsp;&nbsp;<input name="Submit22" type="button" class="btn btn-info" onClick="history.go(-1)" value="返 回"></td>
+  </tr>
+  </form>
+</table>
+
+</body>
+</html>

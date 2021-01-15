@@ -1,0 +1,711 @@
+<!DOCTYPE html> 
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网站后台管理</title>
+<link href="/public/Admin/images/Admin_css.css" type="text/css" rel="stylesheet">
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<script src="/public/js/jquery.js"></script>
+<script src="/public/js/bootstrap.min.js"></script>
+<script charset="gbk" src="/public/Editor/kindeditor-min.js"></script>
+<script charset="utf-8" src="/public/Editor/lang/zh_CN.js"></script>
+<script> 
+KindEditor.options.filterMode = false;
+KindEditor.ready(function(K) {
+K.create('#oSitelx',{  
+					resizeType : 1,
+					allowPreviewEmoticons : false,
+					allowImageUpload : false,
+					items : [
+						'source','fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+						'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+						'insertunorderedlist', '|', 'emoticons', 'image', 'link'],
+					afterBlur: function(){this.sync();}
+});
+});
+</script>
+</head>
+<body>
+<div class="main_center">
+<form name='frm' method='post' action='/update' role="form">
+<div >
+      
+      		<ul class="nav nav-tabs">
+                    <li style="width:100px;"><a data-toggle="tab"></a></li>
+					<li class="active"><a href="#total_config" data-toggle="tab">网站整体配置</a></li>
+        			<li><a href="#home_config" data-toggle="tab">首页配置</a></li>
+					<li><a href="#list_config" data-toggle="tab">列表页配置</a></li>
+                    <li><a href="#content_config" data-toggle="tab">内容页配置</a></li>
+					<li><a href="#mail_config" data-toggle="tab">邮件发送配置</a></li>
+      		</ul>
+        <div class="tab-content" style="border:1px solid #dddddd; border-top:none;padding:10px;">
+        <div class="tab-pane active" id="total_config">
+		<div id="myTab1_Content0"  style="clear:both;">
+<table width="100%" border="0"  align=center cellpadding="3" cellspacing="1" style="margin:5px 0;background:#FFF">
+	
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">网站名称：sitetitle
+				<div id='hSiteTitle' style="color:#ccc;letter-spacing: 0px;font-size:12px;">你网站的名字</div>		  	</td>
+			<td align="right" width="10">&nbsp;</td>
+			<td width="60%" align="left">
+				
+				<input name="sitetitle" type="text" id="oSiteTitle" onFocus="hSiteTitle.style.color='blue';" onBlur="hSiteTitle.style.color='#ccc';" value="{$list.sitetitle}" style="width:300px;">		  </td>
+	  </tr>
+	
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">首页副标题：sitetitle2
+				<div id='hSiteTitle2' style="color:#ccc;letter-spacing: 0px;font-size:12px;">即显示在首页标题后面的文字,可适合填写一些网站关键字,利于搜索引擎收录</div>		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				
+				<input name="sitetitle2" type="text" id="oSiteTitle2" onFocus="hSiteTitle2.style.color='blue';" onBlur="hSiteTitle2.style.color='#ccc';" value="{$list.sitetitle2}" style="width:300px;">		  </td>
+	  </tr>
+	
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">网站域名：siteurl
+				<div id='hSiteUrl' style="color:#ccc;letter-spacing: 0px;font-size:12px;">当前网站域名:前台底部显示&前台顶部设为首页</div>		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				<input name="siteurl" type="text" id="oSiteUrl"  onFocus="hSiteUrl.style.color='blue';" onBlur="hSiteUrl.style.color='#ccc';" value="{$list.siteurl}" style="width:300px;">		  </td>
+	  </tr>
+	  		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">PC默认模板：sitetpl
+				<div id='hsitetpl' style="color:#ccc;letter-spacing: 0px;font-size:12px;">当前网站前台默认模板目录</div>		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				<input name="sitetpl" type="text" id="ositetpl"  onFocus="hsitetpl.style.color='blue';" onBlur="hsitetpl.style.color='#ccc';" value="{$list.sitetpl}" style="width:300px;">		  </td>
+	  </tr>
+	</tr>
+	<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+		<td width="40%" align="right">手机默认模板：sitetpl
+			<div id='wsitetpl' style="color:#ccc;letter-spacing: 0px;font-size:12px;">当前网站手机访问默认模板目录</div>		  	</td>
+		<td align="right">&nbsp;</td>
+		<td width="60%" align="left">
+			<input name="waptpl" type="text" id="waptpl"  onFocus="hsitetpl.style.color='blue';" onBlur="hsitetpl.style.color='#ccc';" value="{$list.waptpl}" style="width:300px;">		  </td>
+	</tr>
+	
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">Logo图片：sitelogo
+				<div id='hSiteLogo' style="color:#ccc;letter-spacing: 0px;font-size:12px;">左上角网站标志图</div>		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				
+                <input name="sitelogo" type="text" id="oSiteLogo" onFocus="hSiteLogo.style.color='blue';" onBlur="hSiteLogo.style.color='#ccc';" value="{$list.sitelogo}" style="width:300px;"><a href="__APP__/Clear">LOGO附件清理</a><br><iframe src="__APP__/File/logo" width="400" height="25" frameborder="0" scrolling="no"></iframe>		  </td>
+	  </tr>
+	
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">关 键 字：sitekeywords
+				<div id='hSiteKeywords' style="color:#ccc;letter-spacing: 0px;font-size:12px;">网站针对搜索引擎的关键字，以半角逗号分隔</div>		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				
+<textarea class='css_textarea' name="sitekeywords" type="text" id="oSiteKeywords" onFocus="hSiteKeywords.style.color='blue';" onBlur="hSiteKeywords.style.color='#ccc';" cols="50" rows="5" >{$list.sitekeywords}</textarea>		  </td>
+	  </tr>
+	
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">网站描述：sitedescription
+				<div id='hSitedescription' style="color:#ccc;letter-spacing: 0px;font-size:12px;">网站的描述</div>		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				
+<textarea class='css_textarea' name="sitedescription" type="text" id="oSitedescription" onFocus="hSitedescription.style.color='blue';" onBlur="hSitedescription.style.color='#ccc';" cols="50" rows="5" >{$list.sitedescription}</textarea>		  </td>
+	  </tr>
+	
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">联系方式：sitelx
+				<div id='hSitelx' style="color:#ccc;letter-spacing: 0px;font-size:12px;">支持html</div>		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				
+<textarea class='css_textarea' name="sitelx" type="text" id="oSitelx" onFocus="hSitelx.style.color='blue';" onBlur="hSitelx.style.color='#ccc';" cols="80" rows="5" >{$list.sitelx}</textarea>		  </td>
+	  </tr>
+	
+
+	
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">备案序号：sitetcp
+				<div id='hSiteTcp' style="color:#ccc;letter-spacing: 0px;font-size:12px;"></div>		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				
+				<input name="sitetcp" type="text" id="oSiteTcp" onFocus="hSiteTcp.style.color='blue';" onBlur="hSiteTcp.style.color='#ccc';" value="{$list.sitetcp}" style="width:300px;">		  </td>
+	  </tr>
+	
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+		  <td align="right">开启会员组阅读权限：defaultup</td>
+		  <td align="right">&nbsp;</td>
+		  <td align="left"><select name="isread">
+<option value="1" <eq name="list.isread" value="1">selected="selected"</eq>>开启</option>
+<option value="0" <eq name="list.isread" value="0">selected="selected"</eq>>禁用</option>
+</select>游客默认用户组ID：<input type="text" name="defaultup" value="{$list.defaultup}" style="width:60px;" />注册用户默认用户组ID:<input type="text" name="defaultmp" value="{$list.defaultmp}" style="width:60px;" /></td>
+		  </tr>
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">留言是否需要审核：bookoff
+				<div id='hbookoff' style="color:#ccc;letter-spacing: 0px;font-size:12px;"></div>		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				
+				<select class='css_select' name="bookoff" type="text" id="obookoff" onFocus="hbookoff.style.color='blue';" onBlur="hbookoff.style.color='#ccc';" style="width:150px;">
+					<option value="1" <eq name="list.bookoff" value="1">selected</eq>>不审核</option><option value="0" <eq name="list.bookoff" value="0">selected</eq>>审核</option>
+				</select>		  </td>
+	  </tr>
+	  
+	   <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">评论是否需要审核：pingoff
+				<div id='hpingoff' style="color:#ccc;letter-spacing: 0px;font-size:12px;"></div>		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				
+				<select class='css_select' name="pingoff" type="text" id="opingoff" onFocus="hpingoff.style.color='blue';" onBlur="hpingoff.style.color='#ccc';" style="width:150px;">
+					<option value="0" <eq name="list.pingoff" value="0">selected</eq>>审核</option><option value="1" <eq name="list.pingoff" value="1">selected</eq>>不审核</option>
+				</select>		  </td>
+	  </tr>
+	  
+	  <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">发表文章，评论等时间间隔(秒)：postovertime 
+				<div id='hpostovertime' style="color:#ccc;letter-spacing: 0px;font-size:12px;">评论等时间间隔(秒)</div>		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				
+				<input name="postovertime" type="text" id="opostovertime" onFocus="hpostovertime.style.color='blue';" onBlur="hpostovertime.style.color='#ccc';" value="{$list.postovertime}" style="width:30px;">		  </td>
+	  </tr>
+
+
+	  <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">网站语言：sitelang
+				<div id='hsitelang' style="color:#ccc;letter-spacing: 0px;font-size:12px;">默认以哪种语言显示</div>		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				
+<select class='css_select' name="sitelang" type="text" id="ositelang" onFocus="hsitelang.style.color='blue';" onBlur="hsitelang.style.color='#ccc';" style="width:150px;">
+		<option value="0" <eq name="list.sitelang" value="0">selected</eq>>简体中文</option><option value="1" <eq name="list.sitelang" value="1">selected</eq>>繁體中文</option>
+				</select>			</td>
+	  </tr>
+
+	  <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">水印开关：watermark
+				<div id='hwatermark' style="color:#ccc;letter-spacing: 0px;font-size:12px;">网站图片附件开启水印</div>		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				
+            <select class='css_select' name="watermark" type="text" id="owatermark" onFocus="hwatermark.style.color='blue';" onBlur="hwatermark.style.color='#ccc';" style="width:150px;">
+					<option value="0" <eq name="list.watermark" value="0">selected</eq>>关闭</option><option value="1" <eq name="list.watermark" value="1">selected</eq>>开启</option>
+				</select>		  </td>
+	  </tr>
+
+	  <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">水印图片：watermarkimg
+				<div id='hwatermarkimg' style="color:#ccc;letter-spacing: 0px;font-size:12px;">仅支持gif/png/jpeg格式</div>		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				
+           <input name="watermarkimg" type="text" id="owatermarkimg" onFocus="hwatermarkimg.style.color='blue';" onBlur="hwatermarkimg.style.color='#ccc';" value="{$list.watermarkimg}" style="width:300px;"><br><iframe src="__APP__/File/watermark" width="400" height="25" frameborder="0" scrolling="no"></iframe>		  </td>
+	  </tr>
+
+	  <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">伪静态设置：urlmode
+				<div id='hurlmode' style="color:#ccc;letter-spacing: 0px;font-size:12px;">'隐藏:index.php':需服务器支持.htaccess</div>		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				
+<select class='css_select' name="urlmode" type="text" id="ourlmode" onFocus="hurlmode.style.color='blue';" onBlur="hurlmode.style.color='#ccc';" style="width:150px;">
+		<option value="0" <eq name="list.urlmode" value="0">selected</eq>>显示'index.php'</option><option value="1" <eq name="list.urlmode" value="1">selected</eq>>隐藏'index.php'</option><option value="2" <eq name="list.urlmode" value="2">selected</eq>>兼容模式'?s='</option>
+				</select>			</td>
+	  </tr>
+	  
+      <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">是否开启在线订单(电商)：(istrade)
+				(支持商城二次开发)		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">				
+<select name="istrade">
+<option value="1" <eq name="list.istrade" value="1">selected="selected"</eq>>开启在线订单</option>
+<option value="0" <eq name="list.istrade" value="0">selected="selected"</eq>>禁用在线订单</option>
+</select>			</td>
+	  </tr>
+      
+      
+	   <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">是否生成并使用静态：(IS_BUILD_HTML)
+				(真正的静态不是伪静态，提升效率10倍以上)		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">				
+<select name="is_build_html">
+<option value="1" <eq name="list.is_build_html" value="1">selected="selected"</eq>>使用静态</option>
+<option value="0" <eq name="list.is_build_html" value="0">selected="selected"</eq>>不使用静态,全动态执行</option>
+</select>			</td>
+	  </tr>
+      
+      
+	  
+	  
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">伪静态后缀：suffix
+				<div id='hsuffix' style="color:#ccc;letter-spacing: 0px;font-size:12px;">伪静态网页后缀</div>		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				<select class='css_select' name="suffix" type="text" id="osuffix" onFocus="hsuffix.style.color='blue';" onBlur="hsuffix.style.color='#ccc';" style="width:150px;">
+			<option value="0" <eq name="list.suffix" value="0">selected</eq>>.html</option>
+			<option value="1" <eq name="list.suffix" value="1">selected</eq>>.htm</option>
+			<option value="2" <eq name="list.suffix" value="2">selected</eq>>.shtml</option>
+			<option value="3" <eq name="list.suffix" value="3">selected</eq>>.php</option>
+			<option value="4" <eq name="list.suffix" value="4">selected</eq>>.asp</option>
+			<option value="5" <eq name="list.suffix" value="5">selected</eq>>.aspx</option>
+			<option value="6" <eq name="list.suffix" value="6">selected</eq>>.jsp</option>
+				</select>			</td>
+	  </tr>
+	
+	
+		<tr class=css_page_list>
+			<td height="30" colspan=3 align="center">
+		  <input name='Submit' type='submit' class="btn btn-success" value=' 确定修改 '></td>
+		</tr>
+</table>
+   		</div>
+        </div>
+        <div class="tab-pane" id="home_config">
+		<div id="myTab1_Content1" style="clear:both;">
+<table width="100%" border="0"  align=center cellpadding="3" cellspacing="1" style="margin:5px 0;background:#FFF">
+	
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">幻灯显示图片数量：ishomeimg
+				<div id='hIsHomeimg' style="color:#ccc;letter-spacing: 0px;font-size:12px;">首页幻灯显示条数,填0则启用首页幻灯位广告</div>
+		  	</td>
+			<td align="right" width="10">&nbsp;</td>
+			<td width="60%" align="left">
+				
+				<input name="ishomeimg" type="text" id="oIsHomeimg" onFocus="hIsHomeimg.style.color='blue';" onBlur="hIsHomeimg.style.color='#ccc';" value="{$list.ishomeimg}" style="width:30px;">
+				
+		  </td>
+	  </tr>
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">首页推荐文章数量：indexrec
+				<div id='hindexrec' style="color:#ccc;letter-spacing: 0px;font-size:12px;">0则不显示</div>
+		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				<input name="indexrec" type="text" id="oindexrec" onFocus="hindexrec.style.color='blue';" onBlur="hindexrec.style.color='#ccc';" value="{$list.indexrec}" style="width:30px;">
+		推荐栏目标题:<input name="indexrectitle" value="{$list.indexrectitle}">
+		  </td>
+	  </tr>
+	
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">首页排行文章数量：indexhot
+				<div id='hindexhot' style="color:#ccc;letter-spacing: 0px;font-size:12px;">0则不显示</div>
+		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				
+				<input name="indexhot" type="text" id="oindexhot" onFocus="hindexhot.style.color='blue';" onBlur="hindexhot.style.color='#ccc';" value="{$list.indexhot}" style="width:30px;">
+		排行栏目标题:<input name="indexhottitle" value="{$list.indexhottitle}">
+		  </td>
+	  </tr>
+	
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">首页显示的投票ID：indexvote
+				<div id='hindexvote' style="color:#ccc;letter-spacing: 0px;font-size:12px;">首页右下角显示的投票ID,0为不显示</div>
+		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				
+				<input name="indexvote" type="text" id="oindexvote" onFocus="hindexvote.style.color='blue';" onBlur="hindexvote.style.color='#ccc';" value="{$list.indexvote}" style="width:30px;">
+			投票栏目标题:<input name="indexvotetitle" value="{$list.indexvotetitle}">
+		  </td>
+	  </tr>
+	
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">公告栏目ID：noticeid
+				<div id='hnoticid' style="color:#ccc;letter-spacing: 0px;font-size:12px;">首页显示的最新公告栏目ID,在栏目管理里面查看</div>
+		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				
+				<input name="noticeid" type="text" id="onoticid" onFocus="hnoticid.style.color='blue';" onBlur="hnoticid.style.color='#ccc';" value="{$list.noticeid}" style="width:30px;">
+			公告栏目标题:<input name="indexnoticetitle" value="{$list.indexnoticetitle}">
+		  </td>
+	  </tr>
+	
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">公告显示数量：noticenum
+				<div id='hNoticNum' style="color:#ccc;letter-spacing: 0px;font-size:12px;">首页网站公告条数,填0则隐藏网站公告</div>
+		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				
+				<input name="noticenum" type="text" id="oNoticNum" onFocus="hNoticNum.style.color='blue';" onBlur="hNoticNum.style.color='#ccc';" value="{$list.noticenum}" style="width:30px;">
+				
+		  </td>
+	  </tr>
+	  <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">迷你滚动公告数量：rollnum
+				<div id='hrollnum' style="color:#ccc;letter-spacing: 0px;font-size:12px;">迷你滚动公告条数,填0则隐藏</div>
+		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				<input name="rollnum" type="text" id="orollnum" onFocus="hrollnum.style.color='blue';" onBlur="hrollnum.style.color='#ccc';" value="{$list.rollnum}" style="width:30px;">
+		  </td>
+	  </tr>
+
+	  <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">首页是否显示友情链接：indexlink
+				<div id='hindexlink' style="color:#ccc;letter-spacing: 0px;font-size:12px;"></div>
+		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				<select class='css_select' name="indexlink" type="text" id="oindexlink" onFocus="hindexlink.style.color='blue';" onBlur="hindexlink.style.color='#ccc';" style="width:50px;">
+					<option value="1" <eq name="list.indexlink" value="1">selected</eq> >显示</option><option value="0" <eq name="list.indexlink" value="0">selected</eq>>隐藏</option>
+				</select>
+		友情链接标题:<input name="indexlinktitle" value="{$list.indexlinktitle}">
+		图片链接:<select class='css_select' name="indexlinkimg" type="text" id="oindexlinkimg" onFocus="hindexlinkimg.style.color='blue';" onBlur="hindexlinkimg.style.color='#ccc';" style="width:50px;">
+					<option value="1" <eq name="list.indexlinkimg" value="1">selected</eq> >显示</option><option value="0" <eq name="list.indexlinkimg" value="0">selected</eq>>隐藏</option>
+				</select>
+		链接申请:<select class='css_select' name="indexdiylink" type="text" id="oindexdiylink" onFocus="hindexdiylink.style.color='blue';" onBlur="hindexdiylink.style.color='#ccc';" style="width:50px;">
+					<option value="1" <eq name="list.indexdiylink" value="1">selected</eq> >显示</option><option value="0" <eq name="list.indexdiylink" value="0">selected</eq>>隐藏</option>
+				</select>
+		  </td>
+	  </tr>
+
+	  	  <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">首页是否显示最新图文：indexpic
+				<div id='hindexpic' style="color:#ccc;letter-spacing: 0px;font-size:12px;"></div>
+		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				<select class='css_select' name="indexpic" type="text" id="oindexpic" onFocus="hindexpic.style.color='blue';" onBlur="hindexpic.style.color='#ccc';" style="width:50px;">
+					<option value="1" <eq name="list.indexpic" value="1">selected</eq> >显示</option><option value="0" <eq name="list.indexpic" value="0">selected</eq>>隐藏</option>
+				</select>
+		最新图文标题:<input name="indexpictitle" value="{$list.indexpictitle}">
+		<select class='css_select' name="indexpicscroll" type="text" id="oindexpic" onFocus="hindexpic.style.color='blue';" onBlur="hindexpic.style.color='#ccc';" style="width:50px;">
+					<option value="1" <eq name="list.indexpicscroll" value="1">selected</eq> >滚动</option><option value="0" <eq name="list.indexpicscroll" value="0">selected</eq>>静止</option>
+				</select>
+				条数:<input name="indexpicnum" value="{$list.indexpicnum}" style="width:30px;">
+		  </td>
+	  </tr>
+
+	  <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">首页幻灯片模式选择：flashmode
+				<div id='hflashmode' style="color:#ccc;letter-spacing: 0px;font-size:12px;">手动幻灯下幻灯管理有效,文章模式下对含幻灯属性文章幻灯</div>
+		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				<select class='css_select' name="flashmode" type="text" id="oflashmode" onFocus="hflashmode.style.color='blue';" onBlur="hflashmode.style.color='#ccc';" style="width:100px;">
+					<option value="1" <eq name="list.flashmode" value="1">selected</eq> >文章幻灯模式</option><option value="0" <eq name="list.flashmode" value="0">selected</eq>>手动幻灯模式</option>
+				</select>
+		  </td>
+	  </tr>
+		<tr class=css_page_list>
+			<td height="30" colspan=3 align="center">
+		  <input name='Submit' type='submit' class="btn btn-success" value=' 确定修改 '></td>
+		</tr>
+</table>
+   		</div>
+        </div>
+        <div class="tab-pane" id="list_config">
+		<div id="myTab1_Content2" style="clear:both;">
+<table width="100%" border="0"  align=center cellpadding="3" cellspacing="1" style="margin:5px 0;background:#FFF">
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">列表页每页显示记录：artlistnum
+				<div id='hartlistnum' style="color:#ccc;letter-spacing: 0px;font-size:12px;">文章分类列表每页显示记录数</div>
+		  	</td>
+			<td align="right" width="10">&nbsp;</td>
+			<td width="60%" align="left">
+				
+				<input name="artlistnum" type="text" id="oartlistnum" onFocus="hartlistnum.style.color='blue';" onBlur="hartlistnum.style.color='#ccc';" value="{$list.artlistnum}" style="width:30px;">
+				
+		  </td>
+	  </tr>
+
+	<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">列表分类导航：listshowmode
+				<div id='hlistshowmode' style="color:#ccc;letter-spacing: 0px;font-size:12px;">列表页右侧分类导航调用</div>
+		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				<select class='css_select' name="listshowmode" type="text" id="olistshowmode" onFocus="hlistshowmode.style.color='blue';" onBlur="hlistshowmode.style.color='#ccc';" style="width:100px;">
+					<option value="1" <eq name="list.listshowmode" value="1">selected</eq> >同级栏目</option><option value="0" <eq name="list.listshowmode" value="0">selected</eq>>子级栏目</option>
+				</select>
+		  </td>
+	  </tr>
+
+	  <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">列表页推荐文章数：artlistrec
+				<div id='hartlistrec' style="color:#ccc;letter-spacing: 0px;font-size:12px;">列表页推荐文章数目,填0代表不启用推荐文章</div>
+		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				<input name="artlistrec" type="text" id="oartlistrec" onFocus="hartlistrec.style.color='blue';" onBlur="hartlistrec.style.color='#ccc';" value="{$list.artlistrec}" style="width:30px;">
+			推荐栏目标题:<input name="listrectitle" value="{$list.listrectitle}">
+		  </td>
+	  </tr>
+	   <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">列表页热门文章数：artlisthot
+				<div id='hartlisthot' style="color:#ccc;letter-spacing: 0px;font-size:12px;">列表页热门文章数目,填0代表不启用热门文章</div>
+		  	</td>
+			<td align="right">&nbsp;</td>
+			<td width="60%" align="left">
+				
+				<input name="artlisthot" type="text" id="oartlisthot" onFocus="hartlisthot.style.color='blue';" onBlur="hartlisthot.style.color='#ccc';" value="{$list.artlisthot}" style="width:30px;">
+			热门栏目标题:<input name="listhottitle" value="{$list.listhottitle}">	
+		  </td>
+	  </tr>
+		<tr class=css_page_list>
+			<td height="30" colspan=3 align="center">
+			<input type="hidden" name="id" value="{$list.id}"/>
+		 <input name='Submit' type='submit' class="btn btn-success" value=' 确定修改 '></td>
+		</tr>
+</table>
+   		</div>
+        </div>
+        <div class="tab-pane" id="content_config">
+		<div id="myTab1_Content3" style="clear:both;">
+<table width="100%" border="0"  align=center cellpadding="3" cellspacing="1" style="margin:5px 0;background:#FFF">
+	
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">内容页推荐文章数：articlerec
+				<div id='harticlerec' style="color:#ccc;letter-spacing: 0px;font-size:12px;">内容页推荐文章数,填0则不显示</div>
+		  	</td>
+			<td align="center" width="10">&nbsp;</td>
+			<td width="60%" align="left">
+				
+				<input name="articlerec" type="text" id="oarticlerec" onFocus="harticlerec.style.color='blue';" onBlur="harticlerec.style.color='#ccc';" value="{$list.articlerec}" style="width:30px;">
+			推荐栏目标题:<input name="artrectitle" value="{$list.artrectitle}">
+		  </td>
+	  </tr>
+	  <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">内容页热门文章数：articlehot
+				<div id='harticlehot' style="color:#ccc;letter-spacing: 0px;font-size:12px;">内容页热门文章数,填0则不显示</div>
+		  	</td>
+			<td align="center">&nbsp;</td>
+			<td width="60%" align="left">
+				
+				<input name="articlehot" type="text" id="oarticlehot" onFocus="harticlehot.style.color='blue';" onBlur="harticlehot.style.color='#ccc';" value="{$list.articlehot}" style="width:30px;">
+			热门栏目标题:<input name="arthottitle" value="{$list.arthottitle}">
+		  </td>
+	  </tr>
+<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">内容页是否显示评论：isping
+				<div id='hisping' style="color:#ccc;letter-spacing: 0px;font-size:12px;">内容页是否显示评论</div>
+		  	</td>
+			<td align="center">&nbsp;</td>
+			<td width="60%" align="left">
+				
+				<select class='css_select' name="isping" type="text" id="oisping" onFocus="hisping.style.color='blue';" onBlur="hisping.style.color='#ccc';" style="width:150px;">
+					<option value="0" <eq name="list.isping" value="0">selected</eq>>不显示</option><option value="1" <eq name="list.isping" value="1">selected</eq>>显示</option>
+				</select>
+				
+		  </td>
+	  </tr>
+	
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">内容页是否显示摘要：iszy
+				<div id='hIszhaiyao' style="color:#ccc;letter-spacing: 0px;font-size:12px;"></div>
+		  	</td>
+			<td align="center">&nbsp;</td>
+			<td width="60%" align="left">
+				
+				<select class='css_select' name="iszy" type="text" id="oIszhaiyao" onFocus="hIszhaiyao.style.color='blue';" onBlur="hIszhaiyao.style.color='#ccc';" style="width:150px;">
+					<option value="1" <eq name="list.iszy" value="1">selected</eq>>显示</option><option value="0" <eq name="list.iszy" value="0">selected</eq>>不显示</option>
+				</select>
+				
+		  </td>
+	  </tr>
+	
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">内容页是否显示点击数：ishits
+				<div id='hIsHits' style="color:#ccc;letter-spacing: 0px;font-size:12px;"></div>
+		  	</td>
+			<td align="center">&nbsp;</td>
+			<td width="60%" align="left">
+				
+				<select class='css_select' name="ishits" type="text" id="oIsHits" onFocus="hIsHits.style.color='blue';" onBlur="hIsHits.style.color='#ccc';" style="width:150px;">
+					<option value="1" <eq name="list.ishits" value="1">selected</eq> >显示</option><option value="0" <eq name="list.ishits" value="0">selected</eq>>不显示</option>
+				</select>
+				
+		  </td>
+	  </tr>
+	
+	
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">内容页是否显示来源：iscopyfrom
+				<div id='hIsFrom' style="color:#ccc;letter-spacing: 0px;font-size:12px;"></div>
+		  	</td>
+			<td align="center">&nbsp;</td>
+			<td width="60%" align="left">
+				
+				<select class='css_select' name="iscopyfrom" type="text" id="oIsFrom" onFocus="hIsFrom.style.color='blue';" onBlur="hIsFrom.style.color='#ccc';" style="width:150px;">
+					<option value="1" <eq name="list.iscopyfrom" value="1">selected</eq> >显示</option><option value="0" <eq name="list.iscopyfrom" value="0">selected</eq>>不显示</option>
+				</select>
+				
+		  </td>
+	  </tr>
+	
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">内容页是否显示心情投票：mood
+				<div id='hmood' style="color:#ccc;letter-spacing: 0px;font-size:12px;"></div>
+		  	</td>
+			<td align="center">&nbsp;</td>
+			<td width="60%" align="left">
+				
+				<select class='css_select' name="mood" type="text" id="omood" onFocus="hmood.style.color='blue';" onBlur="hmood.style.color='#ccc';" style="width:150px;">
+					<option value="1" <eq name="list.mood" value="1">selected</eq> >显示</option><option value="0" <eq name="list.mood" value="0">selected</eq>>不显示</option>
+				</select>
+				
+		  </td>
+	  </tr>
+	
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">内容页是否显示作者：isauthor
+				<div id='hIsAuthor' style="color:#ccc;letter-spacing: 0px;font-size:12px;"></div>
+		  	</td>
+			<td align="center">&nbsp;</td>
+			<td width="60%" align="left">
+				
+				<select class='css_select' name="isauthor" type="text" id="oIsAuthor" onFocus="hIsAuthor.style.color='blue';" onBlur="hIsAuthor.style.color='#ccc';" style="width:150px;">
+					<option value="1" <eq name="list.isauthor" value="1">selected</eq> >显示</option><option value="0" <eq name="list.isauthor" value="0">selected</eq>>不显示</option>
+				</select>
+				
+		  </td>
+	  </tr>
+	
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">内容页是否启用鼠标缩放：mouseimg
+				<div id='hmouserimg' style="color:#ccc;letter-spacing: 0px;font-size:12px;">启用该功能后，文章中的图片会随着鼠标滚轮放大和缩小</div>
+		  	</td>
+			<td align="center">&nbsp;</td>
+			<td width="60%" align="left">
+				
+				<select class='css_select' name="mouseimg" type="text" id="omouserimg" onFocus="hmouserimg.style.color='blue';" onBlur="hmouserimg.style.color='#ccc';" style="width:150px;">
+					<option value="1" <eq name="list.mouseimg" value="1">selected</eq>>启用</option><option value="0" <eq name="list.mouseimg" value="0">selected</eq> >不启用</option>
+				</select>
+				
+		  </td>
+	  </tr>
+	
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">内容页上下篇：updown
+				<div id='hupdown' style="color:#ccc;letter-spacing: 0px;font-size:12px;">内容页是否上一篇下一篇</div>
+		  	</td>
+			<td align="center">&nbsp;</td>
+			<td width="60%" align="left">
+				
+				<select class='css_select' name="updown" type="text" id="oupdown" onFocus="hupdown.style.color='blue';" onBlur="hupdown.style.color='#ccc';" style="width:150px;">
+					<option value="1" <eq name="list.updown" value="1">selected</eq> >启用</option><option value="0" <eq name="list.updown" value="0">selected</eq>>不启用</option>
+				</select>
+				
+		  </td>
+	  </tr>
+	  <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">内容页相关文章：xgwz
+				<div id='hxgwz' style="color:#ccc;letter-spacing: 0px;font-size:12px;">内容页是否显示相关文章</div>
+		  	</td>
+			<td align="center">&nbsp;</td>
+			<td width="60%" align="left">
+				
+				<select class='css_select' name="xgwz" type="text" id="oxgwz" onFocus="hxgwz.style.color='blue';" onBlur="hxgwz.style.color='#ccc';" style="width:150px;">
+					<option value="1" <eq name="list.xgwz" value="1">selected</eq> >启用</option><option value="0" <eq name="list.xgwz" value="0">selected</eq>>不启用</option>
+				</select>
+				
+		  </td>
+	  </tr>
+	  
+	  
+	  	  <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">内容图片本地化：islocalpic
+				<div id='islocalpic' style="color:#ccc;letter-spacing: 0px;font-size:12px;">录入内容时图片本地化</div>
+		  	</td>
+			<td align="center">&nbsp;</td>
+			<td width="60%" align="left">
+				
+				<select class='css_select' name="islocalpic" type="text" id="oislocalpic" onFocus="islocalpic.style.color='blue';" onBlur="islocalpic.style.color='#ccc';" style="width:150px;">
+					<option value="1" <eq name="list.islocalpic" value="1">selected</eq> >启用</option><option value="0" <eq name="list.islocalpic" value="0">selected</eq>>不启用</option>
+				</select>
+				
+		  </td>
+	  </tr>
+	  
+	  
+		<tr class="css_page_list">
+			<td height="30" colspan=3 align="center">
+			<input type="hidden" name="id" value="{$list.id}"/>
+		  <input name='Submit' type='submit' class="btn btn-success" value=' 确定修改 '></td>
+		</tr>
+</table>
+   		</div>
+        </div>
+		
+		<div class="tab-pane" id="mail_config">
+		<div id="myTab1_Content3" style="clear:both;">
+<table width="100%" border="0"  align=center cellpadding="3" cellspacing="1" style="margin:5px 0;background:#FFF">
+	
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">邮件服务器SMTP地址：				</td>
+			<td align="center" width="10">&nbsp;</td>
+			<td width="60%" align="left"><input name="MAIL_SMTP_SERVER" type="text" id="MAIL_SMTP_SERVER" onFocus="hSiteTitle.style.color='blue';" onBlur="hSiteTitle.style.color='#ccc';" value="{:C('MAIL_SMTP_SERVER')}" style="width:300px;"></td>
+	  </tr>
+	    <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+	      <td align="right">邮件服务器SMTP端口：            </td>
+	      <td align="center">&nbsp;</td>
+	      <td align="left"><input name="MAIL_PORT" type="text" id="MAIL_PORT" onFocus="hSiteTitle.style.color='blue';" onBlur="hSiteTitle.style.color='#ccc';" value="{:C('MAIL_PORT')}" style="width:300px;"></td>
+	      </tr>
+	    <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">登陆账号：				</td>
+			<td align="center">&nbsp;</td>
+			<td width="60%" align="left"><input name="MAIL_FROM" type="text" id="MAIL_FROM" onFocus="hSiteTitle.style.color='blue';" onBlur="hSiteTitle.style.color='#ccc';" value="{:C('MAIL_FROM')}" style="width:300px;"></td>
+	  </tr>
+<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">登陆密码：				</td>
+			<td align="center">&nbsp;</td>
+			<td width="60%" align="left"><input name="MAIL_PASSSWORD" type="password" id="MAIL_PASSSWORD" onFocus="hSiteTitle.style.color='blue';" onBlur="hSiteTitle.style.color='#ccc';" value="{:dami_decrypt|C('MAIL_PASSSWORD')}" style="width:300px;"></td>
+	  </tr>
+	
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">是否开启邮件订单提醒：
+				<div id='hIszhaiyao' style="color:#ccc;letter-spacing: 0px;font-size:12px;"></div>		  	</td>
+			<td align="center">&nbsp;</td>
+			<td width="60%" align="left"><select class='css_select' name="MAIL_TRADE" type="text" id="select" onFocus="hindexlink.style.color='blue';" onBlur="hindexlink.style.color='#ccc';" style="width:50px;">
+              <option value="1" 
+			  <if condition="C('MAIL_TRADE') eq 1">selected</if>
+              >开启
+			  </option>
+			  <option value="0" 
+			  <if condition="C('MAIL_TRADE') eq 0">selected</if>
+			  >关闭
+			  </option>
+            </select></td>
+	  </tr>
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+		  <td align="right">是否开启邮件注册认证:</td>
+		  <td align="center">&nbsp;</td>
+		  <td align="left"><select class='css_select' name="MAIL_REG" type="text" id="select" onFocus="hindexlink.style.color='blue';" onBlur="hindexlink.style.color='#ccc';" style="width:50px;">
+              <option value="1" 
+			  <if condition="C('MAIL_REG') eq 1">selected</if>
+              >开启
+			  </option>
+			  <option value="0" 
+			  <if condition="C('MAIL_REG') eq 0">selected</if>
+			  >关闭
+			  </option>
+            </select></td>
+		  </tr>
+	
+		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+			<td width="40%" align="right">订单提醒发送到email：
+			  <div id='hIsHits' style="color:#ccc;letter-spacing: 0px;font-size:12px;"></div>		  	</td>
+			<td align="center">&nbsp;</td>
+			<td width="60%" align="left"><input name="MAIL_TOADMIN" type="text" id="MAIL_TOADMIN" onFocus="hSiteTitle.style.color='blue';" onBlur="hSiteTitle.style.color='#ccc';" value="{:C('MAIL_TOADMIN')}" style="width:300px;"></td>
+	  </tr>
+		<tr class="css_page_list">
+			<td height="30" colspan=3 align="center">
+			<input type="hidden" name="id" value="{$list.id}"/>
+		  <input name='Submit' type='submit' class="btn btn-success" value=' 保存设置 '></td>
+		</tr>
+</table>
+   		</div>
+        </div>
+        </div>
+        
+</div>
+</form>
+</div>
+
+</body>
+</html>

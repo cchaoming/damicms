@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网站后台管理</title>
+<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<import file= "Admin.js.admin,Admin.js.Ajax,Admin.js.Jquery"/> 
+</head>
+<body>
+<div class="main_center">
+<table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="table table-bordered">
+<tr> 
+  <td colspan="5" align=left class="admintitle">模板管理</td>
+</tr>
+    <tr bgcolor="#f1f3f5" style="font-weight:bold;">
+    <td width="30%" align="center" class="ButtonList">文件夹/文件名</td>
+	<td width="20%" align="center" class="ButtonList">文件类型</td>
+	<td width="10%" align="center" class="ButtonList">文件大小</td>
+	<td width="20%" align="center" class="ButtonList">修改时间</td>
+	<td width="20%" align="center" class="ButtonList">相关操作</td>
+    </tr>
+<notempty name="dirlast"> 
+  <tr bgcolor="#f1f3f5" style="font-weight:bold;">
+  <td colspan="5" align="left"><img src="/public/Admin/images/file/last.gif"> <a href="?s=Tpl/index/id/{$dirlast}">上级目录</a> 当前目录: {$dirpath}</td>
+  </tr>
+</notempty>
+<volist name="list_dir" id="vo">
+  <eq name="vo.isDir" value="1">
+  <tr>
+  	<td width="30%"><img src="/public/Admin/images/file/folder.gif" width="16" height="16"><a href="?s=Tpl/index/id/{$vo.pathfile}"> {$vo.filename}</a></td>
+    <td width="20%">文件夹</td>
+    <td width="10%">{:byte_format(getdirsize($vo['path'].'/'.$vo['filename']))}</td>
+    <td width="20%">{$vo.mtime|getcolordate='Y-m-d H:i:s',###}</td>
+    <td width="20%"><a href="?s=Tpl/index/id/{$vo.pathfile}">下级目录</a></td>
+  </tr>
+  <else />
+  <tr>
+  	<in name="vo.ext" value="jpg,gif,js,css,html,htm,php">
+    <td><img src="/public/Admin/images/file/{$vo.ext}.gif" width="16" height="16"> {$vo.filename}</td>
+    <else />
+    <td><img src="/public/Admin/images/file/other.gif" width="16" height="16"> {$vo.filename}</td>
+    </in>
+    <td>{$vo.filename|gettplname}</td>
+    <td>{$vo.size|byte_format}</td>
+    <td>{$vo.mtime|getcolordate='Y-m-d H:i:s',###}</td>
+    <php>if(ereg("\.html|\.htm|\.txt|\.css|\.php|\.js",$vo['filename'])){</php>
+    <td><a href="?s=Tpl/Add/id/{$dirpath|dami_url_repalce=desc}|{:str_replace('.'.$vo['ext'],'*'.$vo['ext'],$vo['filename'])}">编辑</a> <a href="?s=Tpl/Del/id/{$dirpath|dami_url_repalce=desc}|{:str_replace('.'.$vo['ext'],'*'.$vo['ext'],$vo['filename'])}" onClick="return confirm('确定删除该文件吗?')">删除</a></td>
+    <php>}else{</php>
+    <td><a href="{$dirpath}/{$vo.filename}" target="_blank">浏览</a> <a href="?s=Tpl/Del/id/{$dirpath|dami_url_repalce=desc}|{:str_replace('.'.$vo['ext'],'*'.$vo['ext'],$vo['filename'])}" onClick="return confirm('确定删除该文件吗?')">删除</a></td>
+    <php>}</php>
+  </tr>
+  </eq>  
+  </volist>
+</table>
+</div>
+</body>
+</html>

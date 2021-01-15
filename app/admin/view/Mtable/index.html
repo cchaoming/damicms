@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网站后台管理</title>
+<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<import file= "Admin.js.admin"/> 
+</head>
+<body>
+<div class="main_center">
+<form name="myform" method="POST"  id="myform" action="/delall">
+<table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="table table-bordered">
+<tr> 
+  <td colspan="5" align=left class="admintitle">我的表格模型[<a href="/add">添加</a>]</td>
+</tr>
+<tr bgcolor="#f1f3f5" style="font-weight:bold;">
+	<td width="5%" height="30" align="center" class="ButtonList">编号</td>
+    <td width="30%" height="30" align="center" class="ButtonList">管理栏目名称</td>
+	<td width="30%" height="30" align="center" class="ButtonList">控制器命名</td>
+	<td width="15%" align="center" class="ButtonList">MYSQL表名</td>
+    <td width="20%" height="30" align="center" bgcolor="#f1f3f5" class="ButtonList">管理</td>    
+  </tr>
+ <volist name="list" id="vo"> 
+    <tr bgcolor="#f1f3f5" onMouseOver="this.style.backgroundColor='#EAFCD5';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+    <td height="25" align="CENTER">{$vo.id}</td>
+    <td height="25">{$vo.menu_name}
+      </td>
+	<td height="25" align="center">{$vo.action_name}</td>
+	<td align="center">{$vo.table_name}</td>
+    <td align="center"><a href="__APP__/{$vo.action_name}/index">管理数据</a>&nbsp;<a href="javascript:if(confirm('您确定删除该表格模型?')){ location.href='/del/id/{$vo[id]}'; }">删除</a></td>
+  </tr>
+ </volist>
+  <tr><td bgcolor="f7f7f7" colspan="8" align="left"><div>
+  <ul class="pagination">
+    {$page}
+  </ul>
+  </div>
+</td></tr>
+</table>
+</form>
+</div>
+</body>
+</html>

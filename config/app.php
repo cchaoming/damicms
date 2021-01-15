@@ -66,4 +66,7 @@ return [
     'VERSION' => '7.0',
     'SERVER_URL' => 'http://www.damicms.com/',
     'TOKEN_NAME' => '__hash__',
+    'app_map' => [
+        'admin'  =>  'admin',  // 把admin应用映射为外部访问的key:think
+    ],
 ];

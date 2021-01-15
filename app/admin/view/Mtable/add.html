@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网站后台管理</title>
+<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<import file= "Admin.js.admin,Admin.js.Jquery"/> 
+<style>
+.del_fields{ border:1px solid #e6e6e6;padding:0px 5px; background:#930; color:#FFF;font-size:14px;}
+</style>
+</head>
+<body>
+<form action="/doadd" name="myform" id="myform" method="post" onSubmit="return chk();">
+<table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
+<tr> 
+    <td colspan="3" align=left class="admintitle">添加管理表格 [<a href="/index">管理表格列表</a>]</td>
+</tr>
+<tr> 
+<td width="15%" class="b1_1">管理菜单名称</td>
+<td colspan="2" class="b1_1"><input name="menu_name" type="text" id="menu_name" size="40" maxlength="50">*生成的后台管理菜单名称，比如：品牌管理</td>
+</tr>
+<td width="15%" class="b1_1">控制器英文名称</td>
+<td colspan="2" class="b1_1"><input name="action_name" type="text" id="action_name" size="40" maxlength="50">*生成的后台控制器文件名，比如输入:mybrand
+生成控制器路径 Admin\Lib\Action\MybrandAction.class.php</td>
+</tr>
+<tr>
+  <td class="b1_1">MYSQL表名</td>
+  <td colspan="2" class="b1_1"><input name="table_name" type="text" id="table_name" value="" size="40" maxlength="50" onChange="get_fields();">*已经建立有的mysql表名 比如:dami_brand 输入时含前缀</td>
+</tr>
+<tr>
+  <td class="b1_1">MYSQL表唯一索引</td>
+  <td colspan="2" class="b1_1"><input name="zj_id" type="text" id="zj_id" value="" size="40" maxlength="50">*mysql表唯一索引 比如:id 修改和删除数据时的依据 </td>
+</tr>
+<tr>
+<td class="b1_1">字段管理别名与字段名</td> 
+<td colspan="2" class=b1_1>
+<div id="fields_info">
+</div></td>
+</tr>
+<tr> 
+<td width="15%" class="b1_1"></td>
+<td colspan="2" class="b1_1"><input name="Submit" type="submit" id="go_submit" class="btn btn-success" value="添 加" disabled>&nbsp;&nbsp;<input type="button" onClick="history.go(-1);" class="btn btn-info" value="返 回"></td>
+</tr>
+</table>
+</form>
+<script>
+ function chk(){
+ if (document.myform.menu_name.value==""){
+	alert("请填写管理菜单名称！");
+	document.myform.menu_name.focus();
+	return false;
+  }
+ if (document.myform.table_name.value==""){
+	alert("请填写MYSQL表名！");
+	document.myform.table_name.focus();
+	return false;
+  }
+  if (document.myform.action_name.value==""){
+	alert("请填写生成控制器英文名！");
+	document.myform.action_name.focus();
+	return false;
+  }
+  if (document.myform.zj_id.value==""){
+	alert("请填写MYSQL表的唯一值字段名！");
+	document.myform.zj_id.focus();
+	return false;
+  }
+  
+ }
+function get_fields(){
+var url = '{$_SERVER.PHP_SELF}' + '?m=Mtable&a=ajax_get_fields&table_name=' + $('#table_name').val();
+$.getJSON(url,{},function(json){
+var data = json.data;
+if(data == false){
+$('#fields_info').html('<font color="red">MYSQL表不存在，请用phpmyadmin，navicate等mysql工具创建!</font>');	
+$('#go_submit').attr('disabled',true);
+}
+else{
+$('#fields_info').empty();
+for(var i=0;i<data.length;i++){
+$('#fields_info').append('<div>字段管理中文别名：<input name="fields_alis[]" type="text" id="Title" style="width:90px;" value="' + data[i] + '">字段名：<input name="fields_name[]" type="text" style="width:90px;" value="' + data[i] + '">列表页显示否:<input name="fields_visible' + i + '" type="radio" value="1" checked>显示<input name="fields_visible' + i + '" type="radio" value="0">不显示&nbsp;<a href="javascript:void(0);" class="del_fields">×</a></div>');
+}
+$('#go_submit').attr('disabled',false);
+$('.del_fields').click(function(){
+$(this).parent().remove();;
+});
+}
+});
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<?php 
+set_time_limit(0); 
+$width = 500;                      //显示的进度条长度，单位 px 
+$total = count($list);     //总共需要操作的记录数 
+$pix = $width / $total;        //每条记录的操作所占的进度条单位长度 
+$progress = 0;                   //当前进度条长度 
+?>
+<html> 
+<head> 
+    <title>生成静态详细页面</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+    <style> 
+    body, div input { font-family: Tahoma; font-size: 9pt } 
+    </style> 
+    <script language="JavaScript"> 
+    <!-- 
+    function updateProgress(sMsg, iWidth) 
+    {  
+        document.getElementById("status").innerHTML = sMsg; 
+        document.getElementById("progress").style.width = iWidth + "px"; 
+        document.getElementById("percent").innerHTML = parseInt(iWidth / <?php echo $width; ?> * 100) + "%"; 
+     } 
+    //--> 
+    </script>     
+</head> 
+<body> 
+<div style="margin: 4px; padding: 8px; border: 1px solid gray; background: #EAEAEA; width: <?php echo $width+8; ?>px"> 
+    <div style="padding: 0; background-color: white; border: 1px solid navy; width: <?php echo $width; ?>px"> 
+    <div id="progress" style="padding: 0; background-color: #FFCC66; border: 0; width: 0px; text-align: center;   height: 16px"></div>             
+    </div> 
+    <div id="status">&nbsp;</div> 
+    <div id="percent" style="position: relative; top: -30px; text-align: center; font-weight: bold; font-size: 8pt">0%</div> 
+</div> 
+ 
+<?php 
+$_SESSION['is_rebuild'] = 1;
+$surl =  dirname('http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']);
+foreach($list as $k=>$v){
+sleep(1);
+ob_end_flush();//清空浏览器缓存
+?> 
+<script language="JavaScript"> 
+    updateProgress("正在生成文章ID：<?php echo $v[aid]; ?> ....", <?php echo min($width, intval($progress)); ?>); 
+</script> 
+<?php 
+$url =  $surl."/index.php/articles/".$v['aid'];
+@unlink('./Html/'.cookie('think_template').'/articles/'.$v['aid'].'.html');
+//echo $url;
+get_url_contents($url);
+$art_page = explode('[dami_page]',$content);
+$num = count($art_page);
+if($num>1){
+for($i=1;$i<=$num;$i++){
+@unlink('./Html/'.cookie('think_template').'/articles/'.$v['aid'].'/p/'.$i.'.html');
+$url .= '/p/'.$i;
+get_url_contents($url);
+}
+}
+$progress += $pix; 
+ob_flush();   
+flush();    
+}
+unset($_SESSION['is_rebuild']);
+?> 
+<script language="JavaScript"> 
+    updateProgress("操作完成！", <?php echo $width; ?>); 
+</script>  
+</body> 
+</html> 

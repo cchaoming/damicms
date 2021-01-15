@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网站后台管理</title>
+<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<import file= "Admin.setdate.WdatePicker,Admin.js.admin,Admin.js.Ajax,Admin.js.Jquery"/> 
+</head>
+<body>
+<div class="main_center">
+<table width="95%" border="0"  align=center cellpadding="3" cellspacing="1" bgcolor="#F2F9E8" class="table table-bordered">
+<tr> 
+<td colspan="7" align=left class="admintitle">提现列表</td></tr>
+    <tr bgcolor="#f1f3f5" style="font-weight:bold;">
+    <td align="center" class="ButtonList">编号</td>
+    <td  align="center" class="ButtonList">用户名</td>
+    <td  align="center" class="ButtonList">联系方式</td>
+    <td  align="center" class="ButtonList">余额</td>
+	<td align="center" class="ButtonList">提现金额</td>
+	<td align="center" class="ButtonList">联系电话</td>
+    <td width="15%"  align="center" class="ButtonList">操作</td>
+    </tr>
+	<volist name="list" id="vo"> 
+    <tr bgcolor="#ffffff" onMouseOver="this.style.backgroundColor='#EAFCD5';" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+    <td height="25">{$vo.id}</td>
+    <td height="25" align="center"><a href="{:U('Member/showuser',array('id'=>$vo[uid]))}">{$vo.username}<neq name="vo.realname" value="">【{$vo.realname}】</neq></a></td>
+    <td align="center">电话:{$vo.tel}&nbsp;/qq:{$vo.qq}&nbsp;/email:{$vo.email}</td>
+    <td align="center">{$vo.have_money}</td>
+    <td height="25" align="center">{$vo.money}</td>
+	 <td height="25" align="center">{$vo.tel}</td>
+    <td align="center">
+    <neq name='vo.status' value='1'>
+      <a class="btn btn-success btn-sm active" href="javascript:if(confirm('您确定该笔提现已做过处理?')){
+location.href='{:U('Member/dotixian',array('id'=>$vo[id]))}';}">处理扣款</a>
+<else/><font color="#003300">已处理</font></neq>
+      <a class="btn btn-danger btn-sm active" href="javascript:if(confirm('您确定删除吗?')){
+location.href='{:U('Member/deltixian',array('id'=>$vo[id]))}';}">删除</a>
+    </td>
+    </tr>
+	</volist>
+	<tr><td bgcolor="f7f7f7" colspan="7" align="left"><ul class="pagination">{$page}</ul></td></tr>
+</table>
+</div>
+</body>
+</html>

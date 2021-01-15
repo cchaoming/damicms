@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网站后台管理</title>
+<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<import file= "Admin.setdate.WdatePicker,Admin.js.admin,Admin.js.Jquery"/> 
+</head>
+<body>
+<table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
+<form action="<neq name='info.id' value=''>/doedit<else/>/doadd</neq>" name="myform" id="myform" method="post" >
+<tr> 
+    <td colspan="3" align=left class="admintitle"><neq name='info.id' value=''>修改<else/>添加</neq> [<a href="/index">链接列表</a>]</td>
+</tr>
+<!--循环字段-->
+<tr><td class="b1_1">id</td><td colspan="2" class="b1_1"><input name="id" type="text" value="{$info.id}"></td></tr><tr><td class="b1_1">管理员名</td><td colspan="2" class="b1_1"><input name="username" type="text" value="{$info.username}"></td></tr><tr><td class="b1_1">操作</td><td colspan="2" class="b1_1"><input name="operate" type="text" value="{$info.operate}"></td></tr><tr><td class="b1_1">管理所在组</td><td colspan="2" class="b1_1"><input name="usergroup" type="text" value="{$info.usergroup}"></td></tr><tr><td class="b1_1">操作日期</td><td colspan="2" class="b1_1"><input name="addtime" type="text" value="{$info.addtime}"></td></tr><tr><td class="b1_1">操作结果</td><td colspan="2" class="b1_1"><input name="result" type="text" value="{$info.result}"></td></tr><tr><td class="b1_1">所在ip</td><td colspan="2" class="b1_1"><input name="ip" type="text" value="{$info.ip}"></td></tr>
+<tr> 
+<td width="20%" class="b1_1"></td>
+<td colspan="2" class="b1_1"><neq name='info.id' value=''><input name="id" type="hidden" value="{$info.id}"></neq><input name="Submit" type="submit" class="btn btn-success" value="保存">&nbsp;&nbsp;<input type="button" onClick="history.go(-1);" class="btn btn-info" value="返 回"></td>
+</tr>
+</form>
+</table>
+
+</body>
+</html>

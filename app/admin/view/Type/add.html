@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>添加栏目</title>
+<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<link href="/public/js/searchselect/jquery.searchableSelect.css" rel="stylesheet" type="text/css">
+<script src="/public/js/jquery-1.11.1.min.js"></script>
+<script src="/public/js/searchselect/jquery.searchableSelect.js"></script>
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+</head>
+<body>
+<script>
+  $(function() {
+    $('.search_select').searchableSelect();
+  });
+function chk(){
+if(document.getElementById("typename").value==""){
+	alert("栏目名称不能为空!");
+	document.getElementById("typename").focus();
+	return false;
+}
+}
+</script>
+<table width="100%" border="0" align="center" cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
+<tr> 
+  <td colspan="5" class="admintitle">添加栏目</th></tr>
+<form action="/doadd" method="post" onSubmit="return chk();" name="myform">
+<tr>
+<td width="20%" class=b1_1>栏目名称</td>
+<td colspan=4 class=b1_1><input type="text" name="typename" size="40" id="typename" maxlength="20"></td>
+</tr>
+<tr>
+  <td class=b1_1>所属栏目</td>
+  <td colspan=4 class=b1_1><select ID="TopID" name="fid" style="width:250px" class="search_select"><option value='0' selected='selected'>做为顶级分类</option>
+<volist name="list" id="vo">
+<option value='{$vo.typeid}' <eq name="_REQUEST[fid]" value="$vo[typeid]">selected="selected"</eq>><php>
+for($i=0;$i<$vo['count']*3;$i++){
+echo '&nbsp;';
+}
+if($vo['fid']<>0){
+echo "-|";
+}
+</php>{$vo.typename}</option></volist></select></td>
+</tr>
+<tr>
+  <td class=b1_1>外部链接</td>
+  <td colspan=4 class=b1_1><input name="url" type="text" id="Url" size="40">
+    <select name="islink" type="text">
+		<option value="1">启用</option><option value="0" selected>不启用</option>
+		 </select>
+	</td>
+</tr>
+<tr>
+
+  <td class=b1_1>栏目关键字</td>
+  <td colspan=4 class=b1_1><input name="keywords" type="text" id="KeyWord" size="40">
+    <span class="note">针对搜索引擎关键字设置,多个用英文逗号隔开</span></td>
+</tr>
+<tr>
+  <td class=b1_1>栏目介绍</td>
+  <td colspan=4 class=b1_1><textarea name="description" cols="40" rows="5" id="description"></textarea></td>
+</tr>
+<tr>
+  <td class="b1_1">栏目图标icon</td>
+  <td colspan=4 class=b1_1><input name="icon" type="text" id="Images" size="50" maxlength="200"></td>
+</tr>
+<tr>
+ <td class="b1_1"></td>
+  <td colspan=4 class="b1_1"><iframe src="__APP__/File/thumb/" width="400" height="25" frameborder="0" scrolling="no"></iframe></td>
+</tr>
+<tr>
+  <td class=b1_1>打开方式</td>
+  <td colspan=4 class=b1_1><select name="target" id="target">
+      <option value="1" selected>原窗口</option>
+      <option value="0">新窗口</option>
+    </select></td>
+</tr>
+<tr>
+  <td class=b1_1>导航栏是否显示</td>
+  <td colspan=4 class=b1_1><input name="ismenu" type="radio" class="noborder" value="1">
+    是
+      <input name="ismenu" type="radio" class="noborder" value="0" checked>
+      否</td>
+</tr>
+<tr id="laoy4">
+  <td class=b1_1>导航排序</td>
+  <td colspan=4 class=b1_1><input name="drank" type="text"  value="10" size="4" maxlength="2"></td>
+</tr>
+<tr>
+
+  <td class=b1_1>首页是否显示</td>
+  <td colspan=4 class=b1_1><input name="isindex" onClick="if(this.checked){
+			  laoy1.style.display = '';
+              laoy2.style.display = '';
+		  }" type="radio" class="noborder" value="1" checked>
+是
+  <input name="isindex" onClick="if(this.checked){
+			  laoy1.style.display = 'none';
+              laoy2.style.display = 'none';
+		  }" type="radio" class="noborder" value="0">
+否</td>
+</tr>
+<tr id="laoy1">
+  <td class=b1_1>首页排序</td>
+  <td colspan=4 class=b1_1><input name="irank" type="text" id="IndexNum" value="10" size="4" maxlength="2"></td>
+</tr>
+<tr id="laoy2">
+  <td class=b1_1>首页显示数量</td>
+  <td colspan=4 class=b1_1><input name="indexnum" type="text" id="IndexNum" value="10" size="4" maxlength="2"></td>
+</tr>
+
+<tr>
+  <td class=b1_1>分页显示数量</td>
+  <td colspan=4 class=b1_1><input name="pernum" type="text" id="pernum" value="15" size="4" maxlength="2"></td>
+</tr>
+
+<tr>
+  <td class=b1_1>该栏目是否允许用户投稿</td>
+  <td colspan=4 class=b1_1><input name="isuser" type="radio" class="noborder" value="1" checked>
+
+是
+  <input name="isuser" type="radio" class="noborder" value="0">
+否</td>
+</tr>
+<tr> 
+<td width="20%" class=b1_1></td>
+<td class=b1_1 colspan=4><input name="Submit" type="submit" class="btn btn-success" value="添 加">&nbsp;&nbsp;<input type="button" onClick="history.go(-1);" class="btn btn-info" value="返 回"></td>
+</tr>
+</form>
+</table>
+
+</body>
+</html>

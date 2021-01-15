@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<script src="/public/js/jquery.js"></script>
+<script>
+$(document).ready(function(e) {
+//获取列表模板
+$.ajax({
+async:false,
+type: 'GET',
+dataType:'json',
+data:'',
+url:'./index.php?m=Index&a=ajax_list_dir',
+success:function(datas){
+var datajson= datas ;
+var data=datajson.data;     
+for (var i=0;i<data.length;i++){
+var temp ='';
+if( ('list/' +data[i]) == '{$model_path.list_path}')
+{
+temp = 'selected="selected"';
+}  
+$("#list_path").append("<option value='list/" + data[i] + "' " + temp + ">" + data[i] + "</option>");  //添加一项option  
+//alert(data[i]);    //分割后的字符输出
+} 
+}  
+});
+//获取详细页模板
+$.ajax({
+async:false,
+type: 'GET',
+dataType:'json',
+data:'',
+url:'./index.php?m=Index&a=ajax_page_dir',
+success:function(datas){
+var datajson= datas;
+var data=datajson.data;     
+for (var i=0;i<data.length;i++){
+var temp ='';
+if( ('page/' + data[i]) == '{$model_path.page_path}')
+{
+temp = 'selected="selected"';
+} 
+$("#page_path").append("<option value='page/" + data[i] + "' " + temp + ">" + data[i] + "</option>");  //添加一项option  
+//alert(data[i]);    //分割后的字符输出
+} 
+}  
+});
+
+});
+</script>
+</head>
+<body>
+<table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
+<form action="/domanage_moban" name="myform" method="post" id="myform">
+<input name="typeid" type="hidden" value="{$_GET.typeid}">
+<tr> 
+    <td colspan="2" align=left class="admintitle"><font color="#FF0000">{$model_path.typename}</font>&nbsp;模板显示控制[<a onClick="showhelp();">操作提示</a>]</td></tr>
+<tr> 
+<td width="20%" class="b1_1">列表模板</td>
+<td class="b1_1"><select name="list_path" id="list_path"></select></td>
+</tr>
+
+<tr> 
+<td width="20%" class="b1_1">详细模板</td>
+<td class="b1_1"><select name="page_path" id="page_path"></select></td>
+</tr>
+<tr>
+  <td class="b1_1">下一级是否统一以上配置</td>
+  <td class="b1_1"><input name="nset" type="checkbox" value="1">&nbsp;&nbsp;排除栏目ID：<input name="outids" type="text">
+  注:多个ID用|分融</td>
+</tr>
+
+<tr>
+<td width="20%" class="b1_1"></td>
+<td class="b1_1"><input name="submit" type="submit" class="btn btn-success" value="保存设置">&nbsp;&nbsp;<input type="button" onClick="history.go(-1);" class="btn btn-info" value="返 回"></td>
+</tr>
+</form>
+</table>
+
+</body>
+</html>

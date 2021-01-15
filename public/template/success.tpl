@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>页面提示</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="__PUBLIC__css/bootstrap.min.css" type=text/css rel=stylesheet>
+<link href="/public/css/bootstrap.min.css" type=text/css rel=stylesheet>
 </head>
 <body>
 <php>$jumpUrl = !isset($jumpUrl)?'javascript:history.back(-1)':$jumpUrl;</php>
@@ -18,11 +18,11 @@
   </div>
   <div class="panel-body">
 <present name="message" >
-  <font color=red>{$message}</font><br><br><a href="javascript:history.back(-1)" style="text-decoration:none;"><u>返回上一页</u></a>
+  <font color=red>{$message|raw}</font><br><br><a href="javascript:history.back(-1)" style="text-decoration:none;"><u>返回上一页</u></a>
   </tr>
 </present>
 <present name="error" >
-  <font color=red>{$error}</font>
+  <font color=red>{$error|raw}</font>
 </present>
 <present name="closeWin" >
 系统将在 <span style="color:blue;font-weight:bold" id="wait">{$waitSecond}</span> 秒后自动关闭，如果不想等待,直接点击 <a href="{$jumpUrl|raw}" id="href" >这里</a> 关闭

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网站后台管理</title>
+<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<import file= "Admin.setdate.WdatePicker,Admin.js.admin"/> 
+</head>
+<body>
+<script>
+ function chk(){
+ if (document.myform.Title.value==""){
+	alert("请填写标题！");
+	document.myform.Title.focus();
+	return false;
+  }
+ }
+</script> 
+<table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
+<form action="/doedit" name="myform" method="post" id="myform">
+<tr> 
+    <td colspan="3" align=left class="admintitle">修改链接 [<a href="/index">链接列表</a>]</td>
+</tr>
+<tr> 
+<td width="20%" class="b1_1">标题</td>
+<td colspan="2" class="b1_1"><input name="title" type="text" id="Title" size="40" maxlength="50" value={$list.title}></td>
+</tr>
+<tr>
+  <td class="b1_1">链接地址</td>
+  <td colspan="2" class="b1_1"><input name="url" type="text" id="LinkUrl" value="{$list.url}" size="40" maxlength="50"></td>
+</tr>
+<tr>
+  <td class=b1_1>开启LOGO</td>
+  <td colspan=4 class=b1_1>
+<input name="islogo" onClick="if(this.checked){
+			  IsLogo.style.display = '';
+		  }" type="radio" class="noborder" value="1" <eq name="list.islogo" value= "1">checked</eq>>
+是
+	<input name="islogo" onClick="if(this.checked){
+			 IsLogo.style.display = 'none';
+		  }"  type="radio" class="noborder" value="0" <eq name="list.islogo" value= "0">checked</eq>>
+否
+</td>
+</tr>
+<tr id="IsLogo" <eq name="list.islogo" value= "0">style="display:none;"</eq>>
+  <td class="b1_1">Logo地址</td>
+  <td width="21%" class="b1_1"><input name="logo" type="text" id="LogoUrl" size="40" maxlength="250" value="{$list.logo}"></td>
+  <td width="59%" class="b1_1"><iframe src="__APP__/File/link/" width="400" height="25" frameborder="0" scrolling="no"></iframe></td>
+</tr>
+<tr>
+  <td class="b1_1">排序</td>
+  <td colspan="2" class="b1_1"><input name="rank" type="text" id="Num" value="{$list.rank}" size="5" maxlength="3"> <span class="note">值越小越靠前</span></td>
+</tr>
+<tr> 
+<td width="20%" class="b1_1"></td>
+<td colspan="2" class="b1_1"><input type="hidden" name="id" value="{$list.id}"><input name="Submit" type="submit" class="btn btn-success" value="修 改">&nbsp;&nbsp;<input type="button" onClick="history.go(-1);" class="btn btn-info" value="返 回"></td>
+</tr>
+</form>
+</table>
+
+</body>
+</html>

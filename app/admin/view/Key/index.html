@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网站后台管理</title>
+<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<import file= "Admin.js.admin"/> 
+</head>
+ 
+<body>
+<table width="95%" border="0" cellspacing="2" cellpadding="3"  align=center class="admintable" style="margin-bottom:5px;">
+    <tr><form name="form1" method="POST" action="/search">
+      <td height="25" bgcolor="f7f7f7">
+        <input name="keywords" type="text" id="keyword" value="">
+        <input type="submit" name="Submit2" value="搜索"></td>
+      </form>
+    </tr>
+</table>
+ <div class="main_center">
+<form name="myform" method="POST" action="/delall">
+<table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="table table-bordered">
+<tr> 
+  <td colspan="5" align=left class="admintitle">关键字列表　[<a href="/add">添加</a>]</td>
+</tr>
+<tr bgcolor="#f1f3f5" style="font-weight:bold;">
+	<td width="3%" height="30" align="center" class="ButtonList">&nbsp;</td>
+    <td width="23%" height="30" align="center" class="ButtonList">关键字名称</td>
+    <td width="56%" align="center" class="ButtonList">链接地址</td>
+    <td width="18%" height="25" align="center" bgcolor="#f1f3f5" class="ButtonList">管理</td>    
+  </tr>
+ <volist name="list" id="vo"> 
+    <tr bgcolor="#f1f3f5" onMouseOver="this.style.backgroundColor='#EAFCD5';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+    <td height="25" align="CENTER"><input type="checkbox" value="{$vo.id}" name="id[]" onClick="unselectall(this.form)" style="border:0;">
+      <input name="keyid[]" type="hidden" id="keyid" value="{$vo.id}"></td>
+    <td height="25">{$i}.<a href="/edit/id/{$vo.id}">{$vo.title}</a></td>
+    <td height="25" align="center"><input name="url[]" type="text" id="Url" value="{$vo.url}" size="60" maxlength="250"></td>
+    <td align="center"><a href="/edit/id/{$vo.id}">编辑</a></td>
+  </tr>
+ </volist>
+	<tr bgcolor="#f1f3f5" onMouseOver="this.style.backgroundColor='#EAFCD5';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+    <td height="25" align="center" bgcolor="#f1f3f5"><input name="Action" type="hidden"  value="Del">
+      <input name="chkAll" type="checkbox" id="chkAll" onClick=CheckAll(this.form) value="checkbox" style="border:0"></td>
+    <td height="25" colspan="4" bgcolor="#f1f3f5">
+    <div class="btn-group">
+    <input name="Del" type="submit" class="btn btn-info btn-sm" id="Del"  onClick="JavaScript:return confirm('删除吗？')" value="删除">
+      <input name="Del" type="submit" class="btn btn-info btn-sm" id="Del" value="编辑"></div></td>
+    </tr>
+  <tr><td bgcolor="f7f7f7" colspan="5" align="left"><div>
+<ul class="pagination">
+{$page}
+</ul>
+</div>
+</td></tr>
+</table>
+</form>
+</div>
+</body>
+</html>

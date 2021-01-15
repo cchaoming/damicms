@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网站后台管理</title>
+<link href="/public/Admin/images/Admin_css.css" type="text/css" rel="stylesheet">
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<import file= "Admin.js.admin,Admin.js.Jquery"/>
+<script charset="gbk" src="/public/Editor/kindeditor-min.js"></script>
+<script charset="utf-8" src="/public/Editor/lang/zh_CN.js"></script>
+</head>
+<body>
+<script>
+function rebuild(){
+var url = $('#url').val();
+location.href = "{:C('SERVER_URL')}/Build/build_vip_apk?rebuild=1&vip_name={$vip.vip_name}&vip_pwd={$vip.vip_pwd}&url=" + encodeURI(url);
+}
+KindEditor.options.filterMode = false;
+KindEditor.ready(function(K) {
+K.create();
+});
+function chk(){
+if (document.myform.vip_name.value==""){
+	alert("请填写标题！");
+	document.myform.vip_name.focus();
+	return false;
+  }
+}
+</script>
+<table width="100%" border="0" align="center" cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
+<tr> 
+  <td colspan="5" class="admintitle">大米CMS版本
+  </th>（如果您没配置VIP账户,请先配置）</tr>
+
+<neq name='vip.vip_apk_url' value=''><tr>
+  <td class=b1_1>您的VIP版APK下载地址</td>
+  <td colspan=4 class=b1_1>{:rtrim(C('SERVER_URL'),'/')}{$vip.vip_apk_url}</td>
+</tr>
+</neq>
+<neq name='vip.com_apk_url' value=''>
+<tr>
+  <td class=b1_1>您的客户版APK下载地址</td>
+  <td colspan=4 class=b1_1>{:rtrim(C('SERVER_URL'),'/')}{$vip.com_apk_url}</td>
+</tr>
+</neq>
+<tr>
+<td width="20%" class=b1_1>当前生成APK的版本号：</td>
+<td colspan=4 class=b1_1>&nbsp;{$list.version}</td>
+</tr>
+<tr>
+<td width="20%" class=b1_1>描述：</td>
+<td colspan=4 class=b1_1>&nbsp;{$list.descript}</td>
+</tr>
+<tr>
+  <td class=b1_1>您的大米CMS安装全路径</td>
+  <td colspan=4 class=b1_1><input type="text" name="textfield" id="url" value="{$url}"></td>
+</tr>
+<tr> 
+<td width="20%" class=b1_1></td>
+<td class=b1_1 colspan=4>
+<input name="button" type="button" class="btn btn-info" value="重新生成" onClick="rebuild();">&nbsp;&nbsp;</tr>
+</table>
+<div style="text-align:center;margin:10px;">
+<hr>
+<include file="Index:copy" />
+</div>
+</body>
+</html>

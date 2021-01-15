@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网站后台管理</title>
+<link href="/public/Admin/images/Admin_css.css" type="text/css" rel="stylesheet">
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<import file= "Admin.js.admin,Admin.js.Jquery"/>
+<script charset="gbk" src="/public/Editor/kindeditor-min.js"></script>
+<script charset="utf-8" src="/public/Editor/lang/zh_CN.js"></script>
+</head>
+<body>
+<script>
+KindEditor.options.filterMode = false;
+KindEditor.ready(function(K) {
+K.create();
+});
+function chk(){
+if (document.myform.vip_name.value==""){
+	alert("请填写标题！");
+	document.myform.vip_name.focus();
+	return false;
+  }
+}
+</script>
+<table width="100%" border="0" align="center" cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
+<tr> 
+  <td colspan="5" class="admintitle">VIP账号配置</th></tr>
+<form action="/dovip_config" method="post" name="myform" onSubmit="return chk();">
+<tr>
+<td width="20%" class=b1_1>用户名：</td>
+<td colspan=4 class=b1_1><input name="vip_name" type="text" id="vip_name" size="40" maxlength="20" value="{$list.vip_name}"></td>
+</tr>
+<tr>
+<td width="20%" class=b1_1>授权码：</td>
+<td colspan=4 class=b1_1><input name="vip_pwd" type="text" id="vip_pwd" size="40" maxlength="20" value="{$list.vip_pwd}"></td>
+</tr>
+<tr> 
+<td width="20%" class=b1_1></td>
+<neq name='list.id' value=''><input type="hidden" name="id" value="{$list.id}"></neq>
+<td class=b1_1 colspan=4>
+<input name="submit" type="submit" class="btn btn-success" value="保 存">&nbsp;&nbsp;
+<input type="button" onClick="history.go(-1);" class="btn btn-info" value="返 回">
+</tr></form>
+</table>
+</body>
+</html>

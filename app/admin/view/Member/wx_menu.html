@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>微信自定义菜单</title>
+<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<link href="/public/Admin/images/wx_common.css" type=text/css rel=stylesheet>
+<import file= "Admin.js.admin,Admin.js.Jquery,Admin.js.dataTable.jquerydata,Admin.js.weixinmenu"/>
+<style>
+td{text-align:left; height:28px; line-height:28px; padding-left:15px;}
+.w280{width:280px;}
+</style>
+</head>
+<body>
+<div class="sideContent">
+					<div id="tools-weixin-menu-div">
+						<h2 class="maintitle">微信自定义菜单设置</h2>
+						<p class="subtitle red">温馨提示:&nbsp;更多优质服务, 请关注"<a href="http://www.damicms.com">大米CMS</a>"系统.</p>
+						<div class="help-tip">
+							<p class="blue">帮助指南:</p>
+							<p class="blue">1. 菜单类型：(1)手机版网页链接(2)按照关键词推送图文.前面要输入的就是相对大米CMS根目录路径或完整HTTP路径，关键词</p>
+							<p class="blue">2. 微信自定义菜单最多支持两层.</p>
+							<p class="blue">3. 一级菜单项个数必须为2~3个.</p>
+							<p class="blue">4. 子菜单项个数为0~5个.</p>
+							<p class="blue">5. 一级菜单项名称字数不能超过16字节.</p>
+							<p class="blue">6. 子菜单项名称字数不能超过40字节.</p>
+							<p class="blue">7. 菜单项键值字数不能超过128字节.</p>
+							<p class="red">8. 菜单项键值实际为"自定义回复"中的关键字, 用户点击菜单项后会根据此关键字回复信息.</p>
+							<p class="red">9. 如需点击菜单项直接访问网页, 请在"菜单项键值"处填写以http开头的完整URL.</p>
+							<p class="red">以上提及的字节计算, 一个中文字或中文标点符号为3个字节, 一个英文字母或英文标点符号为1个字节.</p>
+						</div>
+						<form id="weixin_menu_form" name="weixin_menu_form" method="POST" action="{:U('Member/wx_menu')}" >
+					
+							<table id="editPWXCMTTable" class="display" cellpadding="0" cellspacing="1" border="0" min-height="650px">
+						        <thead>
+						          <tr>
+						          	<th style="width:20%;text-align:center;" align="center">菜单项名称</th>
+						            <th style="width:15%;text-align:center;"></th>
+						            <th style="width:50%;text-align:center;">菜单项值/菜单类型</th>									
+						            <th style="width:15%;text-align:center;">操作</th>
+						            <th style="width:0%;">parentId</th>
+						            <th style="width:0%;">Level</th>
+						          	<th style="width:0%;">Id</th>
+									<th style="width:0%;">enable</th>
+						          </tr>
+						        </thead>
+						        <tbody></tbody>
+					      	</table>
+							<div class="consoleOperator" style="text-align: center;margin-top: 20px;">
+								<a href="javascript:;" class="slideShowBtnWrapper">
+									<input type="submit" value=" 保存微信菜单设置 " class="btn btn-success">
+								</a>
+							</div>
+						</form>
+					</div>
+					
+					
+				</div>		
+<script>
+var del_url = "{:U('Member/ajax_wxdel')}";
+function initWeixinMenu() {
+$('#editPWXCMTTable_filter,#editPWXCMTTable_info').hide();
+	var weixin_menu_template = JSON.parse("{\\"records\\": <php>if($list_str != 'null'){echo $list_str;}else{</php>[{\"index\":1,\"level\":0,\"name\":\"\",\"key\":\"\",\"enable\":\"0_1\",\"parentId\":0},{\"index\":2,\"level\":0,\"name\":\"\",\"key\":\"\",\"enable\":\"0_2\",\"parentId\":0},{\"index\":3,\"level\":0,\"name\":\"\",\"key\":\"\",\"enable\":\"0_3\",\"parentId\":0}]<php>}</php> }");
+	menuTemplateRecords = weixin_menu_template.records||[];
+	for(var i=0,l=menuTemplateRecords.length; i<l; i++){
+		var keyHtml;
+		var nameHtml;
+		var operationHtml;
+		var buttonHtml;
+		
+		//如果有5条子记录 就隐藏添加按钮
+		if(menuTemplateRecords[i].level==0 && checkSubRecordCountInDataSource(menuTemplateRecords[i].index)==5){
+			buttonHtml = '';
+			nameHtml = '<input type="text" name="key_'+ menuTemplateRecords[i].index + '" id="name_'+menuTemplateRecords[i].index+'" value="'+menuTemplateRecords[i].name+'" onchange="changeValue(this)"/>';
+		}else{
+			//一级菜单
+			if(menuTemplateRecords[i].level==0){
+				nameHtml = '<input type="text" name="key_'+ menuTemplateRecords[i].index + '" id="name_'+menuTemplateRecords[i].index+'" value="'+menuTemplateRecords[i].name+'" style="width:158px;padding-left: 4px;" onchange="changeValue(this)"/>';
+				buttonHtml = '<a href="javascript:addSubRecord('+menuTemplateRecords[i].index+')"><img style="vertical-align: middle;" src="/public/admin/images/icon/addsubmenu.png"/><span style="vertical-align: middle;" >添加子菜单<span></a>';
+			}else{
+			//二级菜单
+				nameHtml = '<div><img src="/public/admin/images/icon/submenu-branch.png" style="float:left;width:10px;"><input type="text" style="float:left;width:158px;padding-left:6px;" name="subkey_' + menuTemplateRecords[i].parentId + '_' + menuTemplateRecords[i].index + '"  id="name_'+menuTemplateRecords[i].index+'" value="'+menuTemplateRecords[i].name+'" onchange="changeValue(this)"/></div>';
+				buttonHtml = '';
+			}
+		}
+		
+		if(ifContainSubRecord(menuTemplateRecords[i].index,menuTemplateRecords)){
+			keyHtml = "";
+			operationHtml ="";
+		}else{
+		if(menuTemplateRecords[i].type != 1){var a='selected';var b='';}else{var a='';var b='selected';}
+			keyHtml = '<input type="text" name="value_'+  menuTemplateRecords[i].parentId + '_' + menuTemplateRecords[i].index + '" id="key_'+menuTemplateRecords[i].index+'" value="'+menuTemplateRecords[i].key+'" class="w280" onchange="changeValue(this)"/><select name="type_' + menuTemplateRecords[i].parentId + '_' + menuTemplateRecords[i].index + '" id="type_'+menuTemplateRecords[i].index+'" onchange="changeValue(this)"><option value="0" ' +a + '>网页链接</option><option value="1" ' + b + '>按关键字推送微信图文</option></select>';
+			operationHtml = '<a href="javascript:void(0);" onclick="deleteMenuItem('+menuTemplateRecords[i].index+')">删除</a>';
+		}
+		
+		
+		//alert(menuTemplateRecords[i].enable);
+		weixin_menu_table.dataTable().fnAddData([
+			nameHtml,
+			buttonHtml,
+			keyHtml,
+			operationHtml, // operation
+			menuTemplateRecords[i].parentId,
+			menuTemplateRecords[i].level,
+			menuTemplateRecords[i].index,
+			menuTemplateRecords[i].enable
+		]);
+	}
+	
+	$('#editPWXCMTTable tbody td').removeClass('sorting_1');
+	$('#editPWXCMTTable_length,#editPWXCMTTable_paginate').hide();
+}
+</script>
+
+</body>
+</html>

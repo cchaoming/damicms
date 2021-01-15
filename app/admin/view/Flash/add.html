@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网站后台管理</title>
+<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<import file= "Admin.js.admin,Admin.js.Jquery"/>
+</head>
+<body>
+<table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
+<form action="/doadd" name="myform" method="POST">
+<tr> 
+    <td colspan="2" align=left class="admintitle">添加幻灯</td></tr>
+<tr> 
+<td width="20%" class="b1_1">幻灯标题</td>
+<td class="b1_1"><input name="title" type="text" id="Title" size="40" maxlength="50" onBlur="CheckName();" onChange="CheckName();"><span class="note">注：最多50个字符</span></td>
+</tr>
+<tr>
+  <td class="b1_1">文章地址</td>
+  <td class="b1_1"><input name="url" type="text" size="50"></td>
+</tr>
+<tr>
+  <td rowspan="2" class="b1_1">图片上传</td>
+  <td class="b1_1"><input name="pic" type="text" id="Pic" size="50" maxlength="200"></td>
+</tr>
+<tr>
+  <td class="b1_1"><iframe src="__APP__/File/hd/" width="400" height="25" frameborder="0" scrolling="no"></iframe></td>
+</tr>
+<tr>
+  <td class=b1_1>幻灯是否显示</td>
+  <td colspan=4 class=b1_1><input name="status" onClick="if(this.checked){
+			  wk.style.display = '';
+		  }" type="radio" class="noborder" value="1" checked>
+是
+  <input name="status" onClick="if(this.checked){
+			  wk.style.display = 'none';
+		  }" type="radio" class="noborder" value="0">
+否</td>
+</tr>
+<tr id="wk">
+  <td class=b1_1>幻灯排序</td>
+  <td colspan=4 class=b1_1><input name="rank" type="text" id="rank" value="10" size="4" maxlength="2"></td>
+</tr>
+
+<td width="20%" class="b1_1"></td>
+<td class="b1_1"><input name="submit" type="submit" class="btn btn-info" value="添 加">&nbsp;&nbsp;<input name="Submit22" type="button" class="btn btn-info" onClick="history.go(-1)" value="返 回"></td>
+</tr>
+</form>
+</table>
+
+</body>
+</html>

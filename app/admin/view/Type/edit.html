@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>编辑栏目</title>
+<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+  <link href="/public/js/searchselect/jquery.searchableSelect.css" rel="stylesheet" type="text/css">
+  <script src="/public/js/jquery-1.11.1.min.js"></script>
+  <script src="/public/js/searchselect/jquery.searchableSelect.js"></script>
+</head>
+<body>
+<script>
+  $(function() {
+    $('.search_select').searchableSelect();
+  });
+function chk(){
+if(document.getElementById("typename").value==""){
+	alert("栏目名称不能为空!");
+	document.getElementById("typen`ame").focus();
+	return false;
+}
+}
+</script>
+<table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
+<form action="/doedit" method="post" onSubmit="return chk();" name="myform">
+<input type="hidden" name="typeid" value="{$list.typeid}"/>
+<tr><td colspan="5" class="admintitle">修改栏目</td></tr>
+<tr> 
+<td width="20%" class="b1_1">栏目名称</td>
+<td colspan=4 class=b1_1><input type="text" name="typename" size="40" value="{$list.typename}" maxlength="20" id="typename"></td>
+</tr>
+<tr>
+  <td class=b1_1>所属栏目</td>
+  <td colspan=4 class=b1_1><select ID="TopID" name="fid" style="width:250px;" class="search_select">
+{$option}
+</select></td>
+</tr>
+<tr>
+  <td height="45" class="b1_1">外部链接</td>
+  <td colspan=4 class=b1_1><input name="url" type="text" id="url" value="{$list.url}" size="40">
+		  <select name="islink" type="text">
+		<option value="1" <eq name="list.islink" value="1">selected</eq>>启用</option><option value="0" <eq name="list.islink" value="0">selected</eq>>不启用</option>
+		 </select>
+      </td>
+</tr>
+<tr>
+  <td class="b1_1">栏目关键字</td>
+  <td colspan=4 class=b1_1><input name="keywords" type="text" id="keyword" value="{$list.keywords}" size="40">
+    <span class="note">针对搜索引擎关键字设置,多个用英文逗号隔开</span></td>
+</tr>
+<tr>
+  <td class="b1_1">栏目介绍</td>
+  <td colspan=4 class=b1_1><textarea name="description" cols="40" rows="5" id="description">{$list.description}</textarea></td>
+</tr>
+<tr>
+  <td class="b1_1">栏目图标icon</td>
+  <td colspan=4 class=b1_1><input name="icon" type="text" id="Images" size="50" maxlength="200" value="{$list.icon}"></td>
+</tr>
+<tr>
+ <td class="b1_1"></td>
+  <td colspan=4 class="b1_1"><iframe src="__APP__/File/thumb/" width="400" height="25" frameborder="0" scrolling="no"></iframe></td>
+</tr>
+<tr>
+  <td class=b1_1>打开方式</td>
+  <td colspan=4 class=b1_1><select name="target" id="target">
+  <eq name="list.target" value= "1"><option value="1" selected>原窗口</option><option value="0">新窗口</option></eq>
+  <eq name="list.target" value= "0"><option value="0" selected>新窗口</option><option value="1">原窗口</option></eq>
+  </select></td>
+</tr>
+<tr>
+  <td class=b1_1>导航栏是否显示</td>
+  <td colspan=4 class=b1_1>
+<input name="ismenu" type="radio" class="noborder" value="1" <eq name="list.ismenu" value= "1">checked</eq>>
+是
+	<input name="ismenu" type="radio" class="noborder" value="0" <eq name="list.ismenu" value= "0">checked</eq>>
+否
+</td>
+</tr>
+<tr id="laoy4">
+  <td class=b1_1>导航排序</td>
+  <td colspan=4 class=b1_1><input name="drank" type="text" size="4" value="{$list.drank}" maxlength="2"></td>
+</tr>
+<tr>
+  <td class=b1_1>首页是否显示</td>
+  <td colspan=4 class=b1_1><input name="isindex" onClick="if(this.checked){
+			  laoy1.style.display = '';
+              laoy2.style.display = '';
+		  }" type="radio" class="noborder" value="1" <eq name="list.isindex" value= "1">checked</eq>>
+是
+  <input name="isindex" onClick="if(this.checked){
+			  laoy1.style.display = 'none';
+              laoy2.style.display = 'none';
+		  }" type="radio" class="noborder" value="0" <eq name="list.isindex" value= "0">checked</eq>>
+否
+</td>
+</tr>
+<tr id="laoy1" <eq name="list.isindex" value= "0">style="display:none;"</eq>>
+  <td class=b1_1>首页排序</td>
+  <td colspan=4 class=b1_1><input name="irank" type="text" id="IndexNum" value="{$list.irank}"  size="4" maxlength="2"></td>
+</tr>
+<tr id="laoy2" <eq name="list.isindex" value= "0">style="display:none;"</eq>>
+  <td class=b1_1>首页显示数量</td>
+  <td colspan=4 class=b1_1><input name="indexnum" type="text" id="indexnum" value="{$list.indexnum}" size="4" maxlength="2"></td>
+</tr>
+
+<tr>
+  <td class=b1_1>分页显示数量</td>
+  <td colspan=4 class=b1_1><input name="pernum" type="text" id="pernum" value="{$list.pernum}" size="4" maxlength="2"></td>
+</tr>
+
+<tr>
+  <td class=b1_1>是否允许用户投稿</td>
+  <td colspan=4 class=b1_1>
+  <input name="isuser" type="radio" class="noborder" value="1" <eq name="list.isuser" value= "1">checked</eq>>
+是
+  <input name="isuser" type="radio" class="noborder" value="0" <eq name="list.isuser" value= "0">checked</eq>>
+否
+</td>
+</tr>
+<tr> 
+<td width="20%" class="b1_1"></td>
+<td class=b1_1 colspan=4><input name="id" type="hidden" value="10"><input name="Submit" type="submit" class="btn btn-success" value="修 改">&nbsp;&nbsp;<input type="button" onClick="history.go(-1);" class="btn btn-info" value="返 回"></td>
+</tr>
+</form>
+</table>
+<div style="text-align:center;margin:10px;">
+ 
+</div>
+</body>
+</html>

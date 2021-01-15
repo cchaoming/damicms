@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网站后台管理</title>
+<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<import file= "Admin.setdate.WdatePicker,Admin.js.admin,Admin.js.Ajax,Admin.js.Jquery"/> 
+</head>
+<body>
+<table border="0" cellspacing="2" cellpadding="3"  align="center" class="admintable" style="width:98%;margin-bottom:5px;">
+    <tr>
+      <td width="93%" height="25" align="left" valign="top" bgcolor="f7f7f7">
+	  
+		<a class="btn btn-success btn-sm active" href="{:U('Member/addgroup')}">增加分组</a>&nbsp;</td>
+      <td width="1%" align="right" bgcolor="f7f7f7"></td>
+    </tr>
+</table>
+<div class="main_center">
+<table width="95%" border="0"  align=center cellpadding="3" cellspacing="1" bgcolor="#F2F9E8" class="table table-bordered">
+<tr> 
+<td colspan="4" align=left class="admintitle">会员分组列表</td>
+</tr>
+    <tr bgcolor="#f1f3f5" style="font-weight:bold;">
+    <td width="10%" height="30" align="center" class="ButtonList">编号</td>
+    <td width="10%" align="center" class="ButtonList">分组名</td>
+    <td width="25%" align="center" class="ButtonList">备注</td>
+	<td width="15%" height="30" align="center" class="ButtonList">操作</td>      
+    </tr>
+	<arclist model="member_group" order="group_id desc" id="vo"> 
+    <tr bgcolor="#ffffff" onMouseOver="this.style.backgroundColor='#EAFCD5';" onMouseOut="this.style.backgroundColor='';this.style.color=''">
+    <td height="25">{$vo.group_id}</td>
+    <td height="25" align="center">{$vo.group_name}</td>
+    <td align="center">&nbsp;{$vo.descript}</td>
+    <td align="center">
+     <a class="btn btn-success btn-sm active" href="{:U('Member/addgroup',array('group_id'=>$vo[group_id]))}">修改权限</a>
+    <a class="btn btn-danger btn-sm active" href="javascript:if(confirm('您确定删除吗?')){
+location.href='{:U('Member/delgroup',array('group_id'=>$vo[group_id]))}';}">删除</a>    </td>
+    </tr>
+	</arclist>
+	
+</table>
+</div>
+</body>
+</html>

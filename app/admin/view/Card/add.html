@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网站后台管理</title>
+<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<import file= "Admin.setdate.WdatePicker,Admin.js.admin,Admin.js.Jquery"/> 
+</head>
+<body>
+<table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
+<form action="/doadd" name="myform" id="myform" method="post" >
+<tr> 
+    <td colspan="3" align=left class="admintitle"><neq name='info.id' value=''>修改<else/>批量制卡</neq> [<a href="/index">链接列表</a>]</td>
+</tr>
+<!--循环字段-->
+<tr>
+  <td class="b1_1">卡号长度</td><td colspan="2" class="b1_1"><input name="card_long" type="text" value="17" id="card_long"></td></tr><tr>
+    <td class="b1_1">卡密码长度</td><td colspan="2" class="b1_1"><input name="pwd_long" type="text" value="18" id="pwd_long"></td></tr><tr>
+      <td class="b1_1">卡面值</td><td colspan="2" class="b1_1"><input name="money" type="text" value="100" id="money">
+      元</td></tr><tr>
+        <td class="b1_1">制卡数量</td><td colspan="2" class="b1_1"><input name="num" type="text" value="100" id="num">
+        张</td></tr>
+<tr> 
+  <td width="20%" class="b1_1"></td>
+  <td colspan="2" class="b1_1"><neq name='info.id' value=''><input name="id" type="hidden" value="{$info.id}"></neq><input name="Submit" type="submit" class="btn btn-success" value="保存">&nbsp;&nbsp;<input type="button" onClick="history.go(-1);" class="btn btn-info" value="返 回"></td>
+</tr>
+</form>
+</table>
+
+</body>
+</html>

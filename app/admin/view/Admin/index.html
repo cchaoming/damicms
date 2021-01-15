@@ -1,0 +1,35 @@
+<!DOCTYPE html> 
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<title>网站管理员管理</title>
+</head>
+<body>
+<div class="page_container">
+<table border="0" align="center" cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="table table-bordered">
+  <tr>
+    <td colspan="7" class="admintitle">管理员列表 <eq name="_SESSION['authId']" value="1"> [<a href="/add">添加</a>] [<a href="/groupindex"><font color="green">管理组</font></a>] [<a href="/nodeindex"><font color="green">权限节点</font></a>]</eq></td>
+  </tr>
+  <tr>
+    <td width="5%" height="25" align="center" bgcolor="#FFFFFF" class="ButtonList">ID</td>
+    <td width="21%" align="center" bgcolor="#FFFFFF" class="ButtonList">管理员名称</td>
+    <td width="12%" align="center" bgcolor="#FFFFFF" class="ButtonList">所在管理组</td>
+    <td width="18%" align="center" bgcolor="#FFFFFF" class="ButtonList">最后登陆时间</td>
+    <td width="16%" align="center" bgcolor="#FFFFFF" class="ButtonList">最后登陆IP</td>
+    <td width="28%" align="center" bgcolor="#FFFFFF" class="ButtonList">管理选项</td>
+  </tr>
+ <foreach name= "list" item= "vo" >
+  <tr>
+    <td height="25" align="center" bgcolor="f7f7f7">{$vo.id}</td>
+    <td align="center" bgcolor="f7f7f7">{$vo.username}</td>
+    <td align="center" bgcolor="f7f7f7">{$vo.role_name}</td>
+    <td align="center" bgcolor="f7f7f7">{$vo.lastlogintime|date="Y-m-d H:i:s",###}</td>
+    <td align="center" bgcolor="f7f7f7">{$vo.lastloginip}</td>
+	<td bgcolor="f7f7f7" style="padding-left:25px;"><a href="/edit/id/{$vo.id}">修改</a><neq name="vo.id" value="1">|<a href="/del/id/{$vo.id}" onClick="JavaScript:return confirm('确定要删除？')">删除</a>|</neq><a href="/status/id/{$vo.id}/status/{$vo.status}"><eq name= "vo.status" value= "1">启用<else/><font color="red">禁用</font></eq></a></td>
+  </tr>
+  </foreach>
+</table>
+</div>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>admin</title>
+<link href="/public/Admin/images/Admin_css.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<script src="/public/js/jquery.js"></script>
+<script src="/public/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="alert alert-danger alert-dismissable" style="width:97.5%; margin:10px auto;">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  {$vip_mess|raw}
+</div>
+<table width="98%" border="0" cellpadding="0" cellspacing="0" align="center">
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="13" height="30" style="background:url(/public/Admin/images/tab_03.gif);"></td>
+        <td width="24" background="/public/Admin/images/tab_05.gif"><img src="/public/Admin/images/311.gif" width="16" height="16" /></td>
+        <td background="/public/Admin/images/tab_05.gif" class="title1">系统信息</td>
+        <td width="14"><img src="/public/Admin/images/tab_07.gif" width="14" height="30" /></td>
+      </tr>
+    </table></td>
+  </tr>
+  
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="9" background="/public/Admin/images/tab_12.gif">&nbsp;</td>
+        <td bgcolor="#bce2fc">
+          <table border="0" align="center" cellpadding="3" cellspacing="1" class="admintable1">
+            <tr>
+              <td width="33%" align="left" bgcolor="#FFFFFF" style="height:30px;">文章总数：<font color="red">{$count.article}</font>  未审核：<font color="red">{$count.narticle}</font><font color="blue">  [<a href="__APP__/Article">管理</a>]</font></td>
+              <td width="33%" align="left" bgcolor="#FFFFFF">栏目总数：<font color="red">{$count.type}</font> <font color="blue">[<a href="__APP__/Type">管理</a>]</font> </td>
+              <td align="left" bgcolor="#FFFFFF">评论总数：<font color="red">{$count.ping}</font>  未审核：<font color="red">{$count.nping}</font> <font color="blue">  [<a href="__APP__/Pl">管理</a>]</font></td>
+            </tr>
+            <tr>
+              <td width="33%" align="left" bgcolor="#FFFFFF" style="height:30px;">幻灯文章：<font color="red">{$count.hd}</font>  <font color="blue">[<a href="__APP__/Flash">管理</a>][<a href="__APP__/Clear/clearhd">清理幻灯附件</a>]</font></td>
+              <td width="33%" align="left" bgcolor="#FFFFFF">链接总数：<font color="red">{$count.link}</font>  <font color="blue">[<a href="__APP__/Link">管理</a>]</font> <font color="blue">[<a href="__APP__/Link/add">添加</a>]</font></td>
+              <td align="left" bgcolor="#FFFFFF">留言总数：<font color="red">{$count.guestbook}</font>  未审核：<font color="red">{$count.nguestbook}</font> <font color="blue">  [<a href="__APP__/Guestbook">管理</a>]</font></td>
+            </tr>
+            
+          </table>
+		  
+		  <table border="0" align="center" cellpadding="3" cellspacing="1" class="admintable1" style="margin-top:5px;">
+            <tr>
+			<volist name="info" id="v" mod="3">
+              <td width="33%" align="left" bgcolor="#FFFFFF" style="height:30px;">{$key}：<font color="red">{$v}</font></td>
+			  <eq name= "mod" value="2"></tr><tr></eq> 
+			 </volist>
+            </tr>
+            
+          </table>
+          
+          <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="50%"><table border="0" cellspacing="2" cellpadding="3"  align="left" class="admintable1" style="margin-top:5px;width:99%;">
+                <tr>
+                  <td align="left" class="admintitle">系统缓存清理</td>
+                </tr>
+                <tr>
+                  <td height="80" bgcolor="#FFFFFF" style="text-align:left;height:75px;line-height:22px;">注意：此操作用于清空<font color="red"><b>Web和Admin</b></font>下runtime文件夹,更新系统配置或修改系统模板后请及时更新缓存<a href="__APP__/Clear/clearcache" class="btn btn-default">开始清理</a>
+                   </td>
+                </tr>
+              </table></td>
+              <td><table border="0" cellspacing="2" cellpadding="3" align="right" class="admintable1" style="margin-top:5px;width:99%">
+                <tr>
+                  <td align="left" class="admintitle">快捷管理</td>
+                </tr>
+                <tr>
+                  <td height="80" bgcolor="#FFFFFF" style="text-align:left;height:75px;line-height:22px;text-align:center;"><input type="button" name="button" value="附件清理" class="btn btn-danger" onClick="window.location.href='__APP__/Clear'" />
+                   <input type="button" name="button" value="标签管理" class="btn btn-info" onClick="window.location.href='__APP__/Label'" />
+                    <input type="button" name="button" value="广告管理" class="btn btn-warning" onClick="window.location.href='__APP__/Ad'" /></td>
+                </tr>
+              </table></td>
+            </tr>
+          </table></td>
+        <td width="9" background="/public/Admin/images/tab_16.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="29"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15" height="29"><img src="/public/Admin/images/tab_20.gif" width="15" height="29" /></td>
+        <td background="/public/Admin/images/tab_21.gif">&nbsp;</td>
+        <td width="14"><img src="/public/Admin/images/tab_22.gif" width="14" height="29" /></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+ 
+</body>
+</html>
