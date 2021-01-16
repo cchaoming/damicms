@@ -15,8 +15,9 @@
 namespace app\admin\controller;
 
 use app\BaseController;
-use think\facade\Cookie;
 use think\facade\Db;
+use think\Response;
+use think\exception\HttpResponseException;
 use until\RBAC;
 
 class Common extends BaseController
@@ -31,17 +32,16 @@ class Common extends BaseController
         }
 //先检查cookie
         if (!session('?username') || !session('?admin_group_id')) {
-            $url = (string)url(config('app.USER_AUTH_GATEWAY'));
-            header("Location:{$url}");
+            throw new HttpResponseException(Response::create(url(config('app.USER_AUTH_GATEWAY')),'redirect',302));
         }
 
         // 用户权限检查
         if (config('app.USER_AUTH_ON') && !in_array(MODULE_NAME, explode(',', config('app.NOT_AUTH_MODULE')))) {
             if (!RBAC::AccessDecision()) {
                 //检查认证识别号
-                if (!$_SESSION [config('app.USER_AUTH_KEY')]) {
+                if (!session(config('app.USER_AUTH_KEY'))) {
                     //跳转到认证网关
-                    redirect(PHP_FILE . config('app.USER_AUTH_GATEWAY'));
+                    throw new HttpResponseException(Response::create(url(config('app.USER_AUTH_GATEWAY')),'redirect',302));
                 }
                 // 没有权限 抛出错误
                 if (config('app.RBAC_ERROR_PAGE')) {
@@ -49,7 +49,7 @@ class Common extends BaseController
                     redirect(config('app.RBAC_ERROR_PAGE'));
                 } else {
                     if (config('app.GUEST_AUTH_ON')) {
-                        $this->assign('jumpUrl', PHP_FILE . config('app.USER_AUTH_GATEWAY'));
+                        $this->assign('jumpUrl', url(config('app.USER_AUTH_GATEWAY')));
                     }
                     // 提示错误信息
                     $this->error('您无访问权限', null, '', 0);
