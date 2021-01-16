@@ -78,7 +78,7 @@ class Article extends Common
         }
         $count = $article->getTableInstance()->whereRaw($condtion)->count();
         $p = new Page($count, 20);
-        $list = $article->getTableInstance()->whereRaw($condtion)->orderRaw($order)->limit($p->firstRow,$p->listRows)->select()->toArray();
+        $list = D('ArticleView')->getTableInstance()->whereRaw($condtion)->orderRaw($order)->limit($p->firstRow,$p->listRows)->select()->toArray();
         //echo 	$article->getLastSql();
         $p->setConfig('prev', '上一页');
         $p->setConfig('header', '篇文章');
@@ -145,6 +145,8 @@ class Article extends Common
 
     public function doedit()
     {
+        $aid = $this->request->param('aid',0);
+        if(!$aid){$this->error('参数错误!');}
         if($this->request->isPost()){
         if (empty($_POST['title'])) {
             $this->_log_operation('修改文章标题为空','失败');
@@ -154,25 +156,20 @@ class Article extends Common
             $this->_log_operation('修改文章未选择栏目','失败');
             $this->error('请选择栏目!');
         }
-        if (isset($_POST['linkurl'])) {
-            $data['linkurl'] = trim($_POST['linkurl']);
-        }
-        if (isset($_POST['imgurl'])) {
-            $data['imgurl'] = trim($_POST['imgurl']);
+        $maybe_fields = ['title','linkurl','imgurl','voteid','pagenum','hits','typeid'];
+        foreach ($maybe_fields as $field_name){
+            if ($this->request->param($field_name)) {
+                $data[$field_name] = $this->request->param($field_name);
+            }
         }
         if (!empty($_POST['TitleFontColor'])) {
             $data['titlecolor'] = trim($_POST['TitleFontColor']);
         }
-        $data['aid'] = $_POST['aid'];
-        $data['voteid'] = $_POST['voteid'];
-        $data['pagenum'] = $_POST['pagenum'];
-        $data['content'] = $_POST['content'];
-		if(intval(config('app.LOCAL_REMOTE_PIC')) == 1){
+        $data['aid'] = $aid;
+        $data['content'] = $this->request->param('content');
+		if(intval(config('app.LOCAL_REMOTE_PIC')) == 1 && $data['content']){
 			$data['content'] = local_remotepic($data['content']);
 		}
-        $data['title'] = trim($_POST['title']);
-        $data['hits'] = trim($_POST['hits']);
-        $data['typeid'] = trim($_POST['typeid']);
         empty($_POST['addtime']) ? $data['addtime'] = date('Y-m-d H:i:s') : $data['addtime'] = trim($_POST['addtime']);
         empty($_POST['author']) ? $data['author'] = '未知' : $data['author'] = trim($_POST['author']);
         empty($_POST['keywords']) ? $data['keywords'] = '' : $data['keywords'] = str_replace('，',',',trim($_POST['keywords']));
@@ -257,37 +254,22 @@ class Article extends Common
             $this->error('请选择栏目!');
         }
 
-        if (isset($_POST['linkurl'])) {
-            $data['linkurl'] = trim($_POST['linkurl']);
-        }
-        if (isset($_POST['imgurl'])) {
-            $data['imgurl'] = trim($_POST['imgurl']);
+        $maybe_fields = ['title','linkurl','imgurl','voteid','pagenum','hits','typeid'];
+        foreach ($maybe_fields as $field_name){
+            if ($this->request->param($field_name)) {
+                $data[$field_name] = $this->request->param($field_name);
+            }
         }
         if (!empty($_POST['TitleFontColor'])) {
             $data['titlecolor'] = trim($_POST['TitleFontColor']);
         }
         $data['status'] = 1;
-        if (isset($_POST['voteid'])) {
-            $data['voteid'] = $_POST['voteid'];
-        }
-        if (isset($_POST['pagenum'])) {
-            $data['pagenum'] = $_POST['pagenum'];
-        }
         //使用stripslashes 反转义,防止服务器开启自动转义
         if (isset($_POST['content'])) {
             $data['content'] = $_POST['content'];
 			if(intval(config('app.LOCAL_REMOTE_PIC')) == 1){
 			$data['content'] = local_remotepic($data['content']);
 		    }
-        }
-        if (isset($_POST['title'])) {
-            $data['title'] = trim($_POST['title']);
-        }
-        if (isset($_POST['hits'])) {
-            $data['hits'] = trim($_POST['hits']);
-        }
-        if (isset($_POST['typeid'])) {
-            $data['typeid'] = trim($_POST['typeid']);
         }
         empty($_POST['addtime']) ? $data['addtime'] = date('Y-m-d H:i:s') : $data['addtime'] = trim($_POST['addtime']);
         empty($_POST['author']) ? $data['author'] = '未知' : $data['author'] = trim($_POST['author']);
@@ -364,10 +346,10 @@ class Article extends Common
         $a = M('article');
         if ($_GET['status'] == 0) {
             $this->_log_operation('审核通过文章ID：'.(int)$aid);
-            $a->where('aid=' .$aid)->save(['status'=>1]);
+            $a->whereRaw('aid=' .$aid)->save(['status'=>1]);
         } elseif ($_GET['status'] == 1) {
             $this->_log_operation('禁用文章ID：'.(int)$aid);
-            $a->where('aid=' . $aid)->save(['status'=>0]);
+            $a->whereRaw('aid=' . $aid)->save(['status'=>0]);
         } else {
             $this->error('非法操作');
         }
@@ -389,7 +371,7 @@ class Article extends Common
 
         if ($_REQUEST['Del'] == '更新时间') {
             $data['addtime'] = date('Y-m-d H:i:s');
-            if ($article->where($map)->save($data)) {
+            if ($article->where($map)->save($data) !== false) {
                 $this->_log_operation('批量更新文章'.$aids.'时间成功');
                 $this->assign("jumpUrl", U('Article/index'));
                 $this->success('操作成功!');
@@ -400,7 +382,7 @@ class Article extends Common
 
         if ($_REQUEST['Del'] == '删除') {
             foreach ($aid as $v) {
-                $article->removeOption()->whereRaw('aid='.$v)->delete();
+                D('article')->whereRaw('aid='.$v)->delete();
             }
             $this->_log_operation('批量删除文章'.$aids.'成功');
             $this->assign("jumpUrl", U('Article/index'));
@@ -409,7 +391,7 @@ class Article extends Common
 
         if ($_REQUEST['Del'] == '批量未审') {
             $data['status'] = 0;
-            if ($article->where($map)->save($data)) {
+            if (D('article')->where($map)->save($data) !== false) {
                 $this->_log_operation('批量待审文章'.$aids.'成功');
                 $this->assign("jumpUrl", U('Article/index'));
                 $this->success('操作成功!');
@@ -419,7 +401,7 @@ class Article extends Common
 
         if ($_REQUEST['Del'] == '批量审核') {
             $data['status'] = 1;
-            if ($article->where($map)->save($data)) {
+            if (D('article')->where($map)->save($data) !== false) {
                 $this->_log_operation('批量审核文章'.$aids.'成功');
                 $this->assign("jumpUrl", U('Article/index'));
                 $this->success('操作成功!');
@@ -429,7 +411,7 @@ class Article extends Common
 
         if ($_REQUEST['Del'] == '推荐') {
             $data['ishot'] = 1;
-            if ($article->where($map)->save($data)) {
+            if (D('article')->where($map)->save($data) !== false) {
                 $this->_log_operation('批量推荐文章'.$aids.'成功');
                 $this->assign("jumpUrl", U('Article/index'));
                 $this->success('操作成功!');
@@ -439,7 +421,7 @@ class Article extends Common
 
         if ($_REQUEST['Del'] == '解除推荐') {
             $data['ishot'] = 0;
-            if ($article->where($map)->save($data)) {
+            if (D('article')->where($map)->save($data) !== false) {
                 $this->_log_operation('批量解除审核文章'.$aids.'成功');
                 $this->assign("jumpUrl", U('Article/index'));
                 $this->success('操作成功!');
@@ -449,7 +431,7 @@ class Article extends Common
 
         if ($_REQUEST['Del'] == '固顶') {
             $data['istop'] = 1;
-            if ($article->where($map)->save($data)) {
+            if (D('article')->where($map)->save($data) !== false) {
                 $this->_log_operation('批量固顶文章'.$aids.'成功');
                 $this->assign("jumpUrl", U('Article/index'));
                 $this->success('操作成功!');
@@ -460,7 +442,7 @@ class Article extends Common
 
         if ($_REQUEST['Del'] == '解除固顶') {
             $data['istop'] = 0;
-            if ($article->where($map)->save($data)) {
+            if (D('article')->where($map)->save($data) !== false) {
                 $this->_log_operation('批量解除固顶文章'.$aids.'成功');
                 $this->assign("jumpUrl", U('Article/index'));
                 $this->success('操作成功!');
@@ -471,7 +453,7 @@ class Article extends Common
 
         if ($_REQUEST['Del'] == '幻灯') {
             $data['isflash'] = 1;
-            if ($article->where($map)->save($data)) {
+            if (D('article')->where($map)->save($data) !== false) {
                 $this->_log_operation('批量幻灯文章'.$aids.'成功');
                 $this->assign("jumpUrl", U('Article/index'));
                 $this->success('操作成功!');
@@ -481,7 +463,7 @@ class Article extends Common
 
         if ($_REQUEST['Del'] == '解除幻灯') {
             $data['isflash'] = 0;
-            if ($article->where($map)->save($data)) {
+            if (D('article')->where($map)->save($data) !== false) {
                 $this->_log_operation('批量解除幻灯文章'.$aids.'成功');
                 $this->assign("jumpUrl", U('Article/index'));
                 $this->success('操作成功!');
@@ -494,7 +476,7 @@ class Article extends Common
                 $this->error('操作失败,请选择目标类别！');
             }
             $data['typeid'] = $_REQUEST['typeid'];
-            if ($article->where($map)->save($data)) {
+            if (D('article')->where($map)->save($data) !== false) {
                 $this->_log_operation('批量移动文章'.$aids.'成功');
                 $this->assign("jumpUrl", U('Article/index'));
                 $this->success('移动成功!');
@@ -506,12 +488,12 @@ class Article extends Common
             if (intval($_REQUEST['typeid']) == 0) {
                 $this->error('操作失败,请选择目标类别！');
             }
-            $list = $article->removeOption()->where($map)->select()->toArray();
+            $list = D('article')->where($map)->select()->toArray();
             foreach ($list as $k => $v) {
                 $data = $v;
                 $data['aid'] = NULL;
                 $data['typeid'] = (int)$_REQUEST['typeid'];
-                $article->removeOption()->save($data);
+                D('article')->save($data);
             }
             $this->_log_operation('复制成功');
             $this->success('复制成功!');
@@ -559,8 +541,8 @@ class Article extends Common
         $op = '';
         foreach ($oplist as $k => $v) {
             $check = '';
-            if (isset($_REQUEST['typeid'])) {
-                if ($v['typeid'] == intval($_REQUEST['typeid'])) {
+            if ($this->request->param('typeid')) {
+                if ($v['typeid'] == intval($this->request->param('typeid'))) {
                     $check = 'selected="selected"';
                 }
             } else if (cookie('curr_typeid') != '') {
@@ -596,8 +578,8 @@ class Article extends Common
         $list = $type->whereRaw($where)->field("typeid,typename,fid,concat(path,'-',typeid) as bpath")->group('bpath')->select()->toArray();
         foreach ($list as $k => $v) {
             $check = '';
-            if (isset($_REQUEST['typeid'])) {
-                if ($v['typeid'] == intval($_REQUEST['typeid'])) {
+            if ($this->request->param('typeid')) {
+                if ($v['typeid'] == intval($this->request->param('typeid'))) {
                     $check = 'selected="selected"';
                 }
             }

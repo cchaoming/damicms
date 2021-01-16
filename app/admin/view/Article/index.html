@@ -91,7 +91,7 @@
     <td height="25">[<a href="{:url('Article/index',['typeid'=>$vo['typeid']])}">{$vo.typename}</a>]<a href="/index.php/articles/{$vo.aid}" target="_blank">{$vo.title}</a><eq name="vo.ishot" value="1"><font color="red">[荐]</font></eq><eq name="vo.istop" value="1"><font color="red">[顶]</font></eq><eq name="vo.isimg" value="1"><font color="red">[图]</font></eq><eq name="vo.islink" value="1"><font color="red">[转]</font></eq><eq name="vo.isflash" value="1"><font color="red">[幻]</font></eq></td>
     <td height="25" align="center">ID:{$vo.aid}</td>
 	<td height="25" align="center">{$vo.addtime}</td>
-    <td align="center"><a href="{:url('Article/status',['aid'=>$vo['aid'],'status'=>$vo['status']])"><eq name= "vo.status" value= "1">已审<else/><font color="red">未审</font></eq></a>|<a href="/edit/aid/{$vo.aid}">编辑</a>|<a href="/del/aid/{$vo.aid}" onClick="JavaScript:return confirm('确定要删除？')">删除</a></td>
+    <td align="center"><a href="{:url('Article/status',['aid'=>$vo['aid'],'status'=>$vo['status']])}"><eq name= "vo.status" value= "1">已审<else/><font color="red">未审</font></eq></a>|<a href="{:url('Article/edit',['aid'=>$vo['aid']])}">编辑</a>|<a href="{:url('Article/del',['aid'=>$vo['aid']])}" onClick="JavaScript:return confirm('确定要删除？')">删除</a></td>
     </tr>
 	</volist>
 <tr><td align="center" bgcolor="f7f7f7"><input name="Action" type="hidden"  value="Del"><input name="chkAll" type="checkbox" id="chkAll" onClick=CheckAll(this.form) value="checkbox" style="border:0"></td>
@@ -103,18 +103,18 @@
     </select>
    
 <div class="btn-group">
-<input name="Del" type="submit" class="btn btn-info btn-sm" id="Del" value="复制">
-<input name="Del" type="submit" class="btn btn-info btn-sm" id="Del" value="移动">
-<input name="Del" type="submit" class="btn btn-info btn-sm" id="Del" value="更新时间">
-<input name="Del" type="submit" class="btn btn-info btn-sm" id="Del" value="删除">
-<input name="Del" type="submit" class="btn btn-info btn-sm" id="Del" value="批量未审">
-<input name="Del" type="submit" class="btn btn-info btn-sm" id="Del" value="批量审核">
-<input name="Del" type="submit" class="btn btn-info btn-sm" id="Del" value="推荐">
-<input name="Del" type="submit" class="btn btn-info btn-sm" id="Del" value="解除推荐">
-<input name="Del" type="submit" class="btn btn-info btn-sm" id="Del" value="固顶">
-<input name="Del" type="submit" class="btn btn-info btn-sm" id="Del" value="解除固顶">
-<input name="Del" type="submit" class="btn btn-info btn-sm" id="Del" value="幻灯">
-<input name="Del" type="submit" class="btn btn-info btn-sm" id="Del" value="解除幻灯">
+<input name="Del" type="submit" class="btn btn-info btn-sm" value="复制">
+<input name="Del" type="submit" class="btn btn-info btn-sm" value="移动">
+<input name="Del" type="submit" class="btn btn-info btn-sm" value="更新时间">
+<input name="Del" type="submit" class="btn btn-info btn-sm" value="删除">
+<input name="Del" type="submit" class="btn btn-info btn-sm" value="批量未审">
+<input name="Del" type="submit" class="btn btn-info btn-sm" value="批量审核">
+<input name="Del" type="submit" class="btn btn-info btn-sm" value="推荐">
+<input name="Del" type="submit" class="btn btn-info btn-sm" value="解除推荐">
+<input name="Del" type="submit" class="btn btn-info btn-sm" value="固顶">
+<input name="Del" type="submit" class="btn btn-info btn-sm" value="解除固顶">
+<input name="Del" type="submit" class="btn btn-info btn-sm" value="幻灯">
+<input name="Del" type="submit" class="btn btn-info btn-sm" value="解除幻灯">
 </div></td>
 </tr><tr><td bgcolor="f7f7f7" colspan="5">
 <div>

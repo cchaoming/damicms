@@ -101,15 +101,15 @@ function del_picyulan(cur_value,old_value,cur_obj,old_obj){
       <td height="25" bgcolor="f7f7f7">快速查找：
         <SELECT onChange="javascript:window.open(this.options[this.selectedIndex].value,'main')"  size="1" name="s">
         <OPTION value="" selected>-=请选择=-</OPTION>
-        <OPTION value="/index">所有文章</OPTION>
-        <OPTION value="/index/status/1">已审的文章</OPTION>
-        <OPTION value="/index/status/0">未审的文章</OPTION>
-        <OPTION value="/index/istop/1">固顶文章</OPTION>
-        <OPTION value="/index/ishot/1">推荐文章</OPTION>
-		<OPTION value="/index/isflash/1">图片文章</OPTION>
-		<OPTION value="/index/isimg/1">图片文章</OPTION>
-        <OPTION value="/index/islink/1">转向链接文章</OPTION>
-        <OPTION value="/index/hits/0">按浏览次数排序</OPTION>
+        <OPTION value="__APP__/Article/index">所有文章</OPTION>
+        <OPTION value="__APP__/Article/index/status/1">已审的文章</OPTION>
+        <OPTION value="__APP__/Article/index/status/0">未审的文章</OPTION>
+        <OPTION value="__APP__/Article/index/istop/1">固顶文章</OPTION>
+        <OPTION value="__APP__/Article/index/ishot/1">推荐文章</OPTION>
+		<OPTION value="__APP__/Article/index/isflash/1">图片文章</OPTION>
+		<OPTION value="__APP__/Article/index/isimg/1">图片文章</OPTION>
+        <OPTION value="__APP__/Article/index/islink/1">转向链接文章</OPTION>
+        <OPTION value="__APP__/Article/index/hits/0">按浏览次数排序</OPTION>
       </SELECT>      </td>
       <td align="center" bgcolor="f7f7f7">
 	  <form name="form1" method="POST" action="/search">
@@ -118,12 +118,12 @@ function del_picyulan(cur_value,old_value,cur_obj,old_obj){
       </form></td>
       <td align="right" bgcolor="f7f7f7">跳转到：
         <select name="ClassID" id="ClassID" onChange="javascript:window.open(this.options[this.selectedIndex].value,'main')">
-<option value="">请选择分类</option>{$op}</select></td>
+<option value="">请选择分类</option>{$op|raw}</select></td>
     </tr>
 </table>
 
 <table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
-<form action="/doedit" onSubmit="return CheckForm();" name="myform" id="myform" method="post">
+<form action="{:url('Article/doedit')}" onSubmit="return CheckForm();" name="myform" id="myform" method="post">
 <tr> 
     <td colspan="2" align=left class="admintitle">修改文章[<a onClick="showhelp();">操作提示</a>]</td></tr>
 <eq name='arr[0]' value='1'>
@@ -143,7 +143,7 @@ function del_picyulan(cur_value,old_value,cur_obj,old_obj){
 <eq name='arr[2]' value='1'>
 <tr>
   <td class="b1_1">描述</td>
-  <td class="b1_1"><input name="description"  value="{$list.description}"  type="text" size="40" maxlength="50">&nbsp;<span class="note">用于搜索引擎抓取</span></td>
+  <td class="b1_1"><input name="description"  value="{$list.description|raw}"  type="text" size="40" maxlength="50">&nbsp;<span class="note">用于搜索引擎抓取</span></td>
 </tr>
 </eq>
 <eq name='arr[3]' value='1'>
@@ -169,7 +169,7 @@ function del_picyulan(cur_value,old_value,cur_obj,old_obj){
 </eq>
 <tr <neq name='arr[6]' value='1'>style="display:none"</neq>>
   <td class="b1_1">分类</td>
-  <td class="b1_1"><select ID="Typeid" name="typeid">{$option}</select></td>
+  <td class="b1_1"><select ID="Typeid" name="typeid">{$option|raw}</select></td>
 </tr>
 <eq name='arr[7]' value='1'>
 <tr>
@@ -193,7 +193,7 @@ function del_picyulan(cur_value,old_value,cur_obj,old_obj){
 <eq name='arr[9]' value='1'>
 <tr>
   <td bgcolor="#FFFFFF" class="b1_1">文章摘要[为空自动截取文章前130字]</td>
-  <td colspan=4 class=b1_1><textarea name="note" id="Note" cols="60" rows="6">{$list.note}</textarea></td></tr>
+  <td colspan=4 class=b1_1><textarea name="note" id="Note" cols="60" rows="6">{$list.note|raw}</textarea></td></tr>
   </eq>
   <eq name='arr[10]' value='1'>
  <tr>
@@ -205,7 +205,7 @@ function del_picyulan(cur_value,old_value,cur_obj,old_obj){
 <tr>
   <td valign="top" class="b1_1"><p>内容</p>
     
-  <td class="b1_1"><textarea id="Content" name="content" style="width:700px;height:300px;">{$list.content}
+  <td class="b1_1"><textarea id="Content" name="content" style="width:700px;height:300px;">{$list.content|raw}
 </textarea>
 </td>
 </tr>
