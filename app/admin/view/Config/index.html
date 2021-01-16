@@ -26,7 +26,7 @@ K.create('#oSitelx',{
 </head>
 <body>
 <div class="main_center">
-<form name='frm' method='post' action='/update' role="form">
+<form name='frm' method='post' action='{:url('Config/update')}' role="form">
 <div >
       
       		<ul class="nav nav-tabs">
@@ -116,7 +116,7 @@ K.create('#oSitelx',{
 			<td align="right">&nbsp;</td>
 			<td width="60%" align="left">
 				
-<textarea class='css_textarea' name="sitelx" type="text" id="oSitelx" onFocus="hSitelx.style.color='blue';" onBlur="hSitelx.style.color='#ccc';" cols="80" rows="5" >{$list.sitelx}</textarea>		  </td>
+<textarea class='css_textarea' name="sitelx" type="text" id="oSitelx" onFocus="hSitelx.style.color='blue';" onBlur="hSitelx.style.color='#ccc';" cols="80" rows="5" >{$list.sitelx|raw}</textarea>		  </td>
 	  </tr>
 	
 
@@ -200,17 +200,6 @@ K.create('#oSitelx',{
 				
            <input name="watermarkimg" type="text" id="owatermarkimg" onFocus="hwatermarkimg.style.color='blue';" onBlur="hwatermarkimg.style.color='#ccc';" value="{$list.watermarkimg}" style="width:300px;"><br><iframe src="__APP__/File/watermark" width="400" height="25" frameborder="0" scrolling="no"></iframe>		  </td>
 	  </tr>
-
-	  <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
-			<td width="40%" align="right">伪静态设置：urlmode
-				<div id='hurlmode' style="color:#ccc;letter-spacing: 0px;font-size:12px;">'隐藏:index.php':需服务器支持.htaccess</div>		  	</td>
-			<td align="right">&nbsp;</td>
-			<td width="60%" align="left">
-				
-<select class='css_select' name="urlmode" type="text" id="ourlmode" onFocus="hurlmode.style.color='blue';" onBlur="hurlmode.style.color='#ccc';" style="width:150px;">
-		<option value="0" <eq name="list.urlmode" value="0">selected</eq>>显示'index.php'</option><option value="1" <eq name="list.urlmode" value="1">selected</eq>>隐藏'index.php'</option><option value="2" <eq name="list.urlmode" value="2">selected</eq>>兼容模式'?s='</option>
-				</select>			</td>
-	  </tr>
 	  
       <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
 			<td width="40%" align="right">是否开启在线订单(电商)：(istrade)
@@ -244,13 +233,13 @@ K.create('#oSitelx',{
 			<td align="right">&nbsp;</td>
 			<td width="60%" align="left">
 				<select class='css_select' name="suffix" type="text" id="osuffix" onFocus="hsuffix.style.color='blue';" onBlur="hsuffix.style.color='#ccc';" style="width:150px;">
-			<option value="0" <eq name="list.suffix" value="0">selected</eq>>.html</option>
-			<option value="1" <eq name="list.suffix" value="1">selected</eq>>.htm</option>
-			<option value="2" <eq name="list.suffix" value="2">selected</eq>>.shtml</option>
-			<option value="3" <eq name="list.suffix" value="3">selected</eq>>.php</option>
-			<option value="4" <eq name="list.suffix" value="4">selected</eq>>.asp</option>
-			<option value="5" <eq name="list.suffix" value="5">selected</eq>>.aspx</option>
-			<option value="6" <eq name="list.suffix" value="6">selected</eq>>.jsp</option>
+			<option value="0" <eq name="list.suffix" value="0">selected</eq>>html</option>
+			<option value="1" <eq name="list.suffix" value="1">selected</eq>>htm</option>
+			<option value="2" <eq name="list.suffix" value="2">selected</eq>>shtml</option>
+			<option value="3" <eq name="list.suffix" value="3">selected</eq>>php</option>
+			<option value="4" <eq name="list.suffix" value="4">selected</eq>>asp</option>
+			<option value="5" <eq name="list.suffix" value="5">selected</eq>>aspx</option>
+			<option value="6" <eq name="list.suffix" value="6">selected</eq>>jsp</option>
 				</select>			</td>
 	  </tr>
 	
@@ -639,22 +628,22 @@ K.create('#oSitelx',{
 		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
 			<td width="40%" align="right">邮件服务器SMTP地址：				</td>
 			<td align="center" width="10">&nbsp;</td>
-			<td width="60%" align="left"><input name="MAIL_SMTP_SERVER" type="text" id="MAIL_SMTP_SERVER" onFocus="hSiteTitle.style.color='blue';" onBlur="hSiteTitle.style.color='#ccc';" value="{:C('MAIL_SMTP_SERVER')}" style="width:300px;"></td>
+			<td width="60%" align="left"><input name="MAIL_SMTP_SERVER" type="text" id="MAIL_SMTP_SERVER" onFocus="hSiteTitle.style.color='blue';" onBlur="hSiteTitle.style.color='#ccc';" value="{:config('app.MAIL_SMTP_SERVER')}" style="width:300px;"></td>
 	  </tr>
 	    <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
 	      <td align="right">邮件服务器SMTP端口：            </td>
 	      <td align="center">&nbsp;</td>
-	      <td align="left"><input name="MAIL_PORT" type="text" id="MAIL_PORT" onFocus="hSiteTitle.style.color='blue';" onBlur="hSiteTitle.style.color='#ccc';" value="{:C('MAIL_PORT')}" style="width:300px;"></td>
+	      <td align="left"><input name="MAIL_PORT" type="text" id="MAIL_PORT" onFocus="hSiteTitle.style.color='blue';" onBlur="hSiteTitle.style.color='#ccc';" value="{:config('app.MAIL_PORT')}" style="width:300px;"></td>
 	      </tr>
 	    <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
 			<td width="40%" align="right">登陆账号：				</td>
 			<td align="center">&nbsp;</td>
-			<td width="60%" align="left"><input name="MAIL_FROM" type="text" id="MAIL_FROM" onFocus="hSiteTitle.style.color='blue';" onBlur="hSiteTitle.style.color='#ccc';" value="{:C('MAIL_FROM')}" style="width:300px;"></td>
+			<td width="60%" align="left"><input name="MAIL_FROM" type="text" id="MAIL_FROM" onFocus="hSiteTitle.style.color='blue';" onBlur="hSiteTitle.style.color='#ccc';" value="{:config('app.MAIL_FROM')}" style="width:300px;"></td>
 	  </tr>
 <tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
 			<td width="40%" align="right">登陆密码：				</td>
 			<td align="center">&nbsp;</td>
-			<td width="60%" align="left"><input name="MAIL_PASSSWORD" type="password" id="MAIL_PASSSWORD" onFocus="hSiteTitle.style.color='blue';" onBlur="hSiteTitle.style.color='#ccc';" value="{:dami_decrypt|C('MAIL_PASSSWORD')}" style="width:300px;"></td>
+			<td width="60%" align="left"><input name="MAIL_PASSSWORD" type="password" id="MAIL_PASSSWORD" onFocus="hSiteTitle.style.color='blue';" onBlur="hSiteTitle.style.color='#ccc';" value="{:config('app.MAIL_PASSSWORD')}" style="width:300px;"></td>
 	  </tr>
 	
 		<tr onMouseOver="this.style.backgroundColor='#EEFCDD';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
@@ -663,11 +652,11 @@ K.create('#oSitelx',{
 			<td align="center">&nbsp;</td>
 			<td width="60%" align="left"><select class='css_select' name="MAIL_TRADE" type="text" id="select" onFocus="hindexlink.style.color='blue';" onBlur="hindexlink.style.color='#ccc';" style="width:50px;">
               <option value="1" 
-			  <if condition="C('MAIL_TRADE') eq 1">selected</if>
+			  <if config('app.MAIL_TRADE')==1>selected</if>
               >开启
 			  </option>
 			  <option value="0" 
-			  <if condition="C('MAIL_TRADE') eq 0">selected</if>
+			  <if config('app.MAIL_TRADE')==0>selected</if>
 			  >关闭
 			  </option>
             </select></td>
@@ -677,11 +666,11 @@ K.create('#oSitelx',{
 		  <td align="center">&nbsp;</td>
 		  <td align="left"><select class='css_select' name="MAIL_REG" type="text" id="select" onFocus="hindexlink.style.color='blue';" onBlur="hindexlink.style.color='#ccc';" style="width:50px;">
               <option value="1" 
-			  <if condition="C('MAIL_REG') eq 1">selected</if>
+			  <if config('app.MAIL_REG')==1>selected</if>
               >开启
 			  </option>
 			  <option value="0" 
-			  <if condition="C('MAIL_REG') eq 0">selected</if>
+			  <if config('app.MAIL_REG')==0>selected</if>
 			  >关闭
 			  </option>
             </select></td>
@@ -691,7 +680,7 @@ K.create('#oSitelx',{
 			<td width="40%" align="right">订单提醒发送到email：
 			  <div id='hIsHits' style="color:#ccc;letter-spacing: 0px;font-size:12px;"></div>		  	</td>
 			<td align="center">&nbsp;</td>
-			<td width="60%" align="left"><input name="MAIL_TOADMIN" type="text" id="MAIL_TOADMIN" onFocus="hSiteTitle.style.color='blue';" onBlur="hSiteTitle.style.color='#ccc';" value="{:C('MAIL_TOADMIN')}" style="width:300px;"></td>
+			<td width="60%" align="left"><input name="MAIL_TOADMIN" type="text" id="MAIL_TOADMIN" onFocus="hSiteTitle.style.color='blue';" onBlur="hSiteTitle.style.color='#ccc';" value="{:config('app.MAIL_TOADMIN')}" style="width:300px;"></td>
 	  </tr>
 		<tr class="css_page_list">
 			<td height="30" colspan=3 align="center">

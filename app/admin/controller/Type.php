@@ -79,13 +79,14 @@ class Type extends Common
         }
         $this->assign('list', $arr);
         //加载扩展字段不想用JOIN个人认为效率不高
-        $list_extend = M('extend_fieldes')->orderRaw('orders asc')->select();
+        $list_extend = M('extend_fieldes')->orderRaw('orders asc')->select()->toArray();
         foreach ($list_extend as $k => $v) {
-            $is_show = M('extend_show')->whereRaw('typeid=' . $typeid . ' and field_id=' . $v['field_id'])->value('is_show');
-            $is_show = intval($is_show) == 1 ? 1 : 0;
+            $is = (int)get_field('extend_show','typeid=' . $typeid . ' and field_id=' . $v['field_id'],'is_show');
+            $is_show = $is == 1 ? 1 : 0;
             $list_extend[$k]['is_show'] = $is_show;
         }
         $this->assign('list_extend', $list_extend);
+        $this->assign('typeid', $typeid);
         return $this->display();
     }
 
@@ -98,6 +99,7 @@ class Type extends Common
             exit();
         }
         $temp = M('type')->whereRaw('typeid=' . $typeid)->find();
+        $this->assign('typeid', $typeid);
         $this->assign('model_path', $temp);
         return $this->display();
     }
@@ -254,6 +256,7 @@ class Type extends Common
         $list = $type->whereRaw('typeid=' . $typeid)->find();
         //获取栏目option
         $olist = $type->removeOption()->whereRaw("islink=0")->field("typeid,typename,fid,concat(path,'-',typeid) as bpath")->group('bpath')->select()->toArray();
+        $option = '';
         foreach ($olist as $k => $v) {
             $count[$k] = '';
             $ban = '';
@@ -263,7 +266,7 @@ class Type extends Common
                 }
             }
 
-            if ($v['typeid'] == $_GET['typeid']) {
+            if ($v['typeid'] == $this->request->param('typeid')) {
                 $ban = " disabled='disabled'";
             }
 
@@ -295,8 +298,9 @@ class Type extends Common
                 $this->error('栏目名称不能为空!');
             }
             $type = D('Type');
-            if ($type->whereRaw('typeid=' . $typeid)->save($_POST)) {
-            //更新path
+            $info = $type->whereRaw('typeid=' . $typeid)->find();
+            if ($info && $info->save($_POST)) {
+                //更新path
                 $type->tclm($typeid, $fid, true);
                 $this->_log_operation('修改栏目' . $_POST['typename']);
                 $this->assign("jumpUrl", U('Type/index'));
@@ -310,8 +314,10 @@ class Type extends Common
     //删除栏目&执行删除
     public function del()
     {
-        $typeid = (int)$this->request->param('typeid',0);
-        if(!$typeid){$this->error('参数错误!');}
+        $typeid = (int)$this->request->param('typeid', 0);
+        if (!$typeid) {
+            $this->error('参数错误!');
+        }
         $type = M('type');
         $article = M('article');
         if ($type->whereRaw('fid=' . $typeid)->select()->toArray()) {
@@ -322,18 +328,17 @@ class Type extends Common
             $this->assign("jumpUrl", U('Type/index'));
             $this->error('请先清空栏目下文章!');
         }
-        if ($type->removeOption()->whereRaw('typeid=' . $typeid)->delete()) {
-            M('extend_show')->whereRaw('typeid=' . $typeid)->delete();
-            $this->_log_operation('删除栏目ID：' . intval($_GET['typeid']));
-            $this->assign("jumpUrl", U('Type/index'));
-            $this->success('删除成功!');
-        }
+        $type->removeOption()->whereRaw('typeid=' . $typeid)->delete();
+        M('extend_show')->whereRaw('typeid=' . $typeid)->delete();
+        $this->_log_operation('删除栏目ID：' . $typeid);
+        $this->assign("jumpUrl", U('Type/index'));
+        $this->success('删除成功!');
     }
 
     //ajax扩展后台菜单
     function ajax_menuid()
     {
-        $typeid = (int)$this->request->param('typeid',0);
+        $typeid = (int)$this->request->param('typeid', 0);
         $t = M('extend_menu')->whereRaw('typeid=' . $typeid)->find();
         if ($t) {
             $this->ajaxReturn($t, 'ok', 1);
@@ -345,7 +350,7 @@ class Type extends Common
     //ajax保存扩展菜单
     function ajax_domenu()
     {
-        $typeid = (int)$this->request->param('typeid',0);
+        $typeid = (int)$this->request->param('typeid', 0);
         if ($typeid == 0) {
             exit('参数错误');
         }
@@ -354,25 +359,29 @@ class Type extends Common
             if (intval($this->request->param('enable')) == 2) {
                 M('extend_menu')->whereRaw('typeid=' . $typeid)->delete();
             } else {
-                M('extendMenu',true)->whereRaw('typeid=' . $typeid)->save(array_map("unescape", $_REQUEST));
+                M('extendMenu', true)->whereRaw('typeid=' . $typeid)->save(array_map("unescape", $_REQUEST));
             }
         } else {
-            M('extendMenu',true)->save(array_map("unescape", $_REQUEST));
+            M('extendMenu', true)->save(array_map("unescape", $_REQUEST));
         }
     }
 
     public function status()
     {
-        $typeid = (int)$this->request->param('typeid',0);
+        $typeid = (int)$this->request->param('typeid', 0);
         $a = M('type');
         $s = $this->request->param('s');
-        if(!$typeid || !$s){$this->error('参数非法');}
+        if (!$typeid || !$s) {
+            $this->error('参数非法');
+        }
         $s = explode("-", $s);
-        if(!is_array($s) || count($s)<2){ $this->error('参数非法');}
+        if (!is_array($s) || count($s) < 2) {
+            $this->error('参数非法');
+        }
         if ($s[1] == 0) {
-            $a->whereRaw('typeid=' . $typeid)->save([$s[0]=>1]);
+            $a->whereRaw('typeid=' . $typeid)->save([$s[0] => 1]);
         } elseif ($s[1] == 1) {
-            $a->whereRaw('typeid=' . $typeid)->save([$s[0]=>0]);
+            $a->whereRaw('typeid=' . $typeid)->save([$s[0] => 0]);
         } else {
             $this->error('非法操作');
         }

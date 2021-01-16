@@ -75,7 +75,7 @@ $.post(url);
  <div class="main_center">
 <table border="0" cellspacing="2" cellpadding="3"  align="center" class="table table-bordered">
 <tr> 
-  <td colspan="8" align=left class="admintitle">栏目列表　[<a href="/add"><font color="#FF0000">添加栏目</font></a>] [<a href="__APP__/Fields/index"><font color="#FF0000">扩展字段管理</font></a>][<a onClick="showhelp();">操作提示</a>]</td>
+  <td colspan="8" align=left class="admintitle">栏目列表　[<a href="{:url('Type/add')}"><font color="#FF0000">添加栏目</font></a>] [<a href="__APP__/Fields/index"><font color="#FF0000">扩展字段管理</font></a>][<a onClick="showhelp();">操作提示</a>]</td>
 </tr>
   <tr align="center"> 
     <td width="20%" class="ButtonList">栏目名称</td>
@@ -89,7 +89,7 @@ $.post(url);
   </tr>
  <volist name= "list" id="vo"> 
     <tr bgcolor="#f1f3f5" onMouseOver="this.style.backgroundColor='#EAFCD5';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
-    <td height="24" class="tdleft"><eq name='vo.fid' value='0'><neq name='vo.islink' value='1'><a href="javascript:show_mydialog({$vo.typeid},'{$vo.typename}');"><img src='/Public/Editor/themes/common/anchor.gif' border='0'></a></neq></eq>{$vo.space}<a href="__APP__/Article/index/typeid/{$vo.typeid}">{$vo.typename}</a><font color="blue">
+    <td height="24" class="tdleft"><eq name='vo.fid' value='0'><neq name='vo.islink' value='1'><a href="javascript:show_mydialog({$vo.typeid},'{$vo.typename|raw}');"><img src='/Public/Editor/themes/common/anchor.gif' border='0'></a></neq></eq>{$vo.space|raw}<a href="__APP__/Article/index/typeid/{$vo.typeid}">{$vo.typename|raw}</a><font color="blue">
 	<font color="blue"><eq name="vo.islink" value="1">[<a href="__APP__/Type/status/typeid/{$vo.typeid}/s/islink-1">外</a>]<else/>(<a href="__APP__/Type/status/typeid/{$vo.typeid}/s/islink-0">{$vo.total}</a>)</eq></font>
 	</td>
     <td height="24" align="center">{$vo.typeid}</td>

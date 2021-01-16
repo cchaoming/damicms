@@ -219,7 +219,8 @@ class Article extends Common
             }
         }
         $article = M('article',true);
-        if ($article->whereRaw('aid='.$data['aid'])->save($data)) {
+        $info =  $article->whereRaw('aid='.$data['aid'])->find();
+        if ($info && $info->save($data)) {
             //echo $article->getLastSql;
             $this->_log_operation('修改文章ID:'.$data['aid'].'成功');
             $this->assign("jumpUrl", U('Article/index'));

@@ -13,7 +13,7 @@ async:false,
 type: 'GET',
 dataType:'json',
 data:'',
-url:'./index.php?m=Index&a=ajax_list_dir',
+url:'/index.php/home/Index/ajax_list_dir',
 success:function(datas){
 var datajson= datas ;
 var data=datajson.data;     
@@ -34,7 +34,7 @@ async:false,
 type: 'GET',
 dataType:'json',
 data:'',
-url:'./index.php?m=Index&a=ajax_page_dir',
+url:'/index.php/home/Index/ajax_page_dir',
 success:function(datas){
 var datajson= datas;
 var data=datajson.data;     
@@ -55,8 +55,8 @@ $("#page_path").append("<option value='page/" + data[i] + "' " + temp + ">" + da
 </head>
 <body>
 <table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
-<form action="/domanage_moban" name="myform" method="post" id="myform">
-<input name="typeid" type="hidden" value="{$_GET.typeid}">
+<form action="{:url('Type/domanage_moban')}" name="myform" method="post" id="myform">
+<input name="typeid" type="hidden" value="{$typeid}">
 <tr> 
     <td colspan="2" align=left class="admintitle"><font color="#FF0000">{$model_path.typename}</font>&nbsp;模板显示控制[<a onClick="showhelp();">操作提示</a>]</td></tr>
 <tr> 

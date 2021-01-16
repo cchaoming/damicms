@@ -10,32 +10,34 @@
 
     @Date 2011-11-23 10:26:03 $
 *************************************************************/
-class AdminlogAction extends CommonAction
+namespace app\admin\controller;
+use until\Page;
+
+class Adminlog extends Common
 {	
     private $model;
-    function _initialize() {
-	parent::_initialize();
-	$this->model = new Model("dami_log",null);
+    public  function initialize() {
+	parent::initialize();
+	$this->model = D("log");
 	}
     public function index()
     {
 		$where = '1=1';
-		if ($_REQUEST['username'] != '') {
-			$where .= " and username='".urldecode($_REQUEST[username])."'";
+		if ($this->request->param('username')) {
+			$where .= " and username='".urldecode($this->request->param('username'))."'";
 		}
-		if ($_REQUEST['keyword'] != '') {
-			$where .= " and (operate like'%".urldecode($_REQUEST[keyword])."%' or result like '%".urldecode($_REQUEST[keyword])."%')";
+		if ($this->request->param('keyword')) {
+			$where .= " and (operate like'%".urldecode($this->request->param('keyword'))."%' or result like '%".urldecode($this->request->param('keyword'))."%')";
 		}
-		if ($_REQUEST['start_time'] != '' && strtotime($_REQUEST['start_time']) != false) {
-			$where .= " and addtime>=".strtotime($_REQUEST['start_time']);
+		if ($this->request->param('start_time')) {
+			$where .= " and addtime>=".strtotime($this->request->param('start_time'));
 		}
-		if ($_REQUEST['end_time'] != '' && strtotime($_REQUEST['end_time']) != false) {
-			$where .= " and addtime<=".strtotime($_REQUEST['start_time']);
+		if ($this->request->param('end_time')) {
+			$where .= " and addtime<=".strtotime($this->request->param('end_time'));
 		}
 
-		$count = $this->model->where($where)->count();
+		$count = $this->model->whereRaw($where)->count();
 		//echo $this->model->getLastSql();
-		import('ORG.Util.Page');
 		$p = new Page($count,20);//分页条数
 		if ($_POST) {
 			$allow_par = array('p','keyword','username','start_time','end_time');
@@ -55,14 +57,14 @@ class AdminlogAction extends CommonAction
 		$p->setConfig('theme',"%first%%upPage%%linkPage%%downPage%%end%
 		<li><span><select name='select' onChange='javascript:window.location.href=(this.options[this.selectedIndex].value);'>%allPage%</select></span></li>\n<li><span>共<font color='#009900'><b>%totalRow%</b></font>条记录 20条/每页</span></li>");
 		$this->assign('page',$p->show());
-		$list = $this->model->where($where)->order('addtime desc')->limit($p->firstRow.','.$p->listRows)->select();
+		$list = $this->model->newInstance()->whereRaw($where)->orderRaw('addtime desc')->limit($p->firstRow,$p->listRows)->select()->toArray();
 		$this->assign('list',$list);
-		$this->display();
+		return $this->display();
     }
 	
 	public function add()
     {
-		$this->display('add');
+		return $this->display('add');
     }
 	/*public function doadd()
     {
@@ -73,7 +75,7 @@ class AdminlogAction extends CommonAction
 	public function edit(){	
 	$info = $this->model->where('id='.$_REQUEST['id'])->find();
 	$this->assign('info',$info);
-	$this->display('add');	
+	return $this->display('add');
 	}
 	/*public function doedit(){
 	$data = $_POST;

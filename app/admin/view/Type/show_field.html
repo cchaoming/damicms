@@ -8,8 +8,8 @@
 </head>
 <body>
 <table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
-<form action="/doshow_field" name="myform" method="post" id="myform">
-<input name="typeid" type="hidden" value="{$_GET.typeid}">
+<form action="{:url('Type/doshow_field')}" name="myform" method="post" id="myform">
+<input name="typeid" type="hidden" value="{$typeid}">
 <tr> 
     <td colspan="2" align=left class="admintitle"><font color="#FF0000">{$field_name}</font>&nbsp;栏字段显示控制[<a onClick="showhelp();">操作提示</a>]</td></tr>
 <volist name='list' id='vo' key='k'>

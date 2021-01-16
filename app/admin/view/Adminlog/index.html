@@ -3,26 +3,26 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>网站后台管理</title>
 <link href="/Public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
-<import file= "Admin.setdate.WdatePicker,Admin.js.admin,Admin.js.Ajax,Admin.js.Jquery"/>
+<load href="/Public/Admin/setdate/WdatePicker.js,/Public/Admin/js/admin.js"/>
 </head>
 <body>
 <div class="main_center">
 <table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="table table-bordered">
 <tr> 
-  <td colspan="80" align=left class="admintitle"><form name="search_form" method="post" action="/index">操作日志 管理员名: <input type="text" class="s26" name="username" value="{$_REQUEST.username}" />开始时间：<input type="text" class="s26 Wdate" name="start_time" id="start_time" value="{$_REQUEST.start_time}" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\\'end_time\\')}'})" />结束时间：<input type="text" class="s26 Wdate" name="end_time" id="end_time" value="{$_REQUEST.end_time}" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\\'start_time\\')}'})"/>关键字：<input type="text" class="s26" name="keyword" value="{$_REQUEST.keyword}" /><input type="submit" name="submit" value="查询" class="btn btn-danger"/> </form></td>
+  <td colspan="80" align=left class="admintitle"><form name="search_form" method="post" action="{:url('Adminlog/index')}">操作日志 管理员名: <input type="text" class="s26" name="username" value="{$Request.param.username}" />开始时间：<input type="text" class="s26 Wdate" name="start_time" id="start_time" value="{$Request.param.start_time}" onClick="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss' })" />结束时间：<input type="text" class="s26 Wdate" name="end_time" id="end_time" value="{$Request.param.end_time}" onClick="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{ $dp.$D(\'start_time\') }' })"/>关键字：<input type="text" class="s26" name="keyword" value="{$Request.param.keyword}" /><input type="submit" name="submit" value="查询" class="btn btn-danger"/> </form></td>
 </tr>
     <tr bgcolor="#f1f3f5" style="font-weight:bold;">
 <td align="center">管理员名</td><td align="center">管理所在组</td><td align="center">描述</td><td align="center">操作结果</td><td align="center">操作日期</td><td align="center">所在IP</td>
     </tr>
 <volist name="list" id="vo"> 
     <tr>
-<td align="left">{$vo.username}</td><td align="left">{$vo.usergroup}</td><td align="left">{$vo.operate}</td><td align="left">{$vo.result|color_red=###}</td><td align="left">{$vo.addtime|date='Y-m-d H:i:s',###}</td><td align="left">{$vo.ip}</td>
+<td align="left">{$vo.username}</td><td align="left">{$vo.usergroup}</td><td align="left">{$vo.operate}</td><td align="left">{$vo.result|color_red=###}</td><td align="left">{:date('Y-m-d H:i:s',$vo.addtime)}</td><td align="left">{$vo.ip}</td>
     </tr>
 </volist>
 <tr><td bgcolor="f7f7f7" colspan="80">
 <div>
 <ul class="pagination">
-{$page}
+{$page|raw}
 </ul>
 </div>
 </td></tr></table>

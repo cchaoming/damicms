@@ -21,7 +21,7 @@ if(document.getElementById("typename").value==""){
 }
 </script>
 <table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
-<form action="/doedit" method="post" onSubmit="return chk();" name="myform">
+<form action="{:url('Type/doedit')}" method="post" onSubmit="return chk();" name="myform">
 <input type="hidden" name="typeid" value="{$list.typeid}"/>
 <tr><td colspan="5" class="admintitle">修改栏目</td></tr>
 <tr> 
@@ -31,7 +31,7 @@ if(document.getElementById("typename").value==""){
 <tr>
   <td class=b1_1>所属栏目</td>
   <td colspan=4 class=b1_1><select ID="TopID" name="fid" style="width:250px;" class="search_select">
-{$option}
+{$option|raw}
 </select></td>
 </tr>
 <tr>
@@ -49,7 +49,7 @@ if(document.getElementById("typename").value==""){
 </tr>
 <tr>
   <td class="b1_1">栏目介绍</td>
-  <td colspan=4 class=b1_1><textarea name="description" cols="40" rows="5" id="description">{$list.description}</textarea></td>
+  <td colspan=4 class=b1_1><textarea name="description" cols="40" rows="5" id="description">{$list.description|raw}</textarea></td>
 </tr>
 <tr>
   <td class="b1_1">栏目图标icon</td>

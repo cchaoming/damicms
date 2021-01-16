@@ -24,7 +24,7 @@ if(document.getElementById("typename").value==""){
 <table width="100%" border="0" align="center" cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
 <tr> 
   <td colspan="5" class="admintitle">添加栏目</th></tr>
-<form action="/doadd" method="post" onSubmit="return chk();" name="myform">
+<form action="{:url('Type/doadd')}" method="post" onSubmit="return chk();" name="myform">
 <tr>
 <td width="20%" class=b1_1>栏目名称</td>
 <td colspan=4 class=b1_1><input type="text" name="typename" size="40" id="typename" maxlength="20"></td>
@@ -33,14 +33,15 @@ if(document.getElementById("typename").value==""){
   <td class=b1_1>所属栏目</td>
   <td colspan=4 class=b1_1><select ID="TopID" name="fid" style="width:250px" class="search_select"><option value='0' selected='selected'>做为顶级分类</option>
 <volist name="list" id="vo">
-<option value='{$vo.typeid}' <eq name="_REQUEST[fid]" value="$vo[typeid]">selected="selected"</eq>><php>
+<option value="{$vo.typeid}" <if isset($_REQUEST['fid']) && $_REQUEST['fid'] == $vo[typeid]>selected="selected"</if>>
+<php>
 for($i=0;$i<$vo['count']*3;$i++){
 echo '&nbsp;';
 }
 if($vo['fid']<>0){
 echo "-|";
 }
-</php>{$vo.typename}</option></volist></select></td>
+</php>{$vo.typename|raw}</option></volist></select></td>
 </tr>
 <tr>
   <td class=b1_1>外部链接</td>

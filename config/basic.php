@@ -1,6 +1,71 @@
-<?php return ['sitetitle' => '大米CMS', 'sitetitle2' => 'PC、手机APP、微信集成，大米官网生成APK', 'siteurl' => '/', 'updown' => '1', 'xgwz' => '1', 'sitedescription' => '大米CMS', 'sitekeywords' => 'damicms', 'sitelx' => '地&nbsp; 址：成都市建设南路88号<br />
-电&nbsp; 话：028-98765432<br />
-传&nbsp; 真：028-98765430<br />
-手&nbsp; 机：15982072714<br />
-网&nbsp; 址：www.damicms.com<br />
-邮&nbsp; 编：610000', 'sitetcp' => '蜀ICP备123456', 'sitelang' => '0', 'watermark' => '0', 'watermarkimg' => 'logo.png', 'sitetpl' => 'default', 'indexrec' => '5', 'indexhot' => '8', 'indexlink' => '1', 'indexpic' => '1', 'noticeid' => '5', 'noticenum' => '5', 'isping' => '1', 'pingoff' => '1', 'bookoff' => '1', 'mood' => '1', 'sitelogo' => 'logo.png', 'ishits' => '1', 'iscopyfrom' => '1', 'isauthor' => '1', 'indexvote' => '1', 'ishomeimg' => '5', 'mouseimg' => '1', 'iszy' => '1', 'id' => '1', 'artlistnum' => '15', 'artlisthot' => '10', 'artlistrec' => '5', 'articlerec' => '5', 'articlehot' => '10', 'rollnum' => '1', 'postovertime' => '15', 'urlmode' => '2', 'flashmode' => '1', 'indexnoticetitle' => '站内公告', 'indexrectitle' => '推荐文章', 'indexhottitle' => '热点排行', 'indexvotetitle' => '热门投票', 'indexpictitle' => '推荐图文', 'indexpicnum' => '4', 'indexpicscroll' => '0', 'indexlinktitle' => '友情链接', 'indexlinkimg' => '1', 'indexdiylink' => '1', 'listrectitle' => '推荐文章', 'listhottitle' => '热点排行', 'listshowmode' => '1', 'artrectitle' => '推荐文章', 'arthottitle' => '热点排行', 'suffix' => '0', 'is_build_html' => 0, 'istrade' => 1, 'isread' => 0, 'defaultup' => 0, 'defaultmp' => 0,]; ?>
+<?php
+return array (
+  'sitetitle' => '大米CMS',
+  'sitetitle2' => 'PC、手机APP、微信集成，大米官网生成APK',
+  'siteurl' => '/',
+  'updown' => '1',
+  'xgwz' => '1',
+  'sitedescription' => '大米CMS',
+  'sitekeywords' => 'damicms',
+  'sitelx' => '地  址：成都市建设南路88号<br />
+电  话：028-98765432<br />
+传  真：028-98765430<br />
+网  址：www.damicms.com<br />
+手  机：15982072714<br />
+邮  编：610000',
+  'sitetcp' => '蜀ICP备123456',
+  'sitelang' => '0',
+  'watermark' => '0',
+  'watermarkimg' => 'logo.png',
+  'sitetpl' => 'default',
+  'waptpl' => 'w3g',
+  'indexrec' => '5',
+  'indexhot' => '8',
+  'indexlink' => '1',
+  'indexpic' => '1',
+  'noticeid' => '5',
+  'noticenum' => '5',
+  'isping' => '1',
+  'pingoff' => '1',
+  'bookoff' => '1',
+  'mood' => '1',
+  'sitelogo' => 'logo.png',
+  'ishits' => '1',
+  'iscopyfrom' => '1',
+  'isauthor' => '1',
+  'indexvote' => '1',
+  'ishomeimg' => '5',
+  'mouseimg' => '1',
+  'iszy' => '1',
+  'id' => '1',
+  'artlistnum' => '15',
+  'artlisthot' => '10',
+  'artlistrec' => '5',
+  'articlerec' => '5',
+  'articlehot' => '10',
+  'rollnum' => '1',
+  'postovertime' => '15',
+  'flashmode' => '1',
+  'indexnoticetitle' => '站内公告',
+  'indexrectitle' => '推荐文章',
+  'indexhottitle' => '热点排行',
+  'indexvotetitle' => '热门投票',
+  'indexpictitle' => '推荐图文',
+  'indexpicnum' => '4',
+  'indexpicscroll' => '0',
+  'indexlinktitle' => '友情链接',
+  'indexlinkimg' => '1',
+  'indexdiylink' => '1',
+  'listrectitle' => '推荐文章',
+  'listhottitle' => '热点排行',
+  'listshowmode' => '1',
+  'artrectitle' => '推荐文章',
+  'arthottitle' => '热点排行',
+  'suffix' => '0',
+  'is_build_html' => '0',
+  'istrade' => '1',
+  'isread' => '0',
+  'defaultup' => '0',
+  'defaultmp' => '0',
+  'islocalpic' => '0',
+);
