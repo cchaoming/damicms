@@ -49,7 +49,7 @@
             <a href="#" class="dropDown_A">{:session('username')} <i class="Hui-iconfont">&#xe6d5;</i></a>
             <ul class="dropDown-menu menu radius box-shadow">
               <li><a data-href="{:url('Admin/edit?id='.session('authId'))}" data-title="修改密码" onclick="Hui_admin_tab(this);">修改密码</a></li>
-              <li><a href="__APP__/Public/loginout">退出</a></li>
+              <li><a href="__APP__/Publics/loginout">退出</a></li>
             </ul>
           </li>
           <li id="Hui-msg"> <a href="#" title="日新订单"><span class="badge badge-danger">{:get_field('member_trade','addtime>unix_timestamp(DATE_SUB(curdate(),INTERVAL 1 DAY))','count(DISTINCT group_trade_no) as num')}</span><i class="Hui-iconfont" style="font-size:18px">&#xe627;</i></a> </li>

@@ -2,8 +2,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>微信自定义菜单</title>
-<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
-<link href="/public/Admin/images/wx_common.css" type=text/css rel=stylesheet>
+<link href="/Public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<link href="/Public/Admin/images/wx_common.css" type=text/css rel=stylesheet>
 <import file= "Admin.js.admin,Admin.js.Jquery,Admin.js.dataTable.jquerydata,Admin.js.weixinmenu"/>
 <style>
 td{text-align:left; height:28px; line-height:28px; padding-left:15px;}
@@ -75,10 +75,10 @@ $('#editPWXCMTTable_filter,#editPWXCMTTable_info').hide();
 			//一级菜单
 			if(menuTemplateRecords[i].level==0){
 				nameHtml = '<input type="text" name="key_'+ menuTemplateRecords[i].index + '" id="name_'+menuTemplateRecords[i].index+'" value="'+menuTemplateRecords[i].name+'" style="width:158px;padding-left: 4px;" onchange="changeValue(this)"/>';
-				buttonHtml = '<a href="javascript:addSubRecord('+menuTemplateRecords[i].index+')"><img style="vertical-align: middle;" src="/public/admin/images/icon/addsubmenu.png"/><span style="vertical-align: middle;" >添加子菜单<span></a>';
+				buttonHtml = '<a href="javascript:addSubRecord('+menuTemplateRecords[i].index+')"><img style="vertical-align: middle;" src="/Public/admin/images/icon/addsubmenu.png"/><span style="vertical-align: middle;" >添加子菜单<span></a>';
 			}else{
 			//二级菜单
-				nameHtml = '<div><img src="/public/admin/images/icon/submenu-branch.png" style="float:left;width:10px;"><input type="text" style="float:left;width:158px;padding-left:6px;" name="subkey_' + menuTemplateRecords[i].parentId + '_' + menuTemplateRecords[i].index + '"  id="name_'+menuTemplateRecords[i].index+'" value="'+menuTemplateRecords[i].name+'" onchange="changeValue(this)"/></div>';
+				nameHtml = '<div><img src="/Public/admin/images/icon/submenu-branch.png" style="float:left;width:10px;"><input type="text" style="float:left;width:158px;padding-left:6px;" name="subkey_' + menuTemplateRecords[i].parentId + '_' + menuTemplateRecords[i].index + '"  id="name_'+menuTemplateRecords[i].index+'" value="'+menuTemplateRecords[i].name+'" onchange="changeValue(this)"/></div>';
 				buttonHtml = '';
 			}
 		}

@@ -27,7 +27,7 @@ img{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-sel
 <body>
 
 <div class="container">
-	<img class="bg" src="/public/image/404.jpg"/>
+	<img class="bg" src="/Public/image/404.jpg"/>
 	<div class="btn">
 		<a href="/" class="goindex">返回首页</a>
 		<a style="cursor:pointer" onClick="history.back()" class="lx">返回上页</a>

@@ -2,11 +2,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>网站后台管理</title>
-<link href="/public/Admin/images/Admin_css.css" type="text/css" rel="stylesheet">
-<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<link href="/Public/Admin/images/Admin_css.css" type="text/css" rel="stylesheet">
+<link rel="shortcut icon" href="/Public/Admin/images/myfav.ico" type="image/x-icon" />
 <import file= "Admin.js.admin,Admin.js.Jquery"/>
-<script charset="gbk" src="/public/Editor/kindeditor-min.js"></script>
-<script charset="utf-8" src="/public/Editor/lang/zh_CN.js"></script>
+<script charset="gbk" src="/Public/Editor/kindeditor-min.js"></script>
+<script charset="utf-8" src="/Public/Editor/lang/zh_CN.js"></script>
 <script> 
 var KE;
 KindEditor.options.filterMode = false;
@@ -78,7 +78,7 @@ function load_picyulan(val,obj){
 	var src = arr[i];
 	 if(!/\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test(src))
      {
-     src = '/public/image/file.png';
+     src = '/Public/image/file.png';
      }
 	 html += '<div style="width:130px;float:left;padding:5px;" id="' + obj + i + '"><img src="' + src +  '" border="0" width="120" height="120"/><p style="text-align: center;"><button type="button" class="btn btn-default" style="margin-top: 8px;"  onclick="del_picyulan(\''+ arr[i] + '\',\''+ val + '\',\''+ obj + i +'\',\'' + obj + '\');">删除</button></p></div>';
     }
@@ -105,7 +105,7 @@ function del_picyulan(cur_value,old_value,cur_obj,old_obj){
 <tr> 
 <td width="20%" class="b1_1">标题</td>
 <td class="b1_1"><input name="title" type="text" id="Title" size="40" maxlength="50"><input name="TitleFontColor" type="hidden" id="TitleFontColor" onClick="Getcolor(ColorBG,'TitleFontColor');" Readonly>
-	  <img border=0 src="/public/Admin/images/Rect.gif" style="cursor:pointer;" onClick="Getcolor(this,'TitleFontColor');" title="选取标题颜色" align="absmiddle" ID="ColorBG">&nbsp;<span class="note">注：最多50个字符</span></td>
+	  <img border=0 src="/Public/Admin/images/Rect.gif" style="cursor:pointer;" onClick="Getcolor(this,'TitleFontColor');" title="选取标题颜色" align="absmiddle" ID="ColorBG">&nbsp;<span class="note">注：最多50个字符</span></td>
 </tr>
 </eq>
 <eq name='arr[1]' value='1'>

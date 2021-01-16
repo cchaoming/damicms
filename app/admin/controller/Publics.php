@@ -133,9 +133,9 @@ class Publics extends BaseController
             $this->_log_operation(session('username').'退出登录');
             session(config('app.USER_AUTH_KEY'),null);
             session(null);
-            $this->success('登出成功!',U('Public/login'));
+            $this->success('登出成功!',U('Publics/login'));
         }
-        $this->assign("jumpUrl",U('Public/login'));
+        $this->assign("jumpUrl",U('Public/slogin'));
         $this->error('已经登出!');
     }
 

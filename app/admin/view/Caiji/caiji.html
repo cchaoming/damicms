@@ -2,11 +2,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>网站后台管理</title>
-<link href="/public/Admin/images/Admin_css.css" type="text/css" rel="stylesheet">
-<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<link href="/Public/Admin/images/Admin_css.css" type="text/css" rel="stylesheet">
+<link rel="shortcut icon" href="/Public/Admin/images/myfav.ico" type="image/x-icon" />
 <import file= "Admin.js.admin,Admin.js.Jquery"/>
-<script charset="gbk" src="/public/Editor/kindeditor-min.js"></script>
-<script charset="utf-8" src="/public/Editor/lang/zh_CN.js"></script>
+<script charset="gbk" src="/Public/Editor/kindeditor-min.js"></script>
+<script charset="utf-8" src="/Public/Editor/lang/zh_CN.js"></script>
 <style type="text/css">
 <!--
 .style5 {
@@ -25,7 +25,7 @@ document.form1.submit();
 }
 $(function() {
 			$("#add_role").click(function() {
-				var tr = '<tr><td class=b1_1><select name="field[]"><volist name="list_field" id="vo"><option value="{$vo.Field}">{$vo.Field}</option></volist></select></td><td colspan=4 class=b1_1><input type="text" name="role[]" id="textfield" style="width:350px;"><img src="/public/Admin/images/icon/del.png" border="0" onclick="$(this).parent().parent().remove()" class="del_a"/> （表达式格式(jquery样的选择器)）</td></tr>';
+				var tr = '<tr><td class=b1_1><select name="field[]"><volist name="list_field" id="vo"><option value="{$vo.Field}">{$vo.Field}</option></volist></select></td><td colspan=4 class=b1_1><input type="text" name="role[]" id="textfield" style="width:350px;"><img src="/Public/Admin/images/icon/del.png" border="0" onclick="$(this).parent().parent().remove()" class="del_a"/> （表达式格式(jquery样的选择器)）</td></tr>';
 				$("#caiji_table").append(tr);
 			});
 		});		
@@ -81,7 +81,7 @@ $(function() {
 </tr>
 <php>$role=$form_data['role'];$field=$form_data['field'];$role_len = count($role);if($role_len>2){for($m=2;$m<$role_len;$m++){</php>
     <tr><td class=b1_1><select name="field[]"><volist name="list_field" id="vo"><option value="{$vo.Field}" <eq name="field[$m]" value="$vo[Field]">selected="selected"</eq>>{$vo.Field}</option></volist></select></td>
-        <td colspan=4 class=b1_1><input type="text" name="role[]" id="textfield" style="width:350px;" value="<?php echo $role[$m];?>"><img src="/public/Admin/images/icon/del.png" border="0" onclick="$(this).parent().parent().remove()" class="del_a"/>（表达式格式(jquery样的选择器)）</td></tr></tr>
+        <td colspan=4 class=b1_1><input type="text" name="role[]" id="textfield" style="width:350px;" value="<?php echo $role[$m];?>"><img src="/Public/Admin/images/icon/del.png" border="0" onclick="$(this).parent().parent().remove()" class="del_a"/>（表达式格式(jquery样的选择器)）</td></tr></tr>
 <php>}}</php>
 </table>
 <table id="but_save">

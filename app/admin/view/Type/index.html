@@ -2,9 +2,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>无标题文档</title>
-<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<link href="/Public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
 <import file= "Admin.js.Jquery"/>
-<script src="/public/js/bootstrap.min.js"></script>
+<script src="/Public/js/bootstrap.min.js"></script>
 </head>
  
 <body>
@@ -89,7 +89,7 @@ $.post(url);
   </tr>
  <volist name= "list" id="vo"> 
     <tr bgcolor="#f1f3f5" onMouseOver="this.style.backgroundColor='#EAFCD5';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
-    <td height="24" class="tdleft"><eq name='vo.fid' value='0'><neq name='vo.islink' value='1'><a href="javascript:show_mydialog({$vo.typeid},'{$vo.typename}');"><img src='/public/Editor/themes/common/anchor.gif' border='0'></a></neq></eq>{$vo.space}<a href="__APP__/Article/index/typeid/{$vo.typeid}">{$vo.typename}</a><font color="blue">
+    <td height="24" class="tdleft"><eq name='vo.fid' value='0'><neq name='vo.islink' value='1'><a href="javascript:show_mydialog({$vo.typeid},'{$vo.typename}');"><img src='/Public/Editor/themes/common/anchor.gif' border='0'></a></neq></eq>{$vo.space}<a href="__APP__/Article/index/typeid/{$vo.typeid}">{$vo.typename}</a><font color="blue">
 	<font color="blue"><eq name="vo.islink" value="1">[<a href="/status/typeid/{$vo.typeid}/s/islink-1">外</a>]<else/>(<a href="/status/typeid/{$vo.typeid}/s/islink-0">{$vo.total}</a>)</eq></font>
 	</td>
     <td height="24" align="center">{$vo.typeid}</td>

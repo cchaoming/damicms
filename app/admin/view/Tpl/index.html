@@ -2,8 +2,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>网站后台管理</title>
-<link href="/public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
-<link rel="shortcut icon" href="/public/Admin/images/myfav.ico" type="image/x-icon" />
+<link href="/Public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<link rel="shortcut icon" href="/Public/Admin/images/myfav.ico" type="image/x-icon" />
 <import file= "Admin.js.admin,Admin.js.Ajax,Admin.js.Jquery"/> 
 </head>
 <body>
@@ -21,13 +21,13 @@
     </tr>
 <notempty name="dirlast"> 
   <tr bgcolor="#f1f3f5" style="font-weight:bold;">
-  <td colspan="5" align="left"><img src="/public/Admin/images/file/last.gif"> <a href="?s=Tpl/index/id/{$dirlast}">上级目录</a> 当前目录: {$dirpath}</td>
+  <td colspan="5" align="left"><img src="/Public/Admin/images/file/last.gif"> <a href="?s=Tpl/index/id/{$dirlast}">上级目录</a> 当前目录: {$dirpath}</td>
   </tr>
 </notempty>
 <volist name="list_dir" id="vo">
   <eq name="vo.isDir" value="1">
   <tr>
-  	<td width="30%"><img src="/public/Admin/images/file/folder.gif" width="16" height="16"><a href="?s=Tpl/index/id/{$vo.pathfile}"> {$vo.filename}</a></td>
+  	<td width="30%"><img src="/Public/Admin/images/file/folder.gif" width="16" height="16"><a href="?s=Tpl/index/id/{$vo.pathfile}"> {$vo.filename}</a></td>
     <td width="20%">文件夹</td>
     <td width="10%">{:byte_format(getdirsize($vo['path'].'/'.$vo['filename']))}</td>
     <td width="20%">{$vo.mtime|getcolordate='Y-m-d H:i:s',###}</td>
@@ -36,9 +36,9 @@
   <else />
   <tr>
   	<in name="vo.ext" value="jpg,gif,js,css,html,htm,php">
-    <td><img src="/public/Admin/images/file/{$vo.ext}.gif" width="16" height="16"> {$vo.filename}</td>
+    <td><img src="/Public/Admin/images/file/{$vo.ext}.gif" width="16" height="16"> {$vo.filename}</td>
     <else />
-    <td><img src="/public/Admin/images/file/other.gif" width="16" height="16"> {$vo.filename}</td>
+    <td><img src="/Public/Admin/images/file/other.gif" width="16" height="16"> {$vo.filename}</td>
     </in>
     <td>{$vo.filename|gettplname}</td>
     <td>{$vo.size|byte_format}</td>
