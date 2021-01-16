@@ -58,20 +58,20 @@
         <OPTION value="__APP__/Article/index/status/1">已审的文章</OPTION>
         <OPTION value="__APP__/Article/index/status/0">未审的文章</OPTION>
         <OPTION value="__APP__/Article/index/istop/1">固顶文章</OPTION>
-        <OPTION value="__APP__/Article/indexishot/1">推荐文章</OPTION>
+        <OPTION value="__APP__/Article/index/ishot/1">推荐文章</OPTION>
 		<OPTION value="__APP__/Article/index/isflash/1">幻灯文章</OPTION>
 		<OPTION value="__APP__/Article/index/isimg/1">图片文章</OPTION>
         <OPTION value="__APP__/Article/index/islink/1">转向链接文章</OPTION>
         <OPTION value="__APP__/Article/index/hits/0">按浏览次数排序</OPTION>
       </SELECT>      </td>
       <td align="center" bgcolor="f7f7f7" valign="top">
-	  <form name="form1" method="POST" action="/search">
+	  <form name="form1" method="POST" action="{:url('Article/search')}">
         <input name="keywords" type="text" id="keyword" value="" class="s26">
         <input type="submit" class="btn btn-danger btn-sm" value="搜索">
       </form></td>
     </tr>
 </table>
-<form name="myform" id="myform" method="POST" action="/delall">
+<form name="myform" id="myform" method="POST" action="{:url('Article/delall')}">
 <table width="95%" border="0"  align=center cellpadding="3" cellspacing="1" bgcolor="#F2F9E8" class="table table-bordered">
 <tr> 
 <td colspan="5" align="left" class="admintitle" style="padding: 0;padding-left: 15px;">[<a href="#" onclick="dami_alert('','');" >操作提示</a>] 选择栏目：<select name="ClassID" id="ClassID" class="search_select">

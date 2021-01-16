@@ -52,26 +52,13 @@ class Article extends Common
         if (!session(config('app.ADMIN_AUTH_KEY')) && session(config('app.USER_CONTENT_KEY'))) {
             $condtion .= ' and article.typeid in(' . session(config('app.USER_CONTENT_KEY')) . ')';
         }
-
-        if (isset($_GET['status'])) {
-            $condtion .= ' and status=' . $_GET['status'];
+        $mult = ['status','istop','ishot','isflash','isimg','islink'];
+        foreach ($mult as $key){
+            if (!is_null($this->request->param($key))) {
+                $condtion .= ' and '.$key.'=' . (int)$this->request->param($key);
+            }
         }
-        if (isset($_GET['istop'])) {
-            $condtion .= ' and istop=' . $_GET['istop'];
-        }
-        if (isset($_GET['ishot'])) {
-            $condtion .= ' and ishot=' . $_GET['ishot'];
-        }
-        if (isset($_GET['isflash'])) {
-            $condtion .= ' and isflash=' . $_GET['isflash'];
-        }
-        if (isset($_GET['isimg'])) {
-            $condtion .= ' and isimg=' . $_GET['isimg'];
-        }
-        if (isset($_GET['islink'])) {
-            $condtion .= ' and islink=' . $_GET['islink'];
-        }
-        if (isset($_GET['hits'])) {
+        if (!is_null($this->request->param('hits'))) {
             $order = 'hits desc';
         } else {
             $order = 'addtime desc';
@@ -656,13 +643,22 @@ class Article extends Common
     public function search()
     {
         $article = D('ArticleView');
-        $map['title'] = array('like', '%' . $_POST['keywords'] . '%');
+        $map[] = ['title','like', '%' . $_POST['keywords'] . '%'];
         if($_POST['keywords']){
             $this->_log_operation('搜索文章包含:'.$_POST['keywords']);
         }
-        $count = $article->where($map)->orderRaw('addtime desc')->count();
+        $typeid = 0;
+        if ($this->request->param('typeid')) {
+            $typeid = intval($this->request->param('typeid'));
+        } else if (cookie('?curr_typeid')) {
+            $typeid = intval(cookie('curr_typeid'));
+        }
+        if ($typeid > 0) {
+            $map[] = ['article.typeid','=', $typeid];
+        }
+        $count = $article->getTableInstance()->where($map)->orderRaw('addtime desc')->count();
         $p = new Page($count, 20);
-        $list = $article->removeOption()->where($map)->orderRaw('addtime desc')->limit($p->firstRow,$p->listRows)->select()->toArray();
+        $list = D('ArticleView')->getTableInstance()->where($map)->orderRaw('addtime desc')->limit($p->firstRow,$p->listRows)->select()->toArray();
         $p->setConfig('prev', '上一页');
         $p->setConfig('header', '篇文章');
         $p->setConfig('first', '首 页');
@@ -671,6 +667,7 @@ class Article extends Common
         $p->setConfig('theme', "%first%%upPage%%linkPage%%downPage%%end%
 		<li><span><select name='select' onChange='javascript:window.location.href=(this.options[this.selectedIndex].value);'>%allPage%</select></span></li>\n<li><span>共<font color='#009900'><b>%totalRow%</b></font>篇文章 20篇/每页</span></li>");
         $this->assign('page', $p->show());
+        $this->type_tree();
         $this->assign('list', $list);
         $this->moveop();//文章编辑option
         $this->jumpop();//快速跳转option
