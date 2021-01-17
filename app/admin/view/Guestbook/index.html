@@ -1,71 +1,94 @@
 <!DOCTYPE html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>网站后台管理</title>
-<link href="/Public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
-<link rel="shortcut icon" href="/Public/Admin/images/myfav.ico" type="image/x-icon" />
-<import file= "Admin.js.admin,Admin.js.Ajax,Admin.js.Jquery"/> 
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>网站后台管理</title>
+    <link href="/Public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+    <link rel="shortcut icon" href="/Public/Admin/images/myfav.ico" type="image/x-icon"/>
+    <load href="/Public/Admin/js/admin.js"/>
 </head>
 <body>
-<table width="95%" border="0" cellspacing="2" cellpadding="3"  align=center class="admintable" style="margin-bottom:5px;">
+<table width="95%" border="0" cellspacing="2" cellpadding="3" align=center class="admintable"
+       style="margin-bottom:5px;">
     <tr>
-      <td height="25" bgcolor="f7f7f7">快速查找：
-        <SELECT onChange="javascript:window.open(this.options[this.selectedIndex].value,'main')"  size="1" name="s">
-        <OPTION value="" selected>-=请选择=-</OPTION>
-        <OPTION value="/index/">所有留言</OPTION>
-        <OPTION value="/index/status/1">已审的留言</OPTION>
-        <OPTION value="/index/status/0">未审的留言</OPTION>
-      </SELECT> </td>
-      <td bgcolor="f7f7f7">
-	  <form name="form1" method="post" action="/search">
-        <input name="keywords" type="text" id="keyword" value="" class="s26">
-        <input name="Submit2" type="submit" class="btn btn-info btn-sm" value="搜索">
+        <td height="25" bgcolor="f7f7f7">快速查找：
+            <SELECT onChange="javascript:window.open(this.options[this.selectedIndex].value,'main')" size="1" name="s">
+                <OPTION value="" selected>-=请选择=-</OPTION>
+                <OPTION value="__APP__/Guestbook/index/">所有留言</OPTION>
+                <OPTION value="__APP__/Guestbook/index/status/1">已审的留言</OPTION>
+                <OPTION value="__APP__/Guestbook/index/status/0">未审的留言</OPTION>
+            </SELECT></td>
+        <td bgcolor="f7f7f7">
+            <form name="form1" method="post" action="__APP__/Guestbook/search">
+                <input name="keywords" type="text" id="keyword" value="" class="s26">
+                <input name="Submit2" type="submit" class="btn btn-info btn-sm" value="搜索">
         </td>
-    </form>
+        </form>
     </tr>
 </table>
- <div class="main_center">
-<form name="myform" method="POST" action="/delall">
-<table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="table table-bordered">
-<tr> 
-  <td colspan="8" align=left class="admintitle">留言列表</td>
-</tr>
-    <tr bgcolor="#f1f3f5" style="font-weight:bold;">
-    <td width="5%" height="30" align="center" class="ButtonList">&nbsp;</td>
-    <td width="40%" align="center" class="ButtonList">留言内容</td>
-    <td width="8%" align="center" class="ButtonList">发布人</td>
-    <td width="10%" align="center" class="ButtonList">联系电话</td>
-    <td width="8%" align="center" class="ButtonList">IP</td>
-    <td width="10%" height="25" align="center" class="ButtonList">发布时间</td>
-    <td width="15%" height="25" align="center" class="ButtonList">管理</td>    
-    </tr>
-	<volist name="list" id="vo"> 
-    <tr>
-    <td height="25" align="center" bgcolor="f7f7f7"><input type="checkbox" value="{$vo.id}" name="id[]" onClick="unselectall(this.form)" style="border:0;"></td>
-    <td height="25" bgcolor="f7f7f7"><a href="/edit/id/{$vo.id}">{$vo.content|msubstr=###,0,30,'utf-8'}...</a></td>
-    <td height="25" align="center" bgcolor="f7f7f7">{$vo.author}</td>
-    <td align="center" bgcolor="f7f7f7">{$vo.tel}</td>
-    <td align="center" bgcolor="f7f7f7">{$vo.ip}</td>
-    <td height="25" align="center" bgcolor="f7f7f7"><span class="td">{$vo.addtime}</span></td>
-    <td align="center" bgcolor="f7f7f7"><a href="/status/id/{$vo.id}/status/{$vo.status}"><eq name="vo.status" value="1">已审<else/><font color='red'>未审</font></eq></a>|<a href="/edit/id/{$vo.id}">回复</a>|<a href="/del/id/{$vo.id}" onClick="JavaScript:return confirm('确定要删除?')">删除</a></td>
-    </tr>
-	</volist>
-<tr><td align="center" bgcolor="f7f7f7"><input name="Action" type="hidden"  value="Del"><input name="chkAll" type="checkbox" id="chkAll" onClick=CheckAll(this.form) value="checkbox" style="border:0"></td>
-  <td colspan="7" bgcolor="f7f7f7">
-    <div class="btn-group">
-    <input name="Del" type="submit" class="btn btn-info btn-sm" id="Del" value="删除">
-    <input name="Del" type="submit" class="btn btn-info btn-sm" id="Del" value="批量未审">
-    <input name="Del" type="submit" class="btn btn-info btn-sm" id="Del" value="批量审核">
-    </div>
-    </td>
-  </tr><tr><td bgcolor="f7f7f7" colspan="8">
-<div>
-<ul class="pagination">
-{$page|raw}
-</ul>
-</div>
-</td></tr></table>
-</form>
+<div class="main_center">
+    <form name="myform" method="POST" action="__APP__/Guestbook/delall">
+        <table width="95%" border="0" align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF"
+               class="table table-bordered">
+            <tr>
+                <td colspan="8" align=left class="admintitle">留言列表</td>
+            </tr>
+            <tr bgcolor="#f1f3f5" style="font-weight:bold;">
+                <td width="5%" height="30" align="center" class="ButtonList">&nbsp;</td>
+                <td width="40%" align="center" class="ButtonList">留言内容</td>
+                <td width="8%" align="center" class="ButtonList">发布人</td>
+                <td width="10%" align="center" class="ButtonList">联系电话</td>
+                <td width="8%" align="center" class="ButtonList">IP</td>
+                <td width="10%" height="25" align="center" class="ButtonList">发布时间</td>
+                <td width="15%" height="25" align="center" class="ButtonList">管理</td>
+            </tr>
+            <volist name="list" id="vo">
+                <tr>
+                    <td height="25" align="center" bgcolor="f7f7f7"><input type="checkbox" value="{$vo.id}" name="id[]"
+                                                                           onClick="unselectall(this.form)"
+                                                                           style="border:0;"></td>
+                    <td height="25" bgcolor="f7f7f7"><a href="/edit/id/{$vo.id}">{$vo.content|msubstr=###,0,30,'utf-8'}...</a>
+                    </td>
+                    <td height="25" align="center" bgcolor="f7f7f7">{$vo.author}</td>
+                    <td align="center" bgcolor="f7f7f7">{$vo.tel}</td>
+                    <td align="center" bgcolor="f7f7f7">{$vo.ip}</td>
+                    <td height="25" align="center" bgcolor="f7f7f7"><span class="td">{$vo.addtime}</span></td>
+                    <td align="center" bgcolor="f7f7f7"><a
+                            href="__APP__/Guestbook/status/id/{$vo.id}/status/{$vo.status}">
+                        <eq name="vo.status" value="1">已审
+                            <else/>
+                            <font color='red'>未审</font></eq>
+                    </a>|<a href="__APP__/Guestbook/edit/id/{$vo.id}">回复</a>|<a href="__APP__/Guestbook/del/id/{$vo.id}"
+                                                                                onClick="JavaScript:return confirm('确定要删除?')">删除</a>
+                    </td>
+                </tr>
+            </volist>
+            <tr>
+                <td align="center" bgcolor="f7f7f7"><input name="Action" type="hidden" value="Del"><input name="chkAll"
+                                                                                                          type="checkbox"
+                                                                                                          id="chkAll"
+                                                                                                          onClick=CheckAll(this.form)
+                                                                                                          value="checkbox"
+                                                                                                          style="border:0">
+                </td>
+                <td colspan="7" bgcolor="f7f7f7">
+                    <div class="btn-group">
+                        <input name="Del" type="submit" class="btn btn-info btn-sm" id="Del" value="删除">
+                        <input name="Del" type="submit" class="btn btn-info btn-sm" id="Del" value="批量未审">
+                        <input name="Del" type="submit" class="btn btn-info btn-sm" id="Del" value="批量审核">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td bgcolor="f7f7f7" colspan="8">
+                    <div>
+                        <ul class="pagination">
+                            {$page|raw}
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
 </div>
 </body>
 </html>

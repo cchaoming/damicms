@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="/Public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
 <link href="/Public/css/bootstrap-theme.min.css" type=text/css rel=stylesheet>
-<import file= "Admin.js.admin,Admin.js.Ajax"/> 
+  <load href="/Public/Admin/js/admin.js,/Public/Admin/js/Ajax.js"/>
 <link rel="StyleSheet" href="/Public/css/dtree.css" type="text/css" />
 <script type="text/javascript" src="/Public/js/dtree2.js"></script>
 <script src="/Public/js/jquery.js"></script>
@@ -35,7 +35,7 @@ function chk(){
 		return false;
 	}
 }
-</script> <form action="/doeditnode" method="post" onSubmit="return chk();">
+</script> <form action="__APP__/Admin/doeditnode" method="post" onSubmit="return chk();">
 <input name="id" type="hidden" value="{$info.id}">
 <table width="600" border="0" align="center" cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">  <tr>
     <td colspan="2" class="admintitle"> 修改节点</td>
@@ -59,7 +59,7 @@ function chk(){
 		d = new dTree('d');
 		d.add(0,-1,'<input name="pid" type="radio" value="0" checked>顶级节点');
 <volist name="node_tree" id="vo">
-		d.add({$vo.id},{$vo.pid},'<input name="pid" type="radio" value="{$vo.id}" <eq name="info[pid]" value="$vo[id]">checked</eq>>{$vo.title}');
+		d.add({$vo.id},{$vo.menu_pid},'<input name="pid" type="radio" value="{$vo.id}" <eq name="info['pid']" value="$vo['id']">checked</eq>>{$vo.title}');
 </volist>
         document.write(d);
 		d.openAll();
@@ -71,25 +71,25 @@ function chk(){
     <td height="25" bgcolor="f7f7f7">权限级别：</td>
     <td height="25" bgcolor="f7f7f7">
       <select name="level" id="level">
-      <option value="0" <eq name="info[level]" value="0">selected</eq>>任何人可访问</option>
-      <option value="1" <eq name="info[level]" value="1">selected</eq>>项目级别</option>
-      <option value="2" <eq name="info[level]" value="2">selected</eq>>控制器</option>
-       <option value="3" <eq name="info[level]" value="3">selected</eq>>方法</option>
+      <option value="0" <eq name="info['level']" value="0">selected</eq>>任何人可访问</option>
+      <option value="1" <eq name="info['level']" value="1">selected</eq>>项目级别</option>
+      <option value="2" <eq name="info['level']" value="2">selected</eq>>控制器</option>
+       <option value="3" <eq name="info['level']" value="3">selected</eq>>方法</option>
       </select></td>
   </tr>
   <tr>
     <td height="25" bgcolor="f7f7f7">状态</td>
     <td height="25" bgcolor="f7f7f7">
     <select name="status" id="level2">
-      <option value="0" <eq name="info[status]" value="0">selected</eq>>禁用</option>
-      <option value="1" <eq name="info[status]" value="1">selected</eq>>启用</option>
+      <option value="0" <eq name="info['status']" value="0">selected</eq>>禁用</option>
+      <option value="1" <eq name="info['status']" value="1">selected</eq>>启用</option>
     </select></td>
   </tr>
   <tr>
     <td height="25" bgcolor="f7f7f7">是否后台左侧管理菜单</td>
     <td height="25" bgcolor="f7f7f7"><select name="ismenu" id="ismenu">
-      <option value="0" <eq name="info[ismenu]" value="0">selected</eq>>否</option>
-      <option value="1" <eq name="info[ismenu]" value="1">selected</eq>>是</option>
+      <option value="0" <eq name="info['ismenu']" value="0">selected</eq>>否</option>
+      <option value="1" <eq name="info['ismenu']" value="1">selected</eq>>是</option>
     </select></td>
   </tr>
   <tr>

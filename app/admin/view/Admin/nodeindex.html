@@ -17,7 +17,7 @@
 <div class="main_center">
 <table border="0" align="center" cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="table table-bordered">
   <tr>
-    <td colspan="7" class="admintitle">节点列表 [<a href="/nodeadd"><font color="green">添加</font></a>]  [<a href="javascript:history.go(-1);">返回</a>]</td>
+    <td colspan="7" class="admintitle">节点列表 [<a href="__APP__/Admin/nodeadd"><font color="green">添加</font></a>]  [<a href="__APP__/Admin/index">返回</a>]</td>
   </tr>
   <tr>
     <td width="5%" height="25" align="center" bgcolor="#FFFFFF" class="ButtonList">ID</td>
@@ -34,7 +34,7 @@
     <td align="center" bgcolor="f7f7f7">{$vo.name}</td>
     <td align="center" bgcolor="f7f7f7">{$vo.pid}</td>
     <td align="center" bgcolor="f7f7f7">{$vo.ismenu}</td>
-    <td bgcolor="f7f7f7" style="padding-left:25px;"><a href="/editnode/id/{$vo.id}">修改</a>|<a href="/delnode/id/{$vo.id}" onClick="JavaScript:return confirm('确定要删除？')">删除</a></td>
+    <td bgcolor="f7f7f7" style="padding-left:25px;"><a href="__APP__/Admin/editnode/id/{$vo.id}">修改</a>|<a href="__APP__/Admin/delnode/id/{$vo.id}" onClick="JavaScript:return confirm('确定要删除？')">删除</a></td>
   </tr>
   </foreach>
 </table>

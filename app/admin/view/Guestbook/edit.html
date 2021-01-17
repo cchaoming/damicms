@@ -4,7 +4,6 @@
 <title>网站后台管理</title>
 <link href="/Public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
 <link rel="shortcut icon" href="/Public/Admin/images/myfav.ico" type="image/x-icon" />
-<import file= "Admin.js.admin,Admin.js.Ajax,Admin.js.Jquery"/> 
 </head>
 <body>
 <table width="95%" border="0" cellspacing="2" cellpadding="3"  align=center class="admintable" style="margin-bottom:5px;">
@@ -12,9 +11,9 @@
       <td height="25" bgcolor="f7f7f7">快速查找：
         <SELECT onChange="javascript:window.open(this.options[this.selectedIndex].value,'main')"  size="1" name="s">
         <OPTION value="" selected>-=请选择=-</OPTION>
-        <OPTION value="/index/">所有留言</OPTION>
-        <OPTION value="/index/status/1">已审的留言</OPTION>
-        <OPTION value="/index/status/0">未审的留言</OPTION>
+        <OPTION value="__APP__/Guestbook/index/">所有留言</OPTION>
+        <OPTION value="__APP__/Guestbook/index/status/1">已审的留言</OPTION>
+        <OPTION value="__APP__/Guestbook/index/status/0">未审的留言</OPTION>
       </SELECT> </td>
       <td bgcolor="f7f7f7">
 	  <form name="form1" method="post" action="/search">
@@ -25,7 +24,7 @@
     </tr>
 </table>
 <table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
-<form name="myform" action="/doedit" method=post>
+<form name="myform" action="__APP__/Guestbook/doedit" method=post>
 <tr> 
     <td colspan="5" class="admintitle">修改留言</td>
 </tr>
@@ -40,12 +39,12 @@
 <tr>
   <td bgcolor="#f7f7f7">内容</td>
   <td colspan=4 bgcolor="#f7f7f7" class=td>
-  <textarea name="content" cols="80" rows="10" id="content">{$list.content}</textarea></td>
+  <textarea name="content" cols="80" rows="10" id="content">{$list.content|raw}</textarea></td>
 </tr>
 <tr>
   <td bgcolor="#f7f7f7">回复</td>
   <td colspan=4 bgcolor="#f7f7f7" class=td>
-  <textarea name="recontent" cols="80" rows="10" id="recontent">{$list.recontent}</textarea></td>
+  <textarea name="recontent" cols="80" rows="10" id="recontent">{$list.recontent|raw}</textarea></td>
 </tr>
 <tr> 
 <td width="20%"></td>

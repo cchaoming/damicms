@@ -2,8 +2,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="/Public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
-
-<import file= "Admin.js.admin,Admin.js.Ajax"/> 
+  <load href="/Public/Admin/js/admin.js,/Public/Admin/js/Ajax.js"/>
 <link rel="StyleSheet" href="/Public/css/dtree.css" type="text/css" />
 <script type="text/javascript" src="/Public/js/dtree2.js"></script>
 <script src="/Public/js/jquery.js"></script>
@@ -29,7 +28,7 @@ function chk(){
 		return false;
 	}
 }
-</script> <form action="/dogroupadd" method="post" onSubmit="return chk();">
+</script> <form action="__APP__/Admin/dogroupadd" method="post" onSubmit="return chk();">
 <table width="600" border="0" align="center" cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">  <tr>
     <td colspan="2" class="admintitle"> 添加组</td>
   </tr>
@@ -49,7 +48,7 @@ function chk(){
 		d = new dTree('d');
 		d.add(0,-1,'管理栏目权限');
 <volist name="node_tree" id="vo">
-		d.add({$vo.id},{$vo.pid},'<input name="manageids[]" type="checkbox" value="{$vo.id}" id="t{$vo.id}" pId="t{$vo.pid}">{$vo.title}');
+		d.add({$vo.id},{$vo.menu_pid},'<input name="manageids[]" type="checkbox" value="{$vo.id}" id="t{$vo.id}" pId="t{$vo.pid}">{$vo.title}');
 </volist>
         document.write(d);
 		

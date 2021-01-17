@@ -55,7 +55,7 @@ class Admin extends Common
         $this->check_superadmin();
         $list = M('role')->select()->toArray();
         $this->assign('list', $list);
-        $this->display();
+        return $this->display();
     }
 
     //节点首页
@@ -64,14 +64,14 @@ class Admin extends Common
 
         $list = M('node')->select()->toArray();
         $this->assign('list', $list);
-        $this->display();
+        return $this->display();
     }
 
     //添加管理组
     function groupadd()
     {
         self::type_tree();
-        $this->nodeadd();
+        return $this->nodeadd();
     }
 
     //修改管理组
@@ -82,7 +82,7 @@ class Admin extends Common
         $rinfo = M('access')->whereRaw('role_id=' . $role_id)->select()->toArray();
         $this->assign('info', $info);
         $this->assign('rinfo', $rinfo);
-        self::groupadd();
+        return self::groupadd();
     }
 
     //添加节点
@@ -99,16 +99,20 @@ class Admin extends Common
         $id = (int)$this->request->param('id');
         $info = M('node')->where('id=' . intval($id))->find();
         $this->assign('info', $info);
-        self::nodeadd();
+        return self::nodeadd();
     }
 
     //保存添加节点
     function donodeadd()
     {
         $this->check_superadmin();
-        M('node', true)->add($_POST);
+        if($this->request->isPost()){
+        $fid = (int)$this->request->param('pid');
+        $_POST['menu_pid'] = $fid;
+        M('node', true)->save($_POST);
         $this->assign("jumpUrl", U('Admin/nodeindex'));
         $this->success('操作成功!');
+        }
     }
 
     //保存添加组
@@ -190,6 +194,8 @@ class Admin extends Common
             $id = $this->request->param('id');
             $this->check_superadmin();
             $info = M('node', true)->where('id=' . intval($id))->find();
+
+            $_POST['menu_pid'] = $id = (int)$this->request->param('pid');
             if ($info) {
                 $info->save($_POST);
             }
@@ -246,10 +252,10 @@ class Admin extends Common
     {
         $this->check_superadmin();
         if ($this->request->isPost()) {
-            $admin = M('admin');
+            $admin = M('admin',true);
             $this->verify_token();
             $data['username'] = trim($_POST['username']);
-            $info = $admin->where('username=\'' . $_POST['username'] . '\'')->find();
+            $info = $admin->whereRaw('username=\'' . $_POST['username'] . '\'')->find();
             if ($info) {
                 $this->error('用户名已存在!');
             }
@@ -257,11 +263,11 @@ class Admin extends Common
                 $this->error('密码不能为空!');
             }
             if ($this->checkPasswordRule($_POST['password']) == false) {
-                $this->error("密码必须包含大写字母、小写字母、数字，且长度8~20位");
+                $this->error("密码中不能含有空格长度8~20位");
             }
             $data['lastlogintime'] = time();
             $data['lastloginip'] = get_client_ip();
-            $data['is_client'] = intval($_POST['is_client']);
+            $data['is_client'] = $this->request->param('is_client',0);
             $data['password'] = md5('wk' . trim($_POST['password']) . 'cms');
             $role = M('role_admin');
             if ($admin->save($data) !== false) {
@@ -314,17 +320,19 @@ class Admin extends Common
         $dopwd = '';
         if (!empty($_POST['password'])) {
             if ($this->checkPasswordRule($_POST['password']) == false) {
-                $this->_log_operation('修改管理用户:' . $data['username'] . '密码必须包含大写字母、小写字母、数字', '失败');
-                $this->error("密码必须包含大写字母、小写字母、数字，且长度8~20位");
+                $this->_log_operation('修改管理用户:' . $data['username'] . '密码中不能含有空格长度8~20位', '失败');
+                $this->error("密码中不能含有空格长度8~20位");
             }
             $dopwd = '改密码';
             $data['password'] = md5('wk' . trim($_POST['password']) . 'cms');
         }
-        $admin->save($data);
+        $info = $admin->find($_POST['id']);
+        if($info){
+        $info->save($data);
         $this->_log_operation('修改管理用户:' . $data['username'] . $dopwd . '成功');
         $this->assign("jumpUrl", U('Admin/index'));
         $this->success('操作成功!');
-
+        }
     }
 
     public function del()
@@ -343,14 +351,14 @@ class Admin extends Common
         $type = M('admin');
         M('role_admin')->whereRaw('user_id=' . $id)->delete();
         $type->where('id=' . $id)->delete();
-        $this->_log_operation('删除管理员ID：' . intval($_GET['id']) . '成功');
+        $this->_log_operation('删除管理员ID：' . intval($id) . '成功');
         $this->assign("jumpUrl", U('Admin/index'));
         $this->success('操作成功!');
     }
 
     public function checkPasswordRule($password)
     {
-        if (!preg_match('/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[A-Za-z0-9]{8,20}/', $password)) {
+        if (!preg_match('/((?!\s)\S){8,20}/', $password)) {
             return false;
         }
         return true;
@@ -361,7 +369,7 @@ class Admin extends Common
         $this->check_superadmin();
         $id = (int)$this->request->param('id');
         $status = (int)$this->request->param('status');
-        if ($id == $_SESSION['authId']) {
+        if ($id == session('authId')) {
 
             $this->error('不能禁用自己!');
         }

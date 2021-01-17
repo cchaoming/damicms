@@ -54,7 +54,7 @@ function chk(){
   <tr>
     <td colspan="2" class="admintitle"> 添加管理员</td>
   </tr>
-  <form action="/doadd" method="post" onSubmit="return chk();">
+  <form action="__APP__/Admin/doadd" method="post" onSubmit="return chk();">
   <tr>
     <td height="25" colspan="2" bgcolor="f7f7f7" style="font-weight:bold;">注：用户名和密码请不要包含任何特殊字符或者危险字符[如or,and,delete等]</td>
     </tr>
@@ -70,13 +70,15 @@ function chk(){
     <td height="25" bgcolor="f7f7f7">所属管理组</td>
     <td height="25" bgcolor="f7f7f7"><label for="select"></label>
       <select name="role_id" id="role_id">
-      <arclist model="role" where="status=1" id="vo">
+      <damicms:arclist model="role" where="status=1" id="vo">
       <option value="{$vo.id}">{$vo.name}</option>
-      </arclist>
+      </damicms:arclist>
       </select></td>
   </tr>
   <tr>
-    <td height="25" colspan="2" align="center" class="tabletd2"><input type="submit" name="Submit" class="btn btn-success" value="添加">&nbsp;&nbsp;<input name="Submit22" type="button" class="btn btn-info" onClick="history.go(-1)"  value="返 回"></td>
+    <td height="25" colspan="2" align="center" class="tabletd2">
+      {:token_field('__hash__')}
+      <input type="submit" name="Submit" class="btn btn-success" value="添加">&nbsp;&nbsp;<input name="Submit22" type="button" class="btn btn-info" onClick="history.go(-1)"  value="返 回"></td>
   </tr>
   </form>
 </table>

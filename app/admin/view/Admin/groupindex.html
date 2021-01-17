@@ -17,7 +17,7 @@
 <div class="main_center">
 <table border="0" align="center" cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="table table-bordered">
   <tr>
-    <td colspan="5" class="admintitle">管理组列表 [<a href="/groupadd"><font color="green">添加</font></a>]  [<a href="javascript:history.go(-1);">返回</a>]</td>
+    <td colspan="5" class="admintitle">管理组列表 [<a href="__APP__/Admin/groupadd"><font color="green">添加</font></a>]  [<a href="__APP__/Admin/index">返回</a>]</td>
   </tr>
   <tr>
     <td width="5%" height="25" align="center" bgcolor="#FFFFFF" class="ButtonList">ID</td>
@@ -30,7 +30,7 @@
     <td height="25" align="center" bgcolor="f7f7f7">{$vo.id}</td>
     <td align="center" bgcolor="f7f7f7">{$vo.name}</td>
     <td align="center" bgcolor="f7f7f7">{$vo.remark}</td>
-    <td bgcolor="f7f7f7" style="padding-left:25px;"><a href="/editgroup/id/{$vo.id}">修改</a>|<a href="/delgroup/id/{$vo.id}" onClick="JavaScript:return confirm('确定要删除？')">删除</a></td>
+    <td bgcolor="f7f7f7" style="padding-left:25px;"><a href="__APP__/Admin/editgroup/id/{$vo.id}">修改</a>|<a href="__APP__/Admin/delgroup/id/{$vo.id}" onClick="JavaScript:return confirm('确定要删除？')">删除</a></td>
   </tr>
   </foreach>
 </table>

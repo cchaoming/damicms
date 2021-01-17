@@ -4,7 +4,7 @@
 <title>网站后台管理</title>
 <link href="/Public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
 <link rel="shortcut icon" href="/Public/Admin/images/myfav.ico" type="image/x-icon" />
-<import file= "Admin.js.admin,Admin.js.Jquery"/>
+  <load href="/Public/Admin/js/admin.js,/Public/Admin/js/Jquery.js"/>
 </head>
 <body>
 <table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
@@ -43,7 +43,8 @@
 </tr>
 
 <td width="20%" class="b1_1"></td>
-<td class="b1_1"><input name="submit" type="submit" class="btn btn-info" value="修 改">&nbsp;&nbsp;<input name="Submit22" type="button" class="btn btn-info" onClick="history.go(-1)" value="返 回"></td>
+<td class="b1_1">{:token_field('__hash__')}
+  <input name="submit" type="submit" class="btn btn-info" value="修 改">&nbsp;&nbsp;<input name="Submit22" type="button" class="btn btn-info" onClick="history.go(-1)" value="返 回"></td>
 <input type="hidden" name="id" value="{$list.id}"/>
 </tr>
 </form>

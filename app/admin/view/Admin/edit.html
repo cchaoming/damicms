@@ -54,7 +54,7 @@
   <tr>
     <td colspan="2" class="admintitle"> 修改管理员资料</td>
   </tr>
-  <form action="/doedit" method="post" onSubmit="return chk();">
+  <form action="__APP__/Admin/doedit" method="post" onSubmit="return chk();">
   <tr>
     <td height="25" colspan="2" bgcolor="f7f7f7" style="font-weight:bold;">注：用户名和密码请不要包含任何特殊字符或者危险字符[如or,and,delete等]&nbsp;<font color="red">支持同时修改帐户和密码</font></td>
     </tr>
@@ -76,8 +76,10 @@
       </select></td>
   </tr>
   <tr>
-  <input type="hidden" name="id" value="{$list.id}"/>
-    <td height="25" colspan="2" align="center" class="tabletd2"><input type="submit" name="Submit" class="btn btn-success" value="确定修改">&nbsp;&nbsp;<input name="Submit22" type="button" class="btn btn-info" onClick="history.go(-1)" value="返 回"></td>
+    <td height="25" colspan="2" align="center" class="tabletd2">
+      {:token_field('__hash__')}
+      <input type="hidden" name="id" value="{$list.id}"/>
+      <input type="submit" name="Submit" class="btn btn-success" value="确定修改">&nbsp;&nbsp;<input name="Submit22" type="button" class="btn btn-info" onClick="history.go(-1)" value="返 回"></td>
   </tr>
   </form>
 </table>

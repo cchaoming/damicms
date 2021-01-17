@@ -9,7 +9,7 @@
 <div class="page_container">
 <table border="0" align="center" cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="table table-bordered">
   <tr>
-    <td colspan="7" class="admintitle">管理员列表 <eq name="_SESSION['authId']" value="1"> [<a href="/add">添加</a>] [<a href="/groupindex"><font color="green">管理组</font></a>] [<a href="/nodeindex"><font color="green">权限节点</font></a>]</eq></td>
+      <td colspan="7" class="admintitle">管理员列表 <if session(config('app.ADMIN_AUTH_KEY'))> [<a href="__APP__/Admin/add"><font color="#ff4500">添加</font></a>] [<a href="__APP__/Admin/groupindex"><font color="green">管理组</font></a>] [<a href="__APP__/Admin/nodeindex"><font color="green">权限节点</font></a>]</if></td>
   </tr>
   <tr>
     <td width="5%" height="25" align="center" bgcolor="#FFFFFF" class="ButtonList">ID</td>
@@ -24,9 +24,9 @@
     <td height="25" align="center" bgcolor="f7f7f7">{$vo.id}</td>
     <td align="center" bgcolor="f7f7f7">{$vo.username}</td>
     <td align="center" bgcolor="f7f7f7">{$vo.role_name}</td>
-    <td align="center" bgcolor="f7f7f7">{$vo.lastlogintime|date="Y-m-d H:i:s",###}</td>
+    <td align="center" bgcolor="f7f7f7">{$vo.lastlogintime|date="Y-m-d H:i:s"}</td>
     <td align="center" bgcolor="f7f7f7">{$vo.lastloginip}</td>
-	<td bgcolor="f7f7f7" style="padding-left:25px;"><a href="/edit/id/{$vo.id}">修改</a><neq name="vo.id" value="1">|<a href="/del/id/{$vo.id}" onClick="JavaScript:return confirm('确定要删除？')">删除</a>|</neq><a href="/status/id/{$vo.id}/status/{$vo.status}"><eq name= "vo.status" value= "1">启用<else/><font color="red">禁用</font></eq></a></td>
+	<td bgcolor="f7f7f7" style="padding-left:25px;"><a href="__APP__/Admin/edit/id/{$vo.id}">修改</a><neq name="vo.id" value="1">|<a href="__APP__/Admin/del/id/{$vo.id}" onClick="JavaScript:return confirm('确定要删除？')">删除</a>|</neq><a href="__APP__/Admin/status/id/{$vo.id}/status/{$vo.status}"><eq name= "vo.status" value= "1">启用<else/><font color="red">禁用</font></eq></a></td>
   </tr>
   </foreach>
 </table>
