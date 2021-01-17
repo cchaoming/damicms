@@ -258,10 +258,9 @@ class File extends Damicms{
 		if($upload->upload())
 		{
 			$info=$upload->getUploadFileInfo();
-			$config = F('basic','','./Web/Conf/');
+			$config = config('basic');
 			if($config['watermark'] == 1)
 			{
-			import('ORG.Util.Image');
 			Image::water($info[0]['savepath'].$info[0]['savename'], './Public/Uploads/logo/'.$config['watermarkimg']);
 			}
 			return $info;

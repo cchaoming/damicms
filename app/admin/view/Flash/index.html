@@ -10,7 +10,7 @@
 <div class="main_center">
 <table width="95%" border="0"  align=center cellpadding="3" cellspacing="1" bgcolor="#F2F9E8" class="table table-bordered">
 <tr> 
-<td colspan="5" align=left class="admintitle">幻灯列表　[<a href="/add">添加</a>][<a href="__APP__/Clear">清理附件</a>]</td></tr>
+<td colspan="5" align=left class="admintitle">幻灯列表　<a href="__APP__/Flash/add" class="btn btn-primary">添加</a>[<a href="__APP__/Clear/index">清理附件</a>]</td></tr>
     <tr bgcolor="#f1f3f5" style="font-weight:bold;">
     <td width="5%" height="30" align="center" class="ButtonList">排序</td>
     <td width="25%" align="center" class="ButtonList">幻灯标题</td>
@@ -21,10 +21,10 @@
 	<volist name="list" id="vo"> 
     <tr bgcolor="#ffffff" onMouseOver="this.style.backgroundColor='#EAFCD5';" onMouseOut="this.style.backgroundColor='';this.style.color=''">
     <td height="25">{$vo.rank}</td>
-    <td height="25" align="center"><a href="/edit/id/{$vo.id}">{$vo.title}</a></td>
+    <td height="25" align="center"><a href="__APP__/Flash/edit/id/{$vo.id}">{$vo.title}</a></td>
     <td height="25" align="center">{$vo.url}</td>
-	 <td height="25" align="center"><a href="/status/id/{$vo.id}/status/{$vo.status}"><eq name= "vo.status" value= "1">正常<else/><font color="red">隐藏</font></eq></a></td>
-    <td align="center"><a href="/edit/id/{$vo.id}">编辑</a>|<a href="/del/id/{$vo.id}" onClick="JavaScript:return confirm('确定要删除?')">删除</a></td>
+	 <td height="25" align="center"><a href="__APP__/Flash/status/id/{$vo.id}/status/{$vo.status}"><eq name= "vo.status" value= "1">正常<else/><font color="red">隐藏</font></eq></a></td>
+    <td align="center"><a href="__APP__/Flash/edit/id/{$vo.id}">编辑</a>|<a href="__APP__/Flash/del/id/{$vo.id}" onClick="JavaScript:return confirm('确定要删除?')">删除</a></td>
     </tr>
 	</volist>
 	<tr><td bgcolor="f7f7f7" colspan="5" align="left">文章幻灯模式下当前模块操作前台无效果,如需要启用手动幻灯请移步网站配置->首页配置 里修改</td></tr>
