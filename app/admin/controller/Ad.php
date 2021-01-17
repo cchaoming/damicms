@@ -129,7 +129,7 @@ class Ad extends Common
         $ad = M('ad');
         if ($this->request->param('Del') == '显示') {
             $data['status'] = 1;
-            if ($ad->where($map)->save($data)) {
+            if ($ad->where($map)->save($data) !== false) {
                 $this->assign("jumpUrl", U('Ad/index'));
                 $this->success('操作成功!');
             }
@@ -138,7 +138,7 @@ class Ad extends Common
 
         if ($this->request->param('Del') == '隐藏') {
             $data['status'] = 0;
-            if ($ad->where($map)->save($data)) {
+            if ($ad->where($map)->save($data)!== false) {
                 $this->assign("jumpUrl", U('Ad/index'));
                 $this->success('操作成功!');
             }

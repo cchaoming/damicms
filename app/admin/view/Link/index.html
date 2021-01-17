@@ -8,10 +8,10 @@
 </head>
 <body>
 <div class="main_center">
-<form name="myform" method="POST"  id="myform" action="/delall">
+<form name="myform" method="POST"  id="myform" action="__APP__/Link/delall">
 <table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="table table-bordered">
 <tr> 
-  <td colspan="5" align=left class="admintitle">链接列表　[<a href="/add">添加</a>]</td>
+  <td colspan="5" align=left class="admintitle">链接列表　[<a href="__APP__/Link/add">添加</a>]</td>
 </tr>
 <tr bgcolor="#f1f3f5" style="font-weight:bold;">
 	<td width="5%" height="30" align="center" class="ButtonList">&nbsp;</td>
@@ -28,7 +28,7 @@
       </td>
 	<td height="25" align="center"><input name="url[]" type="text" id="LinkUrl" value="{$vo.url}" size="40"></td>
     <td height="25" align="center"><input name="rank[]" type="text" id="Num" value="{$vo.rank}" size="4" maxlength="4"></td>
-    <td align="center"><a href="/status/id/{$vo.id}/status/{$vo.status}"><eq name="vo.status" value="1">显示<else/>隐藏</eq></a>|<a href="/edit/id/{$vo.id}">编辑</a></td>
+    <td align="center"><a href="__APP__/Link/status/id/{$vo.id}/status/{$vo.status}"><eq name="vo.status" value="1">显示<else/>隐藏</eq></a>|<a href="__APP__/Link/edit/id/{$vo.id}">编辑</a></td>
   </tr>
  </volist>
  

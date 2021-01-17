@@ -12,21 +12,20 @@
       <td height="25" bgcolor="f7f7f7">快速查找：
         <SELECT onChange="javascript:window.open(this.options[this.selectedIndex].value,'main')"  size="1" name="s">
         <OPTION value="" selected>-=请选择=-</OPTION>
-        <OPTION value="/index/">所有评论</OPTION>
-        <OPTION value="/index/status/1">已审的评论</OPTION>
-        <OPTION value="/index/status/0">未审的评论</OPTION>
+        <OPTION value="__APP__/Pl/index/">所有评论</OPTION>
+        <OPTION value="__APP__/Pl/index/status/1">已审的评论</OPTION>
+        <OPTION value="__APP__/Pl/index/status/0">未审的评论</OPTION>
       </SELECT> </td>
       <td bgcolor="f7f7f7">
-	  <form name="form1" method="POST" action="/search">
+	  <form name="form1" method="POST" action="__APP__/Pl/search">
         <input name="keywords" type="text" id="keyword" value="" class="s26">
         <input name="Submit2" type="submit" class="btn btn-info" value="搜索">
         </td>
-     {__NOTOKEN__}
     </form>
     </tr>
 </table>
 <table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
-<form name="myform" action="/doedit" method=post>
+<form name="myform" action="__APP__/Pl/doedit" method=post>
 <tr> 
     <td colspan="5" class="admintitle">修改评论</td>
 </tr>
@@ -41,12 +40,12 @@
 <tr>
   <td bgcolor="#f7f7f7">内容</td>
   <td colspan=4 bgcolor="#f7f7f7" class=td>
-  <textarea name="content" cols="80" rows="10" id="content">{$list.content}</textarea></td>
+  <textarea name="content" cols="80" rows="10" id="content">{$list.content|raw}</textarea></td>
 </tr>
 <tr>
   <td bgcolor="#f7f7f7">回复</td>
   <td colspan=4 bgcolor="#f7f7f7" class=td>
-  <textarea name="recontent" cols="80" rows="10" id="recontent">{$list.recontent}</textarea></td>
+  <textarea name="recontent" cols="80" rows="10" id="recontent">{$list.recontent|raw}</textarea></td>
 </tr>
 <tr> 
 <td width="20%"></td>

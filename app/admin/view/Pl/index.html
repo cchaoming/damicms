@@ -12,12 +12,12 @@
       <td height="25" bgcolor="f7f7f7">快速查找：
         <SELECT onChange="javascript:window.open(this.options[this.selectedIndex].value,'main')"  size="1" name="s">
         <OPTION value="" selected>-=请选择=-</OPTION>
-        <OPTION value="/index/">所有评论</OPTION>
-        <OPTION value="/index/status/1">已审的评论</OPTION>
-        <OPTION value="/index/status/0">未审的评论</OPTION>
+        <OPTION value="__APP__/Pl/index/">所有评论</OPTION>
+        <OPTION value="__APP__/Pl/index/status/1">已审的评论</OPTION>
+        <OPTION value="__APP__/Pl/index/status/0">未审的评论</OPTION>
       </SELECT> </td>
       <td bgcolor="f7f7f7">
-	  <form name="form1" method="POST" action="/search">
+	  <form name="form1" method="POST" action="__APP__/Pl/search">
         <input name="keywords" type="text" id="keyword" value="" class="s26">
         <input name="Submit2" type="submit" class="btn btn-info" value="搜索">
         </td>
@@ -25,7 +25,7 @@
     </tr>
 </table>
 <div class="main_center">
-<form name="myform" method="POST" action="/delall">
+<form name="myform" method="POST" action="__APP__/Pl/delall">
 <table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="table table-bordered">
 <tr> 
   <td colspan="6" align=left class="admintitle">评论列表</td>
@@ -40,10 +40,10 @@
 	<volist name="list" id="vo"> 
     <tr>
     <td height="25" align="center" bgcolor="f7f7f7"><input type="checkbox" value="{$vo.id}" name="id[]" onClick="unselectall(this.form)" style="border:0;"></td>
-    <td height="25" bgcolor="f7f7f7"><a href="__ROOT__/{$urlmode}articles_{$vo.aid}{$suffix}" target="_blank">{$vo.content|msubstr=###,0,30,'utf-8'}...</a></td>
+    <td height="25" bgcolor="f7f7f7"><a href="/index.php/articles/{$vo.aid}" target="_blank">{$vo.content|msubstr=###,0,30,'utf-8'}...</a></td>
     <td height="25" align="center" bgcolor="f7f7f7">{$vo.ip}</td>
     <td height="25" align="center" bgcolor="f7f7f7"><span class="td">{$vo.ptime}</span></td>
-    <td align="center" bgcolor="f7f7f7"><a href="/status/id/{$vo.id}/status/{$vo.status}"><eq name="vo.status" value="1">已审<else/><font color='red'>未审</font></eq></a>|<a href="/edit/id/{$vo.id}">回复</a>|<a href="/del/id/{$vo.id}" onClick="JavaScript:return confirm('确定要删除?')">删除</a></td>
+    <td align="center" bgcolor="f7f7f7"><a href="__APP__/Pl/status/id/{$vo.id}/status/{$vo.status}"><eq name="vo.status" value="1">已审<else/><font color='red'>未审</font></eq></a>|<a href="__APP__/Pl/edit/id/{$vo.id}">回复</a>|<a href="__APP__/Pl/del/id/{$vo.id}" onClick="JavaScript:return confirm('确定要删除?')">删除</a></td>
     </tr>
 	</volist>
 <tr><td align="center" bgcolor="f7f7f7"><input name="Action" type="hidden"  value="Del"><input name="chkAll" type="checkbox" id="chkAll" onClick=CheckAll(this.form) value="checkbox" style="border:0"></td>

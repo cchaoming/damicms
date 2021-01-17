@@ -110,7 +110,7 @@ class Guestbook extends Common
 
         if ($_REQUEST['Del'] == '批量未审') {
             $data['status'] = 0;
-            if ($guestbook->where($map)->save($data)) {
+            if ($guestbook->where($map)->save($data) !== false) {
                 $this->assign("jumpUrl", U('Guestbook/index'));
                 $this->success('操作成功!');
             }
@@ -119,7 +119,7 @@ class Guestbook extends Common
 
         if ($_REQUEST['Del'] == '批量审核') {
             $data['status'] = 1;
-            if ($guestbook->where($map)->save($data)) {
+            if ($guestbook->where($map)->save($data) !== false) {
                 $this->assign("jumpUrl", U('Guestbook/index'));
                 $this->success('操作成功!');
             }
@@ -137,6 +137,9 @@ class Guestbook extends Common
         $count = $guestbook->where($map)->order('addtime desc')->count();
         $p = new Page($count, 20);
         $list = $guestbook->limit($p->firstRow,$p->listRows)->select()->toArray();
+        if($this->request->isPost()){
+            $p->parameter .= 'keywords='.$keywords;
+        }
         $p->setConfig('prev', '上一页');
         $p->setConfig('header', '条评论');
         $p->setConfig('first', '首 页');

@@ -10,14 +10,16 @@
 
     @Date 2011-11-23 10:33:32 $
 *************************************************************/
-class VoteAction extends CommonAction
+namespace app\admin\controller;
+use until\Page;
+
+class Vote extends Common
 {	
      public function index()
     {
-		import('ORG.Util.Page');
 		$vote = M('vote');
 		$count = $vote->count();
-		$p = new Page($count,20); 
+		$p = new Page($count,20);
 		$p->setConfig('prev','上一页'); 
 		$p->setConfig('header','条记录');
 		$p->setConfig('first','首 页');
@@ -26,59 +28,66 @@ class VoteAction extends CommonAction
 		$p->setConfig('theme',"%first%%upPage%%linkPage%%downPage%%end%
 		<li><span><select name='select' onChange='javascript:window.location.href=(this.options[this.selectedIndex].value);'>%allPage%</select></span></li>\n<li><span>共<font color='#009900'><b>%totalRow%</b></font>条记录 20条/每页</span></li>");
 		$this->assign('page',$p->show());
-		$list = $vote->limit($p->firstRow.','.$p->listRows)->select();
+		$list = $vote->limit($p->firstRow,$p->listRows)->select()->toArray();
 		$this->assign('list',$list);
-		$this->display();	
+		return $this->display();
     }
 	
 	public function add()
     {
-        $this->display();
+        return $this->display();
     }
 	
 	public function doadd()
     {
-		$vote=M('vote');
-		$vote->create(); 
-		if($vote->add())
+        if($this->request->isPost()){
+		$vote=M('vote',true);
+		if($vote->save($_POST))
 		{
 			$this->assign("jumpUrl",U('Vote/index'));
 			$this->success('操作成功!');
 		}
+        }
 		$this->error('操作失败!');	
     }
 
 	   public function edit()
     {
+        $id = (int)$this->request->param('id');
 		$vote = M('vote');
-		$list = $vote->where('id='.$_GET['id'])->find();
+		$list = $vote->whereRaw('id='.$id)->find();
 		$this->assign('list',$list);
         $this->display();
     }
 	
 	public function doedit()
     {
-		$data['id'] = $_POST['id'];
+        if($this->request->isPost()){
+
 		$data['vote'] = $_POST['vote'];
 		$data['title'] = $_POST['title'];
 		$data['starttime'] = $_POST['starttime'];
 		$data['overtime'] = $_POST['overtime'];
 		$data['rank'] = $_POST['rank'];
 		$data['stype'] = $_POST['stype'];
-		$vote = M('vote');
-		if($vote->save($data))
+		$vote = M('vote',true);
+		$info = $vote->find(intval($_POST['id']));
+		if($info && $info->save($data))
 		{
 			$this->assign("jumpUrl",U('Vote/index'));
 			$this->success('操作成功!');
 		}
+        }
 		$this->error('操作失败!');
     }
 	
 	public function del()
     {
+        $id = (int)$this->request->param('id');
 		$type = M('vote');
-		if($type->where('id='.$_GET['id'])->delete())
+		if($id)
 		{
+            $type->whereRaw('id='.$id)->delete();
 			$this->assign("jumpUrl",U('Vote/index'));
 			$this->success('操作成功!');	
 		}
@@ -88,34 +97,27 @@ class VoteAction extends CommonAction
 	public function status()
 	{
 		$a = M('vote');
-		if($_GET['status'] == 0)
-		{
-			$a->where('id='.$_GET['id'])->setField('status',1); 
-		}
-		elseif($_GET['status']==1)
-		{
-			$a->where('id='.$_GET['id'])-> setField('status',0); 
-		}
-		else
-		{
-			$this->error("非法操作!");
-		}
-		$this->redirect('index');
+        $id = (int)$this->request->param('id');
+        $status = (int)$this->request->param('status');
+        if ($status == 0) {
+            $a->whereRaw('id=' . $id)->save(['status'=>1]);
+        } else {
+            $a->whereRaw('id=' . $id)->save(['status'=>0]);
+        }
+		return $this->redirect('Vote/index');
 	}
 	
 	public function delall()
 	{
 		$id = $_REQUEST['id'];  //获取id
-		$ids = implode(',',$id);//批量获取id
-		$id = is_array($id) ? $ids : $id;
-		$map['id'] = array('in',$id); 
+		$id = is_array($id) ? $id : explode(',',$id);
 		if(!$id)
 		{
 			$this->assign("jumpUrl",U('Vote/index'));
 			$this->error('请勾选记录!');
 		}
-		
-		$vote = M('vote');
+        $map[] = ['id','in',$id];
+        $vote = M('vote');
 		
 		if($_REQUEST['Del'] == '删除') 
 		{ 
@@ -130,7 +132,7 @@ class VoteAction extends CommonAction
 		if($_REQUEST['Del'] == '隐藏')
 		{
 			$data['status'] = 0;
-			if($vote->where($map)->save($data))
+			if($vote->where($map)->save($data) !== false)
 			{
 				$this->assign("jumpUrl",U('Vote/index'));
 			$this->success('操作成功!');
@@ -141,7 +143,7 @@ class VoteAction extends CommonAction
 		if($_REQUEST['Del']=='显示')
 		{
 			$data['status'] = 1;		
-			if($vote->where($map)->save($data))
+			if($vote->where($map)->save($data) !== false)
 			{
 				$this->assign("jumpUrl",U('Vote/index'));
 			$this->success('操作成功!');
@@ -152,8 +154,9 @@ class VoteAction extends CommonAction
 	
 	public function show()
 	{
+        $id = (int)$this->request->param('id');
 		$vote = M('vote');
-		$vo = $vote->where('id='.$_GET['id'])->find();
+		$vo = $vote->whereRaw('id='.$id)->find();
 		$strs = explode("\n",trim($vo['vote']));
 		$total = 0;
 		

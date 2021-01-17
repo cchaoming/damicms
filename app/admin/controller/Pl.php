@@ -10,27 +10,23 @@
 
     @Date 2011-11-17 15:13:19 $
 *************************************************************/
-class PlAction extends CommonAction
+namespace app\admin\controller;
+use until\Page;
+
+class Pl extends Common
 {	
     public function index()
     {
-		import('ORG.Util.Page');
-		R("Article/urlmode");
 		$pl = M('pl');
-		if(isset($_GET['status']))
+		$where = '1=1';
+		if($this->request->param('status'))
 		{
-			$count = $pl->where('status='.$_GET['status'])->order('ptime desc')->count();
-			$p = new Page($count,20);
-			$list = $pl->where('status='.$_GET['status'])->order('ptime desc')->limit($p->firstRow.','.$p->listRows)->select();
-		}
-		else
-		{
-			$count = $pl->order('ptime desc')->count();
-			$p = new Page($count,20); 
-			$list = $pl->order('ptime desc')->limit($p->firstRow.','.$p->listRows)->select();
-		}
-		
-		$p->setConfig('prev','上一页');
+		    $where.=' and status='.(int)$this->request->param('status');
+			}
+        $count = $pl->whereRaw($where)->orderRaw('ptime desc')->count();
+        $p = new Page($count,20);
+        $list = $pl->limit($p->firstRow,$p->listRows)->select()->toArray();
+        $p->setConfig('prev','上一页');
 		$p->setConfig('header','条评论');
 		$p->setConfig('first','首 页');
 		$p->setConfig('last','末 页');
@@ -39,25 +35,26 @@ class PlAction extends CommonAction
 		<li><span><select name='select' onChange='javascript:window.location.href=(this.options[this.selectedIndex].value);'>%allPage%</select></span></li>\n<li><span>共<font color='#009900'><b>%totalRow%</b></font>条评论 20条/每页</span></li>");
 		$this->assign('page',$p->show());
 		$this->assign('list',$list);
-		$this->display();
+		return $this->display();
     }
 	
 	 public function edit()
     {
+        $id = (int)$this->request->param('id');
 		$type = M('pl');
-		$list = $type->where('id='.$_GET['id'])->find();
+		$list = $type->where('id='.$id)->find();
 		$this->assign('list',$list);
-		$this->display();
+		return $this->display();
     }
 	
 	public function doedit()
     {
+        $id = (int)$this->request->param('id');
 		$pl=M('pl');
-		$data['id'] = $_POST['id'];
 	//使用stripslashes 反转义,防止服务器开启自动转义
 		$data['content'] = stripslashes($_POST['content']);
 		$data['recontent'] = stripslashes($_POST['recontent']);
-		if($pl->save($data))
+		if($pl->whereRaw('id='.$id)->save($data))
 		{
 			$this->assign("jumpUrl",U('Pl/index'));
 			$this->success('操作成功!');
@@ -68,8 +65,10 @@ class PlAction extends CommonAction
 	public function del()
     {
 		$type = M('pl');
-		if($type->where('id='.$_GET['id'])->delete())
+        $id = (int)$this->request->param('id');
+		if($id)
 		{
+            $type->where('id='.$id)->delete();
 			$this->assign("jumpUrl",U('Pl/index'));
 			$this->success('操作成功!');
 		}
@@ -78,30 +77,30 @@ class PlAction extends CommonAction
 	
 	public function status(){
 		$pl = M('pl');
-		if($_GET['status'] == 0)
+        $id = (int)$this->request->param('id');
+        $status = (int)$this->request->param('status');
+		if($status == 0)
 		{
-			$pl->where( 'id='.$_GET['id'] )-> setField( 'status',1);
+			$pl->whereRaw( 'id='.$id )->save(['status'=>1]);
 		}
-		elseif($_GET['status'] == 1)
+		elseif($status == 1)
 		{
-			$pl->where( 'id='.$_GET['id'] )-> setField( 'status',0);
+			$pl->whereRaw( 'id='.$id )->save(['status'=>0]);
 		}else{
 			$this->error('非法操作!');
 		}
-		$this->redirect('index');
+		return $this->redirect('index');
 	}
 
 
 	public function delall(){
-		$id = $_REQUEST['id'];  //获取文章id
-		$ids = implode(',',$id);//批量获取id
-		$id = is_array($id) ? $ids : $id;
-		$map['id'] = array('in',$id);
-		if(!$id)
-		{
-			$this->error('请先勾选记录!');
-		}
-		$pl = M(pl);
+        $id = $_REQUEST['id'];  //获取文章id
+        $id = is_array($id) ? $id : explode(',', $id);
+        if (!$id) {
+            $this->error('请先勾选记录!');
+        }
+        $map[] = ['id', 'in', $id];
+		$pl = M('pl');
 		if($_REQUEST['Del'] == '删除')
 		{
 			if($pl->where($map)->delete())
@@ -115,7 +114,7 @@ class PlAction extends CommonAction
 		if($_REQUEST['Del'] == '批量未审')
 		{
 			$data['status'] = 0;
-			if($pl->where($map)->save($data))
+			if($pl->where($map)->save($data) !== false)
 			{
 				$this->assign("jumpUrl",U('Pl/index'));
 			$this->success('操作成功!');
@@ -126,7 +125,7 @@ class PlAction extends CommonAction
 		if($_REQUEST['Del'] == '批量审核')
 		{
 			$data['status'] = 1;
-			if($pl->where($map)->save($data))
+			if($pl->where($map)->save($data) !== false)
 			{
 				$this->assign("jumpUrl",U('Pl/index'));
 			$this->success('操作成功!');
@@ -137,13 +136,16 @@ class PlAction extends CommonAction
 
 	public function search()
 	{
-		import('ORG.Util.Page');
-		R("Article/urlmode");
+	    $keyword = (string)$this->request->param('keywords');
+	    if(!$keyword){$this->error('操作失败!');}
 		$pl = M('pl');
-		$map['content'] = array('like','%'.$_POST['keywords'].'%');
-		$count = $pl->where($map)->order('ptime desc')->count();
-		$p = new Page($count,20); 
-		$list = $pl->where($map)->order('ptime desc')->limit($p->firstRow.','.$p->listRows)->select();
+		$map[] = ['content','like','%'.$keyword.'%'];
+		$count = $pl->where($map)->orderRaw('ptime desc')->count();
+		$p = new Page($count,20);
+		$list = $pl->limit($p->firstRow,$p->listRows)->select()->toArray();
+		if($this->request->isPost()){
+            $p->parameter .= 'keywords='.$keyword;
+        }
 		$p->setConfig('prev','上一页');
 		$p->setConfig('header','条评论');
 		$p->setConfig('first','首 页');
@@ -153,7 +155,7 @@ class PlAction extends CommonAction
 		<li><span><select name='select' onChange='javascript:window.location.href=(this.options[this.selectedIndex].value);'>%allPage%</select></span></li>\n<li><span>共<font color='#009900'><b>%totalRow%</b></font>条评论 20条/每页</span></li>");
 		$this->assign('page',$p->show());
 		$this->assign('list',$list);
-		$this->display('index');
+		return $this->display('index');
 	}
 }
 ?>
