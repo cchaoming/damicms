@@ -61,9 +61,9 @@ class StaticVar
         }else{
             define('TMPL_NAME', $cookie_template);
         }
-        //防止注入
+        //防止注入(后台post可能含有关键字不过滤)
         $request_data = $request->param();
-        if(is_array($request_data)){
+        if(is_array($request_data) && APP_NAME != 'admin'){
         array_walk_recursive($request_data, 'inject_check');
         array_walk_recursive($request_data, 'remove_xss');
         }

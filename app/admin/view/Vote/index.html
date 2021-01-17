@@ -7,10 +7,10 @@
   <load href="/Public/Admin/js/admin.js"/>
 <body>
 <div class="main_center">
-<form name="myform" method="POST" action="/delall">
+<form name="myform" method="POST" action="__APP__/Vote/delall">
 <table border="0"  align="center" cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="table table-bordered">
 <tr> 
-  <td colspan="8" align=left class="admintitle">所有投票　[<a href="/add">添加</a>]</td>
+  <td colspan="8" align=left class="admintitle">所有投票　[<a href="__APP__/Vote/add">添加</a>]</td>
 </tr>
   <tr align="center"> 
     <td colspan="2" class="ButtonList">投票标题</td>
@@ -23,12 +23,12 @@
   <volist name="list" id="vo"> 
     <tr bgcolor="#f1f3f5" onMouseOver="this.style.backgroundColor='#EAFCD5';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
     <td width="5%" height="25" align="center"><input type="checkbox" value="{$vo.id}" name="id[]" onClick="unselectall(this.form)" style="border:0;"></td>
-    <td width="30%" class="tdleft"><a href="/edit/id/{$vo.id}">{$vo.title}</a></td>
+    <td width="30%" class="tdleft"><a href="__APP__/Vote/edit/id/{$vo.id}">{$vo.title}</a></td>
     <td height="25" align="center">{$vo.id}</td>
     <td height="25" align="center">{$vo.starttime}至{$vo.overtime}</td>
-    <td height="25" align="center"><a href="/status/id/{$vo.id}/status/{$vo.status}"><eq name="vo.status" value="1">显示<else/>隐藏</eq></a></td>
+    <td height="25" align="center"><a href="__APP__/Vote/status/id/{$vo.id}/status/{$vo.status}"><eq name="vo.status" value="1">显示<else/>隐藏</eq></a></td>
     <td height="25" align="center">{$vo.rank}</td>
-    <td align="center"><a href="/edit/id/{$vo.id}">编辑</a> <a href="/show/id/{$vo.id}">查看结果</a></td>
+    <td align="center"><a href="__APP__/Vote/edit/id/{$vo.id}">编辑</a> <a href="__APP__/Vote/show/id/{$vo.id}">查看结果</a></td>
     </tr>
   </volist>
 <tr>

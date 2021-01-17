@@ -9,7 +9,7 @@
  
 <body>
 <table width="95%" border="0" cellspacing="2" cellpadding="3"  align=center class="admintable" style="margin-bottom:5px;">
-    <tr><form name="form1" method="POST" action="/search">
+    <tr><form name="form1" method="POST" action="__APP__/Key/search">
       <td height="25" bgcolor="f7f7f7">
         <input name="keywords" type="text" id="keyword" value="">
         <input type="submit" name="Submit2" value="搜索"></td>
@@ -17,7 +17,7 @@
     </tr>
 </table>
  <div class="main_center">
-<form name="myform" method="POST" action="/delall">
+<form name="myform" method="POST" action="__APP__/Key/delall">
 <table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="table table-bordered">
 <tr> 
   <td colspan="5" align=left class="admintitle">关键字列表　[<a href="/add">添加</a>]</td>
@@ -32,9 +32,9 @@
     <tr bgcolor="#f1f3f5" onMouseOver="this.style.backgroundColor='#EAFCD5';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
     <td height="25" align="CENTER"><input type="checkbox" value="{$vo.id}" name="id[]" onClick="unselectall(this.form)" style="border:0;">
       <input name="keyid[]" type="hidden" id="keyid" value="{$vo.id}"></td>
-    <td height="25">{$i}.<a href="/edit/id/{$vo.id}">{$vo.title}</a></td>
+    <td height="25">{$i}.<a href="__APP__/Key/edit/id/{$vo.id}">{$vo.title}</a></td>
     <td height="25" align="center"><input name="url[]" type="text" id="Url" value="{$vo.url}" size="60" maxlength="250"></td>
-    <td align="center"><a href="/edit/id/{$vo.id}">编辑</a></td>
+    <td align="center"><a href="__APP__/Key/edit/id/{$vo.id}">编辑</a></td>
   </tr>
  </volist>
 	<tr bgcolor="#f1f3f5" onMouseOver="this.style.backgroundColor='#EAFCD5';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">

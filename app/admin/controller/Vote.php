@@ -57,13 +57,12 @@ class Vote extends Common
 		$vote = M('vote');
 		$list = $vote->whereRaw('id='.$id)->find();
 		$this->assign('list',$list);
-        $this->display();
+        return $this->display();
     }
 	
 	public function doedit()
     {
         if($this->request->isPost()){
-
 		$data['vote'] = $_POST['vote'];
 		$data['title'] = $_POST['title'];
 		$data['starttime'] = $_POST['starttime'];
@@ -163,9 +162,9 @@ class Vote extends Common
 		for($i = 0;$i < count($strs);$i++)
 		{
 			$s = explode("=",$strs[$i]);
-			$data[$i]['num'] = $s[1];
+			$data[$i]['num'] = (int)$s[1];
 			$data[$i]['title'] = $s[0];
-			$total += $s[1];
+			$total += (int)$s[1];
 		}
 		
 		foreach($data as $k=>$v)
@@ -173,7 +172,7 @@ class Vote extends Common
 			$data[$k]['percent'] = round($v['num'] / $total * 100 + 0);
 		}
 		$this->assign('list',$data);
-		$this->display();
+		return $this->display();
 	}
 }
 ?>

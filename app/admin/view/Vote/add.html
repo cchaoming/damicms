@@ -4,11 +4,11 @@
 <title>网站后台管理</title>
 <link href="/Public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
 <link rel="shortcut icon" href="/Public/Admin/images/myfav.ico" type="image/x-icon" />
-    <load href="/Public/Admin/js/admin.js"/>
+    <load href="/Public/Admin/js/admin.js,/Public/Admin/js/Jquery.js,/Public/Admin/setdate/WdatePicker.js"/>
 </head>
 <body>
   <table width="95%" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#f7f7f7" class="admintable">
-  <form name="add" method="post" action="/doadd">
+  <form name="add" method="post" action="__APP__/Vote/doadd">
   <tr>
       <td colspan="2" align="center" class="admintitle">修改投票</td>
     </tr>
@@ -36,9 +36,9 @@
     </tr>
     <tr>
       <td align="center" bgcolor="#FFFFFF">投票时间：</td>
-      <td bgcolor="#FFFFFF"><input name="starttime" type="text" class="input" value="{:date("Y-m-d H:i:s");}" size="20">
+      <td bgcolor="#FFFFFF"><input name="starttime" id="start_time" type="text" class="input" value="{:date("Y-m-d H:i:s");}" size="20" onClick="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss' })">
         -
-        <input name="overtime" type="text" class="input" value="" size="20"></td>
+        <input name="overtime" type="text" class="input" value="" size="20" onClick="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{ $dp.$D(\'start_time\') }' })"></td>
     </tr>
     <tr>
       <td align="center" bgcolor="#FFFFFF">排序：</td>

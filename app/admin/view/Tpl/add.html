@@ -8,7 +8,7 @@
 </head>
 <body>
 <table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
-<form action="{:U('Tpl/Update')}"   name="myform" method="post" id="myform" enctype="multipart/form-data">
+<form action="{:U('Tpl/update')}"   name="myform" method="post" id="myform" enctype="multipart/form-data">
 <tr> 
     <td colspan="2" align=left class="admintitle">模板编辑</td></tr>
 <tr> 
@@ -19,19 +19,7 @@
 <tr>
   <td valign="top" class="b1_1"><p>内容</p>
   <td class="b1_1"><textarea id="Content" name="content" style="width:700px;height:300px;">
-<php>
- $replace =  array(
-            ''      =>  '',  // 项目模板目录
-            '__ROOT__'      =>  '__ROOT__',       // 当前网站地址
-            '__APP__'       =>  '__APP__',        // 当前项目地址
-            '__GROUP__'     =>  '__GROUP__',
-            '__ACTION__'    =>  '__ACTION__',     // 当前操作地址
-            '__SELF__'      =>  '__SELF__',       // 当前页面地址
-            ''       =>  '',
-            '/public'    =>  '/public',
-            '__CURRENT__' => '__CURRENT__'
-        );C('TMPL_PARSE_STRING',$replace);
-</php>{$content}
+{$content|raw}
 </textarea>
 </td>
 </tr>

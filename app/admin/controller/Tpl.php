@@ -10,18 +10,15 @@
 
     @Date 2011-12-12 20:10:23 $
 *************************************************************/
-class TplAction extends CommonAction
-{	
-     Public function _empty()
-	{ 
-		alert('方法不存在');
-	} 
-	
+namespace app\admin\controller;
+use until\Dir;
+
+class Tpl extends Common
+{
 		public function index()
 		{
 			$dirpath = $this->dirpath();//当前目录
 			$dirlast = $this->dirlast();//上一层目录
-			import("ORG.Util.Dir");
 			$dir = new Dir($dirpath);
 			$list_dir = $dir->toArray();
 			if (empty($list_dir))
@@ -32,28 +29,28 @@ class TplAction extends CommonAction
 			{
 				$list_dir[$key]['pathfile'] = dami_url_repalce($value['path'],'desc').'|'.$value['filename'];
 			}
-			$_SESSION['tpl_jumpurl'] = '?s=Tpl/index/id/'.dami_url_repalce($dirpath,'desc');
+			session('tpl_jumpurl', urlencode(url('Tpl/index',['id'=>dami_url_repalce($dirpath,'desc')])));
 			if($dirlast && $dirlast != '.')
 			{
 				$this->assign('dirlast',dami_url_repalce($dirlast,'desc'));
 			}
 			$this->assign('dirpath',$dirpath);
 			$this->assign('list_dir',list_sort_by($list_dir,'mtime','desc'));
-			$this->display('index');
+			return $this->display('index');
 		}
 	//获取模板当前路径
 	public function dirpath()
 	{
-		$id = dami_url_repalce(trim($_GET['id']));
+		$id = dami_url_repalce(trim($this->request->param('id')));
 		if ($id) 
 		{
 			$dirpath = $id;
 		}
 		else
 		{
-			$dirpath ='./Web/Tpl';
+			$dirpath ='./template';
 		}
-		if (!strpos($dirpath,'Tpl')) 
+		if (strpos($dirpath,'template') === false)
 		{
 			$this->error("不在模板文件夹范围内！");
 		}
@@ -62,7 +59,7 @@ class TplAction extends CommonAction
 	//获取模板上一层路径
 	public function dirlast()
 	{
-		$id = dami_url_repalce(trim($_GET['id']));
+		$id = dami_url_repalce(trim($this->request->param('id')));
 		if ($id) 
 		{
 			return substr($id,0,strrpos($id, '/'));
@@ -75,7 +72,7 @@ class TplAction extends CommonAction
 	// 编辑模板
 	public function add()
 	{
-		$filename = dami_url_repalce(str_replace('*','.',trim($_GET['id'])));
+		$filename = dami_url_repalce(str_replace('*','.',trim($this->request->param('id'))));
 		if (empty($filename)) 
 		{
 			$this->error('模板名称不能为空！');
@@ -83,17 +80,19 @@ class TplAction extends CommonAction
 		$content = read_file($filename);
 		$this->assign('filename',$filename);
 		$this->assign('content',htmlspecialchars($content));
-		$this->display('add');
+		return $this->display('add');
 	}
 	// 更新模板
 	public function update()
 	{
 		$filename = trim($_POST['filename']);
-		if(stripos($filename,'.php') !== false){alert('文件名非法!');}
+		$ext = strtolower(substr($filename, strrpos($filename, '.')+1));
+		$allow = ['html','htm','txt','css','js','tpl'];
+		if(!in_array($ext,$allow)){alert('该文件不能编辑!');}
 		$content = stripslashes(htmlspecialchars_decode($_POST['content']));
 		if (!testwrite(substr($filename,0,strrpos($filename,'/'))))
 		{
-			$this->error('在线编辑模板需要给'.__ROOT__."/Web/Tpl".'添加写入权限！');
+			$this->error('在线编辑模板需要给/template添加写入权限！');
 		}
 		if (empty($filename))
 		{
@@ -104,13 +103,13 @@ class TplAction extends CommonAction
 			$this->error('模板内容不能为空！');
 		}
 		write_file($filename,$content);
-		if (!empty($_SESSION['tpl_jumpurl']))
+		if (session('tpl_jumpurl'))
 		{
-			$this->assign("jumpUrl",$_SESSION['tpl_jumpurl']);
+			$this->assign("jumpUrl",urldecode(session('tpl_jumpurl')));
 		}
 		else
 		{
-			$this->assign("jumpUrl",'?s=Tpl/index');
+			$this->assign("jumpUrl",U('Tpl/index'));
 		}
 		$this->success('恭喜您，模板更新成功！');
 	}
@@ -123,14 +122,14 @@ class TplAction extends CommonAction
 			$this->error('无删除权限！');
 		}
 		@unlink($id);
-		if (!empty($_SESSION['tpl_jumpurl']))
-		{
-			$this->assign("jumpUrl",$_SESSION['tpl_jumpurl']);
-		}
-		else
-		{
-			$this->assign("jumpUrl",'?s=Tpl/index');
-		}
+        if (session('tpl_jumpurl'))
+        {
+            $this->assign("jumpUrl",urldecode(session('tpl_jumpurl')));
+        }
+        else
+        {
+            $this->assign("jumpUrl",U('Tpl/index'));
+        }
 		$this->success('删除文件成功！');
     }
 	

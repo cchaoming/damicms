@@ -75,6 +75,7 @@ function arr2file($filename, $arr = '')
 function getdirsize($dir)
 {
     $dirlist = opendir($dir);
+    $dirsize = 0;
     while (false !== ($folderorfile = readdir($dirlist))) {
         if ($folderorfile != "." && $folderorfile != "..") {
             if (is_dir("$dir/$folderorfile")) {
@@ -141,6 +142,7 @@ function list_sort_by($list, $field, $sortby = 'asc')
 // 获取时间颜色:24小时内为红色
 function getcolordate($type = 'Y-m-d H:i:s', $time, $color = 'red')
 {
+    if(!is_numeric($time)){$time=0;}
     if ((time() - $time) > 86400) {
         return date($type, $time);
     } else {

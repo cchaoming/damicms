@@ -83,7 +83,7 @@ function inject_check($str)
     $str=urldecode($str);
     $tmp = preg_match('/select(\s|"|\'|`)+|insert(\s|"|\'|`)+|update(\s|"|\'|`)+|and(\s|"|\'|`)+|or(\s|"|\'|`)+|delete|union|into(\s|"|\'|`)+|load_file|outfile/is', $str);
     if ($tmp) {
-        alert("非法操作,请联系管理员!".msubstr($str,0,10));
+        alert("非法操作,请联系管理员!");
     } else {
         return $str;
     }

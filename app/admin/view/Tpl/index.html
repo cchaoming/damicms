@@ -30,23 +30,23 @@
   	<td width="30%"><img src="/Public/Admin/images/file/folder.gif" width="16" height="16"><a href="?s=Tpl/index/id/{$vo.pathfile}"> {$vo.filename}</a></td>
     <td width="20%">文件夹</td>
     <td width="10%">{:byte_format(getdirsize($vo['path'].'/'.$vo['filename']))}</td>
-    <td width="20%">{$vo.mtime|getcolordate='Y-m-d H:i:s',###}</td>
-    <td width="20%"><a href="?s=Tpl/index/id/{$vo.pathfile}">下级目录</a></td>
+    <td width="20%">{$vo.mtime|getcolordate='Y-m-d H:i:s'}</td>
+    <td width="20%"><a href="__APP__/Tpl/index?id={$vo.pathfile}">下级目录</a></td>
   </tr>
   <else />
   <tr>
-  	<in name="vo.ext" value="jpg,gif,js,css,html,htm,php">
+  	<in name="vo.ext" value="jpg,gif,js,css,html,htm,'txt'">
     <td><img src="/Public/Admin/images/file/{$vo.ext}.gif" width="16" height="16"> {$vo.filename}</td>
     <else />
     <td><img src="/Public/Admin/images/file/other.gif" width="16" height="16"> {$vo.filename}</td>
     </in>
     <td>{$vo.filename|gettplname}</td>
     <td>{$vo.size|byte_format}</td>
-    <td>{$vo.mtime|getcolordate='Y-m-d H:i:s',###}</td>
-    <php>if(ereg("\.html|\.htm|\.txt|\.css|\.php|\.js",$vo['filename'])){</php>
-    <td><a href="?s=Tpl/Add/id/{$dirpath|dami_url_repalce=desc}|{:str_replace('.'.$vo['ext'],'*'.$vo['ext'],$vo['filename'])}">编辑</a> <a href="?s=Tpl/Del/id/{$dirpath|dami_url_repalce=desc}|{:str_replace('.'.$vo['ext'],'*'.$vo['ext'],$vo['filename'])}" onClick="return confirm('确定删除该文件吗?')">删除</a></td>
+    <td>{:getcolordate('Y-m-d H:i:s',$vo.mtime)}</td>
+    <php>if(preg_match("/\.html|\.htm|\.txt|\.css|\.txt|\.js|\.tpl/",$vo['filename'])){</php>
+    <td><a href="__APP__/Tpl/Add?id={:dami_url_repalce($dirpath,'desc')}|{:str_replace('.'.$vo['ext'],'*'.$vo['ext'],$vo['filename'])}">编辑</a> <a href="__APP__/Tpl/Del/id/{:dami_url_repalce($dirpath,'desc')}|{:str_replace('.'.$vo['ext'],'*'.$vo['ext'],$vo['filename'])}" onClick="return confirm('确定删除该文件吗?')">删除</a></td>
     <php>}else{</php>
-    <td><a href="{$dirpath}/{$vo.filename}" target="_blank">浏览</a> <a href="?s=Tpl/Del/id/{$dirpath|dami_url_repalce=desc}|{:str_replace('.'.$vo['ext'],'*'.$vo['ext'],$vo['filename'])}" onClick="return confirm('确定删除该文件吗?')">删除</a></td>
+    <td><a href="{$dirpath}/{$vo.filename}" target="_blank">浏览</a> <a href="__APP__/Tpl/Del?id={:dami_url_repalce($dirpath,'desc')}|{:str_replace('.'.$vo['ext'],'*'.$vo['ext'],$vo['filename'])}" onClick="return confirm('确定删除该文件吗?')">删除</a></td>
     <php>}</php>
   </tr>
   </eq>  

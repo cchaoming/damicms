@@ -12,7 +12,8 @@
   <td colspan="80" align=left class="admintitle"><form name="search_form" method="post" action="{:url('Adminlog/index')}">操作日志 管理员名: <input type="text" class="s26" name="username" value="{$Request.param.username}" />开始时间：<input type="text" class="s26 Wdate" name="start_time" id="start_time" value="{$Request.param.start_time}" onClick="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss' })" />结束时间：<input type="text" class="s26 Wdate" name="end_time" id="end_time" value="{$Request.param.end_time}" onClick="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{ $dp.$D(\'start_time\') }' })"/>关键字：<input type="text" class="s26" name="keyword" value="{$Request.param.keyword}" /><input type="submit" name="submit" value="查询" class="btn btn-danger"/> </form></td>
 </tr>
     <tr bgcolor="#f1f3f5" style="font-weight:bold;">
-<td align="center">管理员名</td><td align="center">管理所在组</td><td align="center">描述</td><td align="center">操作结果</td><td align="center">操作日期</td><td align="center">所在IP</td>
+<td align="center">管理员名</td><td align="center">管理所在组</td><td align="center">描述</td><td align="center">操作结果</td>
+        <td align="center">操作日期</td><td align="center">所在IP</td>
     </tr>
 <volist name="list" id="vo"> 
     <tr>
