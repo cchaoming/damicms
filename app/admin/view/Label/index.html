@@ -9,7 +9,7 @@
 <div class="main_center">
 <table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="table table-bordered">
 <tr> 
-  <td colspan="5" align=left class="admintitle">标签列表　[<a href="/add">添加</a>]</td></tr>
+  <td colspan="5" align=left class="admintitle">标签列表　<a href="__APP__/Label/add" class="btn btn-primary">添加</a></td></tr>
     <tr bgcolor="#f1f3f5" style="font-weight:bold;">
     <td height="30" align="center" class="ButtonList">标签名称</td>
     <td width="23%" height="25" align="center" class="ButtonList">发布时间</td>
@@ -18,11 +18,11 @@
     <td height="25" align="center" class="ButtonList">管理</td>    </tr>
  <volist name="list" id="vo">
     <tr bgcolor="#f1f3f5" onMouseOver="this.style.backgroundColor='#EAFCD5';this.style.color='red'" onMouseOut="this.style.backgroundColor='';this.style.color=''">
-    <td height="25"><a href="/edit/id/{$vo.id}">{$vo.title}</a></td>
+    <td height="25"><a href="__APP__/Label/edit/id/{$vo.id}">{$vo.title}</a></td>
     <td height="25" align="center">{$vo.addtime}</td>
     <td width="7%" height="25" align="center">{$vo.id}</td>
-	<td height="25" align="center"><a href="/status/id/{$vo.id}/status/{$vo.status}"><eq name= "vo.status" value= "1">正常<else/><font color="red">隐藏</font></eq></a></td>
-    <td width="24%" align="center"><a href="/edit/id/{$vo.id}">编辑</a>|<a href="/del/id/{$vo.id}" onClick="JavaScript:return confirm('确定要删除？')">删除</a></td>    </tr>
+	<td height="25" align="center"><a href="__APP__/Label/status/id/{$vo.id}/status/{$vo.status}"><eq name= "vo.status" value= "1">正常<else/><font color="red">隐藏</font></eq></a></td>
+    <td width="24%" align="center"><a href="__APP__/Label/edit/id/{$vo.id}">编辑</a>|<a href="__APP__/Label/del/id/{$vo.id}" onClick="JavaScript:return confirm('确定要删除？')">删除</a></td>    </tr>
 </volist>
 <tr><td bgcolor="f7f7f7" colspan="5" align="left">调用：在需要调用的地方插入: { :label(ID号) } 即可。
 </td></tr></table>

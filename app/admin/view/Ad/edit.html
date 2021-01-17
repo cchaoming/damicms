@@ -27,7 +27,7 @@ KE = K.create('#Content',{ afterBlur: function(){this.sync();}
 <table width="100%" border="0" align="center" cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
 <tr> 
   <td colspan="5" class="admintitle">修改广告</th></tr>
-<form action="/doedit" method="post" name="myform" onsubmit="return chk();">
+<form action="__APP__/Ad/doedit" method="post" name="myform" onsubmit="return chk();">
 <tr>
 <td width="20%" class=b1_1>广告名称</td>
 <td colspan=4 class=b1_1><input name="title" type="text" id="Title" size="40" maxlength="20" value="{$list.title}"></td>
@@ -38,7 +38,7 @@ KE = K.create('#Content',{ afterBlur: function(){this.sync();}
 </tr>
 <tr>
 <td width="20%" class=b1_1>广告代码</td>
-<td colspan=4 class=b1_1><textarea id="Content" name="content" class="form-control kindeditor" style="width:670px;height:400px;">{$list.content}</textarea></textarea></td>
+<td colspan=4 class=b1_1><textarea id="Content" name="content" class="form-control kindeditor" style="width:670px;height:400px;">{$list.content|raw}</textarea></textarea></td>
 </tr>
 <tr>
   <td class=b1_1>广告类型</td>
@@ -52,7 +52,7 @@ KE = K.create('#Content',{ afterBlur: function(){this.sync();}
 </tr>
 <tr>
   <td class=b1_1>广告说明</td>
-  <td colspan=4 class=b1_1><input name="description" type="text" id="Note" value="{$list.description}" size="40"></td>
+  <td colspan=4 class=b1_1><input name="description" type="text" id="Note" value="{$list.description|raw}" size="40"></td>
 </tr>
 <tr> 
 <td width="20%" class=b1_1></td>

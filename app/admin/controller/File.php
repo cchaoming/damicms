@@ -140,8 +140,6 @@ class File extends Damicms{
 		if(!empty($data[0]['savename']))
 		{
 			$js='';
-			$type = M('config');
-			$siteurl = $type->where('id=1')->getField('siteurl');
 			$js.="<script language=javascript>parent.KE.insertHtml('<img src=\"".__PUBLIC__."/Uploads/ad/".$data[0]['savename']."\"/>');</script>";
 			$this->assign('js',$js);
 			return true;
