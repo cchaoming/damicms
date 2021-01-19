@@ -10,32 +10,32 @@
 <tr> 
   <td colspan="5" class="admintitle">微信配置
   </th></tr>
-<form action="/do_wxset" method="post" name="myform">
+<form action="__APP__/Member/do_wxset" method="post" name="myform">
 <tr>
   <td colspan="5" class=b1_1>说明：本系统使用的是微信企业公众服务号接口 使用申请：<a href="https://mp.weixin.qq.com/" target="_blank"><font color="#FF0000" style="font-size:16px;"><b>https://mp.weixin.qq.com/</b></font></a><br>您的验证地址:<font color="#FF0000" style="font-size:16px;">http://{$_SERVER['HTTP_HOST']}/index.php/Wx/index</font>&nbsp;&nbsp;更改配置验证出现失败请清理缓存再验证<br>
   图灵机器人key 官网:http://www.tuling123.com申请</td>
   </tr>
 <tr>
 <td width="20%" class=b1_1>您的AppID(应用ID)</td>
-<td colspan=4 class=b1_1><input name="wx_appid" value="{:C('WX_APPID')}" type="text" id="wx_appid" size="60"></td>
+<td colspan=4 class=b1_1><input name="wx_appid" value="{:config('app.WX_APPID')}" type="text" id="wx_appid" size="60"></td>
 </tr>
 <tr>
   <td class=b1_1>您的AppSecret(应用密钥)：</td>
-  <td colspan=4 class=b1_1><input name="wx_appkey" value="{:C('WX_APPKEY')}" type="text" id="wx_appkey" size="60"></td>
+  <td colspan=4 class=b1_1><input name="wx_appkey" value="{:config('app.WX_APPKEY')}" type="text" id="wx_appkey" size="60"></td>
 </tr>
 <tr> 
   <td width="20%" class=b1_1>您的Token(令牌)：</td>
-  <td colspan=4 class=b1_1><input name="wx_token" value="{:C('WX_TOKEN')}" type="text" id="wx_token" size="60"></td>
+  <td colspan=4 class=b1_1><input name="wx_token" value="{:config('app.WX_TOKEN')}" type="text" id="wx_token" size="60"></td>
 </tr>
 <tr> 
   <td width="20%" class=b1_1>图灵机器人key：</td>
-  <td colspan=4 class=b1_1><input name="wx_jqrkey" value="{:C('WX_JQRKEY')}" type="text" id="wx_jqrkey" size="60"></td>
+  <td colspan=4 class=b1_1><input name="wx_jqrkey" value="{:config('app.WX_JQRKEY')}" type="text" id="wx_jqrkey" size="60"></td>
 </tr>
   <tr>
     <td width="20%" class=b1_1>是否开启微信快捷登陆：</td>
-    <td colspan=4 class=b1_1><input type="radio" name="wx_login" value="1" <if condition="C('WX_LOGIN') eq 1">checked</if> /> 是&nbsp;&nbsp;<input type="radio" name="wx_login" value="0" <if condition="C('WX_LOGIN') eq 0">checked</if>/> 否</td>
+    <td colspan=4 class=b1_1><input type="radio" name="wx_login" value="1" <if config('app.WX_LOGIN')==1>checked</if> /> 是&nbsp;&nbsp;<input type="radio" name="wx_login" value="0" <if config('app.WX_LOGIN')==0>checked</if>/> 否</td>
   </tr>
-    <php>$wx_trade=C('WX_TRADE');</php>
+    <php>$wx_trade=config('app.WX_TRADE');</php>
   <tr>
     <td width="20%" class=b1_1>是否开启微信支付：</td>
     <td colspan=4 class=b1_1><input type="radio" name="wx_trade" value="1" onClick="if(this.checked){

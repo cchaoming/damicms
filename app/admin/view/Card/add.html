@@ -8,9 +8,9 @@
 </head>
 <body>
 <table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
-<form action="/doadd" name="myform" id="myform" method="post" >
+<form action="__APP__/Card/doadd" name="myform" id="myform" method="post" >
 <tr> 
-    <td colspan="3" align=left class="admintitle"><neq name='info.id' value=''>修改<else/>批量制卡</neq> [<a href="/index">链接列表</a>]</td>
+    <td colspan="3" align=left class="admintitle"><neq name="info.id|default=''" value=''>修改<else/>批量制卡</neq> [<a href="__APP__/Card/index">链接列表</a>]</td>
 </tr>
 <!--循环字段-->
 <tr>
@@ -22,7 +22,7 @@
         张</td></tr>
 <tr> 
   <td width="20%" class="b1_1"></td>
-  <td colspan="2" class="b1_1"><neq name='info.id' value=''><input name="id" type="hidden" value="{$info.id}"></neq><input name="Submit" type="submit" class="btn btn-success" value="保存">&nbsp;&nbsp;<input type="button" onClick="history.go(-1);" class="btn btn-info" value="返 回"></td>
+  <td colspan="2" class="b1_1"><neq name="info.id|default=''" value=''><input name="id" type="hidden" value="{$info.id}"></neq><input name="Submit" type="submit" class="btn btn-success" value="保存">&nbsp;&nbsp;<input type="button" onClick="history.go(-1);" class="btn btn-info" value="返 回"></td>
 </tr>
 </form>
 </table>

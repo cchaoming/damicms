@@ -9,7 +9,7 @@
 <div class="main_center"><form name="form1" action="" method="get">
 <table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="table table-bordered">
 <tr> 
-  <td colspan="81" align=left class="admintitle">充值卡管理[<a href="/add">批量制卡</a>]</td>
+  <td colspan="81" align=left class="admintitle">充值卡管理[<a href="__APP__/Card/add">批量制卡</a>]</td>
 </tr>
     <tr bgcolor="#f1f3f5" style="font-weight:bold;">
       <td width="2%" align="center">&nbsp;</td>
@@ -42,7 +42,7 @@ function mult_del(){
   //得到选中的checkbox值序列 
   s = s.substring(0,s.length - 1); 
   if(confirm('您确定要删除吗')){
-  location.href= '__APP__/Card/del/id/' + s;
+  location.href= '__APP__/Card/del?id=' + s;
   }
   }
   else{
@@ -59,7 +59,7 @@ function mult_use(sign){
   //得到选中的checkbox值序列 
   s = s.substring(0,s.length - 1); 
   if(confirm('您确定无误吗')){
-  location.href= '__APP__/Card/cuse/status/' + sign + '/id/' + s;
+  location.href= '__APP__/Card/cuse?status=' + sign + '&id=' + s;
   }
   }
   else{

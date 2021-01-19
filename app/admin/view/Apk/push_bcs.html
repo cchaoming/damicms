@@ -57,7 +57,7 @@ var apk_sign = $('#apk_sign').val();
 var title = $('#title').val();
 var content = $('#content').val();
 if(apk_sign =='' || title =='' || content ==''){alert('请填写完整信息！');return false;}
-$.getJSON("http://www.damicms.com/Bcs/ajax_bcs_mess?apk_sign=" + apk_sign + "&title=" + title + "&content=" + content + "&jsoncallback=?", function(json){}); 
+$.getJSON("https://www.damicms.com/Bcs/ajax_bcs_mess?apk_sign=" + apk_sign + "&title=" + title + "&content=" + content + "&jsoncallback=?", function(json){});
 }
 
 function callback(json){

@@ -2,7 +2,7 @@
 <config>
 <name>大米CMS</name>
 <version>2.2</version>
-<company>大米CMS</company>
+<company>大米CMS测试</company>
 <icon>/Public/Editor/attached/file/20130410/20130410093818_15114.png</icon>
 <start_pic>/Public/Editor/attached/file/20130410/20130410093831_30409.jpg</start_pic>
 <menu_mess>消息中心</menu_mess>

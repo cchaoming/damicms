@@ -28,7 +28,7 @@ require_once("lib/alipay_submit.class.php");
 
         //支付类型
 $payment_type="1";
-$notify_url= "http://" . $_SERVER['HTTP_HOST'].'/index.php/Public/notify/code/alipay';
+$notify_url='http://www.abc.com/index.php/Public/shouquan';
 //需http://格式的完整路径，不能加?id=123这类自定义参数
 //页面跳转同步通知页面路径(客户端的)
 $return_url='http://www.abc.com/Trade/ap_jishi/return_url.php';

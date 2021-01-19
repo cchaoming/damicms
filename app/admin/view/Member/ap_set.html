@@ -10,27 +10,23 @@
 <tr> 
   <td colspan="5" class="admintitle">支付宝配置(<strong>配置成功后请清理缓存</strong>)
   </th></tr>
-<form action="/doap" method="post" name="myform">
+<form action="__APP__/Member/doap" method="post" name="myform">
 <tr>
   <td colspan="5" class=b1_1>说明：本系统集成的是支付宝担保交易与即时到账接口 使用申请：<a href="https://b.alipay.com/order/productIndex.htm" target="_blank"><font color="#FF0000" style="font-size:16px;"><b>https://b.alipay.com/order/productIndex.htm</b></font></a></td>
   </tr>
 <tr>
 <td width="20%" class=b1_1>您的支付宝账号</td>
-<td colspan=4 class=b1_1><input name="ap_email" value="{:C('AP_EMAIL')}" type="text" id="Title" size="40" maxlength="100"></td>
+<td colspan=4 class=b1_1><input name="ap_email" value="{:config('app.AP_EMAIL')}" type="text" id="Title" size="40" maxlength="100"></td>
 </tr>
 <tr>
   <td class=b1_1>您的淘宝PID：</td>
-  <td colspan=4 class=b1_1><input name="ap_pid" value="{:C('AP_PID')}" type="text" id="Title2" size="40" maxlength="60"></td>
+  <td colspan=4 class=b1_1><input name="ap_pid" value="{:config('app.AP_PID')}" type="text" id="Title2" size="40" maxlength="60"></td>
 </tr>
 <tr> 
   <td width="20%" class=b1_1>您的淘宝KEY：</td>
-  <td colspan=4 class=b1_1><input name="ap_key" value="{:C('AP_KEY')}" type="text" id="Title3" size="40" maxlength="60"></td>
+  <td colspan=4 class=b1_1><input name="ap_key" value="{:config('app.AP_KEY')}" type="text" id="Title3" size="40" maxlength="60"></td>
 </tr>
-<tr> 
-  <td width="20%" class=b1_1>支付宝接口类型：</td>
-  <td colspan=4 class=b1_1><input name="ap_type" type="radio" value="0" <if condition="C('AP_TYPE') eq 0">checked</if>>担保交易接口<input name="ap_type" type="radio" value="1" <if condition="C('AP_TYPE') eq 1">checked</if>>即时到账</td>
-</tr>
-<tr> 
+<tr>
   <td width="20%" class=b1_1></td>
   <td class=b1_1 colspan=4><input name="submit" type="submit" class="btn btn-info" value="保存设置">&nbsp;&nbsp;<input type="button" onclick="history.go(-1);" class="btn btn-info" value="返 回"></td>
 </tr></form>
