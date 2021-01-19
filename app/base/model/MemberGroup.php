@@ -4,7 +4,7 @@ namespace app\base\model;
 
 use think\Model;
 
-class Link extends Model
+class MemberGroup extends Model
 {
     protected $pk = 'group_id';
 

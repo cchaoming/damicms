@@ -59,7 +59,7 @@ td{text-align:left; height:28px; line-height:28px; padding-left:15px;}
 var del_url = "{:U('Member/ajax_wxdel')}";
 function initWeixinMenu() {
 $('#editPWXCMTTable_filter,#editPWXCMTTable_info').hide();
-	var weixin_menu_template = JSON.parse("{\\"records\\": <php>if($list_str != 'null'){echo $list_str;}else{</php>[{\"index\":1,\"level\":0,\"name\":\"\",\"key\":\"\",\"enable\":\"0_1\",\"parentId\":0},{\"index\":2,\"level\":0,\"name\":\"\",\"key\":\"\",\"enable\":\"0_2\",\"parentId\":0},{\"index\":3,\"level\":0,\"name\":\"\",\"key\":\"\",\"enable\":\"0_3\",\"parentId\":0}]<php>}</php> }");
+	var weixin_menu_template = {'records':<if $list_str != 'null'>{$list_str|raw}<else/>[{"index":1,"level":0,"name":"","key":"","enable":"0_1","parentId":0},{"index":2,"level":0,"name":"","key":"","enable":"0_2","parentId":0},{"index":3,"level":0,"name":"","key":"","enable":"0_3","parentId":0}]</if>};
 	menuTemplateRecords = weixin_menu_template.records||[];
 	for(var i=0,l=menuTemplateRecords.length; i<l; i++){
 		var keyHtml;

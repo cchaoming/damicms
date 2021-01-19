@@ -31,9 +31,9 @@ $(document).ready(function() {
     <div class="col-sm-10">
 	<select class="form-control" name="group_id">
 	<option value="0">请选择</option>
-	<arclist model="member_group" id="vo">
-	<option value="{$vo.group_id}" <eq name="info.group_id" value="$vo[group_id]">selected="selected"</eq>>{$vo.group_name}</option>
-	</arclist>
+	<damicms:arclist model="member_group" id="vo">
+	<option value="{$vo.group_id}" >{$vo.group_name}</option>
+	</damicms:arclist>
 	</select>
     </div>
   </div>
@@ -55,20 +55,20 @@ $(document).ready(function() {
   <div class="form-group">
     <label for="inputPassword3" class="col-sm-2 control-label">真实姓名</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="realname" name="realname" value="{$info.realname}" placeholder="您的真实姓名用于收货确认等">
+      <input type="text" class="form-control" id="realname" name="realname" value="" placeholder="您的真实姓名用于收货确认等">
     </div>
   </div>
    <div class="form-group">
     <label for="inputPassword3" class="col-sm-2 control-label">本站资金(元)</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="money" name="money" value="{$info.money}" placeholder="在本站拥有的资金">
+      <input type="text" class="form-control" id="money" name="money" value="" placeholder="在本站拥有的资金">
     </div>
   </div>
   
     <div class="form-group">
     <label for="inputPassword3" class="col-sm-2 control-label">联系电话</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="tel" name="tel" value="{$info.tel}" placeholder="您的收货联系电话">
+      <input type="text" class="form-control" id="tel" name="tel" value="" placeholder="您的收货联系电话">
     </div>
   </div>
   <div class="form-group">
@@ -85,14 +85,13 @@ $(document).ready(function() {
     <label for="inputPassword3" class="col-sm-2 control-label">居住地</label>
     
     <div class="col-sm-10">
-      <input type="text" class="form-control" name="address" id="address" placeholder="您的居住地用于收货" value="{$info.address}">
+      <input type="text" class="form-control" name="address" id="address" placeholder="您的居住地用于收货" value="">
     </div>
   </div>
     <div class="form-group">
     <label for="inputPassword3" class="col-sm-2 control-label">性别</label>
     <div class="col-sm-10">
     <select  name="sex" id="sex"  class="form-control">
-    <neq name="info.sex" value=""><option value="{$info.sex}">{$info.sex}</option></neq>
     <option value="男">男</option>
     <option value="女">女</option>
     </select>
@@ -102,20 +101,19 @@ $(document).ready(function() {
     <div class="form-group">
     <label for="inputPassword3" class="col-sm-2 control-label">出生日期</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="birthday" name="birthday" value="{$info.birthday}" placeholder="您的出生年月 格式: 1986-07-22">
+      <input type="text" class="form-control" id="birthday" name="birthday" value="" placeholder="您的出生年月 格式: 1986-07-22">
     </div>
   </div>
     <div class="form-group">
     <label for="inputPassword3" class="col-sm-2 control-label">职务</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="zhiwu" value="{$info.zhiwu}" name="zhiwu" placeholder="">
+      <input type="text" class="form-control" id="zhiwu" value="" name="zhiwu" placeholder="">
     </div>
   </div>
     <div class="form-group">
     <label for="inputPassword3" class="col-sm-2 control-label">血型</label>
     <div class="col-sm-10">
     <select  name="xuexing" id="xuexing"  class="form-control">
-    <neq name="info.xuexing" value=""><option value="{$info.xuexing}">{$info.xuexing}</option></neq>
     <option value="A型">A型</option>
      <option value="B型">B型</option>
       <option value="AB型">AB型</option>

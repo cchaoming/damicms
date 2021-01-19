@@ -31,9 +31,9 @@ $(document).ready(function() {
     <div class="col-sm-10">
 	<select class="form-control" name="group_id">
 	<option value="0">请选择</option>
-	<arclist model="member_group" id="vo">
-	<option value="{$vo.group_id}" <eq name="info.group_id" value="$vo[group_id]">selected="selected"</eq>>{$vo.group_name}</option>
-	</arclist>
+	<damicms:arclist model="member_group" id="vo">
+	<option value="{$vo.group_id}" <eq name="info.group_id" value="$vo['group_id']">selected="selected"</eq>>{$vo.group_name}</option>
+	</damicms:arclist>
 	</select>
     </div>
   </div>

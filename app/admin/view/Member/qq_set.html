@@ -19,21 +19,21 @@ if (document.myform.Title.value==""){
 <tr> 
   <th colspan="5" class="admintitle">QQ快捷登陆设置
   </th></tr>
-<form action="/doqqset" method="post" name="myform">
+<form action="__APP__/Member/doqqset" method="post" name="myform">
 <tr>
   <td colspan="5" class=b1_1>说明：本系统集成的是QQ快捷登陆 使用申请：<a href="http://connect.qq.com/intro/login" target="_blank"><font color="#FF0000" style="font-size:16px;"><b>http://connect.qq.com/intro/login</b></font></a></td>
   </tr>
 <tr>
   <td class=b1_1>您的APP ID：</td>
-  <td colspan=4 class=b1_1><input name="qq_appid" value="{:C('QQ_APPID')}" type="text" id="Title2" size="40" maxlength="60"></td>
+  <td colspan=4 class=b1_1><input name="qq_appid" value="{:config('app.QQ_APPID')}" type="text" id="Title2" size="40" maxlength="60"></td>
 </tr>
 <tr> 
   <td width="20%" class=b1_1>您的APP KEY：</td>
-  <td colspan=4 class=b1_1><input name="qq_appkey" value="{:C('QQ_APPKEY')}" type="text" id="Title3" size="40" maxlength="60"></td>
+  <td colspan=4 class=b1_1><input name="qq_appkey" value="{:config('app.QQ_APPKEY')}" type="text" id="Title3" size="40" maxlength="60"></td>
 </tr>
 <tr> 
   <td width="20%" class=b1_1>是否开启QQ快捷登陆：</td>
-  <td colspan=4 class=b1_1><input name="qq_login" type="radio" value="0" <if condition="C('QQ_LOGIN') eq 0">checked</if> />关闭<input name="qq_login" type="radio" value="1" <if condition="C('QQ_LOGIN') eq 1">checked</if>>开启</td>
+  <td colspan=4 class=b1_1><input name="qq_login" type="radio" value="0" <if config('app.QQ_LOGIN') == 0>checked</if> />关闭<input name="qq_login" type="radio" value="1" <if config('app.QQ_LOGIN') == 1>checked</if>>开启</td>
 </tr>
 <tr> 
   <td width="20%" class=b1_1></td>

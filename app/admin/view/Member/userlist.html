@@ -37,16 +37,16 @@
 	<volist name="list" id="vo"> 
     <tr bgcolor="#ffffff" onMouseOver="this.style.backgroundColor='#EAFCD5';" onMouseOut="this.style.backgroundColor='';this.style.color=''">
     <td height="25">{$vo.id}</td>
-    <td height="25" align="center"><a href="{:U('Member/showuser',array('id'=>$vo[id]))}">{$vo.username}<neq name="vo.realname" value="">【{$vo.realname}】</neq></a></td>
-    <td height="25">{:get_field('member_group','group_id='.$vo[group_id],'group_name')}</td>
+    <td height="25" align="center"><a href="{:U('Member/showuser',array('id'=>$vo['id']))}">{$vo.username}<neq name="vo.realname" value="">【{$vo.realname}】</neq></a></td>
+    <td height="25">{:get_field('member_group','group_id='.$vo['group_id'],'group_name')}</td>
 	<td align="center">电话:{$vo.tel}&nbsp;/qq:{$vo.qq}&nbsp;/email:{$vo.email}</td>
     <td height="25" align="center">{:date('Y-m-d',$vo['addtime'])}</td>
 	 <td height="25" align="center">{$vo.tel}</td>
 
     <td align="center">
-     <a class="btn btn-success btn-sm active" href="{:U('Member/moduser',array('id'=>$vo[id]))}">修改</a>
+     <a class="btn btn-success btn-sm active" href="{:U('Member/moduser',array('id'=>$vo['id']))}">修改</a>
     <a class="btn btn-danger btn-sm active" href="javascript:if(confirm('您确定删除吗?')){
-location.href='{:U('Member/deluser',array('id'=>$vo[id]))}';}">删除</a>
+location.href='{:U('Member/deluser',array('id'=>$vo['id']))}';}">删除</a>
     </td>
     </tr>
 	</volist>

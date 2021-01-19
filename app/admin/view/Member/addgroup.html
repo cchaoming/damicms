@@ -28,14 +28,14 @@ function chk(){
 		return false;
 	}
 }
-</script> <form action="/addgroup" method="post" onSubmit="return chk();">
+</script> <form action="__APP__/Member/addgroup" method="post" onSubmit="return chk();">
 <table width="600" border="0" align="center" cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">  <tr>
-    <td colspan="2" class="admintitle"> <neq name="info.group_id" value="">修改<input name="group_id" type="hidden" value="{$info.group_id}"><else/>添加</neq>会员组</td>
+    <td colspan="2" class="admintitle"> <neq name="info.group_id|default=''" value="">修改<input name="group_id" type="hidden" value="{$info.group_id}"><else/>添加</neq>会员组</td>
   </tr>
   
   <tr>
     <td width="28%" height="25" bgcolor="f7f7f7">组名称：</td>
-    <td width="72%" height="25" bgcolor="f7f7f7"><input name="group_name" type="text" size="30" id="name" value="{$info.group_name}" ></td>
+    <td width="72%" height="25" bgcolor="f7f7f7"><input name="group_name" type="text" size="30" id="name" value="{$info.group_name|default=''}" ></td>
   </tr>
   <tr>
     <td height="25" bgcolor="f7f7f7">内容权限：</td>
@@ -47,7 +47,7 @@ function chk(){
 		t.add({$vo.typeid},{$vo.fid},'<input class="udgp" name="typeids[]" type="checkbox" value="{$vo.typeid}" id="l{$vo.typeid}" pId="l{$vo.fid}" />{$vo.typename}');
 </volist>
         document.write(t);
-		<neq name="info.group_id" value="">
+		<neq name="info.group_id|default=''" value="">
 		$(function(){
 		var lids = '{$info.group_vail}';
 		var arr = lids.split(",");
@@ -89,7 +89,7 @@ function chk(){
   <tr>
     <td height="25" bgcolor="f7f7f7">备注:</td>
     <td height="25" bgcolor="f7f7f7"><label for="textarea"></label>
-      <textarea name="descript" id="textarea" cols="45" rows="5">{$info.descript}</textarea></td>
+      <textarea name="descript" id="textarea" cols="45" rows="5">{$info.descript|default=''}</textarea></td>
   </tr>
   <tr>
     <td height="25"  bgcolor="f7f7f7" align="left"></td><td height="25" bgcolor="f7f7f7"><input type="submit" name="Submit" class="btn btn-success" value="保存">&nbsp;&nbsp;<input name="Submit22" type="button" class="btn btn-info" onClick="history.go(-1)"  value="返 回"></td>

@@ -43,7 +43,7 @@ function remove_xss($val)
 
 function remove_html_xss($string){
 
-    require_once '../extend/htmlpurifier/library/HTMLPurifier.auto.php';
+    require_once('../extend/htmlpurifier/library/HTMLPurifier.auto.php');
     // 生成配置对象
     $_clean_xss_config = HTMLPurifier_Config::createDefault();
     $_clean_xss_config->set('HTML.DefinitionID', 'html5-definitions');
@@ -158,7 +158,7 @@ function check_wap()
 //发送邮件
 function send_mail($sendto_email, $user_name, $subject, $bodyurl, $port = 25)
 {
-    require_once '../extend/phpmailer/PhpMailer.php';
+    require_once('../extend/phpmailer/PhpMailer.php');
     $mail = new PHPMailer();
     $mail->IsSMTP();// send via SMTP
     $mail->SMTPDebug = 0; // 启用SMTP调试功能

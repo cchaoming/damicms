@@ -13,7 +13,7 @@
  *************************************************************/
 
 namespace app\admin\controller;
-use until\PHPExcel;
+use until\Page;
 
 class Member extends Common
 {
@@ -119,11 +119,14 @@ class Member extends Common
         }
     }
 
+    public function qq_set(){
+        return $this->display();
+    }
 //微信自定义菜单
     function wx_menu()
     {
         $dao = M('wx_menu');
-        if ($_POST) {
+        if ($this->request->isPost()) {
             for ($i = 1; $i <= 3; $i++) {
                 //一级菜单
                 //只有一级
@@ -134,11 +137,11 @@ class Member extends Common
                     $data['menu_value'] = $_POST['value_0_' . $i];
                     $data['menu_type'] = intval($_POST['type_0_' . $i]);
                     $data['pid'] = 0;
-                    $t = $dao->whereRaw('id=' . $i)->find();
+                    $t = $dao->removeOption()->whereRaw('id=' . $i)->find();
                     if (!$t) {
-                        $dao->save($data);
+                        $dao->removeOption()->save($data);
                     } else {
-                        $dao->whereRaw('id=' . $i)->save($data);
+                        $dao->removeOption()->whereRaw('id=' . $i)->save($data);
                     }
                 } else {
                     //增加顶级
@@ -147,7 +150,7 @@ class Member extends Common
                     $data['menu_value'] = '';
                     $data['menu_type'] = 2;
                     $data['pid'] = 0;
-                    $t = $dao->whereRaw('id=' . $i)->find();
+                    $t = $dao->removeOption()->whereRaw('id=' . $i)->find();
                     if (!$t) {
                         $dao->removeOption()->save($data);
                     } else {
@@ -163,11 +166,11 @@ class Member extends Common
                             $data['menu_value'] = $_POST['value_' . $i . '_' . $index];
                             $data['menu_type'] = intval($_POST['type_' . $i . '_' . $index]);
                             $data['pid'] = $i;
-                            $t = $dao->whereRaw('id=' . $index)->find();
+                            $t = $dao->removeOption()->whereRaw('id=' . $index)->find();
                             if (!$t) {
                                 $dao->removeOption()->save($data);
                             } else {
-                                $dao->whereRaw('id=' . $index)->save($data);
+                                $dao->removeOption()->whereRaw('id=' . $index)->save($data);
                             }
                         }
                     }
@@ -181,7 +184,7 @@ class Member extends Common
                 $enable = $v['pid'] == 0 ? $v['pid'] . '_' . $v['id'] : '0_' . $v['pid'] . '_' . $v['id'];
                 $ret[] = array('index' => $v['id'], 'level' => $level, 'name' => $v['menu_name'], 'key' => $v['menu_value'], 'enable' => $enable, 'parentId' => $v['pid'], 'type' => $v['menu_type']);
             }
-            $list_str = addslashes(json_encode($ret));
+            $list_str = json_encode($ret);
             //var_dump($list_str);
             $this->assign('list_str', $list_str);
             return $this->display();
@@ -337,21 +340,21 @@ class Member extends Common
             return $this->display();
         }
     }
-
-    function adduser()
+    public function usergroup(){return $this->display();}
+    public function adduser()
     {
         if ($this->request->isPost()) {
             $data = $_POST;
-            if ($_POST['userpwd'] == $_POST['userpwd2'] && trim($_POST['userpwd']) != '' && trim($_POST['userpwd2']) != '') {
-                $data['userpwd'] = md5(md5($_POST['userpwd']));
-            }
-            $User = D("Member"); // 实例化User对象
             try {
                 validate(\app\base\validate\Member::class)->check($data);
             } catch (ValidateException $e) {
                 // 验证失败 输出错误信息
                 $this->error($e->getError());
             }
+            if ($_POST['userpwd'] == $_POST['userpwd2'] && trim($_POST['userpwd']) != '' && trim($_POST['userpwd2']) != '') {
+                $data['userpwd'] = md5(md5($_POST['userpwd']));
+            }
+            $User = D("Member"); // 实例化User对象
             $User->save($data);
             $this->success('添加用户成功~', U('Member/userlist'));
         } else {
@@ -407,13 +410,15 @@ class Member extends Common
     {
         if ($this->request->isPost()) {
             $data = $_POST;
+            if(isset($_POST['typeids'])){
             $data['group_vail'] = implode(',', $_POST['typeids']);
+            }
             if (isset($data['group_id'])) {
                 M('memberGroup',true)->where('group_id','=',(int)$data['group_id'])->find()->save($data);
                 $this->assign("jumpUrl", U('Member/usergroup'));
                 $this->success('修改组成功');
             } else {
-                $gid = M('member_group',true)->save($data);
+                $gid = M('memberGroup',true)->save($data);
                 if ($gid == false) {
                     $this->error('添加会员组失败!');
                 } else {
@@ -491,12 +496,13 @@ class Member extends Common
     function goexcel()
     {
         $fileName = 'member' . date('_YmdHis');//or $xlsTitle 文件名称可根据自己情况设定
-        $objPHPExcel = new PHPExcel();
+        $objPHPExcel = new \PHPExcel();
         $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ');
         $title_array = array(
             'id' => '用户编号',
             'username' => '用户名',
             'realname' => '姓名',
+            'group_id'=>'用户组',
             'sex' => '性别',
             'tel' => '联系电话',
             'qq' => 'QQ',
@@ -524,7 +530,10 @@ class Member extends Common
                 $data_value = $data_array[$i][$k];
                 if ($k == 'addtime' && $data_value != '') {
                     $data_value = date('Y-m-d H:i:s', $data_value);
-                } //对注册时间特殊处理下
+                }else if($k == 'group_id'){
+                    $data_value = get_field('member_group','group_id='.$data_value,'group_name');
+                }
+                //对注册时间特殊处理下
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue($cellName[$j] . ($i + 2), (string)$data_value);
                 $j++;
             }

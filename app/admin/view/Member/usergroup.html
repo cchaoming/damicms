@@ -26,17 +26,17 @@
     <td width="25%" align="center" class="ButtonList">备注</td>
 	<td width="15%" height="30" align="center" class="ButtonList">操作</td>      
     </tr>
-	<arclist model="member_group" order="group_id desc" id="vo"> 
+	<damicms:arclist model="member_group" order="group_id desc" id="vo">
     <tr bgcolor="#ffffff" onMouseOver="this.style.backgroundColor='#EAFCD5';" onMouseOut="this.style.backgroundColor='';this.style.color=''">
     <td height="25">{$vo.group_id}</td>
     <td height="25" align="center">{$vo.group_name}</td>
-    <td align="center">&nbsp;{$vo.descript}</td>
+    <td align="center">&nbsp;{$vo.descript|raw}</td>
     <td align="center">
-     <a class="btn btn-success btn-sm active" href="{:U('Member/addgroup',array('group_id'=>$vo[group_id]))}">修改权限</a>
+     <a class="btn btn-success btn-sm active" href="{:U('Member/addgroup',array('group_id'=>$vo['group_id']))}">修改权限</a>
     <a class="btn btn-danger btn-sm active" href="javascript:if(confirm('您确定删除吗?')){
-location.href='{:U('Member/delgroup',array('group_id'=>$vo[group_id]))}';}">删除</a>    </td>
+location.href='{:U('Member/delgroup',array('group_id'=>$vo['group_id']))}';}">删除</a>    </td>
     </tr>
-	</arclist>
+	</damicms:arclist>
 	
 </table>
 </div>
