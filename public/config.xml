@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+<name>大米CMS</name>
+<version>2.2</version>
+<company>大米CMS</company>
+<icon>/Public/Editor/attached/file/20130410/20130410093818_15114.png</icon>
+<start_pic>/Public/Editor/attached/file/20130410/20130410093831_30409.jpg</start_pic>
+<menu_mess>消息中心</menu_mess>
+<home_name>回到首页</home_name>
+<descript>大米开发团队。大米CMS测试程序.</descript>
+<key>您的商业授权码</key>
+</config>

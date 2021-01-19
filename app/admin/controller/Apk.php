@@ -10,11 +10,12 @@
 
     @Date 2011-11-27 08:52:44 $
 *************************************************************/
-class ApkAction extends CommonAction
+namespace app\admin\controller;
+class Apk extends Common
 {	
  //配置
  function config(){
- $dom=new DOMDocument();
+ $dom=new \DOMDocument();
  $dom->load('./config.xml');
  if(!$dom){$this->error('XML配置路径错误！');exit();}
  $list = array();

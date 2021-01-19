@@ -21,13 +21,13 @@
     </tr>
 <notempty name="dirlast"> 
   <tr bgcolor="#f1f3f5" style="font-weight:bold;">
-  <td colspan="5" align="left"><img src="/Public/Admin/images/file/last.gif"> <a href="?s=Tpl/index/id/{$dirlast}">上级目录</a> 当前目录: {$dirpath}</td>
+  <td colspan="5" align="left"><img src="/Public/Admin/images/file/last.gif"> <a href="__APP__/Tpl/index?id={$dirlast}">上级目录</a> 当前目录: {$dirpath}</td>
   </tr>
 </notempty>
 <volist name="list_dir" id="vo">
   <eq name="vo.isDir" value="1">
   <tr>
-  	<td width="30%"><img src="/Public/Admin/images/file/folder.gif" width="16" height="16"><a href="?s=Tpl/index/id/{$vo.pathfile}"> {$vo.filename}</a></td>
+  	<td width="30%"><img src="/Public/Admin/images/file/folder.gif" width="16" height="16"><a href="__APP__/Tpl/index?id={$vo.pathfile}"> {$vo.filename}</a></td>
     <td width="20%">文件夹</td>
     <td width="10%">{:byte_format(getdirsize($vo['path'].'/'.$vo['filename']))}</td>
     <td width="20%">{$vo.mtime|getcolordate='Y-m-d H:i:s'}</td>
@@ -44,7 +44,7 @@
     <td>{$vo.size|byte_format}</td>
     <td>{:getcolordate('Y-m-d H:i:s',$vo.mtime)}</td>
     <php>if(preg_match("/\.html|\.htm|\.txt|\.css|\.txt|\.js|\.tpl/",$vo['filename'])){</php>
-    <td><a href="__APP__/Tpl/Add?id={:dami_url_repalce($dirpath,'desc')}|{:str_replace('.'.$vo['ext'],'*'.$vo['ext'],$vo['filename'])}">编辑</a> <a href="__APP__/Tpl/Del/id/{:dami_url_repalce($dirpath,'desc')}|{:str_replace('.'.$vo['ext'],'*'.$vo['ext'],$vo['filename'])}" onClick="return confirm('确定删除该文件吗?')">删除</a></td>
+    <td><a href="__APP__/Tpl/Add?id={:dami_url_repalce($dirpath,'desc')}|{:str_replace('.'.$vo['ext'],'*'.$vo['ext'],$vo['filename'])}">编辑</a> <a href="__APP__/Tpl/Del?id={:dami_url_repalce($dirpath,'desc')}|{:str_replace('.'.$vo['ext'],'*'.$vo['ext'],$vo['filename'])}" onClick="return confirm('确定删除该文件吗?')">删除</a></td>
     <php>}else{</php>
     <td><a href="{$dirpath}/{$vo.filename}" target="_blank">浏览</a> <a href="__APP__/Tpl/Del?id={:dami_url_repalce($dirpath,'desc')}|{:str_replace('.'.$vo['ext'],'*'.$vo['ext'],$vo['filename'])}" onClick="return confirm('确定删除该文件吗?')">删除</a></td>
     <php>}</php>

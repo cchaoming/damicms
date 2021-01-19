@@ -1,137 +1,138 @@
 <!DOCTYPE html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>网站后台管理</title>
-<link href="/Public/Admin/images/Admin_css.css" type="text/css" rel="stylesheet">
-<link rel="shortcut icon" href="/Public/Admin/images/myfav.ico" type="image/x-icon" />
-  <load href="/Public/Admin/js/admin.js,/Public/Admin/js/Jquery.js"/>
-<script src="/Public/js/bootstrap.min.js"></script>
-<script charset="gbk" src="/Public/Editor/kindeditor-min.js"></script>
-<script charset="utf-8" src="/Public/Editor/lang/zh_CN.js"></script>
-<style type="text/css">
-<!--
-.style5 {
-	color: #FF0000;
-	font-weight: bold;
-}
--->
-</style>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>网站后台管理</title>
+    <link href="/Public/Admin/images/Admin_css.css" type="text/css" rel="stylesheet">
+    <link rel="shortcut icon" href="/Public/Admin/images/myfav.ico" type="image/x-icon"/>
+    <load href="/Public/Admin/js/admin.js,/Public/Admin/js/Jquery.js"/>
+    <script src="/Public/js/bootstrap.min.js"></script>
+    <script charset="gbk" src="/Public/Editor/kindeditor-min.js"></script>
+    <script charset="utf-8" src="/Public/Editor/lang/zh_CN.js"></script>
+    <style type="text/css">
+        <!--
+        .style5 {
+            color: #FF0000;
+            font-weight: bold;
+        }
+
+        -->
+    </style>
 </head>
 <body>
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">提示信息</h4>
-      </div>
-      <div class="modal-body">
-        <iframe id="build_src" src="" name="build_src"  frameborder="no" scrolling="no" style="width:100%; height:90px;"></iframe>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-success" data-dismiss="modal">确定</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">提示信息</h4>
+            </div>
+            <div class="modal-body">
+                <iframe id="build_src" src="" name="build_src" frameborder="no" scrolling="no"
+                        style="width:100%; height:90px;"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <script>
-function pub_ajax(url,span_id){
-$.ajax({
-async:false,
-type: 'post',
-beforeSend:function(){
-$('#' + span_id).html('<img src="/Public/Editor/themes/common/loading.gif" border="0">正在生成中请稍后...');
-},
-data:'',
-url:url,
-success:function(datas){
-var datajson=eval('(' + datas + ')');
-var data=datajson.data;
-if(span_id !=''){
-$('#' + span_id).html('<font color=red>' + data + '</font>');
-alert(data); 
-}
-}
-});
-}
-function show_mydialog(url){
-$('#build_src').attr('src',url);
-$('#myModal').modal('show');
-}
-
-function sleep(numberMillis) { 
-   var now = new Date()();
-   var exitTime = now.getTime() + numberMillis;  
-   while (true) { 
-       now = new Date()(); 
-       if (now.getTime() > exitTime)    return;
+    function pub_ajax(url, span_id) {
+        $.ajax({
+            async: false,
+            type: 'post',
+            beforeSend: function () {
+                $('#' + span_id).html('<img src="/Public/Editor/themes/common/loading.gif" border="0">正在生成中请稍后...');
+            },
+            data: '',
+            url: url,
+            success: function (datas) {
+                var data = datas.data;
+                if (span_id != '') {
+                    $('#' + span_id).html('<font color=red>' + data + '</font>');
+                    alert(data);
+                }
+            }
+        });
     }
-}
 
-$(function() {
-$("#do_index").click(function() {
-pub_ajax('{$_SERVER.PHP_SELF}' + '?m=Build&a=build_index','m1');			
-});
-			
-			$("#do_list").click(function() {
-			show_mydialog('{$_SERVER.PHP_SELF}' + '?m=Build&a=build_list&typeid=' + $('#ClassID_1').val());			
-			});
-			
-			$("#do_art").click(function() {
-			show_mydialog('{$_SERVER.PHP_SELF}' + '?m=Build&a=build_art&typeid=' + $('#ClassID_2').val());	
-			});
-			
-			$("#do_all").click(function() {
-			pub_ajax('{$_SERVER.PHP_SELF}' + '?m=Build&a=build_index','');
-			show_mydialog('{$_SERVER.PHP_SELF}' + '?m=Build&a=build_list&typeid=0&doall=1');
-			});	
-		});
-		
+    function show_mydialog(url) {
+        $('#build_src').attr('src', url);
+        $('#myModal').modal('show');
+    }
+
+    function sleep(numberMillis) {
+        var now = new Date()();
+        var exitTime = now.getTime() + numberMillis;
+        while (true) {
+            now = new Date()();
+            if (now.getTime() > exitTime) return;
+        }
+    }
+
+    $(function () {
+        $("#do_index").click(function () {
+            pub_ajax('__APP__/Build/build_index', 'm1');
+        });
+
+        $("#do_list").click(function () {
+            show_mydialog('__APP__/Build/build_list?typeid=' + $('#ClassID_1').val());
+        });
+
+        $("#do_art").click(function () {
+            show_mydialog('__APP__/Build/build_art?typeid=' + $('#ClassID_2').val());
+        });
+
+        $("#do_all").click(function () {
+            pub_ajax('__APP__/Build/build_index', '');
+            show_mydialog('__APP__/Build/build_list?typeid=0&doall=1');
+        });
+    });
+
 </script>
-<table id="caiji_table" width="100%" border="0" align="center" cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
-<tr> 
-  <td colspan="5" class="admintitle">大米CMS生成静态HTML（<font color="#FF0000"><b>目录位于安装目录下/Html</b></font>）  </td>
-</tr>
+<table id="caiji_table" width="100%" border="0" align="center" cellpadding="3" cellspacing="2" bgcolor="#FFFFFF"
+       class="admintable">
+    <tr>
+        <td colspan="5" class="admintitle">大米CMS生成静态HTML（<font color="#FF0000"><b>目录位于安装目录下/Html</b></font>）</td>
+    </tr>
 
-<tr>
-  <td class=b1_1>&nbsp;</td>
-  <td width="81%" colspan=4 class=b1_1><input name="button" type="button" class="btn btn-info" value="生成首页" id="do_index">&nbsp;&nbsp;<span id="m1"></span></td>
-</tr>
+    <tr>
+        <td class=b1_1>&nbsp;</td>
+        <td width="81%" colspan=4 class=b1_1><input name="button" type="button" class="btn btn-info" value="生成首页"
+                                                    id="do_index">&nbsp;&nbsp;<span id="m1"></span></td>
+    </tr>
 
-<tr>
-  <td class=b1_1><div align="right"><select name="ClassID" id="ClassID_1">
-    <option value="0">请选择分类</option>{$op}</select></div></td>
-  <td colspan=4 class=b1_1><input type="button" name="add_role" class="btn btn-info" value="生成列表" id="do_list">
-    (不选择将生成所有列表)&nbsp;&nbsp;<span id="m2"></span></td>
-</tr>
+    <tr>
+        <td class=b1_1>
+            <div align="right"><select name="ClassID" id="ClassID_1">
+                <option value="0">请选择分类</option>
+                {$op|raw}</select></div>
+        </td>
+        <td colspan=4 class=b1_1><input type="button" name="add_role" class="btn btn-info" value="生成列表" id="do_list">
+            (不选择将生成所有列表)&nbsp;&nbsp;<span id="m2"></span></td>
+    </tr>
 
-<tr>
-  <td class=b1_1><div align="right"><select name="ClassID" id="ClassID_2">
-    <option value="0">请选择分类</option>{$op}</select></div></td>
-  <td colspan=4 class=b1_1><input type="button" name="add_role2" class="btn btn-info" value="生成详细" id="do_art">
-    (不选择将选择所有详细列表)&nbsp;&nbsp;<span id="m3"></span></td>
-</tr>
-<tr>
-<td width="19%" class=b1_1>&nbsp;</td>
-<td colspan=4 class=b1_1><input type="button" name="add_role22" class="btn btn-info"  value="生成全站" id="do_all">
-  (比较消耗资源请勿频繁点击)&nbsp;&nbsp;<span id="m4"></span></td>
-</tr>
-<tr>
-  <td class=b1_1>&nbsp;</td>
-  <td colspan=4 class=b1_1>&nbsp;</td>
-</tr>
+    <tr>
+        <td class=b1_1>
+            <div align="right"><select name="ClassID" id="ClassID_2">
+                <option value="0">请选择分类</option>
+                {$op|raw}</select></div>
+        </td>
+        <td colspan=4 class=b1_1><input type="button" name="add_role2" class="btn btn-info" value="生成详细" id="do_art">
+            (不选择将选择所有详细列表)&nbsp;&nbsp;<span id="m3"></span></td>
+    </tr>
+    <tr>
+        <td width="19%" class=b1_1>&nbsp;</td>
+        <td colspan=4 class=b1_1><input type="button" name="add_role22" class="btn btn-info" value="生成全站" id="do_all">
+            (比较消耗资源请勿频繁点击)&nbsp;&nbsp;<span id="m4"></span></td>
+    </tr>
+    <tr>
+        <td class=b1_1>&nbsp;</td>
+        <td colspan=4 class=b1_1>&nbsp;</td>
+    </tr>
 </table>
 
 </form>
-
-<span id="hide_row" style="display:none;">
-<tr><td class=b1_1><select name="field[]">
-  <volist name='list_field' id='vo'>
-  <option value="{$vo.Field}">{$vo.Field}</option>
-  </volist>
-  </select>
-  </td><td colspan=4 class=b1_1><input type="text" name="role[]" id="textfield" style="width:350px;">（正则表达式格式：&lt;div id=&quot;****&quot; &gt;&#123;*}&lt;/div&gt;）</td></tr>
-</span>
 </body>
 </html>

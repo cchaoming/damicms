@@ -9,7 +9,7 @@
 </style>
 </head>
 <body>
-<form action="/doadd" name="myform" id="myform" method="post" onSubmit="return chk();">
+<form action="__APP__/Mtable/doadd" name="myform" id="myform" method="post" onSubmit="return chk();">
 <table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
 <tr> 
     <td colspan="3" align=left class="admintitle">添加管理表格 [<a href="/index">管理表格列表</a>]</td>
@@ -20,7 +20,7 @@
 </tr>
 <td width="15%" class="b1_1">控制器英文名称</td>
 <td colspan="2" class="b1_1"><input name="action_name" type="text" id="action_name" size="40" maxlength="50">*生成的后台控制器文件名，比如输入:mybrand
-生成控制器路径 Admin\Lib\Action\MybrandAction.class.php</td>
+生成控制器路径 app\admin\controller\Mybrand.php</td>
 </tr>
 <tr>
   <td class="b1_1">MYSQL表名</td>
@@ -67,7 +67,7 @@
   
  }
 function get_fields(){
-var url = '{$_SERVER.PHP_SELF}' + '?m=Mtable&a=ajax_get_fields&table_name=' + $('#table_name').val();
+var url = '__APP__/Mtable/ajax_get_fields?table_name=' + $('#table_name').val();
 $.getJSON(url,{},function(json){
 var data = json.data;
 if(data == false){

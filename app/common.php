@@ -132,8 +132,6 @@ function get_url_contents($url,$data = [])
         }
         $result = curl_exec($ch);
         curl_close($ch);
-        curl_close($ch);
-        curl_close($ch);
         return $result;
     } else {
         if (ini_get("allow_url_fopen") == "1") {

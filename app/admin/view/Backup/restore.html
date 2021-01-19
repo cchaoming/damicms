@@ -7,10 +7,10 @@
     <load href="/Public/Admin/js/admin.js,/Public/Admin/js/Jquery.js"/>
 </head>
 <body>
-<form name="myform" method="POST" action="/delall">
+<form name="myform" method="POST" action="__APP__/Backup/delall">
 <table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="admintable">
 <tr> 
-  <td colspan="6" align=left class="admintitle">数据库恢复[<a href="/upload">上传备份文件</a>]</td>
+  <td colspan="6" align=left class="admintitle">数据库恢复[<a href="__APP__/Backup/upload">上传备份文件</a>]</td>
 </tr>
     <tr bgcolor="#f1f3f5" style="font-weight:bold;">
     <td width="10%" height="30" align="center" class="ButtonList">编号</td>
@@ -27,7 +27,7 @@
 	<td height="25" align="left" bgcolor="f7f7f7">{$vo.number}</td>
 	<td height="25" align="left" bgcolor="f7f7f7">{$vo.filesize} M</td>
 	<td height="25" align="left" bgcolor="f7f7f7">{$vo.maketime}</td>
-	<td height="25" align="left" bgcolor="f7f7f7"><a href="?m=Backup&a=back&rd={$vo.rd}&id={$vo.pre}" onClick="return confirm('导入数据会删除现在数据库的所有信息,请确定是否导入?')">导入</a> <a href="?m=Backup&a=del&id={$vo.filename}" onClick="return confirm('确定删除?')">删除</a> <a href="?m=Backup&a=down&id={$vo.filename}">下载</a></td>
+	<td height="25" align="left" bgcolor="f7f7f7"><a href="__APP__/Backup/back?rd={$vo.rd}&id={$vo.pre}" onClick="return confirm('导入数据会删除现在数据库的所有信息,请确定是否导入?')">导入</a> <a href="?m=Backup&a=del&id={$vo.filename}" onClick="return confirm('确定删除?')">删除</a> <a href="__APP__/Backup/down?id={$vo.filename}">下载</a></td>
     </tr>
 	</volist>
 <tr><td align="center" bgcolor="f7f7f7">全选:<input name="Action" type="hidden"  value="Del"><input name="chkAll" type="checkbox" id="chkAll" onClick=CheckAll(this.form) value="checkbox" style="border:0"></td>

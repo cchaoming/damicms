@@ -5,45 +5,44 @@ $total = count($type_arr);     //总共需要操作的记录数
 $pix = $width / $total;        //每条记录的操作所占的进度条单位长度 
 $progress = 0;                   //当前进度条长度 
 ?>
-<html> 
-<head> 
-    <title>生成静态列表</title> 
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-    <style> 
-    body, div input { font-family: Tahoma; font-size: 9pt } 
-    </style> 
-    <script language="JavaScript"> 
-    <!-- 
-    function updateProgress(sMsg, iWidth) 
-    {  
-        document.getElementById("status").innerHTML = sMsg; 
-        document.getElementById("progress").style.width = iWidth + "px"; 
-        document.getElementById("percent").innerHTML = parseInt(iWidth / <?php echo $width; ?> * 100) + "%"; 
-     } 
-    //--> 
-    </script>     
-</head> 
-<body> 
-<div style="margin: 4px; padding: 8px; border: 1px solid gray; background: #EAEAEA; width: <?php echo $width+8; ?>px"> 
-    <div style="padding: 0; background-color: white; border: 1px solid navy; width: <?php echo $width; ?>px"> 
-    <div id="progress" style="padding: 0; background-color: #FFCC66; border: 0; width: 0px; text-align: center;   height: 16px"></div>             
-    </div> 
-    <div id="status">&nbsp;</div> 
-    <div id="percent" style="position: relative; top: -30px; text-align: center; font-weight: bold; font-size: 8pt">0%</div> 
-</div> 
- 
+<html>
+<head>
+    <title>生成静态列表</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+    body, div input { font-family: Tahoma; font-size: 9pt }
+    </style>
+    <script language="JavaScript">
+    <!--
+    function updateProgress(sMsg, iWidth)
+    {
+        document.getElementById("status").innerHTML = sMsg;
+        document.getElementById("progress").style.width = iWidth + "px";
+        document.getElementById("percent").innerHTML = parseInt(iWidth / <?php echo $width; ?> * 100) + "%";
+     }
+    //-->
+    </script>
+</head>
+<body>
+<div style="margin: 4px; padding: 8px; border: 1px solid gray; background: #EAEAEA; width: <?php echo $width+8; ?>px">
+    <div style="padding: 0; background-color: white; border: 1px solid navy; width: <?php echo $width; ?>px">
+    <div id="progress" style="padding: 0; background-color: #FFCC66; border: 0; width: 0px; text-align: center;   height: 16px"></div>
+    </div>
+    <div id="status">&nbsp;</div>
+    <div id="percent" style="position: relative; top: -30px; text-align: center; font-weight: bold; font-size: 8pt">0%</div>
+</div>
+
 <?php 
-$_SESSION['is_rebuild'] = 1;
+session('is_rebuild',1);
 foreach($type_arr as $v){ 
 //sleep(1);
-ob_end_flush();//清空浏览器缓存
-?> 
-<script language="JavaScript"> 
-    updateProgress("正在生成栏目ID：<?php echo $v; ?> ....", <?php echo min($width, intval($progress)); ?>); 
-</script> 
+?>
+<script language="JavaScript">
+    updateProgress("正在生成栏目ID：<?php echo $v; ?> ....", <?php echo min($width, intval($progress)); ?>);
+</script>
 <?php 
 $url =  dirname('http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'])."/index.php/lists/";
-$total = M('article')->where('typeid in('.get_children($v).')')->count();
+$total = M('article')->whereRaw('typeid in('.get_children($v).')')->count();
 $total_page = ceil($total/$list_per);
 $url .= $v;
 @unlink('./Html/'.cookie('think_template').'/lists/'.$v.'.html');
@@ -53,17 +52,18 @@ for($i=1;$i<=$total_page;$i++){
 $go_url = $url.'/p/'.$i.'.html';
 get_url_contents($go_url);
 }
-$progress += $pix; 
-ob_flush();   
-flush();    
+$progress += $pix;
+ob_flush();
+flush();
 }
-unset($_SESSION['is_rebuild']);
-?> 
-<script language="JavaScript"> 
+ob_end_flush();//清空浏览器缓存
+session('is_rebuild',null);
+?>
+<script language="JavaScript">
     updateProgress("操作完成！", <?php echo $width; ?>);
-	<eq name="_REQUEST[doall]" value="1">
-	window.parent.show_mydialog('{$_SERVER.PHP_SELF}' + '?m=Build&a=build_art&typeid=0');
-	</eq>
-</script>  
-</body> 
+	<if isset($_REQUEST['doall']) && $_REQUEST['doall']==1>
+	window.parent.show_mydialog('__APP__/Build/build_art?typeid=0');
+	</if>
+</script>
+</body>
 </html> 

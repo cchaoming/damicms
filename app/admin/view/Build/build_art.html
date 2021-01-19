@@ -33,11 +33,9 @@ $progress = 0;                   //当前进度条长度
 </div> 
  
 <?php 
-$_SESSION['is_rebuild'] = 1;
+session('is_rebuild',1);
 $surl =  dirname('http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']);
 foreach($list as $k=>$v){
-sleep(1);
-ob_end_flush();//清空浏览器缓存
 ?> 
 <script language="JavaScript"> 
     updateProgress("正在生成文章ID：<?php echo $v[aid]; ?> ....", <?php echo min($width, intval($progress)); ?>); 
@@ -60,7 +58,8 @@ $progress += $pix;
 ob_flush();   
 flush();    
 }
-unset($_SESSION['is_rebuild']);
+ob_end_flush();//清空浏览器缓存
+session('is_rebuild',null);
 ?> 
 <script language="JavaScript"> 
     updateProgress("操作完成！", <?php echo $width; ?>); 

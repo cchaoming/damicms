@@ -45,7 +45,7 @@
 	alert(str);
  }
 function show_mydialog(id,name){
-var url = '{$_SERVER.PHP_SELF}' + '?m=Type&a=ajax_menuid&typeid=' + id;
+var url = '__APP__/Type/ajax_menuid?typeid=' + id;
 $.getJSON(url,{},function(json){
 var data = json.data;
 var status = json.status;
@@ -67,7 +67,7 @@ $('#myModal').modal('show');
 }
 $(function(){
 $('#myModal').on('hidden.bs.modal', function (e) {
-var url = '{$_SERVER.PHP_SELF}' + '?m=Type&a=ajax_domenu&typeid=' + $('#m_typeid').val() + '&menu_name=' + escape($('#m_typename').val()) + '&enable=' + $('input:radio[name="enable"]:checked').val();
+var url = '__APP__/Type/ajax_domenu?typeid=' + $('#m_typeid').val() + '&menu_name=' + escape($('#m_typename').val()) + '&enable=' + $('input:radio[name="enable"]:checked').val();
 $.post(url);
 });
 });
