@@ -114,7 +114,7 @@ class Vote extends Base
                 }
             }
         }
-        if($vote->removeOption()->where('id='.intval($_POST['id']))->save($data))
+        if($vote->removeOption()->whereRaw('id='.intval($_POST['id']))->save($data))
         {
             Cookie::set('vote'.$_POST['id'],'1',365 * 60 * 60 * 24);
             alert('投票成功!',U('votes/'.$_POST['id']));

@@ -72,19 +72,20 @@ class Adminlog extends Common
 	$this->model->add($data);
 	$this->success('添加成功!');	
     }*/
-	public function edit(){	
-	$info = $this->model->where('id='.$_REQUEST['id'])->find();
+	public function edit(){
+	$id = (int)$this->request->param('id');
+	$info = $this->model->whereRaw('id='.$id)->find();
 	$this->assign('info',$info);
 	return $this->display('add');
 	}
 	/*public function doedit(){
 	$data = $_POST;
-	$this->model->where('id='.$_REQUEST['id'])->save($data);
+	$this->model->whereRaw('id='.$_REQUEST['id'])->save($data);
 	$this->success('修改成功!');	
 	}
 	public function del()
     {
-		if($this->model->where('id='.$_REQUEST['id'])->delete())
+		if($this->model->whereRaw('id='.$_REQUEST['id'])->delete())
 		{
 			$this->success('操作成功!');
 		}

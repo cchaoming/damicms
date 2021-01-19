@@ -23,16 +23,16 @@ class Mood extends BaseController
 
     public function index()
     {
-        inject_check($_GET['aid']);
+        $aid = (int)$this->request->param('aid');
         $mood = M('mood',true);
-        $list = $mood->where('aid='.intval($_GET['aid']))->find();
+        $list = $mood->whereRaw('aid='.$aid)->find();
         if($list)
         {
             echo "{$list['mood1']},{$list['mood2']},{$list['mood3']},{$list['mood4']},{$list['mood5']},{$list['mood6']},{$list['mood7']},{$list['mood8']}";
         }
         else
         {
-            $data['aid'] = intval($_GET['aid']);
+            $data['aid'] = $aid;
             $mood->removeOption()->save($data);
             echo "0,0,0,0,0,0,0,0";
         }
@@ -40,9 +40,10 @@ class Mood extends BaseController
 
     public function update()
     {
+        $aid = (int)$this->request->param('aid');
         $type = $_GET['type'];
         $mood = M('mood',true);
-        $list = $mood->where('aid','=',(int)$_GET['aid'])->find();
+        $list = $mood->whereRaw('aid','=',$aid)->find();
         if($list)
         {
             switch($type)

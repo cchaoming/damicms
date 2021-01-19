@@ -21,7 +21,7 @@ class Publics extends Base
     function rss()
     {
         $myRss = new RSS("大米CMS", config('app.SERVER_URL'), "大米CMS");
-        $list = M('article')->where('1=1')->select()->toArray();
+        $list = M('article')->whereRaw('1=1')->select()->toArray();
         foreach ($list as $k => $v) {
             $myRss->AddItem($v['title'], 'http://' . $_SERVER['SERVER_NAME'] . url('articles', $v['aid']), $v['addtime']);
         }
@@ -35,7 +35,7 @@ class Publics extends Base
     {
         $list = M('article')->whereRaw("description=''")->select()->toArray();
         foreach ($list as $k => $v) {
-            M('article')->removeOption()->where('aid=' . $v['aid'])->save(['description'=>msubstr(strip_tags($v['content']), 0, 100)]);
+            M('article')->removeOption()->whereRaw('aid=' . $v['aid'])->save(['description'=>msubstr(strip_tags($v['content']), 0, 100)]);
         }
         $this->ajaxReturn('成功', '', 1,'html');
     }

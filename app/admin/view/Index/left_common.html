@@ -9,13 +9,13 @@
        </volist>
        <eq name="item['id']" value="1">
        <php>$where = "enable=1 and typeid in(".session(C('USER_CONTENT_KEY')).")";</php>
-        <arclist model="extend_menu" where="$where">        
+        <damicms:arclist model="extend_menu" where="$where">
         <gt name='vo.typeid' value='0'>
         <li><a data-title="{$vo.menu_name}" data-href="__APP__/Article/index/typeid/{$vo.typeid}" target="main">{$vo.menu_name}</a> </li>
         <else/>
         <li><a data-href="__APP__/{$vo.action_name}/index" data-title="{$vo.menu_name}">{$vo.menu_name}</a> </li>
         </gt>
-        </arclist>
+        </damicms:arclist>
         </eq>
 	  </ul>
 			</dd>

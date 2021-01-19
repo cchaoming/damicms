@@ -42,7 +42,7 @@ class Pl extends Common
     {
         $id = (int)$this->request->param('id');
 		$type = M('pl');
-		$list = $type->where('id='.$id)->find();
+		$list = $type->whereRaw('id='.$id)->find();
 		$this->assign('list',$list);
 		return $this->display();
     }
@@ -68,7 +68,7 @@ class Pl extends Common
         $id = (int)$this->request->param('id');
 		if($id)
 		{
-            $type->where('id='.$id)->delete();
+            $type->whereRaw('id='.$id)->delete();
 			$this->assign("jumpUrl",U('Pl/index'));
 			$this->success('操作成功!');
 		}

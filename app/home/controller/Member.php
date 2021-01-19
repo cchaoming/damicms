@@ -37,7 +37,7 @@ class Member extends Base
         $this->wxconfig['callback'] = 'http://' . $_SERVER['HTTP_HOST'] . "/index.php/Member/wxcallback";
         $member_menu = S('member_menu');
         if (!is_array($member_menu)) {
-            $member_menu = M('member_menu')->whereRaw('is_show=1')->orderRaw('drand asc')->select();
+            $member_menu = M('member_menu')->whereRaw('is_show=1')->orderRaw('drand asc')->select()->toArray();
             S('member_menu', $member_menu);
         }
         $this->assign('member_menu', $member_menu);
@@ -298,7 +298,7 @@ class Member extends Base
         } else {
             $data['is_lock'] = 0;
             $data['last_uptime'] = time();
-            M('member',true)->where("username='{$username}' and last_uptime is null")->save($data);
+            M('member',true)->whereRaw("username='{$username}' and last_uptime is null")->find()->save($data);
             $this->assign('jumpUrl', 'http://' . $_SERVER['HTTP_HOST']);
             $this->success('邮件激活，请登陆`');
         }
@@ -356,7 +356,7 @@ class Member extends Base
                 $this->error($e->getError());
             }
         } else {
-            $info = M('member')->where('id=' . (int)session('dami_uid'))->find();
+            $info = M('member')->whereRaw('id=' . (int)session('dami_uid'))->find();
             $this->assign('info', $info);
             return $this->display();
         }
@@ -392,7 +392,7 @@ class Member extends Base
     function tougaolist()
     {
         self::is_login();
-        $list = M('article')->where('dami_uid=' . (int)session('dami_uid'))->select()->toArray();
+        $list = M('article')->whereRaw('dami_uid=' . (int)session('dami_uid'))->select()->toArray();
         $this->assign('list', $list);
         return $this->display();
     }

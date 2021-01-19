@@ -18,7 +18,7 @@ class Article extends Base
         $config = config('basic');
         $page_model = 'page/page_default.html';
         //相关判断
-        $alist = $article->where('aid=' . $aid)->find();
+        $alist = $article->whereRaw('aid=' . $aid)->find();
         if (!$alist) {
             alert('文章不存在或已删除!');
         }

@@ -490,10 +490,10 @@ function get_childcity($typeid, $withself = 1)
         $temp[] = $typeid;
     }
     $dao = M('city');
-    $t = $dao->where('city_id =' . $typeid)->find();
+    $t = $dao->whereRaw('city_id =' . $typeid)->find();
     if ($t) {
         $str = $t["path"] . "-" . $t["city_id"];
-        $mylist = $dao->removeOption()->where("1 = instr(path,'" . $str . "')")->select()->toArray();
+        $mylist = $dao->removeOption()->whereRaw("1 = instr(path,'" . $str . "')")->select()->toArray();
         foreach ($mylist as $kk => $vv) {
             $temp[] = $vv['city_id'];
         }

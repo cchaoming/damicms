@@ -119,7 +119,7 @@ class Type extends Common
         $data['typeid'] = $typeid;
         $data['show_fields'] = $str;
         $dao = M('type', true);
-        $temp = $dao->where('typeid=' . $typeid)->save($data);
+        $temp = $dao->whereRaw('typeid=' . $typeid)->save($data);
         //保存扩展字段显示
         $list_extend = M('extend_fieldes')->orderRaw('orders asc')->select()->toArray();
         foreach ($list_extend as $k => $v) {
@@ -145,7 +145,7 @@ class Type extends Common
             $ids = get_children($typeid);
             $where .= "typeid in($ids)";
             M('type')->whereRaw($where)->save(['show_fields' => $str]);
-            $childids = M('type')->whereRaw($where)->select();
+            $childids = M('type')->whereRaw($where)->select()->toArray();
             foreach ($childids as $key => $value) {
                 foreach ($list_extend as $k => $v) {
                     $dao = M('extend_show')->whereRaw('typeid=' . $value['typeid'] . ' and field_id=' . $v['field_id'])->find();
@@ -216,7 +216,7 @@ class Type extends Common
         $fid = 0;
         if (isset($_POST['fid']) && intval($_POST['fid']) > 0) {
             $fid = intval($_POST['fid']);
-            $temp = M('type')->where('typeid=' . $fid)->find();
+            $temp = M('type')->whereRaw('typeid=' . $fid)->find();
             if ($temp) {
                 $_POST['show_fields'] = $temp['show_fields'];
                 $_POST['list_path'] = $temp['list_path'];

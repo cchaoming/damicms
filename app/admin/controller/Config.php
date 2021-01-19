@@ -17,7 +17,7 @@ class Config extends Common
     public function index()
     {
         $type = M('config');
-        $list = $type->where('id=1')->find();
+        $list = $type->whereRaw('id=1')->find();
         $this->assign('list', $list);
         return $this->display('index');
     }

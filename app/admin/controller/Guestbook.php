@@ -44,7 +44,7 @@ class Guestbook extends Common
     {
         $id = (int)$this->request->param('id');
         $type = M('guestbook');
-        $list = $type->where('id=' . $id)->find();
+        $list = $type->whereRaw('id=' . $id)->find();
         $this->assign('list', $list);
         return $this->display('edit');
     }
@@ -82,9 +82,9 @@ class Guestbook extends Common
         $id = (int)$this->request->param('id');
         $status = (int)$this->request->param('status');
         if ($status == 0) {
-            $a->where('id=' . $id)->save(['status'=>1]);
+            $a->whereRaw('id=' . $id)->save(['status'=>1]);
         } elseif ($status == 1) {
-            $a->where('id=' . $id)->save(['status'=>0]);
+            $a->whereRaw('id=' . $id)->save(['status'=>0]);
         } else {
             $this->error('非法操作!');
         }
@@ -134,7 +134,7 @@ class Guestbook extends Common
         if(!$keywords){$this->error('参数错误!');}
         $guestbook = M('guestbook');
         $map[] = ['content','like', '%' . $keywords . '%'];
-        $count = $guestbook->where($map)->order('addtime desc')->count();
+        $count = $guestbook->where($map)->orderRaw('addtime desc')->count();
         $p = new Page($count, 20);
         $list = $guestbook->limit($p->firstRow,$p->listRows)->select()->toArray();
         if($this->request->isPost()){

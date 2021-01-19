@@ -45,6 +45,9 @@ class Damicms extends TagLib {
         $className = "\\app\\base\\model\\".ucfirst($model);
         if (class_exists($className)) {
             $html .= '<?php $mdl=new ' . $className . '();';
+            if(strpos($model,'View') !== false){
+                $html .= '$mdl = $mdl->getTableInstance();';
+            }
         } else {
             if ($prefix == false) {
                 $model = config('database.connections.mysql.prefix') . $model;
@@ -59,7 +62,7 @@ class Damicms extends TagLib {
                 $html .= '$cache_key="key_".md5("' . $query . '");';
                 $html .= 'if(!$ret=S($cache_key)){ $ret=\think\facade\Db::query("' . $query . '");S($cache_key,$ret,'.$cache.');}';
             } else {
-                $html .= '$ret=$mdl->query("' . $query . '");';
+                $html .= '$ret=\think\facade\Db::query("' . $query . '");';
             }
         }
         //如果使用了分页,缓存也不生效

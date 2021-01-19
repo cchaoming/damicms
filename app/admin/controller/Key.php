@@ -80,7 +80,7 @@ class Key extends Common
         $type = M('key');
         $id = (int)$this->request->param('id');
         if ($id) {
-            $type->where('id=' . $id)->delete();
+            $type->whereRaw('id=' . $id)->delete();
             $this->assign("jumpUrl", U('Key/index'));
             $this->success('操作成功!');
 

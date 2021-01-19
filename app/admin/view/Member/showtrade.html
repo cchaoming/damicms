@@ -7,14 +7,14 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
   <!--[if lt IE 9]>
-  <script type="text/javascript" src="lib/html5shiv.js"></script>
-  <script type="text/javascript" src="lib/respond.min.js"></script>
+  <script type="text/javascript" src="/static/lib/html5shiv.js"></script>
+  <script type="text/javascript" src="/static/lib/respond.min.js"></script>
   <![endif]-->
-  <link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
-  <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
-  <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
-  <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
-  <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+  <link rel="stylesheet" type="text/css" href="/static/h-ui/css/H-ui.min.css" />
+  <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/H-ui.admin.css" />
+  <link rel="stylesheet" type="text/css" href="/static/lib/Hui-iconfont/1.0.8/iconfont.css" />
+  <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/skin/default/skin.css" id="skin" />
+  <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/style.css" />
   <!--[if IE 6]>
   <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
   <script>DD_belatedPNG.fix('*');</script>
@@ -34,17 +34,17 @@
     </tr>
     </thead>
     <tbody>
-    <php>$total_price=0;</php>
-    <arclist model="TradeView" where="member_trade.group_trade_no = '$_REQUEST[buyid]'">
+    <php>$total_price=0;$buyid = $_REQUEST['buyid'];</php>
+    <damicms:arclist model="TradeView" where="member_trade.group_trade_no = '$buyid'">
       <tr class="text-c">
       <td>{$vo.buy_id}</td>
       <td>{$vo.title}</td>
       <td>{$vo.servial}</td>
       <td>{$vo.num}</td>
       <td>{$vo.price}</td>
-        <php>$total_price += $vo[price] * $vo[num];</php>
+        <php>$total_price += $vo['price'] * $vo['num'];</php>
     </tr>
-    </arclist>
+    </damicms:arclist>
     <tr><td colspan="7" style="text-align: right;padding-right: 50px;">订单合计:{$total_price}</td></tr>
     </tbody>
   </table>
@@ -60,15 +60,16 @@
     </tr>
     </thead>
     <tbody>
-    <arclist model="TradeView" where="member_trade.group_trade_no = '$_REQUEST[buyid]'" group="member_trade.group_trade_no">
+
+    <damicms:arclist model="TradeView" where="member_trade.group_trade_no = '$buyid'" group="member_trade.group_trade_no">
       <tr class="text-c">
         <td>{$vo.sh_name}</td>
         <td>{$vo.sh_tel}</td>
         <td>{$vo.province}{$vo.city}{$vo.area}<br>{$vo.address}</td>
-        <td>{:C('TRADE_TYPE.'.$vo['trade_type'])}</td>
-        <td>{:C('TRADE_STATUS.'.$vo['status'])}</td>
+        <td>{:config('app.TRADE_TYPE.'.$vo['trade_type'].'.title')}</td>
+        <td>{:config('app.TRADE_STATUS.'.$vo['status'])}</td>
       </tr>
-    </arclist>
+    </damicms:arclist>
     </tbody>
   </table>
 </div>

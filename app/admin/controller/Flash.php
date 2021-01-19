@@ -79,7 +79,7 @@ class Flash extends Common
         $id = (int)$this->request->param('id');
         $flash = M('flash');
         if ($id) {
-            $flash->where('id=' . $id)->delete();
+            $flash->whereRaw('id=' . $id)->delete();
             $this->assign("jumpUrl", U('Flash/index'));
             $this->success('操作成功!');
         }
@@ -93,9 +93,9 @@ class Flash extends Common
         $s = (int)$this->request->param('status');
         if ($id) {
             if ($s == 0) {
-                $status->where('id=' . $id)->save(['status' => 1]);
+                $status->whereRaw('id=' . $id)->save(['status' => 1]);
             } elseif ($s == 1) {
-                $status->where('id=' . $id)->save(['status' => 0]);
+                $status->whereRaw('id=' . $id)->save(['status' => 0]);
             } else {
                 $this->error('非法操作!');
             }

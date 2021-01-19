@@ -75,7 +75,7 @@ class Apk extends Common
             }
             $dao = M('vipMess',true);
             $data = $_POST;
-            $list = $dao->where('1=1')->order('id asc')->find();
+            $list = $dao->whereRaw('1=1')->orderRaw('id asc')->find();
             if ($list) {
                 $list->save($data);
             } else {

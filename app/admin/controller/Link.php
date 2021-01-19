@@ -42,7 +42,7 @@ class Link extends Common
     {
         $id = (int)$this->request->param('id');
 		$link = M('link');
-		$list = $link->where('id='.$id)->find();
+		$list = $link->whereRaw('id='.$id)->find();
 		$this->assign('list',$list);
 		return $this->display();
     }
@@ -87,7 +87,7 @@ class Link extends Common
 		$type = M('link');
 		if($id)
 		{
-            $type->where('id='.$id)->delete();
+            $type->whereRaw('id='.$id)->delete();
 			$this->assign("jumpUrl",U('Link/index'));
 			$this->success('操作成功!');
 		}
@@ -100,11 +100,11 @@ class Link extends Common
         $status = (int)$this->request->param('status');
 		if($status == 0)
 		{
-			$link->where( 'id='.$id )->save(['status'=>1]);
+			$link->whereRaw( 'id='.$id )->save(['status'=>1]);
 		}
 		elseif($status==1)
 		{
-			$link->where( 'id='.$id )->save(['status'=>0]);
+			$link->whereRaw( 'id='.$id )->save(['status'=>0]);
 		}
 		else
 		{

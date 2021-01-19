@@ -152,8 +152,8 @@ class Clear extends Common
         $data = array_slice($data, 2);
         //读取数据库附件内容
         $a = M('config');
-        $logo = $a->where('id=1')->value('sitelogo');
-        $watermarkimg = $a->where('id=1')->value('watermarkimg');
+        $logo = $a->whereRaw('id=1')->value('sitelogo');
+        $watermarkimg = $a->value('watermarkimg');
         if (!empty($logo) || !empty($watermarkimg)) {
             if (!empty($logo)) $pic[] = $logo;
             if (!empty($watermarkimg)) $pic[] = $watermarkimg;

@@ -34,7 +34,7 @@ class Ad extends Common
         $p->setConfig('theme', "%first%%upPage%%linkPage%%downPage%%end%
 		<li><span><select name='select' onChange='javascript:window.location.href=(this.options[this.selectedIndex].value);'>%allPage%</select></span></li>\n<li><span>共<font color='#009900'><b>%totalRow%</b></font>条记录 20条/每页</span></li>");
         $this->assign('page', $p->show());
-        $list = $ad->removeOption()->where($map)->orderRaw('addtime desc')->limit($p->firstRow, $p->listRows)->select()->toArray();
+        $list = $ad->orderRaw('addtime desc')->limit($p->firstRow, $p->listRows)->select()->toArray();
         $this->assign('list', $list);
         return $this->display();
     }
@@ -95,7 +95,7 @@ class Ad extends Common
         $id = (int)$this->request->param('id');
         if ($id) {
             $type = M('ad');
-            if ($type->where('id=' . $id)->delete()) {
+            if ($type->whereRaw('id=' . $id)->delete()) {
                 $this->assign("jumpUrl", U('Ad/index'));
                 $this->success('操作成功!');
             }
@@ -109,9 +109,9 @@ class Ad extends Common
         $status = (int)$this->request->param('status');
         $a = M('ad');
         if ($status == 0) {
-            $a->where('id=' . $id)->save(['status'=>1]);
+            $a->whereRaw('id=' . $id)->save(['status'=>1]);
         } else {
-            $a->where('id=' . $id)->save(['status'=>0]);
+            $a->whereRaw('id=' . $id)->save(['status'=>0]);
         }
         return $this->redirect('Ad/index');
     }

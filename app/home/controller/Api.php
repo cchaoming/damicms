@@ -50,6 +50,9 @@ class Api extends BaseController
         $className = "\\app\\base\\model\\".ucfirst($model);
         if (class_exists($className)) {
             $m = new $className();
+            if(strpos($model,'View') !== false){
+                $m = $m->getTableInstance();
+            }
         } else {
             if ($prefix == false) {
                 $model = config('database.connections.mysql.prefix') . $model;
@@ -60,26 +63,24 @@ class Api extends BaseController
         }
         //如果使用了分页,缓存也不生效
         if($page){
-            $count=$m->where($where)->count();
+            $count=$m->whereRaw($where)->count();
             $total_page = ceil($count / $pagesize);
             $p = new \until\Page($count,$pagesize);
             //如果使用了分页，num将不起作用
-            $t=$m->removeOption();
-            if($field){$t->field($field);}
-            if($where){$t->whereRaw($where);}
-            if($order){$t->order($order);}
-            $t->limit($p->firstRow,$p->listRows);
+            if($field){$m->field($field);}
+            if($where){$m->whereRaw($where);}
+            if($order){$m->orderRaw($order);}
+            $m->limit($p->firstRow,$p->listRows);
             //echo $m->getLastSql();
-            $ret = array('total_page'=>$total_page,'data'=>$t->select()->toArray());
+            $ret = array('total_page'=>$total_page,'data'=>$m->select()->toArray());
         }
         //如果没有使用分页，并且没有 query
         if(!$page){
-            $ret=$m->removeOption();
-            if($field){$ret->field($field);}
-            if($where){$ret->whereRaw($where);}
-            if($order){$ret->order($order);}
-            if($num){$ret->limit((int)$num);}
-            $ret = $ret->toArray();
+            if($field){$m->field($field);}
+            if($where){$m->whereRaw($where);}
+            if($order){$m->orderRaw($order);}
+            if($num){$m->limit((int)$num);}
+            $ret = $m->toArray();
         }
         $this->ajaxReturn($ret,'返回信息',1);
     }
@@ -112,7 +113,7 @@ class Api extends BaseController
         $field = $this->request->param('type',0)==0?'hits':'good_tp';
         $hits = get_field('article','aid=' . $aid,$field);
         if (intval(config('app.IS_BUILD_HTML')) == 1 && $field== 'hits') {
-            M('article')->where('aid',$aid)->inc('hits',1)->update();
+            M('article')->whereRaw('aid='.$aid)->inc('hits',1)->update();
         }
         $this->ajaxReturn($hits,1,'','html');
     }

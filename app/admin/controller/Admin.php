@@ -21,7 +21,7 @@ class Admin extends Common
         if (session(config('app.ADMIN_AUTH_KEY'))) {
             $list = $admin->field('id,lastlogintime,lastloginip,username,status')->select()->toArray();
         } else {
-            $list = $admin->where('id=' . (int)session('authId'))->field('id,lastlogintime,lastloginip,username,status')->select()->toArray();
+            $list = $admin->whereRaw('id=' . (int)session('authId'))->field('id,lastlogintime,lastloginip,username,status')->select()->toArray();
         }
         foreach ($list as $k => $v) {
             $role_id = M('role_admin')->whereRaw('user_id=' . $v['id'])->value('role_id');
@@ -78,7 +78,7 @@ class Admin extends Common
     function editgroup()
     {
         $role_id = (int)$this->request->param('id');
-        $info = M('role')->where('id=' . $role_id)->find();
+        $info = M('role')->whereRaw('id=' . $role_id)->find();
         $rinfo = M('access')->whereRaw('role_id=' . $role_id)->select()->toArray();
         $this->assign('info', $info);
         $this->assign('rinfo', $rinfo);
@@ -97,7 +97,7 @@ class Admin extends Common
     function editnode()
     {
         $id = (int)$this->request->param('id');
-        $info = M('node')->where('id=' . intval($id))->find();
+        $info = M('node')->whereRaw('id=' . intval($id))->find();
         $this->assign('info', $info);
         return self::nodeadd();
     }
@@ -168,11 +168,11 @@ class Admin extends Common
                 $info->save($data);
             }
             $mids = $_POST['manageids'];
-            M('access')->where('role_id=' . $role_id)->delete();
+            M('access')->whereRaw('role_id=' . $role_id)->delete();
             //保存组栏目权限数据
             for ($i = 0; $i < count($mids); $i++) {
                 $temp = array();
-                $t = M('node')->where('status=1 and id=' . intval($mids[$i]))->find();
+                $t = M('node')->whereRaw('status=1 and id=' . intval($mids[$i]))->find();
                 if ($t) {
                     $temp['role_id'] = $role_id;
                     $temp['node_id'] = intval($mids[$i]);
@@ -193,7 +193,7 @@ class Admin extends Common
         if ($this->request->isPost()) {
             $id = $this->request->param('id');
             $this->check_superadmin();
-            $info = M('node', true)->where('id=' . intval($id))->find();
+            $info = M('node', true)->whereRaw('id=' . intval($id))->find();
 
             $_POST['menu_pid'] = $id = (int)$this->request->param('pid');
             if ($info) {
@@ -233,7 +233,7 @@ class Admin extends Common
         $dao = M('node');
         $ret = array();
         $child = array();
-        $list = $dao->where('pid=' . $id)->select()->toArray();
+        $list = $dao->whereRaw('pid=' . $id)->select()->toArray();
         foreach ($list as $k => $v) {
             $child = get_childID_list($v['id']);
         }
@@ -243,7 +243,7 @@ class Admin extends Common
     //栏目权限树
     private function node_tree()
     {
-        $node_tree = M('node')->where('status=1')->select()->toArray();
+        $node_tree = M('node')->whereRaw('status=1')->select()->toArray();
         $this->assign('node_tree', $node_tree);
     }
 
@@ -299,8 +299,8 @@ class Admin extends Common
             $role_list = M('role')->whereRaw('status=1')->select()->toArray();
         }
         $this->assign('role_list', $role_list);
-        $list = M('admin')->where('id=' . $id)->find();
-        $cur_roleid = M('role_admin')->where('user_id=' . $id)->value('role_id');
+        $list = M('admin')->whereRaw('id=' . $id)->find();
+        $cur_roleid = M('role_admin')->whereRaw('user_id=' . $id)->value('role_id');
         $this->assign('list', $list);
         $this->assign('role_id', $cur_roleid);
         return $this->display();
@@ -313,7 +313,7 @@ class Admin extends Common
             $this->error('用户名不能为空!');
         }
         $this->verify_token();
-        M('role_admin')->where('user_id=' . $_POST['id'])->save(['role_id' => $_POST['role_id']]);
+        M('role_admin')->whereRaw('user_id=' . $_POST['id'])->save(['role_id' => $_POST['role_id']]);
         $admin = M('admin', true);
         $data['username'] = trim($_POST['username']);
         $data['id'] = $_POST['id'];
@@ -350,7 +350,7 @@ class Admin extends Common
         }
         $type = M('admin');
         M('role_admin')->whereRaw('user_id=' . $id)->delete();
-        $type->where('id=' . $id)->delete();
+        $type->whereRaw('id=' . $id)->delete();
         $this->_log_operation('删除管理员ID：' . intval($id) . '成功');
         $this->assign("jumpUrl", U('Admin/index'));
         $this->success('操作成功!');

@@ -270,7 +270,7 @@ class Member extends Common
         $where .= '1=1';
         $count = $model->whereRaw($where)->count();
         $p = new Page($count, 20);
-        $list = $model->whereRaw($where)->order('addtime desc')->limit($p->firstRow, $p->listRows)->select()->toArray();
+        $list = $model->whereRaw($where)->orderRaw('addtime desc')->limit($p->firstRow, $p->listRows)->select()->toArray();
         $p->setConfig('prev', '上一页');
         $p->setConfig('header', '篇文章');
         $p->setConfig('first', '首 页');
@@ -404,6 +404,7 @@ class Member extends Common
         $this->assign('info', $info);
         return $this->display();
     }
+    public function showtrade(){return $this->display();}
 
 //添加、修改用户组
     function addgroup()

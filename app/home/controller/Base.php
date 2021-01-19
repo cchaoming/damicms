@@ -96,13 +96,13 @@ class Base extends BaseController
     protected function children_dir($typeid = 22, $assign = 'product_dir', $show_all = 0)
     {
         $dao = M('type');
-        $t = $dao->where('typeid =' . $typeid)->find();
+        $t = $dao->whereRaw('typeid =' . $typeid)->find();
         if ($t) {
             if ($show_all == 1) {
                 $str = $t["path"] . "-" . $t["typeid"];
-                $mylist = $dao->removeOption()->where("1 = instr(path,'" . $str . "')")->select()->toArray();
+                $mylist = $dao->removeOption()->whereRaw("1 = instr(path,'" . $str . "')")->select()->toArray();
             } else {
-                $mylist = $dao->removeOption()->where("fid = " . $t["typeid"])->select()->toArray();
+                $mylist = $dao->removeOption()->whereRaw("fid = " . $t["typeid"])->select()->toArray();
             }
             $this->assign($assign, $mylist);
         }
@@ -116,7 +116,7 @@ class Base extends BaseController
         }
         $str = get_all_tree($typeid);
         $dao = M('type');
-        $t = $dao->where('typeid in(' . $str . ')')->order('typeid')->select()->toArray();
+        $t = $dao->whereRaw('typeid in(' . $str . ')')->orderRaw('typeid')->select()->toArray();
         $this->assign($assign, $t);
     }
 

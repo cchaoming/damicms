@@ -61,7 +61,7 @@ class Card extends Common
             while ($cur_num < $num) {
                 $card_number = MiString::rand_string($card_long, 1);
                 $card_pwd = MiString::rand_string($pwd_long, 5);
-                $t = $dao->where("card_number='$card_number'")->find();
+                $t = $dao->whereRaw("card_number='$card_number'")->find();
                 if (!$t) {
                     $data['card_number'] = $card_number;
                     $data['card_pwd'] = $card_pwd;

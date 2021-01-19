@@ -49,7 +49,7 @@ class Label extends Common
     {
         $id = (int)$this->request->param('id');
         $label = M('label');
-        $list = $label->where('id=' . $id)->find();
+        $list = $label->whereRaw('id=' . $id)->find();
         $this->assign('list', $list);
         return $this->display();
     }

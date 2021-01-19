@@ -24,9 +24,9 @@
     <tr>
       <td width="6%" height="25" bgcolor="f7f7f7">快速查找：      </td>
       <td width="93%" align="left" valign="top" bgcolor="f7f7f7">
-	  <form name="form1" method="POST" action="/cartlist">
+	  <form name="form1" method="POST" action="__APP__/Member/cartlist">
 	    日期从&nbsp;
-	    <input name="start_time" type="text" id="start_time" value="" class="s26"  onClick="WdatePicker({dateFmt:'yyyy-MM-dd'})">&nbsp;到&nbsp;<input name="end_time" type="text" id="end_time" value="" class="s26"  onClick="WdatePicker({dateFmt:'yyyy-MM-dd'})">&nbsp;关键字:&nbsp;
+	    <input name="start_time" type="text" id="start_time" autocomplete="off" value="" class="s26"  onClick="WdatePicker({ dateFmt:'yyyy-MM-dd'})">&nbsp;到&nbsp;<input name="end_time" type="text" id="end_time" value="" class="s26" autocomplete="off" onClick="WdatePicker({ dateFmt:'yyyy-MM-dd'})">&nbsp;关键字:&nbsp;
         <input name="keyword" type="text" id="keyword" value="" class="s26">
         <input type="submit" class="btn btn-danger btn-sm" value="搜索">
       </form></td>
@@ -47,21 +47,21 @@
     </tr>
 	<volist name="list" id="vo"> 
     <tr bgcolor="#ffffff" onMouseOver="this.style.backgroundColor='#EAFCD5';" onMouseOut="this.style.backgroundColor='';this.style.color=''">
-    <td height="25"><a href='javascript:void(0);' onclick="layer_show('订单详情','/showtrade/buyid/{$vo.group_trade_no}','','')">{$vo.group_trade_no}</a></td>
-     <td height="25" align="center">{:C('TRADE_TYPE.'.$vo['trade_type'])}</td>
+    <td height="25"><a href='javascript:void(0);' onclick="layer_show('订单详情','__APP__/Member/showtrade/buyid/{$vo.group_trade_no}','','')">{$vo.group_trade_no}</a></td>
+     <td height="25" align="center">{:config('app.TRADE_TYPE.'.$vo['trade_type'].'.title')}</td>
 	 <td height="25" align="center">订单合计:{$vo.sub_total_price}元</td>
         <td height="25">{$vo.sh_name}</td>
     <td align="left">{$vo.province}{$vo.city}{$vo.area}<br>{$vo.address}<br>{$vo.sh_tel}</td>
     <td align="center">
-    <php>$status_arr = C('TRADE_STATUS');</php>
+    <php>$status_arr = config('app.TRADE_STATUS');</php>
     <select class="trade_status" name="trade_status" rel="{$vo.group_trade_no}">
     <volist name='status_arr' id='voo' key='z'>
-    <option value="{$z-1}" <eq name="vo[status]" value="$z-1">selected="selected"</eq> >{$voo}</option>
+    <option value="{$z-1}" <eq name="vo['status']" value="$z-1">selected="selected"</eq> >{$voo}</option>
     </volist>
     </select>
-        <a class="btn btn-info btn-sm active" href="javascript:layer_show('订单详情','/showtrade/buyid/{$vo.group_trade_no}','','');">详情</a>
+        <a class="btn btn-info btn-sm active" href="javascript:layer_show('订单详情','__APP__/Member/showtrade?buyid={$vo.group_trade_no}','','');">详情</a>
     <a class="btn btn-danger btn-sm active" href="javascript:if(confirm('您确定删除吗?')){
-location.href='{:U('Member/deltrade',array('buyid'=>$vo[group_trade_no]))}';}">删除</a>
+location.href='{:U('Member/deltrade',array('buyid'=>$vo['group_trade_no']))}';}">删除</a>
     </td>
     </tr>
 	</volist>
@@ -75,7 +75,7 @@ $(this).change(function(){
 	if(confirm('您确定交易状态将设置为:' + $(this).find("option:selected").text() )){
 var status = $(this).val();
 var buyid= $(this).attr('rel');
-$.getJSON("/ajax_change_trade", {status: status,buyid:buyid}, function(json){
+$.getJSON("__APP__/Member/ajax_change_trade", {status: status,buyid:buyid}, function(json){
 		alert(json.data);
 });
 	}else{
@@ -87,9 +87,9 @@ $.getJSON("/ajax_change_trade", {status: status,buyid:buyid}, function(json){
 </script>
 </div>
 <!--_footer 作为公共模版分离出去-->
-<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
-<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
-<script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="/static/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/static/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
 </body>
 </html>
