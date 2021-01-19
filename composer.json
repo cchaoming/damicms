@@ -1,22 +1,21 @@
 {
-    "name": "topthink/think",
-    "description": "the new thinkphp framework",
+    "name": "topthink/damicms",
+    "description": "samrt cms base on thinkphp6",
     "type": "project",
     "keywords": [
-        "framework",
-        "thinkphp",
-        "ORM"
+        "damicms",
+        "thinkphp6"
     ],
-    "homepage": "http://thinkphp.cn/",
+    "homepage": "http://www.damicms.com/",
     "license": "Apache-2.0",
     "authors": [
         {
-            "name": "liu21st",
-            "email": "liu21st@gmail.com"
+            "name": "toby.chen",
+            "email": "279197963@qq.com"
         },
         {
             "name": "yunwuxin",
-            "email": "448901948@qq.com"
+            "email": "cchaoming@163.com"
         }        
     ],
     "require": {
