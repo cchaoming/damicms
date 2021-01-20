@@ -34,7 +34,7 @@ class ControllerBefore
             //允许参数
             ob_start();
             $request_data = $request->param();
-            $allow_param = ['page', 'author_id','keyword'];
+            $allow_param = ['page', 'author_id','keyword','p','typceid'];
             $static_file = './html/' . TMPL_NAME . '/' . MODULE_NAME.'/'.ACTION_NAME;
             $mid_str = '';
             if (is_array($request_data)) {

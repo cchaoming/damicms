@@ -30,7 +30,7 @@ $(document).bind("mobileinit", function() {
 <div data-role="content">	
 <div data-role="panel" id="rightpanel1" data-position="right" data-display="overlay" data-theme="b"> 
 <p><ul>
-<eq name="_SESSION['dami_uid']" value="">
+<eq name=":session('dami_uid')" value="">
 <li><a href="{:U('Member/login')}" data-role="button" data-icon="user" id="userlogin">用户登陆</a></li>
 <li><a href="{:U('Member/gobuy',array('iscart'=>'1'))}" data-role="button" data-icon="grid" data-ajax="false">我的购物车</a></li>
 <li><a href="tel:15982072714" data-role="button" data-icon="star">致电我们</a></li>
@@ -57,9 +57,9 @@ $(document).bind("mobileinit", function() {
 		</form>
 		<ul data-role="listview"  data-inset="true" >
        <!-- 特殊处理下单页关于我们-->
-        <li><a href="{:url(lists,14)}"><img src="__TMPL__/images/icon/contact.png" alt="News" class="ui-li-icon">关于我们</a></li>
+        <li><a href="{:geturl('lists',14)}"><img src="__TMPL__/images/icon/contact.png" alt="News" class="ui-li-icon">关于我们</a></li>
 		<volist name="menu" id="vo" offset="1" length='7' key='k'> 
-			<li><a href="<eq name="vo.url" value="">{$vo.typeid|url=lists,###}<else/>{$vo.url}</eq>" rel="external" data-transition="slidedown" <eq name='vo.typeid' value='26'>data-ajax="false"</eq>>
+			<li><a href="<eq name="vo.url" value="">{$vo.typeid|geturl='lists',###}<else/>{$vo.url}</eq>" rel="external" data-transition="slidedown" <eq name='vo.typeid' value='26'>data-ajax="false"</eq>>
 			<neq name="icon[$k+1]" value=""><img src="__TMPL__/images/icon/{$icon[$k+1]}" alt="News" class="ui-li-icon"></neq>{$vo.typename}</a></li> 
 			</volist>
 			<li><a href="#links" data-transition="slidedown"><img src="__TMPL__/images/icon/links.png" alt="Links" class="ui-li-icon">友情链接</a></li>		
