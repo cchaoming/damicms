@@ -16,7 +16,7 @@
 <php>if(in_array($vo[status],array(0,3,6,9,10,11))){</php>
 <a data-role="button" data-inline="true" data-theme="e" href="javascript:if(confirm('您确定删除吗?')){
 location.href='{:U('Member/deltrade',array('buyid'=>$vo[buy_id]))}';}">删除</a>
-<php>}</php>&nbsp;<a href="{$vo.gid|url=articles,###}" data-role="button" data-inline="true" data-theme="d">产品详情</a>
+<php>}</php>&nbsp;<a href="{$vo.gid|geturl='articles',###}" data-role="button" data-inline="true" data-theme="d">产品详情</a>
 </td>
 </tr>
 </volist>

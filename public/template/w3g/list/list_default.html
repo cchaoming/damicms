@@ -28,7 +28,7 @@
 <!--有子分类-->
 		<ul data-role="listview">
 		<volist name='child_list' id='vo'>
-		    <li><a href="{$vo.typeid|url=lists,###}" rel="external"><h3>{$vo.typename}</h3></a></li>
+		    <li><a href="{$vo.typeid|geturl='lists',###}" rel="external"><h3>{$vo.typename}</h3></a></li>
 		</volist>
 		</ul>
 <!--关于我们单页-->
@@ -42,7 +42,7 @@
 		<ul data-role="listview">
 		<volist name="list" id="vo">
 		<li>
-		<a href="{$vo.aid|url=articles,###}"><h3>{$vo.title}</h3><p>{$vo.addtime}</p></a></li>
+		<a href="{$vo.aid|geturl='articles',###}"><h3>{$vo.title}</h3><p>{$vo.addtime}</p></a></li>
 		</volist>
 		<li><div class="PageN">{$page|raw}</div></li>
 		</ul>		
