@@ -6,6 +6,8 @@
 官网:https://www.damicms.com
 下载:https://www.damicms.com/Down
 
+> 联系技术QQ:279197963 微信:damicms
+
 ## 主要新特性
 
 CMS特点：
