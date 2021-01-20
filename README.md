@@ -35,7 +35,7 @@ CMS特点：
 
 如果需要更新框架使用
 ~~~
-composer update topthink/framework
+composer update
 ~~~
 
 ## 开发文档
