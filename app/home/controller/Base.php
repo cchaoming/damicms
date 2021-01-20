@@ -40,8 +40,8 @@ class Base extends BaseController
         // 查找所有系统设置表数据
         $abs_path = '/template/' . TMPL_NAME . '/';
         $this->template = '.' . $abs_path;
-        config('view.view_path', $this->template);
-        config('view.tpl_replace_string.__TMPL__', $abs_path);
+        config(['view_path'=>$this->template],'view');
+        config(['tpl_replace_string'=>['__TMPL__'=>$abs_path]],'view');
         //获取访客权限
         if (intval(cookie('first_look')) != 1 && !session('dami_uid')) {
             if (config('basic.isread') == 1) {
