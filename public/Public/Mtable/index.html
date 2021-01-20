@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>网站后台管理</title>
+<link href="/Public/Admin/images/Admin_css.css" type=text/css rel=stylesheet>
+<load href= "/Public/Admin/js/admin.js,/Public/Admin/js/Ajax.js,/Public/Admin/js/Jquery.js"/>
+</head>
+<body>
+<div class="main_center">
+<table width="95%" border="0"  align=center cellpadding="3" cellspacing="2" bgcolor="#FFFFFF" class="table table-bordered">
+<tr> 
+  <td colspan="80" align=left class="admintitle">menu_name[<a href="{:U('action_name/add')}">添加</a>]</td>
+</tr>
+    <tr bgcolor="#f1f3f5" style="font-weight:bold;">
+col_td_loop
+    </tr>
+<volist name="list" id="vo"> 
+    <tr>
+col_td_volist
+    </tr>
+</volist>
+<tr><td bgcolor="f7f7f7" colspan="80">
+<div>
+<ul class="pagination">
+{$page|raw}
+</ul>
+</div>
+</td></tr></table>
+</div>
+</body>
+</html>
