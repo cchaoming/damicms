@@ -10,8 +10,11 @@
 // +----------------------------------------------------------------------
 
 // [ 应用入口文件 ]
-namespace think;
 
+
+namespace think;
+require_once('php_safe.php');
+if(!file_exists(dirname(__FILE__).'/install.lck')) header('Location:./install/index.php');
 require __DIR__ . '/../vendor/autoload.php';
 
 // 执行HTTP应用并响应

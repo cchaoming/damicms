@@ -1,31 +1,36 @@
-ThinkPHP 6.0
+大米CMS beta7.0.0
 ===============
 
 > 运行环境要求PHP7.1+。
 
-[官方应用服务市场](https://market.topthink.com) | [`ThinkPHP`开发者扶持计划](https://sites.thinkphp.cn/1782366)
-
-ThinkPHPV6.0版本由[亿速云](https://www.yisu.com/)独家赞助发布。
+官网:https://www.damicms.com
+下载:https://www.damicms.com/Down
 
 ## 主要新特性
 
-* 采用`PHP7`强类型（严格模式）
-* 支持更多的`PSR`规范
-* 原生多应用支持
-* 更强大和易用的查询
-* 全新的事件系统
-* 模型事件和数据库事件统一纳入事件系统
-* 模板引擎分离出核心
-* 内部功能中间件化
-* SESSION/Cookie机制改进
-* 对Swoole以及协程支持改进
-* 对IDE更加友好
-* 统一和精简大量用法
+CMS特点：
+1:扩展字段自定义,根据自己系统需要无限扩展字段,对于SELECT等下拉选项支持PHP代码生成OPTION,支持自定义多图多文件上传字段!
+2:后台栏目分类无限极，并可以控制字段的显示或隐藏,生成不同的管理表单,内置RBAC权限体系，分栏目管理权限，内容管理权限，会员支持分组，不同会员组不同阅读权限
+3:列表模板（list目录下）和详细模板（page目录下）自定义，字段显示与模板控制能下级同步本级配置
+4:基于最新的thinkphp6.X MVC框架开发（官网www.thinkphp.cn）, 内置大量函数方便前台模板调用,大米拥有自己的万能标签与分类标签等方便调用数据
+5:作站灵活,可以将该系统做成任何类型网站，内置新闻类型站、企业站、手机3g站模型,通过http://***安装目录****/?t=xinwen这种查看，方便二次开发出不同模板
+7:支持伪静态与全站生成静态HTML，支持数据采集,系统一键升级！
+8:国内率先将微电商的概念引入CMS，让企业站不仅仅再是展示企业，可快速开展电子商务。集成支付宝个人纯担保交易，企业即时到账接口,微信支付，支持购物车，可在线支付,货到付款，站内支付三种购买方式!支持批量制卡，会员用支付宝、充值卡充值，会员集成QQ快捷登陆，购物订单可通过电子邮件提醒！
+9:跨平台支持移动终端访问,自适应，不变形！支持微信，可做手机APP等应用开发,内置JSON数据API接口
+10:国内CMS首创MSYQL表万能管理模型，输入MYSQL表名即可生成一个有增删改功能的管理模型，可快速在此基础上开发出自己想要的管理功能!
+
+在线生成安卓APK应用特点：
+
+1:一个手机上可以安装多个企业在本站生成的APK，不会出现签名冲突，这估计是国内首创！
+2:不是将网页下载生成静态打包进APK，而是将大米CMS做的手机站进行包装签名生成APK，实现网站内容同步，客户自主性很高，生成简单快捷.
+3:内置订单消息推送,整合微信接口
 
 ## 安装
 
 ~~~
-composer create-project topthink/think tp 6.0.*
+网站根目录public
+##：自动安装：根据向导install/index.php安装
+##:手动安装：在public下新建install.lck 导入数据库修改.env里数据库连接信息
 ~~~
 
 如果需要更新框架使用
@@ -33,24 +38,11 @@ composer create-project topthink/think tp 6.0.*
 composer update topthink/framework
 ~~~
 
-## 文档
+## 开发文档
 
-[完全开发手册](https://www.kancloud.cn/manual/thinkphp6_0/content)
-
-## 参与开发
-
-请参阅 [ThinkPHP 核心框架包](https://github.com/top-think/framework)。
+[think6.x完全开发手册]  https://www.kancloud.cn/manual/thinkphp6_0/1037479
+[模板引擎] https://www.kancloud.cn/manual/think-template/1286403
+[大米CMS下载以及模板开发]https://www.damicms.com/Down
 
 ## 版权信息
-
-ThinkPHP遵循Apache2开源协议发布，并提供免费使用。
-
-本项目包含的第三方源码和二进制文件之版权信息另行标注。
-
-版权所有Copyright © 2006-2020 by ThinkPHP (http://thinkphp.cn)
-
-All rights reserved。
-
-ThinkPHP® 商标和著作权所有者为上海顶想信息科技有限公司。
-
-更多细节参阅 [LICENSE.txt](LICENSE.txt)
+大米CMS  软件版权登记号:2014SR045881
