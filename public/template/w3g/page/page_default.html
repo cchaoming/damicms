@@ -30,14 +30,14 @@ max-width:100%;}
 	<div data-role="content">
 		
 <div id="wrapper">
-<h1><notempty name="article.titlecolor"><font color="{$article.titlecolor}"></notempty>{$article.title}<present name="nowpage">({$nowpage})</present><notempty name="article.titlecolor"></font></notempty></h1>
+<h1><notempty name="article.titlecolor"><font color="{$article.titlecolor}"></notempty>{$article.title}<present name="nowpage">({$nowpage|raw})</present><notempty name="article.titlecolor"></font></notempty></h1>
 <p>{$article.content|raw}</p>
 <p>发布日期: {$article.addtime}</p>
 <p><div class="PageN">{$page|raw}</div></p>
 <p></p>
 </div>
-<neq name="lastpage" value=""><div  class="ui-bar ui-bar-a ui-corner-all" data-icon="arrow-l" data-theme="a" data-iconpos="left">{$lastpage}</div></neq>
-    <neq name="nextpage" value=""><div c class="ui-bar ui-bar-a ui-corner-all" data-icon="arrow-r" data-theme="a" data-iconpos="left">{$nextpage}</div></neq>
+<neq name="lastpage" value=""><div  class="ui-bar ui-bar-a ui-corner-all" data-icon="arrow-l" data-theme="a" data-iconpos="left">{$lastpage|raw}</div></neq>
+    <neq name="nextpage" value=""><div c class="ui-bar ui-bar-a ui-corner-all" data-icon="arrow-r" data-theme="a" data-iconpos="left">{$nextpage|raw}</div></neq>
 	</div><!-- /content -->	
 </div><!-- /page -->
 </body>

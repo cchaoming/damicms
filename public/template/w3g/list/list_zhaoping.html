@@ -29,8 +29,8 @@
 			<volist name="list" id="vo">
 			<li data-role="list-divider"><a href='{$vo.aid|geturl='articles',###}' style="color:#000000" rel="external">{$vo.title}</a><span class="ui-li-count">{$vo.addtime}</span></li>
 			<li>
-			<h3>{$vo.content}</h3>
-			<p class="ui-li-aside" style="top:0.2em;right:2.2em;">{$vo.description}</p>	
+			<h3>{$vo.content|raw}</h3>
+			<p class="ui-li-aside" style="top:0.2em;right:2.2em;">{$vo.description|raw}</p>
 			</li>
 			</volist>
 			<li><div class="PageN">{$page|raw}</div></li>
