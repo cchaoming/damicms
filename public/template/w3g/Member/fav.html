@@ -1,0 +1,14 @@
+<include file="$head"/>
+<div  data-role="content">
+    <table data-role="table" id="movie-table" data-mode="reflow" class="ui-responsive table-stroke">
+        <thead>
+        <tr><th width="80" align="center">文章编号</th><th>文章标题</th><th>操作</th></tr>
+        </thead>
+        <volist name="list" id="vo">
+            <tr><td align="center">{$vo.id}</td><td> <a target="_blank" href="{$vo.aid|geturl='articles',###}">{$vo.title}</a></td>
+                <td><a class="btn btn-danger btn-sm active" href="javascript:if(confirm('您确定删除吗?')){
+location.href='{:U('Member/fav_del',array('aid'=>$vo['aid']))}';}">删除</a>
+                </td></tr>
+        </volist>
+    </table>
+</div>
