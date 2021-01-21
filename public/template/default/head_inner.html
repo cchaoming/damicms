@@ -21,7 +21,7 @@
 <div class="top">
 
 <div class="TopLogo">
-<div class="logo"><a href="__ROOT__"><img src="__PUBLIC__/Uploads/logo/{$config.sitelogo}" alt="{$config.sitetitle}"></a></div>
+<div class="logo"><a href="/"><img src="__PUBLIC__/Uploads/logo/{$config.sitelogo}" alt="{$config.sitetitle}"></a></div>
 </div>
 
 <div class="TopInfo">
@@ -46,7 +46,7 @@
 <div class="NavBG">
 <!--头部菜单-->
 	<ul id="headermenu_nav">
-		<li><a href='__ROOT__'>首页</a></li>
+		<li><a href='/'>首页</a></li>
 		<volist name="menu" id="vo" offset="0" length='7' key="k">
 			<li><a href="<eq name="vo.url" value="">{$vo.typeid|geturl='lists',###}<else/>{$vo.url}</eq>" target="<eq name="vo.target" value="1">_self<else/>_blank</eq>">{$vo.typename}</a>
 				<!--第二级-->

@@ -76,7 +76,7 @@ $(document).ready(function() {
     <div class="col-sm-10">
     <script>KindEditor.ready(function(K){var editor = K.editor({allowFileManager : true});K("#insertfile_sl").click(function() {
 	editor.loadPlugin("insertfile", function() {editor.plugin.fileDialog({fileUrl : K("#sl").val(),clickFn : function(url, title) {
-	url=url.replace('__ROOT__','');K("#sl").val(url);editor.hideDialog();}});});});});</script><input type="text" id="sl" name="imgurl" value=""  /> <input type="button" id="insertfile_sl" value="选择文件" />
+	url=url.replace('/','');K("#sl").val(url);editor.hideDialog();}});});});});</script><input type="text" id="sl" name="imgurl" value=""  /> <input type="button" id="insertfile_sl" value="选择文件" />
 </textarea>
     </div>
   </div>

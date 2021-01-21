@@ -1,6 +1,6 @@
 <include file="$head"/>
-<script charset="gbk" src="__PUBLIC__/Editor/kindeditor-min.js"></script>
-<script charset="utf-8" src="__PUBLIC__/Editor/lang/zh_CN.js"></script>
+<script charset="gbk" src="/Public//Editor/kindeditor-min.js"></script>
+<script charset="utf-8" src="/Public//Editor/lang/zh_CN.js"></script>
 <script> 
 KindEditor.options.filterMode = false;
 KindEditor.ready(function(K) {
@@ -16,7 +16,7 @@ K.create('#Content_tougao',{ items : [
  	<form class="form-horizontal" role="form" method="post" action="" data-ajax="false">
 
 <select ID="Typeid" name="typeid" class="form-control">
-<option value="">请选择分类</option>{$op}
+<option value="">请选择分类</option>{$op|raw}
 </select>
 
       <input type="text" class="form-control" id="title" name="title" value="" placeholder="投稿标题">   

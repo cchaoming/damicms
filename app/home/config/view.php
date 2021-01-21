@@ -9,7 +9,7 @@ return [
     // 模板文件名分隔符
     'tpl_replace_string' => [
         '__ROOT__'=> '/',
-        '__PUBLIC__'=>'/public/',
+        '__PUBLIC__'=>'/Public/',
         '__TMPL__'=> $cur_template,
     ]
 ];

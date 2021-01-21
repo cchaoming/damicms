@@ -1,5 +1,12 @@
 <include file="$head"/>
-<link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" language="javascript" src="/Public/js/jsAddress.js"></script>
+<script>
+  //省市区初始化
+  $(document).ready(function() {
+    addressInit('province', 'city', 'area','{$uinfo.province}','{$uinfo.city}','{$uinfo.area}');
+  });
+  </script>
+<link href="/Public//css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 <style>
 *, *:before, *:after {
 -webkit-box-sizing: inherit; 
@@ -27,7 +34,7 @@ box-sizing: inherit;
 <td align="center" valign="middle">{$vo.gtype}<input name="gtype[]" type="hidden" value="{$vo.gtype}" /></td>
 <td align="center" valign="middle">{$vo.qty}<input name="qty[]" type="hidden" value="{$vo.qty}" /></td>
 <td align="center" valign="middle">{$vo.price}<input name="price[]" type="hidden" value="{$vo.price}" /></td>
-<td align="center" valign="middle"><php>$total_fee += ($vo[qty]*$vo[price])*1; echo $vo[qty]*$vo[price];</php></td></tr></neq>
+<td align="center" valign="middle"><php>$total_fee += ($vo['qty']*$vo['price'])*1; echo $vo['qty']*$vo['price'];</php></td></tr></neq>
 </volist>
 </table>
 </div>
@@ -41,26 +48,22 @@ box-sizing: inherit;
 <tr><td  align="center">区域</td><td><select  name="province" id="province"  ></select><select  name="city" id="city"></select><select  name="area" id="area" ></select></td></tr>
 <tr><td  align="center">地址</td><td><input type="text" value="{$uinfo.address}" name="address" class="dline" /></td></tr>
 <tr><td  align="center">支付方式</td><td><select name="trade_type" id="trade_type">
-  <php>$trade_type = C('TRADE_TYPE');</php>
+  <php>$trade_type = config('app.TRADE_TYPE');</php>
   <volist name='trade_type' id="vo" key='k'>
-  <option value="{$key}">{$vo}</option>
+  <option value="{$key}">{$vo.title}</option>
   </volist>
   </select></td></tr>
 </table>
 </div>
   </div>
   <div style="text-align:right">合计：<font style="color:#F00; font-size:14px; font-weight:bold;">{$total_fee}</font>元&nbsp;&nbsp;&nbsp;&nbsp;
+    {:token_field('__hash__')}
   <input name="iscart" type="hidden" value="{$_REQUEST['iscart']}" /><input type="submit" value="提交订单" data-theme="b" /><br><br>
   </form>
 </div>
-<script type="text/javascript" language="javascript" src="__PUBLIC__/js/jsAddress.js"></script>
 <script>
 $(document).ready(function() {
-	addressInit('province', 'city', 'area');
-	$('#province').val('{$uinfo.province}').change();
-	$('#city').val('{$uinfo.city}').change();
-	$('#area').val('{$uinfo.area}').change();
-  <if condition="C('WX_TRADE') eq 1">
+  <if config('app.WX_TRADE')==1>
 	if(isWeiXin()){
     //在微信中直接移除支付宝支付与微信扫码支付
 	$("#trade_type option[value='1']").remove();

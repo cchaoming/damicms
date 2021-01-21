@@ -4,28 +4,27 @@
 });
 </script>
 <div data-role="content">
-    <?php
-$user_agent = $_SERVER['HTTP_USER_AGENT'];
-if (strpos($user_agent, 'MicroMessenger') === false || intval(C('WX_TRADE')) != 1) {
-if(intval(C('AP_TYPE')) == 1){
-$action = "./Trade/ap_jishi/alipayapi.php";
-}else{
-$action = "./Trade/ap_danbao/alipayapi.php";
-}
-}else{
-$action = "./Trade/Wxpay/dopay/jsapi.php";
-}
-?>
-    <form name="payment" action="{$action}" method="post" data-ajax="false">
+    <form name="payment" action="{:U('Member/chongzhi')}" method="post" data-ajax="false">
         <p>您的余额：
-            <font color=red>{$row[money]}</font>
+            <font color=red>{$row['money']}</font>
             <span>元</span>
         </p>          <input name="WIDtotal_fee" placeholder="充值金额 单位（元*）"/>
         <input name="WIDsubject" value="{$config.sitetitle}会员在线充值" placeholder="充值名称(*）"/>
-        <input size="30" name="WIDbody" value="{$config.sitetitle}会员在线充值" placeholder="{$config.sitetitle}会员在线充值"/>
+        <input size="30" name="WIDbody" value="{$config.sitetitle}会员在线充值" placeholder="{$config.sitetitle}会员在线充值" style="display: none"/>
         <input size="30" name="WIDreceive_mobile" placeholder="联系电话"/>
         <input size="30" name="WIDout_trade_no" type="hidden" value="CZ{:time()}-{:session('dami_uid')}"/>
-        <?php if (strpos($user_agent, 'MicroMessenger') === false) { ?>
+
+        <div data-role="fieldcontain">
+            <fieldset data-role="controlgroup">
+                <legend>支付方式:</legend>
+                <label for="gender01">支付宝</label>
+                <input type="radio" name="paymethod" value="alipay" checked>
+                <label for="gender02">微信支付</label>
+                <input type="radio" name="paymethod" value="wxpay">
+            </fieldset>
+        </div>
+
+        <?php $user_agent = $_SERVER['HTTP_USER_AGENT'];if (strpos($user_agent, 'MicroMessenger') === false) { ?>
 					<span style="display:none;">
                     <dt>商品展示地址：</dt>
                     <dd>
@@ -38,7 +37,7 @@ $action = "./Trade/Wxpay/dopay/jsapi.php";
                     <dd>
                         <span class="null-star">*</span>
                         <input size="30" name="WIDreceive_name"/> <input size="30" name="WIDseller_email"
-                                                                         value="{:C('AP_EMAIL')}"/>
+                                                                         value="{:config('app.AP_EMAIL')}"/>
                         <span>如：张三
 </span>
                     </dd>

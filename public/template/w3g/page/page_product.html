@@ -72,7 +72,7 @@ max-width:100%;}
 </div>
 
 <link href="__TMPL__/css/shopping.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="__PUBLIC__/js/jQuery-shopping.js"></script>
+<script type="text/javascript" src="/Public/js/jQuery-shopping.js"></script>
 <script type="text/javascript" >
 var url_root = '';
 //初始化购物车
@@ -83,8 +83,8 @@ $.getJSON("/index.php/Publics/ajax_cart_list",{},function(ret){
 $.each(data,function(key,val) {
 	if(typeof(val.name) != "undefined"){
 	num++;
-	if(typeof(val.option.pic) != "undefined" && val.option.pic !=''){var pic=val.option.pic;}else{var pic='__ROOT__/Public/image/nopic.gif';}
-	$('.J-shoping-body').prepend('<div class="J-shoping-list" data-id="'+val.id+'"><a href="#" title=""><img src="' + pic + '" width="50"height="50"/></a><div class="J-shoping-list-a"><p>' + val.name + '【' + val.qty + '件】</p><p><span class="left">'+ val.option.gtype + '</span><span class="right"><em>' + val.price + '</em>元</span></p></div><div class="baseBg J-shoping-close"></div></div>');		
+	if(typeof(val.option.pic) != "undefined" && val.option.pic !=''){var pic=val.option.pic;}else{var pic='/Public/image/nopic.gif';}
+	$('.J-shoping-body').prepend('<div class="J-shoping-list" data-bid="' + val.id + '"  data-id="'+val.id+'"><a href="#" title=""><img src="' + pic + '" width="50"height="50"/></a><div class="J-shoping-list-a"><p>' + val.name + '【' + val.qty + '件】</p><p><span class="left">'+ val.option.gtype + '</span><span class="right"><em>' + val.price + '</em>元</span></p></div><div class="baseBg J-shoping-close"></div></div>');
 	};
 	$('.J-shoping-num').text(num);
 	

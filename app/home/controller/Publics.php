@@ -70,7 +70,7 @@ class Publics extends Base
 //将物品从购物车中删除
     function ajax_del_cart()
     {
-        $id = intval($_REQUEST['id']);
+        $id = intval($this->request->param('id'));
         $cart = new Cart();
         $arr = array(
             'rowid' => md5(strval($id)),

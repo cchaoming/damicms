@@ -41,7 +41,7 @@ class Base extends BaseController
         $abs_path = '/template/' . TMPL_NAME . '/';
         $this->template = '.' . $abs_path;
         config(['view_path'=>$this->template],'view');
-        config(['tpl_replace_string'=>['__TMPL__'=>$abs_path]],'view');
+        config(['tpl_replace_string'=>['__TMPL__'=>$abs_path,'__ROOT__'=> '/', '__PUBLIC__'=>'/Public/']],'view');
         //获取访客权限
         if (intval(cookie('first_look')) != 1 && !session('dami_uid')) {
             if (config('basic.isread') == 1) {
