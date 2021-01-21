@@ -148,9 +148,13 @@ class Base extends BaseController
             $menuson = $all_menu[0];
             $menu = $all_menu[1];
         }else{
-            $menu = $type->whereRaw('ismenu=1')->orderRaw('drank asc')->select()->toArray();
+            $menu = $type->whereRaw('ismenu=1 and fid=0')->orderRaw('drank asc')->select()->toArray();
             foreach ($menu as $k => $v) {
-                $menuson[$k] = $type->removeOption()->whereRaw('fid=' . $v['typeid'] . ' AND drank <> 0')->orderRaw('drank asc')->select()->toArray();
+                $submenu = $type->removeOption()->whereRaw('fid=' . $v['typeid'])->orderRaw('drank asc')->select()->toArray();
+                foreach ($submenu as $kk=>$vv){
+                    $submenu[$kk]['submenu'] =  $type->removeOption()->whereRaw('fid=' . $vv['typeid'])->orderRaw('drank asc')->select()->toArray();
+                }
+                $menuson[$k] = $submenu;
                 $menu[$k]['submenu'] = $menuson[$k];
             }
             $all_menu = [$menuson,$menu];

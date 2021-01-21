@@ -55,24 +55,22 @@
 				<ul>
 					<volist name="vo['submenu']" id="sub" key="sub_k">
 						<li><a href="{$sub.typeid|geturl='lists',###}">{$sub.typename}</a>
-							<!--第三级-->
-							<php>if(have_child($sub['typeid'])){</php>
+							<php>if(isset($sub['submenu'])){</php>
 							<!--[if lte IE 6]><table><tr><td><![endif]-->
-							<php>$sub_typeid=$sub['typeid'];</php>
 							<ul>
-								<damicms:arclist model="type" where="fid=$sub_typeid" order="drank asc" id="tree">
+								<volist name="sub['submenu']" id="tree">
 									<li><a href='{$tree.typeid|geturl='lists',###}'>{$tree.typename}</a></li>
-								</damicms:arclist>
+								</volist>
 							</ul>
-							<!--[if lte IE 6]></td></tr></table></a><![endif]-->
-							<php>}</php>
-						</li>
+				            <!--[if lte IE 6]></td></tr></table></a><![endif]-->
+				            <php>}</php>
+			            </li>
 					</volist>
 				</ul>
-				<!--[if lte IE 6]></td></tr></table></a><![endif]-->
 				<php>}</php>
 			</li>
 		</volist>
+
 		<!--单页调用-->
 		<li><a href='{:U('Publics/single',array('aid'=>133))}'>售后服务</a></li>
 	</ul>
