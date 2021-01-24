@@ -2,7 +2,6 @@
 /.vscode
 /vendor
 *.log
-.env
 /runtime
 /public/test.php
 /public/Public/Uploads
