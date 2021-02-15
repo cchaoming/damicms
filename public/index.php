@@ -13,15 +13,11 @@
 
 
 namespace think;
-require_once('php_safe.php');
+
 if(!file_exists(dirname(__FILE__).'/install.lck')) header('Location:./install/index.php');
 require __DIR__ . '/../vendor/autoload.php';
-
 // 执行HTTP应用并响应
 $http = (new App())->http;
-
 $response = $http->run();
-
 $response->send();
-
 $http->end($response);

@@ -7,10 +7,10 @@
  * @licence http://www.kindsoft.net/license.php
  *******************************************************************************/
 (function (K) {
-    function KSWFUpload(options) {
+    function KHTMLUpload(options) {
         this.init(options);
     }
-    K.extend(KSWFUpload, {
+    K.extend(KHTMLUpload, {
         init: function (options) {
             var self = this;
             options.afterError = options.afterError || function (str) {
@@ -156,8 +156,8 @@
         }
     });
 
-    K.swfupload = function (element, options) {
-        return new KSWFUpload(element, options);
+    K.htmlupload = function (element, options) {
+        return new KHTMLUpload(element, options);
     };
 
 })(KindEditor);
@@ -191,25 +191,25 @@ KindEditor.plugin('multiimage', function (K) {
             previewBtn: {
                 name: lang.insertAll,
                 click: function (e) {
-                    clickFn.call(self, swfupload.getUrlList());
+                    clickFn.call(self, htmlupload.getUrlList());
                 }
             },
             yesBtn: {
                 name: lang.clearAll,
                 click: function (e) {
-                    swfupload.removeFiles();
+                    htmlupload.removeFiles();
                 }
             },
             beforeRemove: function () {
                 // IE9 bugfix: https://github.com/kindsoft/kindeditor/issues/72
                 if (!K.IE || K.V <= 8) {
-                    swfupload.remove();
+                    htmlupload.remove();
                 }
             }
         }),
             div = dialog.div;
 
-        var swfupload = K.swfupload({
+        var htmlupload = K.htmlupload({
             container: K('.swfupload', div),
             fileIconUrl: imgPath + 'image.png',
             uploadDesc: uploadDesc,

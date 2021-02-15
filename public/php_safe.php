@@ -16,8 +16,7 @@ if(is_array($StrFiltValue))
     $StrFiltValue=implode($StrFiltValue);
 }  
 if (preg_match("/".$ArrFiltReq."/is",$StrFiltValue)==1){   
-        //slog("<br><br>操作IP: ".$_SERVER["REMOTE_ADDR"]."<br>操作时间: ".strftime("%Y-%m-%d %H:%M:%S")."<br>操作页面:".$_SERVER["PHP_SELF"]."<br>提交方式: ".$_SERVER["REQUEST_METHOD"]."<br>提交参数: ".$StrFiltKey."<br>提交数据: ".$StrFiltValue);
-        print "大米CMS提示:有非法参数,Illegal operation!";
+        print "damicms,Illegal operation!";
         exit();
 }      
 }  

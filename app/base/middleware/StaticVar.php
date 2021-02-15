@@ -64,6 +64,7 @@ class StaticVar
         //防止注入(后台post可能含有关键字不过滤)
         $request_data = $request->param();
         if(is_array($request_data) && APP_NAME != 'admin'){
+        require_once('./php_safe.php');
         array_walk_recursive($request_data, 'inject_check');
         array_walk_recursive($request_data, 'remove_xss');
         }
