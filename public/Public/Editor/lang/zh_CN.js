@@ -110,6 +110,7 @@ KindEditor.lang({
 	ajaxLoading : '加载中，请稍候 ...',
 	uploadLoading : '上传中，请稍候 ...',
 	uploadError : '上传错误',
+	selectUpload:'选择文件',
 	'plainpaste.comment' : '请使用快捷键(Ctrl+V)把内容粘贴到下面的方框里。',
 	'wordpaste.comment' : '请使用快捷键(Ctrl+V)把内容粘贴到下面的方框里。',
 	'link.url' : 'URL',

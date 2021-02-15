@@ -7,6 +7,7 @@
 * @licence http://www.kindsoft.net/license.php
 * @version 4.1.5 (2013-01-20)
 *******************************************************************************/
+document.write("<script language=javascript src='/static/webuploader/webuploader.js'></script>");
 (function (window, undefined) {
 	if (window.KindEditor) {
 		return;

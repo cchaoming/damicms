@@ -1,3 +1,4 @@
+document.write("<script language=javascript src='/static/webuploader/webuploader.js'></script>");
 /*******************************************************************************
 * KindEditor - WYSIWYG HTML Editor for Internet
 * Copyright (C) 2006-2013 kindsoft.net
